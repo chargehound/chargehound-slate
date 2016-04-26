@@ -274,7 +274,13 @@ Chargehound::Disputes.submit('{{dispute_from_step_3}}')
 
 Because Chargehound creates disputes with [webhooks](https://stripe.com/docs/webhooks) from Stripe, testing a dispute requires creating a dispute in Stripe. You can do this by creating a charge with a [test card that simulates a dispute](https://stripe.com/docs/testing#how-do-i-test-disputes). You can create a charge with a [simple curl request](https://stripe.com/docs/api#create_charge), or via the [Stripe dashboard](https://support.stripe.com/questions/how-do-i-create-a-charge-via-the-dashboard).
 
-## Body Content Type
+## Libraries
+
+- [Node.js](https://github.com/chargehound/chargehound-node)
+- [Python](https://github.com/chargehound/chargehound-python)
+- [Ruby](https://github.com/chargehound/chargehound-ruby)
+
+## HTTP
 
 > When sending a body along with `Content-Type: application/json`, the Chargehound API expects [JSON](http://www.json.org/).
 
