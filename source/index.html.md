@@ -7,14 +7,10 @@ language_tabs:
   - python: Python
   - ruby: Ruby
 
-toc_footers:
-  - <a href='#'>Sign Up for a Developer Key</a>
-  - <a href='https://github.com/tripit/slate'>Documentation Powered by Slate</a>
-
 includes:
   - disputes
 
-search: true
+search: false
 ---
 
 # Overview
@@ -282,7 +278,7 @@ Because Chargehound creates disputes with [webhooks](https://stripe.com/docs/web
 
 > When sending a body along with `Content-Type: application/json`, the Chargehound API expects [JSON](http://www.json.org/).
 
-```sh
+```
 curl -X PUT https://api.chargehound.com/v1/disputes/dp_17p1SvLU6oDzEeR1fBeR07I6 \
   -u test_1a5e353b154642ea836ddbb6730d63cc: \
   -H "Content-Type: application/json" \
@@ -291,7 +287,7 @@ curl -X PUT https://api.chargehound.com/v1/disputes/dp_17p1SvLU6oDzEeR1fBeR07I6 
 
 > When sending a body along with `Content-Type: application/x-www-form-urlencoded`, the Chargehound API expects [form data](https://en.wikipedia.org/wiki/Percent-encoding#The_application.2Fx-www-form-urlencoded_type). This Content Type is set automatically by curl. Dictionaries can be expressed with square brackets.
 
-```sh
+```
 curl -X PUT https://api.chargehound.com/v1/disputes/dp_17p1SvLU6oDzEeR1fBeR07I6 \
   -u test_1a5e353b154642ea836ddbb6730d63cc: \
   -d fields[cool]=1999
