@@ -96,12 +96,12 @@ chargehound.Disputes.submit("dp_17p1SvLU6oDzEeR1fBeR07I6",
 require 'chargehound'
 Chargehound.api_key = 'test_1a5e353b154642ea836ddbb6730d63cc'
 
-Chargehound::Disputes.submit('dp_17p1SvLU6oDzEeR1fBeR07I6', {
-  'template' => 'unrecognized',
-  'fields' => {
+Chargehound::Disputes.submit('dp_17p1SvLU6oDzEeR1fBeR07I6',
+  template: 'unrecognized',
+  fields: {
     'customer_ip' => '100'
   }
-})
+)
 ```
 
 > Example response:
@@ -475,12 +475,12 @@ chargehound.Disputes.update("dp_17p1SvLU6oDzEeR1fBeR07I6",
 require 'chargehound'
 Chargehound.api_key = 'test_1a5e353b154642ea836ddbb6730d63cc'
 
-Chargehound::Disputes.update('dp_17p1SvLU6oDzEeR1fBeR07I6', {
-  'template' => 'unrecognized',
-  'fields' => {
+Chargehound::Disputes.update('dp_17p1SvLU6oDzEeR1fBeR07I6',
+  template: 'unrecognized',
+  fields: {
     'customer_ip' => '100'
   }
-})
+)
 ```
 
 > Example response:
