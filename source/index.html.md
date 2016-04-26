@@ -1,168 +1,300 @@
 ---
-title: API Reference
+title: Chargehound API Reference
 
 language_tabs:
-  - shell
-  - ruby
-  - python
+  - shell: cURL
+  - javascript: Node
+  - python: Python
+  - ruby: Ruby
 
 toc_footers:
   - <a href='#'>Sign Up for a Developer Key</a>
   - <a href='https://github.com/tripit/slate'>Documentation Powered by Slate</a>
 
 includes:
-  - errors
+  - disputes
 
 search: true
 ---
 
-# Introduction
+# Overview
 
-Welcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.
+Chargehound's API is organized around REST. [JSON](http://www.json.org/) is returned by all API responses, including errors. All API URLs listed in this documentation are relative to `https://api.chargehound.com/v1/`. For example, the `/disputes/` resource is located at `https://api.chargehound.com/v1/disputes`.
 
-We have language bindings in Shell, Ruby, and Python! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
+All requests must be made over [HTTPS](https://en.wikipedia.org/wiki/HTTPS).
 
-This example API documentation page was created with [Slate](https://github.com/tripit/slate). Feel free to edit it and use it as a base for your own API's documentation.
+## Authentication
 
-# Authentication
+```sh
+curl -u test_1a5e353b154642ea836ddbb6730d63cc:
+```
 
-> To authorize, use this code:
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
+```js
+var chargehound = require('chargehound')(
+  'test_1a5e353b154642ea836ddbb6730d63cc'
+);
 ```
 
 ```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
+import chargehound
+chargehound.api_key = "test_1a5e353b154642ea836ddbb6730d63cc"
 ```
-
-```shell
-# With shell, you can just pass the correct header with each request
-curl "api_endpoint_here"
-  -H "Authorization: meowmeowmeow"
-```
-
-> Make sure to replace `meowmeowmeow` with your API key.
-
-Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our [developer portal](http://example.com/developers).
-
-Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:
-
-`Authorization: meowmeowmeow`
-
-<aside class="notice">
-You must replace <code>meowmeowmeow</code> with your personal API key.
-</aside>
-
-# Kittens
-
-## Get All Kittens
 
 ```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get
+require 'chargehound'
+Chargehound.api_key = 'test_1a5e353b154642ea836ddbb6730d63cc'
 ```
 
-```python
-import kittn
+> Make sure to replace `test_1a5e353b154642ea836ddbb6730d63cc` with your API key.
 
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get()
-```
+Authentication to the API is performed via [HTTP Basic Auth](https://en.wikipedia.org/wiki/Basic_access_authentication). Your API key serves as your username. You do not need to provide a password, so the full authorization string should have the form `{{key}}:`.
 
-```shell
-curl "http://example.com/api/kittens"
-  -H "Authorization: meowmeowmeow"
-```
+If you are setting authentication in the HTTP Headers with the form `Authorization: Basic {{credentials}}` be sure to [base 64](https://en.wikipedia.org/wiki/Base64) encode the credentials so that, for example, `test_1a5e353b154642ea836ddbb6730d63cc:` becomes `dGVzdF8xYTVlMzUzYjE1NDY0MmVhODM2ZGRiYjY3MzBkNjNjYzo=`.
 
-> The above command returns JSON structured like this:
+You have two API keys, one for test and one for live data.
 
-```json
-[
-  {
-    "id": 1,
-    "name": "Fluffums",
-    "breed": "calico",
-    "fluffiness": 6,
-    "cuteness": 7
-  },
-  {
-    "id": 2,
-    "name": "Max",
-    "breed": "unknown",
-    "fluffiness": 5,
-    "cuteness": 10
-  }
-]
-```
-
-This endpoint retrieves all kittens.
-
-### HTTP Request
-
-`GET http://example.com/api/kittens`
-
-### Query Parameters
-
-Parameter | Default | Description
---------- | ------- | -----------
-include_cats | false | If set to true, the result will also include cats.
-available | true | If set to false, the result will include kittens that have already been adopted.
-
-<aside class="success">
-Remember — a happy kitten is an authenticated kitten!
-</aside>
-
-## Get a Specific Kitten
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```shell
-curl "http://example.com/api/kittens/2"
-  -H "Authorization: meowmeowmeow"
-```
-
-> The above command returns JSON structured like this:
+## Errors
 
 ```json
 {
-  "id": 2,
-  "name": "Max",
-  "breed": "unknown",
-  "fluffiness": 5,
-  "cuteness": 10
+  "url": "/v1/disputes/puppy/submit",
+  "livemode": false,
+  "error": {
+    "status": 404,
+    "message": "A dispute with id 'puppy' was not found"
+  }
 }
 ```
 
-This endpoint retrieves a specific kitten.
+Chargehound uses conventional HTTP response codes to indicate success or failure of an API request. In general, codes in the 2xx range indicate success, codes in the 4xx range indicate an error that resulted from the provided information (e.g. a required parameter was missing, a payment failed, etc.), and codes in the 5xx range indicate an error with our servers.
 
-<aside class="warning">Inside HTML code blocks like this one, you can't use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
+## Testing
 
-### HTTP Request
+> 1) Create a token for a card with the dispute trigger code.
 
-`GET http://example.com/kittens/<ID>`
+```sh
+curl https://api.stripe.com/v1/tokens \
+  -u {{your_stripe_test_key}}: \
+  -d card[number]=4000000000000259 \
+  -d card[exp_month]=12 \
+  -d card[exp_year]=2017 \
+  -d card[cvc]=123
+```
 
-### URL Parameters
+```js
+var stripe = require('stripe')(
+  '{{your_stripe_test_key}}'
+);
 
-Parameter | Description
---------- | -----------
-ID | The ID of the kitten to retrieve
+stripe.tokens.create({
+  card: {
+    number: '4000000000000259',
+    exp_month: 12,
+    exp_year: 2017,
+    cvc: '123'
+  }
+}, function (err, token) {
+  // ...
+});
+```
 
+```python
+import stripe
+stripe.api_key = "{{your_stripe_test_key}}"
+
+stripe.Token.create(
+  card={
+    "number": "4000000000000259",
+    "exp_month": 12,
+    "exp_year": 2017,
+    "cvc": "123"
+  },
+)
+```
+
+```ruby
+require 'stripe'
+Stripe.api_key = 'sk_test_U6L0vjlZ4JdcZY4cfz5xFmKL'
+
+Stripe::Token.create(
+  :card => {
+    :number => '4000000000000259',
+    :exp_month => 4,
+    :exp_year => 2017,
+    :cvc => '314'
+  },
+)
+```
+
+> 2) Attach that token to a Stripe customer, for easy reuse later.
+
+```sh
+curl https://api.stripe.com/v1/customers \
+  -u {{your_stripe_test_key}}: \
+  -d description="Always disputes charges" \
+  -d source={{token_from_step_1}}
+```
+
+```js
+var stripe = require('stripe')(
+  '{{your_stripe_test_key}}'
+);
+
+stripe.customers.create({
+  description: 'Always disputes charges',
+  source: '{{token_from_step_1}}'
+}, function (err, customer) {
+  // ...
+});
+```
+
+```python
+import stripe
+stripe.api_key = "{{your_stripe_test_key}}"
+
+stripe.Customer.create(
+  description="Always disputes charges",
+  source="{{token_from_step_1}}"
+)
+```
+
+```ruby
+require 'stripe'
+Stripe.api_key = 'sk_test_U6L0vjlZ4JdcZY4cfz5xFmKL'
+
+Stripe::Customer.create(
+  :description => 'Always disputes charges',
+  :source => '{{token_from_step_1}}'
+)
+```
+
+> 3) Create a charge that will trigger a dispute. You can view the resulting dispute in the [Stripe dashboard](https://dashboard.stripe.com/test/disputes/overview).
+
+```sh
+curl https://api.stripe.com/v1/charges \
+  -u {{your_stripe_test_key}}: \
+  -d amount=701 \
+  -d currency=usd \
+  -d customer={{customer_from_step_2}} \
+  -d description="Triggering a dispute"
+```
+
+```js
+var stripe = require('stripe')(
+  '{{your_stripe_test_key}}'
+);
+
+stripe.charges.create({
+  amount: 400,
+  currency: 'usd',
+  source: '{{customer_from_step_2}}', // obtained with Stripe.js
+  description: 'Charge for test@example.com'
+}, function (err, charge) {
+  // ...
+});
+```
+
+```python
+import stripe
+stripe.api_key = "{{your_stripe_test_key}}"
+
+stripe.Charge.create(
+  amount=400,
+  currency="usd",
+  customer="{{customer_from_step_2}}",
+  description="Triggering a dispute"
+)
+```
+
+```ruby
+require 'stripe'
+Stripe.api_key = 'sk_test_U6L0vjlZ4JdcZY4cfz5xFmKL'
+
+Stripe::Charge.create(
+  :amount => 701,
+  :currency => 'usd',
+  :customer => '{{customer_from_step_2}}',
+  :description => 'Triggering a dispute'
+)
+```
+
+> 4) Once the dispute is created in Stripe, you will see it mirrored in Chargehound.
+
+```sh
+curl https://api.chargehound.com/v1/disputes/{{dispute_from_step_3}} \
+  -u {{your_chargehound_test_key}}:
+```
+
+```js
+var chargehound = require('chargehound')('{{your_chargehound_test_key}}');
+
+chargehound.Disputes.retrieve('{{dispute_from_step_3}}'), function (err, res) {
+  // ...
+});
+```
+
+```python
+import chargehound
+chargehound.api_key = "{{your_chargehound_test_key}}"
+
+chargehound.Disputes.retrieve("{{dispute_from_step_3}}")
+```
+
+```ruby
+require 'chargehound'
+Chargehound.api_key = '{{your_chargehound_test_key}}'
+
+Chargehound::Disputes.retrieve('{{dispute_from_step_3}}')
+```
+
+> 5) Using your test API key, you can then update and submit the dispute.
+
+```sh
+curl https://api.chargehound.com/v1/disputes/{{dispute_from_step_3}}/submit \
+  -u {{your_chargehound_test_key}}:
+```
+
+```js
+var chargehound = require('chargehound')('{{your_chargehound_test_key}}');
+
+chargehound.Disputes.submit('{{dispute_from_step_3}}'), function (err, res) {
+  // ...
+});
+```
+
+```python
+import chargehound
+chargehound.api_key = "{{your_chargehound_test_key}}"
+
+chargehound.Disputes.submit("{{dispute_from_step_3}}")
+```
+
+```ruby
+require 'chargehound'
+Chargehound.api_key = '{{your_chargehound_test_key}}'
+
+Chargehound::Disputes.submit('{{dispute_from_step_3}}')
+```
+
+Because Chargehound creates disputes with [webhooks](https://stripe.com/docs/webhooks) from Stripe, testing a dispute requires creating a dispute in Stripe. You can do this by creating a charge with a [test card that simulates a dispute](https://stripe.com/docs/testing#how-do-i-test-disputes). You can create a charge with a [simple curl request](https://stripe.com/docs/api#create_charge), or via the [Stripe dashboard](https://support.stripe.com/questions/how-do-i-create-a-charge-via-the-dashboard).
+
+## Body Content Type
+
+> When sending a body along with `Content-Type: application/json`, the Chargehound API expects [JSON](http://www.json.org/).
+
+```sh
+curl -X PUT https://api.chargehound.com/v1/disputes/dp_17p1SvLU6oDzEeR1fBeR07I6 \
+  -u test_1a5e353b154642ea836ddbb6730d63cc: \
+  -H "Content-Type: application/json" \
+  -d "{\"fields\": { \"cool\": 1999 } }"
+```
+
+> When sending a body along with `Content-Type: application/x-www-form-urlencoded`, the Chargehound API expects [form data](https://en.wikipedia.org/wiki/Percent-encoding#The_application.2Fx-www-form-urlencoded_type). This Content Type is set automatically by curl. Dictionaries can be expressed with square brackets.
+
+```sh
+curl -X PUT https://api.chargehound.com/v1/disputes/dp_17p1SvLU6oDzEeR1fBeR07I6 \
+  -u test_1a5e353b154642ea836ddbb6730d63cc: \
+  -d fields[cool]=1999
+```
+
+If you are making HTTP requests directly, be sure to set the `Content-Type` header in PUT/POST requests to specify the format of the body. The Chargehound API supports JSON and URL encoding. 
