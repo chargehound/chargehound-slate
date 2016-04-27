@@ -62,7 +62,7 @@ Chargehound::Disputes.submit
 curl -X POST https://api.chargehound.com/v1/disputes/dp_17p1SvLU6oDzEeR1fBeR07I6/submit \
   -u test_1a5e353b154642ea836ddbb6730d63cc: \
   -d template=unrecognized \
-  -d fields[customer_ip]=100
+  -d fields[product_url]=http://example.com/products/cool
 ```
 
 ```js
@@ -73,7 +73,7 @@ var chargehound = require('chargehound')(
 chargehound.Disputes.submit('dp_17p1SvLU6oDzEeR1fBeR07I6', {
   template: 'unrecognized',
   fields: {
-    customer_ip: '100'
+    product_url: 'http://example.com/products/cool'
   }
 }, function (err, res) {
   // ...
@@ -82,12 +82,12 @@ chargehound.Disputes.submit('dp_17p1SvLU6oDzEeR1fBeR07I6', {
 
 ```python
 import chargehound
-chargehound.api_key = "test_1a5e353b154642ea836ddbb6730d63cc"
+chargehound.api_key = 'test_1a5e353b154642ea836ddbb6730d63cc'
 
-chargehound.Disputes.submit("dp_17p1SvLU6oDzEeR1fBeR07I6",
-  template="unrecognized",
+chargehound.Disputes.submit('dp_17p1SvLU6oDzEeR1fBeR07I6',
+  template='unrecognized',
   fields={
-    "customer_ip": "100"
+    'product_url': 'http://example.com/products/cool'
   }
 )
 ```
@@ -99,7 +99,7 @@ Chargehound.api_key = 'test_1a5e353b154642ea836ddbb6730d63cc'
 Chargehound::Disputes.submit('dp_17p1SvLU6oDzEeR1fBeR07I6',
   template: 'unrecognized',
   fields: {
-    'customer_ip' => '100'
+    'product_url' => 'http://example.com/products/cool'
   }
 )
 ```
@@ -138,7 +138,7 @@ Chargehound::Disputes.submit('dp_17p1SvLU6oDzEeR1fBeR07I6',
   "created": "2016-03-14T19:35:17",
   "url": "/v1/disputes/dp_17p1SvLU6oDzEeR1fBeR07I6",
   "fields": {
-    "cool": 33,
+    "product_url": "http://example.com/products/cool",
     "customer_name": "Susie Chargeback"
   },
   "file_url": null,
@@ -208,7 +208,7 @@ chargehound.Disputes.list(), function (err, res) {
 
 ```python
 import chargehound
-chargehound.api_key = "test_1a5e353b154642ea836ddbb6730d63cc"
+chargehound.api_key = 'test_1a5e353b154642ea836ddbb6730d63cc'
 
 chargehound.Disputes.list()
 ```
@@ -296,7 +296,6 @@ Chargehound::Disputes.list
       "created": "2016-03-15T18:09:01",
       "fields": {
         "exp_month": 12,
-        "cool": 55,
         "last4": "0259",
         "charged_at": "2016-03-15T18:08:36",
         "card_brand": "Visa",
@@ -357,9 +356,9 @@ chargehound.Disputes.retrieve('dp_17pPChLU6oDzEeR1JfWFHZuG'), function (err, res
 
 ```python
 import chargehound
-chargehound.api_key = "test_1a5e353b154642ea836ddbb6730d63cc"
+chargehound.api_key = 'test_1a5e353b154642ea836ddbb6730d63cc'
 
-chargehound.Disputes.retrieve("dp_17pPChLU6oDzEeR1JfWFHZuG")
+chargehound.Disputes.retrieve('dp_17pPChLU6oDzEeR1JfWFHZuG')
 ```
 
 ```ruby
@@ -415,6 +414,8 @@ Chargehound::Disputes.retrieve('dp_17pPChLU6oDzEeR1JfWFHZuG')
 }
 ```
 
+You can retrieve a single dispute by its id.
+
 ## Updating a dispute
 
 > Definition
@@ -441,7 +442,7 @@ Chargehound::Disputes.update
 curl -X PUT https://api.chargehound.com/v1/disputes/dp_17p1SvLU6oDzEeR1fBeR07I6/update \
   -u test_1a5e353b154642ea836ddbb6730d63cc: \
   -d template=unrecognized \
-  -d fields[customer_ip]=100
+  -d fields[product_url]=http://example.com/products/cool
 ```
 
 ```js
@@ -452,7 +453,7 @@ var chargehound = require('chargehound')(
 chargehound.Disputes.update('dp_17p1SvLU6oDzEeR1fBeR07I6', {
   template: 'unrecognized',
   fields: {
-    customer_ip: '100'
+    product_url: 'http://example.com/products/cool'
   }
 }, function (err, res) {
   // ...
@@ -461,12 +462,12 @@ chargehound.Disputes.update('dp_17p1SvLU6oDzEeR1fBeR07I6', {
 
 ```python
 import chargehound
-chargehound.api_key = "test_1a5e353b154642ea836ddbb6730d63cc"
+chargehound.api_key = 'test_1a5e353b154642ea836ddbb6730d63cc'
 
-chargehound.Disputes.update("dp_17p1SvLU6oDzEeR1fBeR07I6",
-  template="unrecognized",
+chargehound.Disputes.update('dp_17p1SvLU6oDzEeR1fBeR07I6',
+  template='unrecognized',
   fields={
-    "customer_ip": "100"
+    'product_url': 'http://example.com/products/cool'
   }
 )
 ```
@@ -478,7 +479,7 @@ Chargehound.api_key = 'test_1a5e353b154642ea836ddbb6730d63cc'
 Chargehound::Disputes.update('dp_17p1SvLU6oDzEeR1fBeR07I6',
   template: 'unrecognized',
   fields: {
-    'customer_ip' => '100'
+    'product_url' => 'http://example.com/products/cool'
   }
 )
 ```
@@ -517,7 +518,7 @@ Chargehound::Disputes.update('dp_17p1SvLU6oDzEeR1fBeR07I6',
   "created": "2016-03-14T19:35:17",
   "url": "/v1/disputes/dp_17p1SvLU6oDzEeR1fBeR07I6",
   "fields": {
-    "cool": 100000,
+    "product_url": "http://example.com/products/cool",
     "customer_name": "Susie Chargeback"
   },
   "file_url": null,
