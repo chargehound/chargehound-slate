@@ -2,6 +2,7 @@
 @import 'normalize';
 @import 'variables';
 @import 'icon-font';
+@import 'chargehound';
 
 /*
 Copyright 2008-2013 Concur Technologies, Inc.
@@ -29,6 +30,7 @@ body {
 
 .tocify, .toc-footer, .lang-selector, .search, #nav-button {
   display: none;
+
 }
 
 .tocify-wrapper>img {
