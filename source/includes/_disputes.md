@@ -29,9 +29,9 @@ A Dispute object is:
 | customer_email | string    | Email of the Stripe customer (if any).                                        |
 | customer_purchase_ip | string    | IP of purchase (if available).                                        |
 | address_zip | string    | Billing address zip of the charge.                                        |
-| address_line1_check | string    | State of address check (if available). One of 'pass', 'fail', 'unavailable', 'checked'.                                       |
-| address_zip_check | string    | State of address zip check (if available). One of 'pass', 'fail', 'unavailable', 'checked'.                                       |
-| cvc_check | string    | State of cvc check (if available). One of 'pass', 'fail', 'unavailable', 'checked'.                                       |
+| address_line1_check | string    | State of address check (if available). One of `pass`, `fail`, `unavailable`, `checked`.                                       |
+| address_zip_check | string    | State of address zip check (if available). One of `pass`, `fail`, `unavailable`, `checked`.                                       |
+| cvc_check | string    | State of cvc check (if available). One of `pass`, `fail`, `unavailable`, `checked`.                                       |
 | statement_descriptor | string    | Statement descriptor on the charge.                                        |
 | created     | string     | ISO 8601 timestamp. |
 | updated     | string     | ISO 8601 timestamp. |
@@ -154,10 +154,10 @@ The dispute will be in the `submitted` state if the submit was successful.
 
 | Parameter        | Type       | Required?  | Description                                                |
 | -------------    |----------  |------------|-------------------------------------------------           |
-| `template`       | string     | optional   | The id of the template to use.                             |
-| `fields`         | dictionary | optional   | Key value pairs to hydrate the template's evidence fields. |
-| `customer_name`  | string     | optional   | Update the customer name. Will also update the customer name in the evidence fields. |
-| `customer_email` | string     | optional   | Update the customer email. Will also update the customer email in the evidence fields. Must be a valid email address. |
+| template       | string     | optional   | The id of the template to use.                             |
+| fields         | dictionary | optional   | Key value pairs to hydrate the template's evidence fields. |
+| customer_name  | string     | optional   | Update the customer name. Will also update the customer name in the evidence fields. |
+| customer_email | string     | optional   | Update the customer email. Will also update the customer email in the evidence fields. Must be a valid email address. |
 
 ### Possible errors:
 
@@ -315,9 +315,9 @@ This endpoint will list all the disputes that we have synced from Stripe. By def
 
 | Parameter        | Type       | Required?  | Description                                                          |
 | -------------    |----------  |------------|-------------------------------------------------                     |
-| `limit`          | integer    | optional   | Maximum number of disputes to return. Default is 20, maximum is 100. |
-| `starting_after` | string     | optional   | A dispute id. Fetch disputes created after this dispute.             |
-| `ending_before`  | string     | optional   | A dispute id. Fetch disputes created before this dispute.            |
+| limit          | integer    | optional   | Maximum number of disputes to return. Default is 20, maximum is 100. |
+| starting_after | string     | optional   | A dispute id. Fetch disputes created after this dispute.             |
+| ending_before  | string     | optional   | A dispute id. Fetch disputes created before this dispute.            |
 
 ## Retrieving a dispute
 
@@ -534,10 +534,10 @@ You can update the template and the fields on a dispute.
 
 | Parameter        | Type       | Required?  | Description                                                |
 | -------------    |----------  |------------|-------------------------------------------------           |
-| `template`       | string     | optional   | The id of the template to use.                             |
-| `fields`         | dictionary | optional   | Key value pairs to hydrate the template's evidence fields. |
-| `customer_name`  | string     | optional   | Update the customer name. Will also update the customer name in the evidence fields. |
-| `customer_email` | string     | optional   | Update the customer email. Will also update the customer email in the evidence fields. Must be a valid email address. |
+| template       | string     | optional   | The id of the template to use.                             |
+| fields         | dictionary | optional   | Key value pairs to hydrate the template's evidence fields. |
+| customer_name  | string     | optional   | Update the customer name. Will also update the customer name in the evidence fields. |
+| customer_email | string     | optional   | Update the customer email. Will also update the customer email in the evidence fields. Must be a valid email address. |
 
 ### Possible errors:
 
