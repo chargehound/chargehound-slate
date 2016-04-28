@@ -15,37 +15,37 @@ search: false
 
 # Overview
 
-Chargehound's API is organized around REST. [JSON](http://www.json.org/) is returned by all API responses, including errors. All API URLs listed in this documentation are relative to `https://api.chargehound.com/v1/`. For example, the `/disputes/` resource is located at `https://api.chargehound.com/v1/disputes`.
+Chargehound's API is organized around REST. [JSON](http://www.json.org/) is returned by all API responses, including errors, although our [API libraries](#libraries) convert responses to appropriate language-specific objects. All API URLs listed in this documentation are relative to `https://api.chargehound.com/v1/`. For example, the `/disputes/` resource is located at `https://api.chargehound.com/v1/disputes`.
 
 All requests must be made over [HTTPS](https://en.wikipedia.org/wiki/HTTPS).
 
 ## Authentication
 
 ```sh
-curl -u test_1a5e353b154642ea836ddbb6730d63cc:
+curl -u test_123:
 ```
 
 ```js
 var chargehound = require('chargehound')(
-  'test_1a5e353b154642ea836ddbb6730d63cc'
+  'test_123'
 );
 ```
 
 ```python
 import chargehound
-chargehound.api_key = 'test_1a5e353b154642ea836ddbb6730d63cc'
+chargehound.api_key = 'test_123'
 ```
 
 ```ruby
 require 'chargehound'
-Chargehound.api_key = 'test_1a5e353b154642ea836ddbb6730d63cc'
+Chargehound.api_key = 'test_123'
 ```
 
-> Make sure to replace `test_1a5e353b154642ea836ddbb6730d63cc` with your API key.
+> Make sure to replace `test_123` with your API key.
 
 Authentication to the API is performed via [HTTP Basic Auth](https://en.wikipedia.org/wiki/Basic_access_authentication). Your API key serves as your username. You do not need to provide a password, so the full authorization string should have the form `{{key}}:`.
 
-If you are setting authentication in the HTTP Headers with the form `Authorization: Basic {{credentials}}` be sure to [base 64](https://en.wikipedia.org/wiki/Base64) encode the credentials so that, for example, `test_1a5e353b154642ea836ddbb6730d63cc:` becomes `dGVzdF8xYTVlMzUzYjE1NDY0MmVhODM2ZGRiYjY3MzBkNjNjYzo=`.
+If you are setting authentication in the HTTP Headers with the form `Authorization: Basic {{credentials}}` be sure to [base 64](https://en.wikipedia.org/wiki/Base64) encode the credentials so that, for example, `test_123:` becomes `dGVzdF8xMjM6`.
 
 You have two API keys, one for test and one for live data.
 
@@ -110,7 +110,7 @@ stripe.Token.create(
 
 ```ruby
 require 'stripe'
-Stripe.api_key = 'sk_test_U6L0vjlZ4JdcZY4cfz5xFmKL'
+Stripe.api_key = '{{your_stripe_test_key}}'
 
 Stripe::Token.create(
   :card => {
@@ -156,7 +156,7 @@ stripe.Customer.create(
 
 ```ruby
 require 'stripe'
-Stripe.api_key = 'sk_test_U6L0vjlZ4JdcZY4cfz5xFmKL'
+Stripe.api_key = '{{your_stripe_test_key}}'
 
 Stripe::Customer.create(
   :description => 'Always disputes charges',
@@ -204,7 +204,7 @@ stripe.Charge.create(
 
 ```ruby
 require 'stripe'
-Stripe.api_key = 'sk_test_U6L0vjlZ4JdcZY4cfz5xFmKL'
+Stripe.api_key = '{{your_stripe_test_key}}'
 
 Stripe::Charge.create(
   :amount => 701,
@@ -276,6 +276,8 @@ Because Chargehound creates disputes with [webhooks](https://stripe.com/docs/web
 
 ## Libraries
 
+Chargehound offers wrapper libraries in the following languages:
+
 - [Node.js](https://github.com/chargehound/chargehound-node)
 - [Python](https://github.com/chargehound/chargehound-python)
 - [Ruby](https://github.com/chargehound/chargehound-ruby)
@@ -285,8 +287,8 @@ Because Chargehound creates disputes with [webhooks](https://stripe.com/docs/web
 > When sending a body along with `Content-Type: application/json`, the Chargehound API expects [JSON](http://www.json.org/).
 
 ```
-curl -X PUT https://api.chargehound.com/v1/disputes/dp_17p1SvLU6oDzEeR1fBeR07I6 \
-  -u test_1a5e353b154642ea836ddbb6730d63cc: \
+curl -X PUT https://api.chargehound.com/v1/disputes/dp_123 \
+  -u test_123: \
   -H "Content-Type: application/json" \
   -d "{\"fields\": { \"product_url\":  \"http://www.example.com/products/cool\" } }"
 ```
@@ -294,8 +296,8 @@ curl -X PUT https://api.chargehound.com/v1/disputes/dp_17p1SvLU6oDzEeR1fBeR07I6 
 > When sending a body along with `Content-Type: application/x-www-form-urlencoded`, the Chargehound API expects [form data](https://en.wikipedia.org/wiki/Percent-encoding#The_application.2Fx-www-form-urlencoded_type). This Content Type is set automatically by curl. Dictionaries can be expressed with square brackets.
 
 ```
-curl -X PUT https://api.chargehound.com/v1/disputes/dp_17p1SvLU6oDzEeR1fBeR07I6 \
-  -u test_1a5e353b154642ea836ddbb6730d63cc: \
+curl -X PUT https://api.chargehound.com/v1/disputes/dp_123 \
+  -u test_123: \
   -d fields[product_url]=http://www.example.com/products/cool
 ```
 

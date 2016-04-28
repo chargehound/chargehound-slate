@@ -38,7 +38,7 @@ A Dispute object is:
 
 ## Submitting a dispute
 
-> Definition
+> Definition:
 
 ```sh
 POST /v1/disputes/{{dispute_id}}/submit
@@ -59,18 +59,18 @@ Chargehound::Disputes.submit
 > Example request:
 
 ```sh
-curl -X POST https://api.chargehound.com/v1/disputes/dp_17p1SvLU6oDzEeR1fBeR07I6/submit \
-  -u test_1a5e353b154642ea836ddbb6730d63cc: \
+curl -X POST https://api.chargehound.com/v1/disputes/dp_123/submit \
+  -u test_123: \
   -d template=unrecognized \
   -d fields[product_url]=http://example.com/products/cool
 ```
 
 ```js
 var chargehound = require('chargehound')(
-  'test_1a5e353b154642ea836ddbb6730d63cc'
+  'test_123'
 );
 
-chargehound.Disputes.submit('dp_17p1SvLU6oDzEeR1fBeR07I6', {
+chargehound.Disputes.submit('dp_123', {
   template: 'unrecognized',
   fields: {
     product_url: 'http://example.com/products/cool'
@@ -82,9 +82,9 @@ chargehound.Disputes.submit('dp_17p1SvLU6oDzEeR1fBeR07I6', {
 
 ```python
 import chargehound
-chargehound.api_key = 'test_1a5e353b154642ea836ddbb6730d63cc'
+chargehound.api_key = 'test_123'
 
-chargehound.Disputes.submit('dp_17p1SvLU6oDzEeR1fBeR07I6',
+chargehound.Disputes.submit('dp_123',
   template='unrecognized',
   fields={
     'product_url': 'http://example.com/products/cool'
@@ -94,9 +94,9 @@ chargehound.Disputes.submit('dp_17p1SvLU6oDzEeR1fBeR07I6',
 
 ```ruby
 require 'chargehound'
-Chargehound.api_key = 'test_1a5e353b154642ea836ddbb6730d63cc'
+Chargehound.api_key = 'test_123'
 
-Chargehound::Disputes.submit('dp_17p1SvLU6oDzEeR1fBeR07I6',
+Chargehound::Disputes.submit('dp_123',
   template: 'unrecognized',
   fields: {
     'product_url' => 'http://example.com/products/cool'
@@ -121,7 +121,7 @@ Chargehound::Disputes.submit('dp_17p1SvLU6oDzEeR1fBeR07I6',
   "fee": 1500,
   "due_by": "2016-03-30T23:59:59",
   "charge": "ch_17p1SvLU6oDzEeR1VPDcd6ZR",
-  "id": "dp_17p1SvLU6oDzEeR1fBeR07I6",
+  "id": "dp_123",
   "state": "submitted",
   "template": "unrecognized",
   "is_charge_refundable": false,
@@ -136,7 +136,7 @@ Chargehound::Disputes.submit('dp_17p1SvLU6oDzEeR1fBeR07I6',
   "address_zip": null,
   "submitted_at": null,
   "created": "2016-03-14T19:35:17",
-  "url": "/v1/disputes/dp_17p1SvLU6oDzEeR1fBeR07I6",
+  "url": "/v1/disputes/dp_123",
   "fields": {
     "product_url": "http://example.com/products/cool",
     "customer_name": "Susie Chargeback"
@@ -171,7 +171,7 @@ Disputes are not created via the REST API. Instead, once your Stripe account is 
 
 ## Retrieving a list of disputes
 
-> Definition
+> Definition:
 
 ```sh
 GET /v1/disputes
@@ -193,12 +193,12 @@ Chargehound::Disputes.list
 
 ```sh
 curl https://api.chargehound.com/v1/disputes \
-  -u test_1a5e353b154642ea836ddbb6730d63cc:
+  -u test_123:
 ```
 
 ```js
 var chargehound = require('chargehound')(
-  'test_1a5e353b154642ea836ddbb6730d63cc'
+  'test_123'
 );
 
 chargehound.Disputes.list(), function (err, res) {
@@ -208,14 +208,14 @@ chargehound.Disputes.list(), function (err, res) {
 
 ```python
 import chargehound
-chargehound.api_key = 'test_1a5e353b154642ea836ddbb6730d63cc'
+chargehound.api_key = 'test_123'
 
 chargehound.Disputes.list()
 ```
 
 ```ruby
 require 'chargehound'
-Chargehound.api_key = 'test_1a5e353b154642ea836ddbb6730d63cc'
+Chargehound.api_key = 'test_123'
 
 Chargehound::Disputes.list
 ```
@@ -241,7 +241,7 @@ Chargehound::Disputes.list
       "fee": 1500,
       "due_by": "2016-03-31T23:59:59",
       "charge": "ch_17pPCgLU6oDzEeR14leOmeCC",
-      "id": "dp_17pPChLU6oDzEeR1JfWFHZuG",
+      "id": "dp_123",
       "state": "needs_response",
       "template": null,
       "is_charge_refundable": false,
@@ -279,7 +279,7 @@ Chargehound::Disputes.list
       "fee": 1500,
       "due_by": "2016-03-31T23:59:59",
       "charge": "ch_17pMauLU6oDzEeR1CKoB9Ovn",
-      "id": "dp_17pMauLU6oDzEeR1WvsPrfMu",
+      "id": "dp_abc",
       "state": "submitted",
       "template": "default",
       "is_charge_refundable": false,
@@ -309,6 +309,8 @@ Chargehound::Disputes.list
 }
 ```
 
+This endpoint will list all the disputes that we have synced from Stripe. By default the disputes will be ordered by created with the most recent dispute first. `has_more` will be true if more results are available.
+
 ### Parameters:
 
 | Parameter        | Type       | Required?  | Description                                                          |
@@ -319,7 +321,7 @@ Chargehound::Disputes.list
 
 ## Retrieving a dispute
 
-> Definition
+> Definition:
 
 ```sh
 GET /v1/disputes/{{dispute_id}}
@@ -340,32 +342,32 @@ Chargehound::Disputes.retrieve
 > Example request:
 
 ```sh
-curl https://api.chargehound.com/v1/disputes/dp_17pPChLU6oDzEeR1JfWFHZuG \
-  -u test_1a5e353b154642ea836ddbb6730d63cc:
+curl https://api.chargehound.com/v1/disputes/dp_123 \
+  -u test_123:
 ```
 
 ```js
 var chargehound = require('chargehound')(
-  'test_1a5e353b154642ea836ddbb6730d63cc'
+  'test_123'
 );
 
-chargehound.Disputes.retrieve('dp_17pPChLU6oDzEeR1JfWFHZuG'), function (err, res) {
+chargehound.Disputes.retrieve('dp_123'), function (err, res) {
   // ...
 });
 ```
 
 ```python
 import chargehound
-chargehound.api_key = 'test_1a5e353b154642ea836ddbb6730d63cc'
+chargehound.api_key = 'test_123'
 
-chargehound.Disputes.retrieve('dp_17pPChLU6oDzEeR1JfWFHZuG')
+chargehound.Disputes.retrieve('dp_123')
 ```
 
 ```ruby
 require 'chargehound'
-Chargehound.api_key = 'test_1a5e353b154642ea836ddbb6730d63cc'
+Chargehound.api_key = 'test_123'
 
-Chargehound::Disputes.retrieve('dp_17pPChLU6oDzEeR1JfWFHZuG')
+Chargehound::Disputes.retrieve('dp_123')
 ```
 
 > Example response:
@@ -385,7 +387,7 @@ Chargehound::Disputes.retrieve('dp_17pPChLU6oDzEeR1JfWFHZuG')
   "fee": 1500,
   "due_by": "2016-03-31T23:59:59",
   "charge": "ch_17pPCgLU6oDzEeR14leOmeCC",
-  "id": "dp_17pPChLU6oDzEeR1JfWFHZuG",
+  "id": "dp_123",
   "state": "needs_response",
   "template": null,
   "is_charge_refundable": false,
@@ -400,7 +402,7 @@ Chargehound::Disputes.retrieve('dp_17pPChLU6oDzEeR1JfWFHZuG')
   "address_zip": null,
   "submitted_at": null,
   "created": "2016-03-15T21:35:28",
-  "url": "/v1/disputes/dp_17pPChLU6oDzEeR1JfWFHZuG",
+  "url": "/v1/disputes/dp_123",
   "fields": {
     "exp_month": 12,
     "last4": "0259",
@@ -418,7 +420,7 @@ You can retrieve a single dispute by its id.
 
 ## Updating a dispute
 
-> Definition
+> Definition:
 
 ```sh
 PUT /v1/disputes/{{dispute_id}}
@@ -439,18 +441,18 @@ Chargehound::Disputes.update
 > Example request:
 
 ```sh
-curl -X PUT https://api.chargehound.com/v1/disputes/dp_17p1SvLU6oDzEeR1fBeR07I6/update \
-  -u test_1a5e353b154642ea836ddbb6730d63cc: \
+curl -X PUT https://api.chargehound.com/v1/disputes/dp_123/update \
+  -u test_123: \
   -d template=unrecognized \
   -d fields[product_url]=http://example.com/products/cool
 ```
 
 ```js
 var chargehound = require('chargehound')(
-  'test_1a5e353b154642ea836ddbb6730d63cc'
+  'test_123'
 );
 
-chargehound.Disputes.update('dp_17p1SvLU6oDzEeR1fBeR07I6', {
+chargehound.Disputes.update('dp_123', {
   template: 'unrecognized',
   fields: {
     product_url: 'http://example.com/products/cool'
@@ -462,9 +464,9 @@ chargehound.Disputes.update('dp_17p1SvLU6oDzEeR1fBeR07I6', {
 
 ```python
 import chargehound
-chargehound.api_key = 'test_1a5e353b154642ea836ddbb6730d63cc'
+chargehound.api_key = 'test_123'
 
-chargehound.Disputes.update('dp_17p1SvLU6oDzEeR1fBeR07I6',
+chargehound.Disputes.update('dp_123',
   template='unrecognized',
   fields={
     'product_url': 'http://example.com/products/cool'
@@ -474,9 +476,9 @@ chargehound.Disputes.update('dp_17p1SvLU6oDzEeR1fBeR07I6',
 
 ```ruby
 require 'chargehound'
-Chargehound.api_key = 'test_1a5e353b154642ea836ddbb6730d63cc'
+Chargehound.api_key = 'test_123'
 
-Chargehound::Disputes.update('dp_17p1SvLU6oDzEeR1fBeR07I6',
+Chargehound::Disputes.update('dp_123',
   template: 'unrecognized',
   fields: {
     'product_url' => 'http://example.com/products/cool'
@@ -501,7 +503,7 @@ Chargehound::Disputes.update('dp_17p1SvLU6oDzEeR1fBeR07I6',
   "fee": 1500,
   "due_by": "2016-03-30T23:59:59",
   "charge": "ch_17p1SvLU6oDzEeR1VPDcd6ZR",
-  "id": "dp_17p1SvLU6oDzEeR1fBeR07I6",
+  "id": "dp_123",
   "state": "needs_response",
   "template": "unrecognized",
   "is_charge_refundable": false,
@@ -516,7 +518,7 @@ Chargehound::Disputes.update('dp_17p1SvLU6oDzEeR1fBeR07I6',
   "address_zip": null,
   "submitted_at": null,
   "created": "2016-03-14T19:35:17",
-  "url": "/v1/disputes/dp_17p1SvLU6oDzEeR1fBeR07I6",
+  "url": "/v1/disputes/dp_123",
   "fields": {
     "product_url": "http://example.com/products/cool",
     "customer_name": "Susie Chargeback"
