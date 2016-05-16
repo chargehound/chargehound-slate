@@ -121,7 +121,7 @@ except ChargehoundAuthenticationError, e:
   # Incorrect or missing API key
   pass
 except ChargehoundError, e:
-  # GenericChargehound error (404, 500, etc.)
+  # Generic Chargehound error (404, 500, etc.)
   pass
 except Exception, e:
   # Handle any other types of unexpected errors
@@ -142,7 +142,7 @@ rescue Chargehound::ChargehoundBadRequestError => e
 rescue Chargehound::ChargehoundAuthenticationError => e
   # Incorrect or missing API key
 rescue Chargehound::ChargehoundError => e
-  # GenericChargehound error (404, 500, etc.)
+  # Generic Chargehound error (404, 500, etc.)
 rescue => e
   # Handle any other types of unexpected errors
 end
