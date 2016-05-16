@@ -95,7 +95,7 @@ var Chargehound = require('chargehound')('test_123')
   } else if (err instanceof Chargehound.error.ChargehoundAuthenticationError) {
     // Incorrect or missing API key
   } else if (err instanceof Chargehound.error.ChargehoundError) {
-    // An error occurred internally with Chargehound's API
+    // Generic Chargehound error (404, 500, etc.)
   } else {
     // Handle any other types of unexpected errors
   }
@@ -121,7 +121,7 @@ except ChargehoundAuthenticationError, e:
   # Incorrect or missing API key
   pass
 except ChargehoundError, e:
-  # An error occurred internally with Chargehound's API
+  # GenericChargehound error (404, 500, etc.)
   pass
 except Exception, e:
   # Handle any other types of unexpected errors
@@ -142,7 +142,7 @@ rescue Chargehound::ChargehoundBadRequestError => e
 rescue Chargehound::ChargehoundAuthenticationError => e
   # Incorrect or missing API key
 rescue Chargehound::ChargehoundError => e
-  # An error occurred internally with Chargehound's API
+  # GenericChargehound error (404, 500, etc.)
 rescue => e
   # Handle any other types of unexpected errors
 end
