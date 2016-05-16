@@ -62,7 +62,94 @@ You have two API keys, one for test and one for live data.
 }
 ```
 
-Chargehound uses conventional HTTP response codes to indicate success or failure of an API request. In general, codes in the 2xx range indicate success, codes in the 4xx range indicate an error that resulted from the provided information (e.g. a required parameter was missing, a payment failed, etc.), and codes in the 5xx range indicate an error with our servers.
+Chargehound uses conventional HTTP response codes to indicate success or failure of an API request. In general, codes in the 2xx range indicate success, codes in the 4xx range indicate an error that resulted from the provided information (e.g. a required parameter was missing, a payment failed, etc.), and codes in the 5xx range indicate an error with our servers. 
+
+### HTTP Status Code Summary
+
+| Status | Description |
+|--------|--------|
+| 200 - OK | Everything worked as expected. |
+| 201 - Created | The resource was successfully created. |
+| 400 - Bad Request | The request data was invalid or incomplete. |
+| 401 - Unauthorized | No valid API key provided. |
+| 403 - Forbidden | Error with your API key or insecure connection. |
+| 404 - Not Found | Resource could note be found. |
+| 500 - Server Error | Something went wrong on Chargehound's end. |
+
+### Handling errors
+
+```js
+var Chargehound = require('chargehound')('test_123')
+
+// Use the Chargehound library to make a request
+.then(function () {
+  // handle success
+})
+.catch(function (err) {
+  if (err instanceof Chargehound.error.ChargehoundBadRequestError) {
+    // Invalid parameters were supplied in the request
+
+    console.log('Status is: ' + err.status)
+    console.log('Message is: ' + err.message)
+
+  } else if (err instanceof Chargehound.error.ChargehoundAuthenticationError) {
+    // Incorrect or missing API key
+  } else if (err instanceof Chargehound.error.ChargehoundError) {
+    // An error occurred internally with Chargehound's API
+  } else {
+    // Handle any other types of unexpected errors
+  }
+})
+```
+
+```python
+from chargehound.error import (
+  ChargehoundError, ChargehoundBadRequestError, 
+  ChargehoundAuthenticationError
+)
+
+try:
+  # Use the Chargehound library to make a request
+except ChargehoundBadRequestError, e:
+  # Invalid parameters were supplied in the request
+
+  print 'Status is: %s' % e.status
+  print 'Message is: %s' % e.message
+
+  pass
+except ChargehoundAuthenticationError, e:
+  # Incorrect or missing API key
+  pass
+except ChargehoundError, e:
+  # An error occurred internally with Chargehound's API
+  pass
+except Exception, e:
+  # Handle any other types of unexpected errors
+  pass
+```
+
+```ruby
+require 'chargehound/error'
+
+begin
+  # Use the Chargehound library to make a request
+rescue Chargehound::ChargehoundBadRequestError => e
+  # Invalid parameters were supplied in the request
+
+  puts 'Status is: #{e.status}'
+  puts 'Message is: #{e.message}'
+
+rescue Chargehound::ChargehoundAuthenticationError => e
+  # Incorrect or missing API key
+rescue Chargehound::ChargehoundError => e
+  # An error occurred internally with Chargehound's API
+rescue => e
+  # Handle any other types of unexpected errors
+end
+```
+
+When using our client libraries Chargehound also provides typed exceptions when errors are returned from the API.
+
 
 ## Testing
 
