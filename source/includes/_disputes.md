@@ -4,37 +4,37 @@ Dispute objects represent a dispute created on a charge in Stripe. A dispute has
 
 A Dispute object is:
 
-| Field       | Type   | Description                                                                        |
-| ------------|--------|-------------------------------------------------                                   |
-| id          | string     | A unique identifier for the dispute. This is the same id used by Stripe.           |
-| state       | string     | State of the dispute. One of `needs_response`,`submitted`, `under_review`, `won`, `lost`, `warning_needs_response`, `warning_under_review`, `warning_closed` , `response_disabled`, `charge_refunded`.                                                  |
-| reason      | string     | Reason for the dispute. One of `general`, `fraudulent`, `duplicate`, `subscription_canceled`, `product_unacceptable`, `product_not_received`, `unrecognized`, `credit_not_processed`, `incorrect_account_details`, `insufficient_funds`, `bank_cannot_process`, `debit_not_authorized`.                                               |
-| charged_at | string     | ISO 8601 timestamp. |
-| disputed_at | string     | ISO 8601 timestamp. |
-| due_by      | string     | ISO 8601 timestamp. |
-| submitted_at | string     | ISO 8601 timestamp. |
-| closed_at     | string     | ISO 8601 timestamp. |
-| submitted_count | integer     | Number of times the dispute evidence has been submitted. |
-| file_url | string     | Location of the generated evidence document. |
-| template    | string     | Id of the template attached to the dispute.                                   |
-| fields      | dictionary | Evidence fields attached to the dispute.                                      |
-| missing_fields | dictionary | Any fields required by the template that have not yet been provided.       |
-| charge      | string     | Id of the disputed charge.                                                    |
-| is_charge_refundable | boolean     | Can the charge be refunded. |
-| amount      | integer    | Amount of the disputed charge. Amounts are in cents.                          |
-| currency    | string     | Currency code of the disputed charge. e.g. 'USD'.                             |
-| fee         | integer    | Dispute fee.                                                                  |
-| external_customer | string    | Id of the Stripe customer (if any).                                      |
-| customer_name | string    | Name of the Stripe customer (if any).                                        |
-| customer_email | string    | Email of the Stripe customer (if any).                                        |
-| customer_purchase_ip | string    | IP of purchase (if available).                                        |
-| address_zip | string    | Billing address zip of the charge.                                        |
-| address_line1_check | string    | State of address check (if available). One of `pass`, `fail`, `unavailable`, `checked`.                                       |
-| address_zip_check | string    | State of address zip check (if available). One of `pass`, `fail`, `unavailable`, `checked`.                                       |
-| cvc_check | string    | State of cvc check (if available). One of `pass`, `fail`, `unavailable`, `checked`.                                       |
-| statement_descriptor | string    | Statement descriptor on the charge.                                        |
-| created     | string     | ISO 8601 timestamp. |
-| updated     | string     | ISO 8601 timestamp. |
+| Field                | Type       | Description                                                                                 |
+| ---------------------|------------|---------------------------------------------------------------------------------------------|
+| id                   | string     | A unique identifier for the dispute. This is the same id used by Stripe.                    |
+| state                | string     | State of the dispute. One of `needs_response`,`submitted`, `under_review`, `won`, `lost`, `warning_needs_response`, `warning_under_review`, `warning_closed` , `response_disabled`, `charge_refunded`.                                                  |
+| reason               | string     | Reason for the dispute. One of `general`, `fraudulent`, `duplicate`, `subscription_canceled`, `product_unacceptable`, `product_not_received`, `unrecognized`, `credit_not_processed`, `incorrect_account_details`, `insufficient_funds`, `bank_cannot_process`, `debit_not_authorized`.                                               |
+| charged_at           | string     | ISO 8601 timestamp.                                                                         |
+| disputed_at          | string     | ISO 8601 timestamp.                                                                         |
+| due_by               | string     | ISO 8601 timestamp.                                                                         |
+| submitted_at         | string     | ISO 8601 timestamp.                                                                         |
+| closed_at            | string     | ISO 8601 timestamp.                                                                         |
+| submitted_count      | integer    | Number of times the dispute evidence has been submitted.                                    |
+| file_url             | string     | Location of the generated evidence document.                                                |
+| template             | string     | Id of the template attached to the dispute.                                                 |
+| fields               | dictionary | Evidence fields attached to the dispute.                                                    |
+| missing_fields       | dictionary | Any fields required by the template that have not yet been provided.                        |
+| charge               | string     | Id of the disputed charge.                                                                  |
+| is_charge_refundable | boolean    | Can the charge be refunded.                                                                 |
+| amount               | integer    | Amount of the disputed charge. Amounts are in cents.                                        |
+| currency             | string     | Currency code of the disputed charge. e.g. 'USD'.                                           |
+| fee                  | integer    | Dispute fee.                                                                                |
+| external_customer    | string     | Id of the Stripe customer (if any).                                                         |
+| customer_name        | string     | Name of the Stripe customer (if any).                                                       |
+| customer_email       | string     | Email of the Stripe customer (if any).                                                      |
+| customer_purchase_ip | string     | IP of purchase (if available).                                                              |
+| address_zip          | string     | Billing address zip of the charge.                                                          |
+| address_line1_check  | string     | State of address check (if available). One of `pass`, `fail`, `unavailable`, `checked`.     |
+| address_zip_check    | string     | State of address zip check (if available). One of `pass`, `fail`, `unavailable`, `checked`. |
+| cvc_check            | string     | State of cvc check (if available). One of `pass`, `fail`, `unavailable`, `checked`.         |
+| statement_descriptor | string     | Statement descriptor on the charge.                                                         |
+| created              | string     | ISO 8601 timestamp.                                                                         |
+| updated              | string     | ISO 8601 timestamp.                                                                         |
 
 ## Submitting a dispute
 
@@ -62,7 +62,24 @@ Chargehound::Disputes.submit
 curl -X POST https://api.chargehound.com/v1/disputes/dp_123/submit \
   -u test_123: \
   -d template=unrecognized \
-  -d fields[product_url]=http://example.com/products/cool
+  -d fields[customer_ip]="0.0.0.0" \
+  -d products="[{
+                   \"name\" : \"Product Name 1\",
+                   \"description\" : \"Product Description (optional)\",
+                   \"image\" : \"Product Image URL (optional)\",
+                   \"sku\" : \"Stock Keeping Unit (optional)\",
+                   \"quantity\" : 1,
+                   \"amount\" : 1000,
+                   \"url\" : \"Product URL (optional)\"
+                },{
+                   \"name\" : \"Product Name 2\",
+                   \"description\" : \"Product Description (optional)\",
+                   \"image\" : \"Product Image URL (optional)\",
+                   \"sku\" : \"Stock Keeping Unit (optional)\",
+                   \"quantity\" : \"10oz\",
+                   \"amount\" : 2000,
+                   \"url\" : \"Product URL (optional)\"
+                }]"
 ```
 
 ```js
@@ -73,8 +90,25 @@ var chargehound = require('chargehound')(
 chargehound.Disputes.submit('dp_123', {
   template: 'unrecognized',
   fields: {
-    product_url: 'http://example.com/products/cool'
-  }
+    customer_ip: '0.0.0.0'
+  },
+  products: [{
+    name: 'Product Name 1',
+    description: 'Product Description (optional)',
+    image: 'Product Image URL (optional)',
+    sku: 'Stock Keeping Unit (optional)',
+    quantity: 1,
+    amount: 1000,
+    url: 'Product URL (optional)'
+  },{
+    name: 'Product Name 2',
+    description: 'Product Description (optional)',
+    image: 'Product Image URL (optional)',
+    sku: 'Stock Keeping Unit (optional)',
+    quantity: '10oz',
+    amount: 2000,
+    url: 'Product URL (optional)'
+  }]
 }, function (err, res) {
   // ...
 });
@@ -87,8 +121,25 @@ chargehound.api_key = 'test_123'
 chargehound.Disputes.submit('dp_123',
   template='unrecognized',
   fields={
-    'product_url': 'http://example.com/products/cool'
-  }
+    'customer_ip': '0.0.0.0'
+  },
+  products=[{
+     'name': 'Product Name 1',
+     'description': 'Product Description (optional)',
+     'image': 'Product Image URL (optional)',
+     'sku': 'Stock Keeping Unit (optional)',
+     'quantity': 1,
+     'amount': 1000,
+     'url': 'Product URL (optional)'
+  }, {
+     'name': 'Product Name 2',
+     'description': 'Product Description (optional)',
+     'image': 'Product Image URL (optional)',
+     'sku': 'Stock Keeping Unit (optional)',
+     'quantity': '10oz',
+     'amount': 2000,
+     'url': 'Product URL (optional)'
+  }]
 )
 ```
 
@@ -99,8 +150,25 @@ Chargehound.api_key = 'test_123'
 Chargehound::Disputes.submit('dp_123',
   template: 'unrecognized',
   fields: {
-    'product_url' => 'http://example.com/products/cool'
-  }
+    'customer_ip' => '0.0.0.0'
+  },
+  products: [{
+     name: 'Product Name 1',
+     description: 'Product Description (optional)',
+     image: 'Product Image URL (optional)',
+     sku: 'Stock Keeping Unit (optional)',
+     quantity: 1,
+     amount: 1000,
+     url: 'Product URL (optional)'
+  },{
+     name: 'Product Name 2',
+     description: 'Product Description (optional)',
+     image: 'Product Image URL (optional)',
+     sku: 'Stock Keeping Unit (optional)',
+     quantity: '10oz',
+     amount: 2000,
+     url: 'Product URL (optional)'
+  }]
 )
 ```
 
@@ -138,9 +206,26 @@ Chargehound::Disputes.submit('dp_123',
   "created": "2016-03-14T19:35:17",
   "url": "/v1/disputes/dp_123",
   "fields": {
-    "product_url": "http://example.com/products/cool",
+    "customer_ip": "0.0.0.0",
     "customer_name": "Susie Chargeback"
   },
+  "products": [{
+      "name": "Product Name 1",
+      "description": "Product Description (optional)",
+      "image": "Product Image URL (optional)",
+      "sku": "Stock Keeping Unit (optional)",
+      "quantity": "1",
+      "amount": 1000,
+      "url": "Product URL (optional)"
+    },{
+      "name": "Product Name 2",
+      "description": "Product Description (optional)",
+      "image": "Product Image URL (optional)",
+      "sku": "Stock Keeping Unit (optional)",
+      "quantity": "10oz",
+      "amount": 2000,
+      "url": "Product URL (optional)"
+  }],
   "file_url": null,
   "amount": 500
 }
@@ -152,8 +237,8 @@ The dispute will be in the `submitted` state if the submit was successful.
 
 ### Parameters:
 
-| Parameter        | Type       | Required?  | Description                                                |
-| -------------    |----------  |------------|-------------------------------------------------           |
+| Parameter      | Type       | Required?  | Description                                                |
+| -------------  |----------  |------------|-------------------------------------------------           |
 | template       | string     | optional   | The id of the template to use.                             |
 | fields         | dictionary | optional   | Key value pairs to hydrate the template's evidence fields. |
 | customer_name  | string     | optional   | Update the customer name. Will also update the customer name in the evidence fields. |
@@ -264,6 +349,23 @@ Chargehound::Disputes.list
         "exp_year": 2017,
         "customer_name": "Susie Chargeback"
       },
+      "products": [{
+          "name": "Product Name 1",
+          "description": "Product Description (optional)",
+          "image": "Product Image URL (optional)",
+          "sku": "Stock Keeping Unit (optional)",
+          "quantity": "1",
+          "amount": 1000,
+          "url": "Product URL (optional)"
+        },{
+          "name": "Product Name 2",
+          "description": "Product Description (optional)",
+          "image": "Product Image URL (optional)",
+          "sku": "Stock Keeping Unit (optional)",
+          "quantity": "10oz",
+          "amount": 2000,
+          "url": "Product URL (optional)"
+      }],
       "file_url": null,
       "amount": 515
     },
@@ -302,6 +404,23 @@ Chargehound::Disputes.list
         "exp_year": 2017,
         "customer_name": "Susie Chargeback"
       },
+      "products": [{
+          "name": "Product Name 1",
+          "description": "Product Description (optional)",
+          "image": "Product Image URL (optional)",
+          "sku": "Stock Keeping Unit (optional)",
+          "quantity": "1",
+          "amount": 1000,
+          "url": "Product URL (optional)"
+        },{
+          "name": "Product Name 2",
+          "description": "Product Description (optional)",
+          "image": "Product Image URL (optional)",
+          "sku": "Stock Keeping Unit (optional)",
+          "quantity": "10oz",
+          "amount": 2000,
+          "url": "Product URL (optional)"
+      }],
       "file_url": null,
       "amount": 500
     }
@@ -411,6 +530,23 @@ Chargehound::Disputes.retrieve('dp_123')
     "exp_year": 2017,
     "customer_name": "Susie Chargeback"
   },
+  "products": [{
+      "name": "Product Name 1",
+      "description": "Product Description (optional)",
+      "image": "Product Image URL (optional)",
+      "sku": "Stock Keeping Unit (optional)",
+      "quantity": "1",
+      "amount": 1000,
+      "url": "Product URL (optional)"
+    },{
+      "name": "Product Name 2",
+      "description": "Product Description (optional)",
+      "image": "Product Image URL (optional)",
+      "sku": "Stock Keeping Unit (optional)",
+      "quantity": "10oz",
+      "amount": 2000,
+      "url": "Product URL (optional)"
+  }],
   "file_url": null,
   "amount": 515
 }
@@ -444,7 +580,7 @@ Chargehound::Disputes.update
 curl -X PUT https://api.chargehound.com/v1/disputes/dp_123/update \
   -u test_123: \
   -d template=unrecognized \
-  -d fields[product_url]=http://example.com/products/cool
+  -d fields[customer_ip]="0.0.0.0" 
 ```
 
 ```js
@@ -455,8 +591,8 @@ var chargehound = require('chargehound')(
 chargehound.Disputes.update('dp_123', {
   template: 'unrecognized',
   fields: {
-    product_url: 'http://example.com/products/cool'
-  }
+    customer_ip: '0.0.0.0'
+  },
 }, function (err, res) {
   // ...
 });
@@ -469,7 +605,7 @@ chargehound.api_key = 'test_123'
 chargehound.Disputes.update('dp_123',
   template='unrecognized',
   fields={
-    'product_url': 'http://example.com/products/cool'
+    'customer_ip': '0.0.0.0'
   }
 )
 ```
@@ -481,7 +617,7 @@ Chargehound.api_key = 'test_123'
 Chargehound::Disputes.update('dp_123',
   template: 'unrecognized',
   fields: {
-    'product_url' => 'http://example.com/products/cool'
+    'customer_ip' => '0.0.0.0'
   }
 )
 ```
@@ -520,9 +656,26 @@ Chargehound::Disputes.update('dp_123',
   "created": "2016-03-14T19:35:17",
   "url": "/v1/disputes/dp_123",
   "fields": {
-    "product_url": "http://example.com/products/cool",
+    "customer_ip": "0.0.0.0",
     "customer_name": "Susie Chargeback"
   },
+  "products": [{
+      "name": "Product Name 1",
+      "description": "Product Description (optional)",
+      "image": "Product Image URL (optional)",
+      "sku": "Stock Keeping Unit (optional)",
+      "quantity": "1",
+      "amount": 1000,
+      "url": "Product URL (optional)"
+    },{
+      "name": "Product Name 2",
+      "description": "Product Description (optional)",
+      "image": "Product Image URL (optional)",
+      "sku": "Stock Keeping Unit (optional)",
+      "quantity": "10oz",
+      "amount": 2000,
+      "url": "Product URL (optional)"
+  }],
   "file_url": null,
   "amount": 500
 }
@@ -532,11 +685,11 @@ You can update the template and the fields on a dispute.
 
 ### Parameters:
 
-| Parameter        | Type       | Required?  | Description                                                |
-| -------------    |----------  |------------|-------------------------------------------------           |
-| template       | string     | optional   | The id of the template to use.                             |
-| fields         | dictionary | optional   | Key value pairs to hydrate the template's evidence fields. |
-| customer_name  | string     | optional   | Update the customer name. Will also update the customer name in the evidence fields. |
+| Parameter      | Type       | Required?  | Description                                                                                                           |
+| -------------  | ---------- | ---------- | --------------------------------------------------------------------------------------------------------------------- |
+| template       | string     | optional   | The id of the template to use.                                                                                        |
+| fields         | dictionary | optional   | Key value pairs to hydrate the template's evidence fields.                                                            |
+| customer_name  | string     | optional   | Update the customer name. Will also update the customer name in the evidence fields.                                  |
 | customer_email | string     | optional   | Update the customer email. Will also update the customer email in the evidence fields. Must be a valid email address. |
 
 ### Possible errors:
