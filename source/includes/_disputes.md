@@ -237,11 +237,12 @@ The dispute will be in the `submitted` state if the submit was successful.
 
 ### Parameters:
 
-| Parameter      | Type       | Required?  | Description                                                |
-| -------------  |----------  |------------|-------------------------------------------------           |
-| template       | string     | optional   | The id of the template to use.                             |
-| fields         | dictionary | optional   | Key value pairs to hydrate the template's evidence fields. |
-| customer_name  | string     | optional   | Update the customer name. Will also update the customer name in the evidence fields. |
+| Parameter      | Type       | Required?  | Description                                                                                                           |
+| -------------  | ---------  |------------|-----------------------------------------------------------------------------------------------------------------------|
+| template       | string     | optional   | The id of the template to use.                                                                                        |
+| fields         | dictionary | optional   | Key value pairs to hydrate the template's evidence fields.                                                            |
+| products       | array      | optional   | List of products the customer purchased.                                                                              |
+| customer_name  | string     | optional   | Update the customer name. Will also update the customer name in the evidence fields.                                  |
 | customer_email | string     | optional   | Update the customer email. Will also update the customer email in the evidence fields. Must be a valid email address. |
 
 ### Possible errors:
@@ -432,8 +433,8 @@ This endpoint will list all the disputes that we have synced from Stripe. By def
 
 ### Parameters:
 
-| Parameter        | Type       | Required?  | Description                                                          |
-| -------------    |----------  |------------|-------------------------------------------------                     |
+| Parameter      | Type       | Required?  | Description                                                          |
+| -------------  | ---------- | ---------- | -------------------------------------------------------------------- |
 | limit          | integer    | optional   | Maximum number of disputes to return. Default is 20, maximum is 100. |
 | starting_after | string     | optional   | A dispute id. Fetch disputes created after this dispute.             |
 | ending_before  | string     | optional   | A dispute id. Fetch disputes created before this dispute.            |
@@ -689,6 +690,7 @@ You can update the template and the fields on a dispute.
 | -------------  | ---------- | ---------- | --------------------------------------------------------------------------------------------------------------------- |
 | template       | string     | optional   | The id of the template to use.                                                                                        |
 | fields         | dictionary | optional   | Key value pairs to hydrate the template's evidence fields.                                                            |
+| products       | array      | optional   | List of products the customer purchased.                                                                              |
 | customer_name  | string     | optional   | Update the customer name. Will also update the customer name in the evidence fields.                                  |
 | customer_email | string     | optional   | Update the customer email. Will also update the customer email in the evidence fields. Must be a valid email address. |
 
