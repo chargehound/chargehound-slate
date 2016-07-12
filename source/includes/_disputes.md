@@ -19,9 +19,10 @@ A Dispute object is:
 | template             | string     | Id of the template attached to the dispute.                                                 |
 | fields               | dictionary | Evidence fields attached to the dispute.                                                    |
 | missing_fields       | dictionary | Any fields required by the template that have not yet been provided.                        |
+| products             | list       | A list of products in the disputed order (if available).                                    |
 | charge               | string     | Id of the disputed charge.                                                                  |
 | is_charge_refundable | boolean    | Can the charge be refunded.                                                                 |
-| amount               | integer    | Amount of the disputed charge. Amounts are in cents.                                        |
+| amount               | integer    | Amount of the disputed charge. Amounts are in cents (or other minor currency unit).         |
 | currency             | string     | Currency code of the disputed charge. e.g. 'USD'.                                           |
 | fee                  | integer    | Dispute fee.                                                                                |
 | external_customer    | string     | Id of the Stripe customer (if any).                                                         |
@@ -35,6 +36,20 @@ A Dispute object is:
 | statement_descriptor | string     | Statement descriptor on the charge.                                                         |
 | created              | string     | ISO 8601 timestamp.                                                                         |
 | updated              | string     | ISO 8601 timestamp.                                                                         |
+
+### Products
+
+If a customer purchased multiple products in a disputed order, those products can be individually attached to a Dispute. Each product line-item has the following properties:
+
+| Field        | Type              | Description                                                                                 |
+| -------------|-------------------|---------------------------------------------------------------------------------------------|
+| name         | string            | The name of the product ordered.                                                            |
+| quantity     | string or integer | The number or quantity of this product (e.g. 10 or "10oz").                                 |
+| amount       | integer           | The price paid for this item, in cents (or other minor currency unit).                      |
+| description  | string            | (Optional) A product description - for example, the size or color.                          |
+| image        | url               | (Optional) A URL showing the product image.                                                 |
+| sku          | string            | (Optional) The stock-keeping unit.                                                          |
+| url          | url               | (Optional) The URL of the purchased item, if it is listed online.                           |
 
 ## Submitting a dispute
 
