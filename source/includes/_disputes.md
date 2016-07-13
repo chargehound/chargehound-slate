@@ -19,7 +19,7 @@ A Dispute object is:
 | template             | string     | Id of the template attached to the dispute.                                                 |
 | fields               | dictionary | Evidence fields attached to the dispute.                                                    |
 | missing_fields       | dictionary | Any fields required by the template that have not yet been provided.                        |
-| products             | list       | A list of products in the disputed order (if available).                                    |
+| products             | list       | An (optiona ) list of products in the disputed order (see the [Product data](#product-data) for details) |
 | charge               | string     | Id of the disputed charge.                                                                  |
 | is_charge_refundable | boolean    | Can the charge be refunded.                                                                 |
 | amount               | integer    | Amount of the disputed charge. Amounts are in cents (or other minor currency unit).         |
@@ -36,20 +36,6 @@ A Dispute object is:
 | statement_descriptor | string     | Statement descriptor on the charge.                                                         |
 | created              | string     | ISO 8601 timestamp.                                                                         |
 | updated              | string     | ISO 8601 timestamp.                                                                         |
-
-### Products
-
-If a customer purchased multiple products in a disputed order, those products can be individually attached to a Dispute. Each product line-item has the following properties:
-
-| Field        | Type              | Description                                                                                 |
-| -------------|-------------------|---------------------------------------------------------------------------------------------|
-| name         | string            | The name of the product ordered.                                                            |
-| quantity     | string or integer | The number or quantity of this product (e.g. 10 or "10oz").                                 |
-| amount       | integer           | The price paid for this item, in cents (or other minor currency unit).                      |
-| description  | string            | (Optional) A product description - for example, the size or color.                          |
-| image        | url               | (Optional) A URL showing the product image.                                                 |
-| sku          | string            | (Optional) The stock-keeping unit.                                                          |
-| url          | url               | (Optional) The URL of the purchased item, if it is listed online.                           |
 
 ## Submitting a dispute
 
@@ -77,24 +63,7 @@ Chargehound::Disputes.submit
 curl -X POST https://api.chargehound.com/v1/disputes/dp_123/submit \
   -u test_123: \
   -d template=unrecognized \
-  -d fields[customer_ip]="0.0.0.0" \
-  -d products="[{
-                   \"name\" : \"Product Name 1\",
-                   \"description\" : \"Product Description (optional)\",
-                   \"image\" : \"Product Image URL (optional)\",
-                   \"sku\" : \"Stock Keeping Unit (optional)\",
-                   \"quantity\" : 1,
-                   \"amount\" : 1000,
-                   \"url\" : \"Product URL (optional)\"
-                },{
-                   \"name\" : \"Product Name 2\",
-                   \"description\" : \"Product Description (optional)\",
-                   \"image\" : \"Product Image URL (optional)\",
-                   \"sku\" : \"Stock Keeping Unit (optional)\",
-                   \"quantity\" : \"10oz\",
-                   \"amount\" : 2000,
-                   \"url\" : \"Product URL (optional)\"
-                }]"
+  -d fields[customer_ip]="0.0.0.0" 
 ```
 
 ```js
@@ -106,24 +75,7 @@ chargehound.Disputes.submit('dp_123', {
   template: 'unrecognized',
   fields: {
     customer_ip: '0.0.0.0'
-  },
-  products: [{
-    name: 'Product Name 1',
-    description: 'Product Description (optional)',
-    image: 'Product Image URL (optional)',
-    sku: 'Stock Keeping Unit (optional)',
-    quantity: 1,
-    amount: 1000,
-    url: 'Product URL (optional)'
-  },{
-    name: 'Product Name 2',
-    description: 'Product Description (optional)',
-    image: 'Product Image URL (optional)',
-    sku: 'Stock Keeping Unit (optional)',
-    quantity: '10oz',
-    amount: 2000,
-    url: 'Product URL (optional)'
-  }]
+  }
 }, function (err, res) {
   // ...
 });
@@ -137,24 +89,7 @@ chargehound.Disputes.submit('dp_123',
   template='unrecognized',
   fields={
     'customer_ip': '0.0.0.0'
-  },
-  products=[{
-     'name': 'Product Name 1',
-     'description': 'Product Description (optional)',
-     'image': 'Product Image URL (optional)',
-     'sku': 'Stock Keeping Unit (optional)',
-     'quantity': 1,
-     'amount': 1000,
-     'url': 'Product URL (optional)'
-  }, {
-     'name': 'Product Name 2',
-     'description': 'Product Description (optional)',
-     'image': 'Product Image URL (optional)',
-     'sku': 'Stock Keeping Unit (optional)',
-     'quantity': '10oz',
-     'amount': 2000,
-     'url': 'Product URL (optional)'
-  }]
+  }
 )
 ```
 
@@ -166,24 +101,7 @@ Chargehound::Disputes.submit('dp_123',
   template: 'unrecognized',
   fields: {
     'customer_ip' => '0.0.0.0'
-  },
-  products: [{
-     name: 'Product Name 1',
-     description: 'Product Description (optional)',
-     image: 'Product Image URL (optional)',
-     sku: 'Stock Keeping Unit (optional)',
-     quantity: 1,
-     amount: 1000,
-     url: 'Product URL (optional)'
-  },{
-     name: 'Product Name 2',
-     description: 'Product Description (optional)',
-     image: 'Product Image URL (optional)',
-     sku: 'Stock Keeping Unit (optional)',
-     quantity: '10oz',
-     amount: 2000,
-     url: 'Product URL (optional)'
-  }]
+  }
 )
 ```
 
@@ -224,29 +142,12 @@ Chargehound::Disputes.submit('dp_123',
     "customer_ip": "0.0.0.0",
     "customer_name": "Susie Chargeback"
   },
-  "products": [{
-      "name": "Product Name 1",
-      "description": "Product Description (optional)",
-      "image": "Product Image URL (optional)",
-      "sku": "Stock Keeping Unit (optional)",
-      "quantity": "1",
-      "amount": 1000,
-      "url": "Product URL (optional)"
-    },{
-      "name": "Product Name 2",
-      "description": "Product Description (optional)",
-      "image": "Product Image URL (optional)",
-      "sku": "Stock Keeping Unit (optional)",
-      "quantity": "10oz",
-      "amount": 2000,
-      "url": "Product URL (optional)"
-  }],
   "file_url": null,
   "amount": 500
 }
 ```
 
-You will want to submit the dispute through Chargehound after you recieve a notification from Stripe of a new dispute. With one `POST` request you can update a dispute with the evidence fields and send the generated response to Stripe.
+You will want to submit the dispute through Chargehound after you receive a notification from Stripe of a new dispute. With one `POST` request you can update a dispute with the evidence fields and send the generated response to Stripe.
 
 The dispute will be in the `submitted` state if the submit was successful. 
 
@@ -365,23 +266,6 @@ Chargehound::Disputes.list
         "exp_year": 2017,
         "customer_name": "Susie Chargeback"
       },
-      "products": [{
-          "name": "Product Name 1",
-          "description": "Product Description (optional)",
-          "image": "Product Image URL (optional)",
-          "sku": "Stock Keeping Unit (optional)",
-          "quantity": "1",
-          "amount": 1000,
-          "url": "Product URL (optional)"
-        },{
-          "name": "Product Name 2",
-          "description": "Product Description (optional)",
-          "image": "Product Image URL (optional)",
-          "sku": "Stock Keeping Unit (optional)",
-          "quantity": "10oz",
-          "amount": 2000,
-          "url": "Product URL (optional)"
-      }],
       "file_url": null,
       "amount": 515
     },
@@ -420,23 +304,6 @@ Chargehound::Disputes.list
         "exp_year": 2017,
         "customer_name": "Susie Chargeback"
       },
-      "products": [{
-          "name": "Product Name 1",
-          "description": "Product Description (optional)",
-          "image": "Product Image URL (optional)",
-          "sku": "Stock Keeping Unit (optional)",
-          "quantity": "1",
-          "amount": 1000,
-          "url": "Product URL (optional)"
-        },{
-          "name": "Product Name 2",
-          "description": "Product Description (optional)",
-          "image": "Product Image URL (optional)",
-          "sku": "Stock Keeping Unit (optional)",
-          "quantity": "10oz",
-          "amount": 2000,
-          "url": "Product URL (optional)"
-      }],
       "file_url": null,
       "amount": 500
     }
@@ -546,23 +413,6 @@ Chargehound::Disputes.retrieve('dp_123')
     "exp_year": 2017,
     "customer_name": "Susie Chargeback"
   },
-  "products": [{
-      "name": "Product Name 1",
-      "description": "Product Description (optional)",
-      "image": "Product Image URL (optional)",
-      "sku": "Stock Keeping Unit (optional)",
-      "quantity": "1",
-      "amount": 1000,
-      "url": "Product URL (optional)"
-    },{
-      "name": "Product Name 2",
-      "description": "Product Description (optional)",
-      "image": "Product Image URL (optional)",
-      "sku": "Stock Keeping Unit (optional)",
-      "quantity": "10oz",
-      "amount": 2000,
-      "url": "Product URL (optional)"
-  }],
   "file_url": null,
   "amount": 515
 }
@@ -608,7 +458,7 @@ chargehound.Disputes.update('dp_123', {
   template: 'unrecognized',
   fields: {
     customer_ip: '0.0.0.0'
-  },
+  }
 }, function (err, res) {
   // ...
 });
@@ -675,23 +525,6 @@ Chargehound::Disputes.update('dp_123',
     "customer_ip": "0.0.0.0",
     "customer_name": "Susie Chargeback"
   },
-  "products": [{
-      "name": "Product Name 1",
-      "description": "Product Description (optional)",
-      "image": "Product Image URL (optional)",
-      "sku": "Stock Keeping Unit (optional)",
-      "quantity": "1",
-      "amount": 1000,
-      "url": "Product URL (optional)"
-    },{
-      "name": "Product Name 2",
-      "description": "Product Description (optional)",
-      "image": "Product Image URL (optional)",
-      "sku": "Stock Keeping Unit (optional)",
-      "quantity": "10oz",
-      "amount": 2000,
-      "url": "Product URL (optional)"
-  }],
   "file_url": null,
   "amount": 500
 }
@@ -714,3 +547,383 @@ You can update the template and the fields on a dispute.
 | Error code           | Description                                                          |
 | ---------------------|-------------------------------------------------                     |
 | 400 Bad Request      | Dispute has no template, or missing fields required by the template. |
+
+## Product data
+
+If a customer purchased multiple products in a disputed order, those products can be individually attached to a dispute. Each product has the following properties:
+
+### Product data fields
+
+| Field        | Type              | Description                                                                                 |
+| -------------|-------------------|---------------------------------------------------------------------------------------------|
+| name         | string            | The name of the product ordered.                                                            |
+| quantity     | string or integer | The number or quantity of this product (e.g. 10 or "64oz").                                 |
+| amount       | integer           | The price paid for this item, in cents (or other minor currency unit).                      |
+| description  | string            | (Optional) A product description - for example, the size or color.                          |
+| image        | url               | (Optional) A URL showing the product image.                                                 |
+| sku          | string            | (Optional) The stock-keeping unit.                                                          |
+| url          | url               | (Optional) The URL of the purchased item, if it is listed online.                           |
+
+
+## Submitting product data with a dispute
+
+Product data can be sent when a dispute is submitted.
+
+> Definition:
+
+```sh
+POST /v1/disputes/{{dispute_id}}/submit
+```
+
+```js
+chargehound.Disputes.submit();
+```
+
+```python
+chargehound.Disputes.submit()
+```
+
+```ruby
+Chargehound::Disputes.submit
+```
+
+> Example request:
+
+```sh
+curl -X POST https://api.chargehound.com/v1/disputes/dp_123/submit \
+  -u test_123: \
+  -d template=unrecognized \
+  -d products="[{
+                   \"name\" : \"Saxophone\",
+                   \"description\" : \"Alto saxophone, with carrying case\",
+                   \"image\" : \"http://s3.amazonaws.com/chargehound/saxophone.png\",
+                   \"sku\" : \"17283001272\",
+                   \"quantity\" : 1,
+                   \"amount\" : 20000,
+                   \"url\" : \"http://www.example.com\"
+                },{
+                   \"name\" : \"Milk\",
+                   \"description\" : \"Semi-skimmed Organic\",
+                   \"image\" : \"http://s3.amazonaws.com/chargehound/milk.png\",
+                   \"sku\" : \"26377382910\",
+                   \"quantity\" : \"64oz\",
+                   \"amount\" : 400,
+                   \"url\" : \"http://www.example.com\"
+                }]"
+```
+
+```js
+var chargehound = require('chargehound')(
+  'test_123'
+);
+
+chargehound.Disputes.submit('dp_123', {
+  template: 'unrecognized',
+  products: [{
+    'name': 'Saxophone',
+    'description': 'Alto saxophone, with carrying case',
+    'image': 'http://s3.amazonaws.com/chargehound/saxophone.png',
+    'sku': '17283001272',
+    'quantity': 1,
+    'amount': 20000,
+    'url': 'http://www.example.com'
+  },{
+    'name': 'Milk',
+    'description': 'Semi-skimmed Organic',
+    'image': 'http://s3.amazonaws.com/chargehound/milk.png',
+    'sku': '26377382910',
+    'quantity': '64oz',
+    'amount': 400,
+    'url': 'http://www.example.com'
+  }]
+}, function (err, res) {
+  // ...
+});
+```
+
+```python
+import chargehound
+chargehound.api_key = 'test_123'
+
+chargehound.Disputes.submit('dp_123',
+  template='unrecognized',
+  products=[{
+     'name': 'Saxophone',
+     'description': 'Alto saxophone, with carrying case',
+     'image': 'http://s3.amazonaws.com/chargehound/saxophone.png',
+     'sku': '17283001272',
+     'quantity': 1,
+     'amount': 20000,
+     'url': 'http://www.example.com'
+  }, {
+     'name': 'Milk',
+     'description': 'Semi-skimmed Organic',
+     'image': 'http://s3.amazonaws.com/chargehound/milk.png',
+     'sku': '26377382910',
+     'quantity': '64oz',
+     'amount': 400,
+     'url': 'http://www.example.com'
+  }]
+)
+```
+
+```ruby
+require 'chargehound'
+Chargehound.api_key = 'test_123'
+
+Chargehound::Disputes.submit('dp_123',
+  template: 'unrecognized',
+  products: [{
+     name: 'Saxophone',
+     description: 'Alto saxophone, with carrying case',
+     image: 'http://s3.amazonaws.com/chargehound/saxophone.png',
+     sku: '17283001272',
+     quantity: 1,
+     amount: 20000,
+     url: 'http://www.example.com'
+  },{
+     name: 'Milk',
+     description: 'Semi-skimmed Organic',
+     image: 'http://s3.amazonaws.com/chargehound/milk.png',
+     sku: '26377382910',
+     quantity: '64oz',
+     amount: 400,
+     url: 'http://www.example.com'
+  }]
+)
+```
+
+> Example response:
+
+```json
+{
+  "external_customer": "cus_85B8chA2k4OSlJ",
+  "livemode": false,
+  "currency": "usd",
+  "cvc_check": null,
+  "address_line1_check": null,
+  "address_zip_check": null,
+  "missing_fields": {},
+  "closed_at": null,
+  "statement_descriptor": null,
+  "customer_name": "Susie Chargeback",
+  "fee": 1500,
+  "due_by": "2016-03-30T23:59:59",
+  "charge": "ch_17p1SvLU6oDzEeR1VPDcd6ZR",
+  "id": "dp_123",
+  "state": "submitted",
+  "template": "unrecognized",
+  "is_charge_refundable": false,
+  "updated": "2016-03-16T20:58:34",
+  "customer_email": null,
+  "object": "dispute",
+  "customer_purchase_ip": null,
+  "disputed_at": "2016-03-14T19:35:17",
+  "submitted_count": 0,
+  "reason": "unrecognized",
+  "charged_at": "2016-03-14T19:34:57",
+  "address_zip": null,
+  "submitted_at": null,
+  "created": "2016-03-14T19:35:17",
+  "url": "/v1/disputes/dp_123",
+  "products": [{
+      "name": "Saxophone",
+      "description": "Alto saxophone, with carrying case",
+      "image": "http://s3.amazonaws.com/chargehound/saxophone.png",
+      "sku": "17283001272",
+      "quantity": "1",
+      "amount": 20000,
+      "url": "http://www.example.com"
+    },{
+      "name": "Milk",
+      "description": "Semi-skimmed Organic",
+      "image": "http://s3.amazonaws.com/chargehound/milk.png",
+      "sku": "26377382910",
+      "quantity": "64oz",
+      "amount": 400,
+      "url": "http://www.example.com"
+  }],
+  "file_url": null,
+  "amount": 21900
+}
+```
+
+
+## Updating product data 
+
+You can update the product data on a dispute.
+
+> Definition:
+
+```sh
+PUT /v1/disputes/{{dispute_id}}
+```
+
+```js
+chargehound.Disputes.update();
+```
+
+```python
+chargehound.Disputes.update()
+```
+
+```ruby
+Chargehound::Disputes.update
+```
+
+> Example request:
+
+```sh
+curl -X PUT https://api.chargehound.com/v1/disputes/dp_123/update \
+  -u test_123: \
+  -d products="[{
+                   \"name\" : \"Saxophone\",
+                   \"description\" : \"Alto saxophone, with carrying case\",
+                   \"image\" : \"http://s3.amazonaws.com/chargehound/saxophone.png\",
+                   \"sku\" : \"17283001272\",
+                   \"quantity\" : 1,
+                   \"amount\" : 20000,
+                   \"url\" : \"http://www.example.com\"
+                },{
+                   \"name\" : \"Milk\",
+                   \"description\" : \"Semi-skimmed Organic\",
+                   \"image\" : \"http://s3.amazonaws.com/chargehound/milk.png\",
+                   \"sku\" : \"26377382910\",
+                   \"quantity\" : \"64oz\",
+                   \"amount\" : 400,
+                   \"url\" : \"http://www.example.com\"
+                }]"
+```
+
+```js
+var chargehound = require('chargehound')(
+  'test_123'
+);
+
+chargehound.Disputes.update('dp_123', {
+  products: [{
+    'name': 'Saxophone',
+    'description': 'Alto saxophone, with carrying case',
+    'image': 'http://s3.amazonaws.com/chargehound/saxophone.png',
+    'sku': '17283001272',
+    'quantity': 1,
+    'amount': 20000,
+    'url': 'http://www.example.com'
+  },{
+    'name': 'Milk',
+    'description': 'Semi-skimmed Organic',
+    'image': 'http://s3.amazonaws.com/chargehound/milk.png',
+    'sku': '26377382910',
+    'quantity': '64oz',
+    'amount': 400,
+    'url': 'http://www.example.com'
+  }]
+}, function (err, res) {
+  // ...
+});
+```
+
+```python
+import chargehound
+chargehound.api_key = 'test_123'
+
+chargehound.Disputes.update('dp_123',
+  products=[{
+     'name': 'Saxophone',
+     'description': 'Alto saxophone, with carrying case',
+     'image': 'http://s3.amazonaws.com/chargehound/saxophone.png',
+     'sku': '17283001272',
+     'quantity': 1,
+     'amount': 20000,
+     'url': 'http://www.example.com'
+  }, {
+     'name': 'Milk',
+     'description': 'Semi-skimmed Organic',
+     'image': 'http://s3.amazonaws.com/chargehound/milk.png',
+     'sku': '26377382910',
+     'quantity': '64oz',
+     'amount': 400,
+     'url': 'http://www.example.com'
+  }]
+)
+```
+
+```ruby
+require 'chargehound'
+Chargehound.api_key = 'test_123'
+
+Chargehound::Disputes.update('dp_123',
+  products: [{
+     name: 'Saxophone',
+     description: 'Alto saxophone, with carrying case',
+     image: 'http://s3.amazonaws.com/chargehound/saxophone.png',
+     sku: '17283001272',
+     quantity: 1,
+     amount: 20000,
+     url: 'http://www.example.com'
+  },{
+     name: 'Milk',
+     description: 'Semi-skimmed Organic',
+     image: 'http://s3.amazonaws.com/chargehound/milk.png',
+     sku: '26377382910',
+     quantity: '64oz',
+     amount: 400,
+     url: 'http://www.example.com'
+  }]
+)
+```
+
+> Example response:
+
+```json
+{
+  "external_customer": "cus_85B8chA2k4OSlJ",
+  "livemode": false,
+  "currency": "usd",
+  "cvc_check": null,
+  "address_line1_check": null,
+  "address_zip_check": null,
+  "missing_fields": {},
+  "closed_at": null,
+  "statement_descriptor": null,
+  "customer_name": "Susie Chargeback",
+  "fee": 1500,
+  "due_by": "2016-03-30T23:59:59",
+  "charge": "ch_17p1SvLU6oDzEeR1VPDcd6ZR",
+  "id": "dp_123",
+  "state": "needs_response",
+  "template": "unrecognized",
+  "is_charge_refundable": false,
+  "updated": "2016-03-16T21:48:34",
+  "customer_email": null,
+  "object": "dispute",
+  "customer_purchase_ip": null,
+  "disputed_at": "2016-03-14T19:35:17",
+  "submitted_count": 0,
+  "reason": "unrecognized",
+  "charged_at": "2016-03-14T19:34:57",
+  "address_zip": null,
+  "submitted_at": null,
+  "created": "2016-03-14T19:35:17",
+  "url": "/v1/disputes/dp_123",
+  "products": [{
+      "name": "Saxophone",
+      "description": "Alto saxophone, with carrying case",
+      "image": "http://s3.amazonaws.com/chargehound/saxophone.png",
+      "sku": "17283001272",
+      "quantity": "1",
+      "amount": 20000,
+      "url": "http://www.example.com"
+    },{
+      "name": "Milk",
+      "description": "Semi-skimmed Organic",
+      "image": "http://s3.amazonaws.com/chargehound/milk.png",
+      "sku": "26377382910",
+      "quantity": "64oz",
+      "amount": 400,
+      "url": "http://www.example.com"
+  }],
+  "file_url": null,
+  "amount": 21900
+}
+```
