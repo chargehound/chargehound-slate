@@ -9,20 +9,20 @@ A Dispute object is:
 | id                   | string     | A unique identifier for the dispute. This is the same id used by Stripe.                    |
 | state                | string     | State of the dispute. One of `needs_response`,`submitted`, `under_review`, `won`, `lost`, `warning_needs_response`, `warning_under_review`, `warning_closed` , `response_disabled`, `charge_refunded`.                                                  |
 | reason               | string     | Reason for the dispute. One of `fraudulent`, `unrecognized`, `general`, `duplicate`, `subscription_canceled`, `product_unacceptable`, `product_not_received`, `credit_not_processed`, `incorrect_account_details`, `insufficient_funds`, `bank_cannot_process`, `debit_not_authorized`, `goods_services_returned_or_refused`, `goods_services_cancelled` | 
-| charged_at           | string     | ISO 8601 timestamp.                                                                         |
-| disputed_at          | string     | ISO 8601 timestamp.                                                                         |
-| due_by               | string     | ISO 8601 timestamp.                                                                         |
-| submitted_at         | string     | ISO 8601 timestamp.                                                                         |
-| closed_at            | string     | ISO 8601 timestamp.                                                                         |
+| charged_at           | string     | ISO 8601 timestamp - when the charge was made.                                              |
+| disputed_at          | string     | ISO 8601 timestamp - when the charge was disputed.                                          |
+| due_by               | string     | ISO 8601 timestamp - when dispute evidence needs to be disputed by.                         |
+| submitted_at         | string     | ISO 8601 timestamp - when dispute evidence was submitted.                                   |
+| closed_at            | string     | ISO 8601 timestamp - when the dispute was resolved.                                         |
 | submitted_count      | integer    | Number of times the dispute evidence has been submitted.                                    |
 | file_url             | string     | Location of the generated evidence document.                                                |
 | template             | string     | Id of the template attached to the dispute.                                                 |
 | fields               | dictionary | Evidence fields attached to the dispute.                                                    |
 | missing_fields       | dictionary | Any fields required by the template that have not yet been provided.                        |
-| products             | list       | An (optional) list of products in the disputed order (see the [Product data](#product-data) for details) |
+| products             | array      | (Optional) A list of products in the disputed order. (See [Product data](#product-data) for details.) |
 | charge               | string     | Id of the disputed charge.                                                                  |
 | is_charge_refundable | boolean    | Can the charge be refunded.                                                                 |
-| amount               | integer    | Amount of the disputed charge. Amounts are in cents (or other minor currency unit).         |
+| amount               | integer    | Amount of the disputed charge. Amounts are in cents (or other minor currency unit.)         |
 | currency             | string     | Currency code of the disputed charge. e.g. 'USD'.                                           |
 | fee                  | integer    | Dispute fee.                                                                                |
 | external_customer    | string     | Id of the Stripe customer (if any).                                                         |
@@ -33,7 +33,7 @@ A Dispute object is:
 | address_line1_check  | string     | State of address check (if available). One of `pass`, `fail`, `unavailable`, `checked`.     |
 | address_zip_check    | string     | State of address zip check (if available). One of `pass`, `fail`, `unavailable`, `checked`. |
 | cvc_check            | string     | State of cvc check (if available). One of `pass`, `fail`, `unavailable`, `checked`.         |
-| statement_descriptor | string     | Statement descriptor on the charge.                                                         |
+| statement_descriptor | string     | The descriptor that appears on the customer's credit card statement for this change.        |
 | created              | string     | ISO 8601 timestamp.                                                                         |
 | updated              | string     | ISO 8601 timestamp.                                                                         |
 
@@ -538,9 +538,9 @@ You can update the template and the fields on a dispute.
 | -------------  | ---------- | ---------- | --------------------------------------------------------------------------------------------------------------------- |
 | template       | string     | optional   | The id of the template to use.                                                                                        |
 | fields         | dictionary | optional   | Key value pairs to hydrate the template's evidence fields.                                                            |
-| products       | array      | optional   | List of products the customer purchased.                                                                              |
 | customer_name  | string     | optional   | Update the customer name. Will also update the customer name in the evidence fields.                                  |
 | customer_email | string     | optional   | Update the customer email. Will also update the customer email in the evidence fields. Must be a valid email address. |
+| products       | array      | optional   | (Optional) List of products the customer purchased. (See [Product data](#product-data) for details.)                  |
 
 ### Possible errors:
 
@@ -674,21 +674,21 @@ Chargehound.api_key = 'test_123'
 Chargehound::Disputes.submit('dp_123',
   template: 'unrecognized',
   products: [{
-     name: 'Saxophone',
-     description: 'Alto saxophone, with carrying case',
-     image: 'http://s3.amazonaws.com/chargehound/saxophone.png',
-     sku: '17283001272',
-     quantity: 1,
-     amount: 20000,
-     url: 'http://www.example.com'
+     'name' => 'Saxophone',
+     'description' => 'Alto saxophone, with carrying case',
+     'image' => 'http =>//s3.amazonaws.com/chargehound/saxophone.png',
+     'sku' => '17283001272',
+     'quantity' => 1,
+     'amount' => 20000,
+     'url' => 'http =>//www.example.com'
   },{
-     name: 'Milk',
-     description: 'Semi-skimmed Organic',
-     image: 'http://s3.amazonaws.com/chargehound/milk.png',
-     sku: '26377382910',
-     quantity: '64oz',
-     amount: 400,
-     url: 'http://www.example.com'
+     'name' => 'Milk',
+     'description' => 'Semi-skimmed Organic',
+     'image' => 'http =>//s3.amazonaws.com/chargehound/milk.png',
+     'sku' => '26377382910',
+     'quantity' => '64oz',
+     'amount' => 400,
+     'url' => 'http =>//www.example.com'
   }]
 )
 ```
@@ -854,21 +854,21 @@ Chargehound.api_key = 'test_123'
 
 Chargehound::Disputes.update('dp_123',
   products: [{
-     name: 'Saxophone',
-     description: 'Alto saxophone, with carrying case',
-     image: 'http://s3.amazonaws.com/chargehound/saxophone.png',
-     sku: '17283001272',
-     quantity: 1,
-     amount: 20000,
-     url: 'http://www.example.com'
+     'name' => 'Saxophone',
+     'description' => 'Alto saxophone, with carrying case',
+     'image' => 'http =>//s3.amazonaws.com/chargehound/saxophone.png',
+     'sku' => '17283001272',
+     'quantity' => 1,
+     'amount' => 20000,
+     'url' => 'http =>//www.example.com'
   },{
-     name: 'Milk',
-     description: 'Semi-skimmed Organic',
-     image: 'http://s3.amazonaws.com/chargehound/milk.png',
-     sku: '26377382910',
-     quantity: '64oz',
-     amount: 400,
-     url: 'http://www.example.com'
+     'name' => 'Milk',
+     'description' => 'Semi-skimmed Organic',
+     'image' => 'http =>//s3.amazonaws.com/chargehound/milk.png',
+     'sku' => '26377382910',
+     'quantity' => '64oz',
+     'amount' => 400,
+     'url' => 'http =>//www.example.com'
   }]
 )
 ```
