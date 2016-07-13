@@ -19,7 +19,7 @@ A Dispute object is:
 | template             | string     | Id of the template attached to the dispute.                                                 |
 | fields               | dictionary | Evidence fields attached to the dispute.                                                    |
 | missing_fields       | dictionary | Any fields required by the template that have not yet been provided.                        |
-| products             | list       | An (optiona ) list of products in the disputed order (see the [Product data](#product-data) for details) |
+| products             | list       | An (optional) list of products in the disputed order (see the [Product data](#product-data) for details) |
 | charge               | string     | Id of the disputed charge.                                                                  |
 | is_charge_refundable | boolean    | Can the charge be refunded.                                                                 |
 | amount               | integer    | Amount of the disputed charge. Amounts are in cents (or other minor currency unit).         |
