@@ -8,7 +8,7 @@ A Dispute object is:
 | ---------------------|------------|---------------------------------------------------------------------------------------------|
 | id                   | string     | A unique identifier for the dispute. This is the same id used by Stripe.                    |
 | state                | string     | State of the dispute. One of `needs_response`,`submitted`, `under_review`, `won`, `lost`, `warning_needs_response`, `warning_under_review`, `warning_closed` , `response_disabled`, `charge_refunded`.                                                  |
-| reason               | string     | Reason for the dispute. One of `general`, `fraudulent`, `duplicate`, `subscription_canceled`, `product_unacceptable`, `product_not_received`, `unrecognized`, `credit_not_processed`, `incorrect_account_details`, `insufficient_funds`, `bank_cannot_process`, `debit_not_authorized`.                                               |
+| reason               | string     | Reason for the dispute. One of `fraudulent`, `unrecognized`, `general`, `duplicate`, `subscription_canceled`, `product_unacceptable`, `product_not_received`, `credit_not_processed`, `incorrect_account_details`, `insufficient_funds`, `bank_cannot_process`, `debit_not_authorized`, `goods_services_returned_or_refused`, `goods_services_cancelled` | 
 | charged_at           | string     | ISO 8601 timestamp.                                                                         |
 | disputed_at          | string     | ISO 8601 timestamp.                                                                         |
 | due_by               | string     | ISO 8601 timestamp.                                                                         |
