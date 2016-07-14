@@ -153,7 +153,7 @@ When using our client libraries Chargehound also provides typed exceptions when 
 
 ## Testing
 
-### With a generated dispute
+### Generating disputes
 
 It's possible to create disputes with randomly generated data in test mode. You can update and submit these disputes as normal, and you will be able to view the generated response. This is a good way to become familiar with Chargehound's API and dashboard.
 
