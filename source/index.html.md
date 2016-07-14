@@ -153,6 +153,14 @@ When using our client libraries Chargehound also provides typed exceptions when 
 
 ## Testing
 
+### With a generated dispute
+
+It's possible to create disputes with randomly generated data in test mode. You can update and submit these disputes as normal, and you will be able to view the generated response. This is a good way to become familiar with Chargehound's API and dashboard.
+
+You can create a dispute from the Chargehound dashboard when in test mode, simply click the "Create a Test Dispute" button: [test dashboard](https://www.chargehound.com/test/dashboard/disputes).
+
+### End to end with Stripe
+
 > 1) Create a token for a card with the dispute trigger code.
 
 ```sh
@@ -359,7 +367,7 @@ Chargehound.api_key = '{{your_chargehound_test_key}}'
 Chargehound::Disputes.submit('{{dispute_from_step_3}}')
 ```
 
-Because Chargehound creates disputes with [webhooks](https://stripe.com/docs/webhooks) from Stripe, testing a dispute requires creating a dispute in Stripe. You can do this by creating a charge with a [test card that simulates a dispute](https://stripe.com/docs/testing#how-do-i-test-disputes). You can create a charge with a [simple curl request](https://stripe.com/docs/api#create_charge), or via the [Stripe dashboard](https://support.stripe.com/questions/how-do-i-create-a-charge-via-the-dashboard).
+Because Chargehound creates disputes with [webhooks](https://stripe.com/docs/webhooks) from Stripe, testing end to end requires creating a dispute in Stripe. You can do this by creating a charge with a [test card that simulates a dispute](https://stripe.com/docs/testing#how-do-i-test-disputes). You can create a charge with a [simple curl request](https://stripe.com/docs/api#create_charge), or via the [Stripe dashboard](https://support.stripe.com/questions/how-do-i-create-a-charge-via-the-dashboard).
 
 ## Libraries
 
