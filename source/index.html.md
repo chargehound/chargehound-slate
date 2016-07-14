@@ -157,7 +157,7 @@ When using our client libraries Chargehound also provides typed exceptions when 
 
 It's possible to create disputes with randomly generated data in test mode. You can update and submit these disputes as normal, and you will be able to view the generated response. This is a good way to become familiar with Chargehound's API and dashboard.
 
-You can create a dispute from the Chargehound dashboard when in test mode, simply click the "Create a Test Dispute" button: [test dashboard](https://www.chargehound.com/test/dashboard/disputes).
+You can create a dispute from the Chargehound dashboard when in test mode, simply click the "Create a Test Dispute" button: [Chargehound test dashboard](https://www.chargehound.com/test/dashboard/disputes).
 
 ### End to end with Stripe
 
