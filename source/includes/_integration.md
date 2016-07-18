@@ -6,15 +6,13 @@ This section walks through some of the finer points of completing a Chargehound 
 
 Before you can use the Chargehound API, you will need your API keys. Your API keys are located on the [team settings page](https://www.chargehound.com/team).
 
-![View API Keys](images/View_API_Keys.png)
-
 In order to submit a dispute you will also need to specify the template to use. Each template is referenced by an ID. You can see a list of your organizations templates and their IDs on the [templates page](https://www.chargehound.com/templates).
 
 ## Identifying the missing fields
 
 Depending on the template that you want to use, you will need to collect specific pieces of evidence in order to submit a dispute. Chargehound will fill some of the evidence fields automatically, but it is unlikely that we can get all the evidence we need without your help. Using the API you can identify the missing fields that represent the evidence you will need to collect yourself.
 
-When your organization first connected to Stripe, Chargehound imported your current queue of disputes needing response. In order to figure out what evidence you need to collect we will need to look at one of these real disputes, but don't worry, we aren't going to submit or permanently alter the dispute yet. List your disputes using the [list endpoint](#retrieving-a-list-of-disputes), and choose one.
+When your organization first connected to Stripe, Chargehound imported your current queue of disputes needing response. In order to figure out what evidence you need to collect we will need to look at one of these real disputes, but don't worry, we aren't going to submit the dispute yet. List your disputes using the [list endpoint](#retrieving-a-list-of-disputes), and choose one.
 
 Once you have chosen a dispute, choose the template that you want to use and copy its ID. Next, attatch the template to the dispute using the [update endpoint](#updating-a-dispute). In the response body look for the `missing_fields` hash. The `missing_fields` hash shows which fields are still needed in order to submit the dispute with the chosen template. Now you can figure out how to collected the needed evidence.
 
@@ -26,12 +24,12 @@ When submitting evidence you will encounter a few different types of fields in t
 |--------|--------|
 | text | Expects a string. Multiline strings are ok, but be sensitive to your template layout, you might be adding a linebreak to the middle of a paragraph. |
 | date | Expects a string. Templates will ultimately be reviewed by humans so try to format dates to be human readable and friendly, although no specific format is enforced. This is not the place for Unix timestamps. |
-| number | A number. |
-| amount | An amount should be an integer that represents the cents (or other minor currency unit) value. E.g. $1 is 100. |
+| number | Expects a number. |
+| amount | Expects a number. An amount should be an integer that represents the cents (or other minor currency unit) value. E.g. $1 is 100. |
 | url | Expects a fully qualified url including `http:// ` or `https://`.  |
 | email | Expects a valid email address. |
 
-Once you have all your evidence properly formatted, use the [submit endpoint](#submitting-a-dispute) to submit a dispute. The submit endpoint adds the template and evidence fields to a dispute, just like the [update endpoint](#updating-a-dispute), and it also submits the evidence to be reviewed. When you get a `201` response code the dispute was successfully submitted and you are done.
+Once you have all your evidence properly formatted, use the [submit endpoint](#submitting-a-dispute) to submit a dispute. The submit endpoint adds the template and evidence fields to a dispute, just like the [update endpoint](#updating-a-dispute), and it also submits the evidence to be reviewed. If you get a `400` response code or `ChargehoundBadRequestError` after a submit or update it is probably because one of the evidence fields is not properly formatted. When you get a `201` response code the dispute was successfully submitted and you are done.
 
 ## Setting up Stripe Webhooks
 
@@ -43,7 +41,7 @@ In order to automatically submit responses whenever you get a dispute, you will 
 
 ## Using a worker task to submit evidence
 
-You do not need to immediately POST your evidence to the [submit endpoint](#submitting-a-dispute) when you receive a `charge.dispute.created` event from Stripe. In fact, dispute creation events are often batched by Stripe, and trying to handle alot at once could hurt your server. This is a good time to use a job queue if you have one.
+You do not need to immediately POST your evidence to the [submit endpoint](#submitting-a-dispute) when you receive a `charge.dispute.created` event from Stripe. This is a good time to use a job queue if you have one. Simply pass the dispute id and (if you need it) the charge id to the worker. The worker can then query your database for the needed evidence, and POST the submit to Chargehound when it's ready.
 
 ## Testing
 
