@@ -8,7 +8,7 @@ Before you can use the Chargehound API, you will need your API keys. Your API ke
 
 In order to submit a dispute you will also need to specify the template to use. Templates are referenced by an ID. You can see a list of your organization's templates and their IDs on the [templates page](https://www.chargehound.com/templates).
 
-## Identifying the missing fields
+## Collecting evidence
 
 Depending on the template that you want to use, you will need to collect specific evidence in order to submit a dispute. The `fields` hash on a dispute represents this evidence. Chargehound will fill some of the evidence fields automatically, but it is unlikely that we can get all the evidence we need without your help. Using the API you can identify the missing fields that represent the evidence you will need to collect yourself.
 
@@ -16,7 +16,7 @@ When your organization first connected to Stripe, Chargehound imported your curr
 
 Once you have chosen a dispute, choose the template that you want to use and copy its ID. Next, attach the template to the dispute using the [update endpoint](#updating-a-dispute). In the response body look for the `missing_fields` hash. The `missing_fields` hash shows which fields are still needed in order to submit the dispute with the chosen template. Now you can figure out how to collected the needed evidence.
 
-## Formatting field types
+## Formatting fields
 
 When submitting evidence you will encounter a few different types of fields in the `missing_fields` hash. Currently Chargehound templates can have `text`, `date`, `number`, `amount` `url`, and `email` fields, and each type is validated differently. Here's a breakdown of what Chargehound expects for each type:
 
