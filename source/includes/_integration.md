@@ -1,47 +1,47 @@
 # Integration Guide
 
-This section walks through some of the finer points of completing a Chargehound integration.
+This section walks through some of the technical details of completing a Chargehound integration.
 
 ## Getting started
 
-Before you can use the Chargehound API, you will need your API keys. Your API keys are located on the [team settings page](https://www.chargehound.com/team).
+Before you can use the Chargehound API, you will need your API keys. Your API keys can be found on the [team settings page](https://www.chargehound.com/team) in the "View API keys" section.
 
-In order to submit a dispute you will also need to specify the template to use. Each template is referenced by an ID. You can see a list of your organizations templates and their IDs on the [templates page](https://www.chargehound.com/templates).
+In order to submit a dispute you will also need to specify the template to use. Templates are referenced by an ID. You can see a list of your organization's templates and their IDs on the [templates page](https://www.chargehound.com/templates).
 
 ## Identifying the missing fields
 
-Depending on the template that you want to use, you will need to collect specific pieces of evidence in order to submit a dispute. Chargehound will fill some of the evidence fields automatically, but it is unlikely that we can get all the evidence we need without your help. Using the API you can identify the missing fields that represent the evidence you will need to collect yourself.
+Depending on the template that you want to use, you will need to collect specific evidence in order to submit a dispute. The `fields` hash on a dispute represents this evidence. Chargehound will fill some of the evidence fields automatically, but it is unlikely that we can get all the evidence we need without your help. Using the API you can identify the missing fields that represent the evidence you will need to collect yourself.
 
 When your organization first connected to Stripe, Chargehound imported your current queue of disputes needing response. In order to figure out what evidence you need to collect we will need to look at one of these real disputes, but don't worry, we aren't going to submit the dispute yet. List your disputes using the [list endpoint](#retrieving-a-list-of-disputes), and choose one.
 
-Once you have chosen a dispute, choose the template that you want to use and copy its ID. Next, attatch the template to the dispute using the [update endpoint](#updating-a-dispute). In the response body look for the `missing_fields` hash. The `missing_fields` hash shows which fields are still needed in order to submit the dispute with the chosen template. Now you can figure out how to collected the needed evidence.
+Once you have chosen a dispute, choose the template that you want to use and copy its ID. Next, attach the template to the dispute using the [update endpoint](#updating-a-dispute). In the response body look for the `missing_fields` hash. The `missing_fields` hash shows which fields are still needed in order to submit the dispute with the chosen template. Now you can figure out how to collected the needed evidence.
 
 ## Formatting field types
 
-When submitting evidence you will encounter a few different types of fields in the `missing_fields` hash. Currently Chargehound templates can have `text`, `date`, `number`, `amount` `url`, and `email` fields, and each type is validated differently. Here's a quick breakdown of what Chargehound expects for each type:
+When submitting evidence you will encounter a few different types of fields in the `missing_fields` hash. Currently Chargehound templates can have `text`, `date`, `number`, `amount` `url`, and `email` fields, and each type is validated differently. Here's a breakdown of what Chargehound expects for each type:
 
-| Type | Validation |
-|--------|--------|
-| text | Expects a string. Multiline strings are ok, but be sensitive to your template layout, you might be adding a linebreak to the middle of a paragraph. |
-| date | Expects a string. Templates will ultimately be reviewed by humans so try to format dates to be human readable and friendly, although no specific format is enforced. This is not the place for Unix timestamps. |
-| number | Expects a number. |
-| amount | Expects a number. An amount should be an integer that represents the cents (or other minor currency unit) value. E.g. $1 is 100. |
-| url | Expects a fully qualified url including `http:// ` or `https://`.  |
-| email | Expects a valid email address. |
+| Field  | Type   | Validation |
+|--------|--------|------------|
+| text | string | Multi-line strings are ok, but be sensitive to your template layout, you might be adding a line break to the middle of a paragraph. |
+| date | string | Submitted responses will be reviewed by humans so try to format dates to be human readable and friendly, although no specific format is enforced. This is not the place for Unix timestamps. |
+| number | integer | A number should be an integer, not a float. |
+| amount | integer | An amount should be an integer that represents the cents (or other minor currency unit) value. E.g. $1 is 100. |
+| url | string | A url hould be a fully qualified url including the scheme (`http:// ` or `https://`). |
+| email | string | An email should be a valid email address. |
 
-Once you have all your evidence properly formatted, use the [submit endpoint](#submitting-a-dispute) to submit a dispute. The submit endpoint adds the template and evidence fields to a dispute, just like the [update endpoint](#updating-a-dispute), and it also submits the evidence to be reviewed. If you get a `400` response code or `ChargehoundBadRequestError` after a submit or update it is probably because one of the evidence fields is not properly formatted. When you get a `201` response code the dispute was successfully submitted and you are done.
+Once you have all your evidence properly formatted, use the [submit endpoint](#submitting-a-dispute) to submit a dispute. The submit endpoint adds the template and evidence fields to a dispute just like the [update endpoint](#updating-a-dispute), and it also submits the evidence to be reviewed. If you get a `400` response code or `ChargehoundBadRequestError` after a submit or update it is probably because one of the evidence fields is not properly formatted. When you get a `201` response code the dispute was successfully submitted and you are done.
 
 ## Setting up Stripe Webhooks
 
-In order to automatically submit responses whenever you get a dispute, you will need to set up a webhook handler and handle Stripe's `charge.dispute.created` event. It's best to refer to Stripe's [own documentation regarding webhooks](https://stripe.com/docs/webhooks), but here's a quick checklist of what you need to do.
+In order to automatically submit responses whenever you get a dispute, you will need to set up a webhook handler and handle Stripe's `charge.dispute.created` event. It's best to refer to Stripe's [own documentation regarding webhooks](https://stripe.com/docs/webhooks), but here's a quick checklist of what you need to do:
 
-- [ ] Configure your Stripe [webhook settings](https://dashboard.stripe.com/account/webhooks) to send webhooks to your server.
-- [ ] Stripe can send you all events, or a set of events of your choosing. Ensure that you are subscribed to the ` charge.dispute.created` event.
-- [ ] For security, ensure that you are confirming the event data with Stripe before acting upon it. That is, when you recieve an event from Stripe, parse the event id and use Stripe's [retrieve event](https://stripe.com/docs/api#retrieve_event) endpoint to fetch the event. Then, act on the fetched data. This ensures that the event was authentic.
+- Configure your Stripe [webhook settings](https://dashboard.stripe.com/account/webhooks) to send webhooks to your server.
+- Stripe can send you all events, or a set of events of your choosing. Ensure that you are subscribed to the `charge.dispute.created` event.
+- For security, ensure that you are confirming the event data with Stripe before acting upon it. When you receive an event from Stripe, parse the event id and use Stripe's [retrieve event](https://stripe.com/docs/api#retrieve_event) endpoint to fetch the event. Then, act on the fetched data. This ensures that the event was authentic.
 
-## Using a worker task to submit evidence
+## Using a job queue
 
-You do not need to immediately POST your evidence to the [submit endpoint](#submitting-a-dispute) when you receive a `charge.dispute.created` event from Stripe. This is a good time to use a job queue if you have one. Simply pass the dispute id and (if you need it) the charge id to the worker. The worker can then query your database for the needed evidence, and POST the submit to Chargehound when it's ready.
+You do not need to immediately POST your evidence to the [submit endpoint](#submitting-a-dispute) when you receive a `charge.dispute.created` event from Stripe. This is a good time to use a [job queue](https://en.wikipedia.org/wiki/Job_queue) if you have one. Simply pass the dispute id and (if you need it) the charge id to the job. The task worker can then query your database for the needed evidence and POST the submit to Chargehound when it's ready.
 
 ## Testing
 
@@ -259,4 +259,4 @@ Chargehound.api_key = '{{your_chargehound_test_key}}'
 Chargehound::Disputes.submit('{{dispute_from_step_3}}')
 ```
 
-Because Chargehound creates disputes with [webhooks](https://stripe.com/docs/webhooks) from Stripe, testing end to end requires creating a dispute in Stripe. You can do this by creating a charge with a [test card that simulates a dispute](https://stripe.com/docs/testing#how-do-i-test-disputes). You can create a charge with a [simple curl request](https://stripe.com/docs/api#create_charge), or via the [Stripe dashboard](https://support.stripe.com/questions/how-do-i-create-a-charge-via-the-dashboard).
+Because Chargehound creates live mode disputes with [webhooks](https://stripe.com/docs/webhooks) from Stripe, testing end to end requires creating a dispute in Stripe. You can do this by creating a charge with a [test card that simulates a dispute](https://stripe.com/docs/testing#how-do-i-test-disputes). You can create a charge with a [simple curl request](https://stripe.com/docs/api#create_charge), or via the [Stripe dashboard](https://support.stripe.com/questions/how-do-i-create-a-charge-via-the-dashboard).
