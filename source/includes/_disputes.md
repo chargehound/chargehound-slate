@@ -217,7 +217,7 @@ Chargehound::Disputes.list
 ```
 
 ```go
-ch.Disputes.List(*chargehound.ListDisputeParams)
+ch.Disputes.List(*chargehound.ListDisputesParams)
 ```
 
 > Example request:
@@ -258,7 +258,7 @@ import (
 
 ch := chargehound.New("test_123") 
 
-dispute, err := ch.Disputes.List(nil)
+disputeList, err := ch.Disputes.List(nil)
 ```
 
 > Example response:
@@ -563,7 +563,11 @@ import (
 ch := chargehound.New("test_123") 
 
 params := chargehound.UpdateDisputeParams{
-  ID: "dp_123",
+  ID:       "dp_123",
+  Template: "unrecognized",
+  Fields: map[string]interface{}{
+    "customer_ip": "0.0.0.0",
+  },
 }
 
 dispute, err := ch.Disputes.Update(&params)

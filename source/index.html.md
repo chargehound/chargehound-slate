@@ -172,24 +172,23 @@ chErr := err.(chargehound.Error)
 
 switch chErr.Type() {
 case BadRequestError:
-  # Invalid parameters were supplied in the request
+  // Invalid parameters were supplied in the request
 
   fmt.Println(chErr.Error())
 
 case chargehound.UnauthorizedError:
-  # Missing API key
+  // Missing API key
 case chargehound.ForbiddenError:
-  # Incorrect API key
+  // Incorrect API key
 case chargehound.NotFoundError:
-  # Not found
+  // Not found
 case chargehound.InternalServerError:
-  # Internal server error
+  // Internal server error
 case chargehound.GenericError:
-  # Generic Chargehound error 
+  // Generic Chargehound error 
 default:
-  # Handle any other types of unexpected errors
+  // Handle any other types of unexpected errors
 }
-
 ```
 
 When using our client libraries Chargehound also provides typed exceptions when errors are returned from the API.
