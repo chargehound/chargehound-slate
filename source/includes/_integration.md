@@ -109,6 +109,19 @@ Stripe::Token.create(
 )
 ```
 
+```go
+stripe.Key = "{{your_stripe_test_key}}"
+
+t, err := token.New(&stripe.TokenParams{
+  Card: &stripe.CardParams{
+        Number: "4000000000000259",
+        Month:  "12",
+        Year:   "2017",
+        CVC:    "123",
+    },
+})
+```
+
 > 2) Attach that token to a Stripe customer, for easy reuse later.
 
 ```sh
@@ -149,6 +162,16 @@ Stripe::Customer.create(
   :description => 'Always disputes charges',
   :source => '{{token_from_step_1}}'
 )
+```
+
+```go
+stripe.Key = "{{your_stripe_test_key}}"
+
+customerParams := &stripe.CustomerParams{
+  Desc: "Always disputes charges",
+}
+customerParams.SetSource("{{token_from_step_1}}")
+c, err := customer.New(customerParams)
 ```
 
 > 3) Create a charge that will trigger a dispute. You can view the resulting dispute in the [Stripe dashboard](https://dashboard.stripe.com/test/disputes/overview).
@@ -201,6 +224,18 @@ Stripe::Charge.create(
 )
 ```
 
+```go
+stripe.Key = "{{your_stripe_test_key}}"
+
+chargeParams := &stripe.ChargeParams{
+  Amount: 400,
+  Currency: "usd",
+  Desc: "Triggering a dispute",
+}
+chargeParams.SetSource("{{customer_from_step_2}}")
+ch, err := charge.New(chargeParams)
+```
+
 > 4) Once the dispute is created in Stripe, you will see it mirrored in Chargehound.
 
 ```sh
@@ -230,6 +265,16 @@ Chargehound.api_key = '{{your_chargehound_test_key}}'
 Chargehound::Disputes.retrieve('{{dispute_from_step_3}}')
 ```
 
+```go
+ch := chargehound.New("{{your_chargehound_test_key}}") 
+
+params := chargehound.RetrieveDisputeParams{
+  ID: "{{dispute_from_step_3}}",
+}
+
+dispute, err := ch.Disputes.Retrieve(&params)
+```
+
 > 5) Using your test API key, you can then update and submit the dispute.
 
 ```sh
@@ -257,6 +302,16 @@ require 'chargehound'
 Chargehound.api_key = '{{your_chargehound_test_key}}'
 
 Chargehound::Disputes.submit('{{dispute_from_step_3}}')
+```
+
+```go
+ch := chargehound.New("{{your_chargehound_test_key}}") 
+
+params := chargehound.RetrieveDisputeParams{
+  ID: "{{dispute_from_step_3}}",
+}
+
+_, err := ch.Disputes.Submit(&params)
 ```
 
 Because Chargehound creates live mode disputes with [webhooks](https://stripe.com/docs/webhooks) from Stripe, testing end to end requires creating a dispute in Stripe. You can do this by creating a charge with a [test card that simulates a dispute](https://stripe.com/docs/testing#how-do-i-test-disputes). You can create a charge with a [simple curl request](https://stripe.com/docs/api#create_charge), or via the [Stripe dashboard](https://support.stripe.com/questions/how-do-i-create-a-charge-via-the-dashboard).
