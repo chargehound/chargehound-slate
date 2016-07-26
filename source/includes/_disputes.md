@@ -36,6 +36,7 @@ A Dispute object is:
 | statement_descriptor | string     | The descriptor that appears on the customer's credit card statement for this change.        |
 | created              | string     | ISO 8601 timestamp.                                                                         |
 | updated              | string     | ISO 8601 timestamp.                                                                         |
+| source               | string     | The source of the dispute. One of `mock` or `stripe`                                        |
 
 ## Submitting a dispute
 
@@ -143,7 +144,9 @@ Chargehound::Disputes.submit('dp_123',
     "customer_name": "Susie Chargeback"
   },
   "file_url": null,
-  "amount": 500
+  "amount": 500,
+  "source": "stripe",
+  "products": []
 }
 ```
 
@@ -267,7 +270,9 @@ Chargehound::Disputes.list
         "customer_name": "Susie Chargeback"
       },
       "file_url": null,
-      "amount": 515
+      "amount": 515,
+      "source": "stripe",
+      "products": []
     },
     {
       "external_customer": "cus_85B8chA2k4OSlJ",
@@ -305,7 +310,9 @@ Chargehound::Disputes.list
         "customer_name": "Susie Chargeback"
       },
       "file_url": null,
-      "amount": 500
+      "amount": 500,
+      "source": "stripe",
+      "products": []
     }
   ]
 }
@@ -414,7 +421,9 @@ Chargehound::Disputes.retrieve('dp_123')
     "customer_name": "Susie Chargeback"
   },
   "file_url": null,
-  "amount": 515
+  "amount": 515,
+  "source": "stripe",
+  "products": []
 }
 ```
 
@@ -526,7 +535,9 @@ Chargehound::Disputes.update('dp_123',
     "customer_name": "Susie Chargeback"
   },
   "file_url": null,
-  "amount": 500
+  "amount": 500,
+  "source": "stripe",
+  "products": []
 }
 ```
 
@@ -744,7 +755,8 @@ Chargehound::Disputes.submit('dp_123',
       "url": "http://www.example.com"
   }],
   "file_url": null,
-  "amount": 21900
+  "amount": 21900,
+  "source": "stripe"
 }
 ```
 
@@ -924,6 +936,7 @@ Chargehound::Disputes.update('dp_123',
       "url": "http://www.example.com"
   }],
   "file_url": null,
-  "amount": 21900
+  "amount": 21900,
+  "source": "stripe"
 }
 ```
