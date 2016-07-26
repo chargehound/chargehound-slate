@@ -58,6 +58,10 @@ chargehound.Disputes.submit()
 Chargehound::Disputes.submit
 ```
 
+```go
+ch.Disputes.Submit(*chargehound.UpdateDisputeParams)
+```
+
 > Example request:
 
 ```sh
@@ -104,6 +108,24 @@ Chargehound::Disputes.submit('dp_123',
     'customer_ip' => '0.0.0.0'
   }
 )
+```
+
+```go
+import (
+  "github.com/chargehound/chargehound-go"
+)
+
+ch := chargehound.New("test_123") 
+
+params := chargehound.UpdateDisputeParams{
+  ID:       "dp_123",
+  Template: "unrecognized",
+  Fields: map[string]interface{}{
+    "customer_ip": "0.0.0.0",
+  },
+}
+
+dispute, err := ch.Disputes.Submit(&params)
 ```
 
 > Example response:
@@ -194,6 +216,10 @@ chargehound.Disputes.list()
 Chargehound::Disputes.list
 ```
 
+```go
+ch.Disputes.List(*chargehound.ListDisputeParams)
+```
+
 > Example request:
 
 ```sh
@@ -223,6 +249,16 @@ require 'chargehound'
 Chargehound.api_key = 'test_123'
 
 Chargehound::Disputes.list
+```
+
+```go
+import (
+  "github.com/chargehound/chargehound-go"
+)
+
+ch := chargehound.New("test_123") 
+
+dispute, err := ch.Disputes.List(nil)
 ```
 
 > Example response:
@@ -348,6 +384,10 @@ chargehound.Disputes.retrieve()
 Chargehound::Disputes.retrieve
 ```
 
+```go
+ch.Disputes.Retrieve(*chargehound.RetrieveDisputeParams)
+```
+
 > Example request:
 
 ```sh
@@ -377,6 +417,20 @@ require 'chargehound'
 Chargehound.api_key = 'test_123'
 
 Chargehound::Disputes.retrieve('dp_123')
+```
+
+```go
+import (
+  "github.com/chargehound/chargehound-go"
+)
+
+ch := chargehound.New("test_123") 
+
+params := chargehound.RetrieveDisputeParams{
+  ID: "dp_123",
+}
+
+dispute, err := ch.Disputes.Retrieve(&params)
 ```
 
 > Example response:
@@ -449,6 +503,10 @@ chargehound.Disputes.update()
 Chargehound::Disputes.update
 ```
 
+```go
+ch.Disputes.Update(*chargehound.UpdateDisputeParams)
+```
+
 > Example request:
 
 ```sh
@@ -495,6 +553,20 @@ Chargehound::Disputes.update('dp_123',
     'customer_ip' => '0.0.0.0'
   }
 )
+```
+
+```go
+import (
+  "github.com/chargehound/chargehound-go"
+)
+
+ch := chargehound.New("test_123") 
+
+params := chargehound.UpdateDisputeParams{
+  ID: "dp_123",
+}
+
+dispute, err := ch.Disputes.Update(&params)
 ```
 
 > Example response:
@@ -596,6 +668,10 @@ chargehound.Disputes.submit()
 
 ```ruby
 Chargehound::Disputes.submit
+```
+
+```go
+ch.Disputes.Submit(*chargehound.UpdateDisputeParams)
 ```
 
 > Example request:
@@ -704,6 +780,41 @@ Chargehound::Disputes.submit('dp_123',
 )
 ```
 
+```go
+import (
+  "github.com/chargehound/chargehound-go"
+)
+
+ch := chargehound.New("test_123") 
+
+params := chargehound.UpdateDisputeParams{
+  ID:       "dp_2284d5ac6eba4e4e8e9a80df0f9c2287",
+  Template: "unrecognized",
+  Products: []chargehound.Product{
+    {
+      Name:        "Saxophone",
+      Description: "Alto saxophone, with carrying case",
+      Image:       "http://s3.amazonaws.com/chargehound/saxophone.png",
+      Sku:         "17283001272",
+      Quantity:    1,
+      Amount:      20000,
+      Url:         "http://www.example.com",
+    },
+    {
+      Name:        "Milk",
+      Description: "Semi-skimmed Organic",
+      Image:       "http://s3.amazonaws.com/chargehound/milk.png",
+      Sku:         "26377382910",
+      Quantity:    "64oz",
+      Amount:      400,
+      Url:         "http://www.example.com",
+    },
+  },
+}
+
+dispute, err := ch.Disputes.Submit(&params)
+```
+
 > Example response:
 
 ```json
@@ -781,6 +892,10 @@ chargehound.Disputes.update()
 
 ```ruby
 Chargehound::Disputes.update
+```
+
+```go
+ch.Disputes.Update(*chargehound.UpdateDisputeParams)
 ```
 
 > Example request:
@@ -883,6 +998,41 @@ Chargehound::Disputes.update('dp_123',
      'url' => 'http =>//www.example.com'
   }]
 )
+```
+
+```go
+import (
+  "github.com/chargehound/chargehound-go"
+)
+
+ch := chargehound.New("test_123") 
+
+params := chargehound.UpdateDisputeParams{
+  ID:       "dp_2284d5ac6eba4e4e8e9a80df0f9c2287",
+  Template: "unrecognized",
+  Products: []chargehound.Product{
+    {
+      Name:        "Saxophone",
+      Description: "Alto saxophone, with carrying case",
+      Image:       "http://s3.amazonaws.com/chargehound/saxophone.png",
+      Sku:         "17283001272",
+      Quantity:    1,
+      Amount:      20000,
+      Url:         "http://www.example.com",
+    },
+    {
+      Name:        "Milk",
+      Description: "Semi-skimmed Organic",
+      Image:       "http://s3.amazonaws.com/chargehound/milk.png",
+      Sku:         "26377382910",
+      Quantity:    "64oz",
+      Amount:      400,
+      Url:         "http://www.example.com",
+    },
+  },
+}
+
+dispute, err := ch.Disputes.Update(&params)
 ```
 
 > Example response:
