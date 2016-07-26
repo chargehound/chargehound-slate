@@ -6,6 +6,7 @@ language_tabs:
   - javascript: Node
   - python: Python
   - ruby: Ruby
+  - go: Go
 
 includes:
   - integration
@@ -40,6 +41,14 @@ chargehound.api_key = 'test_123'
 ```ruby
 require 'chargehound'
 Chargehound.api_key = 'test_123'
+```
+
+```go
+import (
+  "github.com/chargehound/chargehound-go"
+)
+
+ch := chargehound.New("test_123") 
 ```
 
 > Make sure to replace `test_123` with your API key.
@@ -142,11 +151,44 @@ rescue Chargehound::ChargehoundBadRequestError => e
 
 rescue Chargehound::ChargehoundAuthenticationError => e
   # Incorrect or missing API key
+rescue Chargehound::ChargehoundTimeoutError => e
+  # The request timed out (default timeout is 60 seconds)
 rescue Chargehound::ChargehoundError => e
   # Generic Chargehound error (404, 500, etc.)
 rescue => e
   # Handle any other types of unexpected errors
 end
+```
+
+```go
+import (
+  "fmt"
+  "github.com/chargehound/chargehound-go"
+)
+
+// Use the Chargehound library to make a request
+
+chErr := err.(chargehound.Error)
+
+switch chErr.Type() {
+case BadRequestError:
+  // Invalid parameters were supplied in the request
+
+  fmt.Println(chErr.Error())
+
+case chargehound.UnauthorizedError:
+  // Missing API key
+case chargehound.ForbiddenError:
+  // Incorrect API key
+case chargehound.NotFoundError:
+  // Not found
+case chargehound.InternalServerError:
+  // Internal server error
+case chargehound.GenericError:
+  // Generic Chargehound error 
+default:
+  // Handle any other types of unexpected errors
+}
 ```
 
 When using our client libraries Chargehound also provides typed exceptions when errors are returned from the API.
@@ -159,6 +201,7 @@ Chargehound offers wrapper libraries in the following languages:
 - [Node.js](https://github.com/chargehound/chargehound-node)
 - [Python](https://github.com/chargehound/chargehound-python)
 - [Ruby](https://github.com/chargehound/chargehound-ruby)
+- [Go](https://github.com/chargehound/chargehound-go)
 
 ## HTTP
 
