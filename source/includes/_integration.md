@@ -307,7 +307,7 @@ Chargehound::Disputes.submit('{{dispute_from_step_3}}')
 ```go
 ch := chargehound.New("{{your_chargehound_test_key}}") 
 
-params := chargehound.RetrieveDisputeParams{
+params := chargehound.UpdateDisputeParams{
   ID: "{{dispute_from_step_3}}",
 }
 
