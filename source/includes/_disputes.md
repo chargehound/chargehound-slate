@@ -185,6 +185,7 @@ The dispute will be in the `submitted` state if the submit was successful.
 | products       | array      | optional   | List of products the customer purchased.                                                                              |
 | customer_name  | string     | optional   | Update the customer name. Will also update the customer name in the evidence fields.                                  |
 | customer_email | string     | optional   | Update the customer email. Will also update the customer email in the evidence fields. Must be a valid email address. |
+| account_id | string     | optional   | Set the account_id for Connected accounts that are charged directly through Stripe. |
 
 ### Possible errors:
 
@@ -628,6 +629,7 @@ You can update the template and the fields on a dispute.
 | customer_name  | string     | optional   | Update the customer name. Will also update the customer name in the evidence fields.                                  |
 | customer_email | string     | optional   | Update the customer email. Will also update the customer email in the evidence fields. Must be a valid email address. |
 | products       | array      | optional   | (Optional) List of products the customer purchased. (See [Product data](#product-data) for details.)                  |
+| account_id | string     | optional   | Set the account_id for Connected accounts that are charged directly through Stripe. |
 
 ### Possible errors:
 
@@ -1094,3 +1096,157 @@ dispute, err := ch.Disputes.Update(&params)
   "source": "stripe"
 }
 ```
+
+## Connected accounts
+
+> Definition:
+
+```sh
+POST /v1/disputes/{{dispute_id}}/submit
+```
+
+```js
+chargehound.Disputes.submit();
+```
+
+```python
+chargehound.Disputes.submit()
+```
+
+```ruby
+Chargehound::Disputes.submit
+```
+
+```go
+ch.Disputes.Submit(*chargehound.UpdateDisputeParams)
+```
+
+> Example request:
+
+```sh
+curl -X POST https://api.chargehound.com/v1/disputes/dp_123/submit \
+  -u test_123: \
+  -d template=unrecognized \
+  -d account_id=acct_xxx \
+  -d fields[customer_ip]="0.0.0.0" 
+```
+
+```js
+var chargehound = require('chargehound')(
+  'test_123'
+);
+
+chargehound.Disputes.submit('dp_123', {
+  template: 'unrecognized',
+  account_id: 'acct_xxx',
+  fields: {
+    customer_ip: '0.0.0.0'
+  }
+}, function (err, res) {
+  // ...
+});
+```
+
+```python
+import chargehound
+chargehound.api_key = 'test_123'
+
+chargehound.Disputes.submit('dp_123',
+  template='unrecognized',
+  account_id='acct_xxx',
+  fields={
+    'customer_ip': '0.0.0.0'
+  }
+)
+```
+
+```ruby
+require 'chargehound'
+Chargehound.api_key = 'test_123'
+
+Chargehound::Disputes.submit('dp_123',
+  template: 'unrecognized',
+  account_id: 'acct_xxx',
+  fields: {
+    'customer_ip' => '0.0.0.0'
+  }
+)
+```
+
+```go
+import (
+  "github.com/chargehound/chargehound-go"
+)
+
+ch := chargehound.New("test_123") 
+
+params := chargehound.UpdateDisputeParams{
+  ID:        "dp_123",
+  Template:  "unrecognized",
+  AccountID: "acct_xxx",
+  Fields: map[string]interface{}{
+    "customer_ip": "0.0.0.0",
+  },
+}
+
+dispute, err := ch.Disputes.Submit(&params)
+```
+
+> Example response:
+
+```json
+{
+  "external_customer": "cus_85B8chA2k4OSlJ",
+  "livemode": false,
+  "currency": "usd",
+  "cvc_check": null,
+  "address_line1_check": null,
+  "address_zip_check": null,
+  "missing_fields": {},
+  "closed_at": null,
+  "statement_descriptor": null,
+  "customer_name": "Susie Chargeback",
+  "fee": 1500,
+  "due_by": "2016-03-30T23:59:59",
+  "charge": "ch_17p1SvLU6oDzEeR1VPDcd6ZR",
+  "id": "dp_123",
+  "state": "submitted",
+  "template": "unrecognized",
+  "is_charge_refundable": false,
+  "updated": "2016-03-16T20:58:34",
+  "customer_email": null,
+  "object": "dispute",
+  "customer_purchase_ip": null,
+  "disputed_at": "2016-03-14T19:35:17",
+  "submitted_count": 0,
+  "reason": "unrecognized",
+  "charged_at": "2016-03-14T19:34:57",
+  "address_zip": null,
+  "submitted_at": null,
+  "created": "2016-03-14T19:35:17",
+  "url": "/v1/disputes/dp_123",
+  "fields": {
+    "customer_ip": "0.0.0.0",
+    "customer_name": "Susie Chargeback"
+  },
+  "file_url": null,
+  "amount": 500,
+  "source": "stripe",
+  "products": []
+}
+```
+
+In order to work with managed or connected account integrations that charge directly, you will need to attach the Stripe account id to the dispute using the `account_id` parameter. When you recieve a webhook to your Connect webhook endpoint, get the `user_id` from the event. The `user_id` is the Stripe account id that you will need to set.
+
+
+### Parameters:
+
+| Parameter      | Type       | Required?  | Description                                                                                                           |
+| -------------  | ---------  |------------|-----------------------------------------------------------------------------------------------------------------------|
+| template       | string     | optional   | The id of the template to use.                                                                                        |
+| fields         | dictionary | optional   | Key value pairs to hydrate the template's evidence fields.                                                            |
+| products       | array      | optional   | List of products the customer purchased.                                                                              |
+| customer_name  | string     | optional   | Update the customer name. Will also update the customer name in the evidence fields.                                  |
+| customer_email | string     | optional   | Update the customer email. Will also update the customer email in the evidence fields. Must be a valid email address. |
+| account_id | string     | optional   | Set the account_id for Connected accounts that are charged directly through Stripe. |
+
