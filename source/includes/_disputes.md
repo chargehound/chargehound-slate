@@ -185,7 +185,7 @@ The dispute will be in the `submitted` state if the submit was successful.
 | products       | array      | optional   | List of products the customer purchased.                                                                              |
 | customer_name  | string     | optional   | Update the customer name. Will also update the customer name in the evidence fields.                                  |
 | customer_email | string     | optional   | Update the customer email. Will also update the customer email in the evidence fields. Must be a valid email address. |
-| account_id | string     | optional   | Set the account_id for Connected accounts that are charged directly through Stripe. |
+| account_id | string     | optional   | Set the account id for Connected accounts that are charged directly through Stripe. |
 
 ### Possible errors:
 
@@ -629,7 +629,7 @@ You can update the template and the fields on a dispute.
 | customer_name  | string     | optional   | Update the customer name. Will also update the customer name in the evidence fields.                                  |
 | customer_email | string     | optional   | Update the customer email. Will also update the customer email in the evidence fields. Must be a valid email address. |
 | products       | array      | optional   | (Optional) List of products the customer purchased. (See [Product data](#product-data) for details.)                  |
-| account_id | string     | optional   | Set the account_id for Connected accounts that are charged directly through Stripe. |
+| account_id | string     | optional   | Set the account id for Connected accounts that are charged directly through Stripe. |
 
 ### Possible errors:
 
@@ -1248,5 +1248,5 @@ In order to work with managed or connected account integrations that charge dire
 | products       | array      | optional   | List of products the customer purchased.                                                                              |
 | customer_name  | string     | optional   | Update the customer name. Will also update the customer name in the evidence fields.                                  |
 | customer_email | string     | optional   | Update the customer email. Will also update the customer email in the evidence fields. Must be a valid email address. |
-| account_id | string     | optional   | Set the account_id for Connected accounts that are charged directly through Stripe. |
+| account_id | string     | optional   | Set the account id for Connected accounts that are charged directly through Stripe. |
 
