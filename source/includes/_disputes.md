@@ -1,12 +1,12 @@
 # Disputes
 
-Dispute objects represent a dispute created on a charge in Stripe. A dispute has information about the charge and customer. In order to contest a dispute, attach a Template and update the dispute with the Template's required fields.
+Dispute objects represent a dispute created on a charge. They can also be referred to as chargebacks. In order to contest a dispute, attach a Template and update the dispute with the Template's required fields.
 
 A Dispute object is:
 
 | Field                | Type       | Description                                                                                 |
 | ---------------------|------------|---------------------------------------------------------------------------------------------|
-| id                   | string     | A unique identifier for the dispute. This is the same id used by Stripe.                    |
+| id                   | string     | A unique identifier for the dispute. This id is set by the payment processor of the dispute. |
 | state                | string     | State of the dispute. One of `needs_response`,`submitted`, `under_review`, `won`, `lost`, `warning_needs_response`, `warning_under_review`, `warning_closed` , `response_disabled`, `charge_refunded`.                                                  |
 | reason               | string     | Reason for the dispute. One of `fraudulent`, `unrecognized`, `general`, `duplicate`, `subscription_canceled`, `product_unacceptable`, `product_not_received`, `credit_not_processed`, `incorrect_account_details`, `insufficient_funds`, `bank_cannot_process`, `debit_not_authorized`, `goods_services_returned_or_refused`, `goods_services_cancelled` | 
 | charged_at           | string     | ISO 8601 timestamp - when the charge was made.                                              |
@@ -25,18 +25,23 @@ A Dispute object is:
 | amount               | integer    | Amount of the disputed charge. Amounts are in cents (or other minor currency unit.)         |
 | currency             | string     | Currency code of the disputed charge. e.g. 'USD'.                                           |
 | fee                  | integer    | Dispute fee.                                                                                |
-| external_customer    | string     | Id of the Stripe customer (if any).                                                         |
-| customer_name        | string     | Name of the Stripe customer (if any).                                                       |
-| customer_email       | string     | Email of the Stripe customer (if any).                                                      |
+| reversal_amount      | integer    | The amount deducted due to the chargeback. Amounts are in cents (or other minor currency unit.)         |
+| reversal_currency    | string     | Currency code of the deduction amount. e.g. 'USD'.                                           |
+| fee                  | integer    | Dispute fee.                                                                                |
+| external_customer    | string     | Id of the customer (if any). This id is set by the payment processor of the dispute. |
+| customer_name        | string     | Name of the customer (if any).                                                       |
+| customer_email       | string     | Email of the customer (if any).                                                      |
 | customer_purchase_ip | string     | IP of purchase (if available).                                                              |
 | address_zip          | string     | Billing address zip of the charge.                                                          |
 | address_line1_check  | string     | State of address check (if available). One of `pass`, `fail`, `unavailable`, `checked`.     |
 | address_zip_check    | string     | State of address zip check (if available). One of `pass`, `fail`, `unavailable`, `checked`. |
 | cvc_check            | string     | State of cvc check (if available). One of `pass`, `fail`, `unavailable`, `checked`.         |
 | statement_descriptor | string     | The descriptor that appears on the customer's credit card statement for this change.        |
+| account_id           | string     | The account id for Connected accounts that are charged directly through Stripe (if any).
 | created              | string     | ISO 8601 timestamp.                                                                         |
 | updated              | string     | ISO 8601 timestamp.                                                                         |
-| source               | string     | The source of the dispute. One of `mock` or `stripe`                                        |
+| source               | string     | The source of the dispute. One of `mock`, `braintree`, `api` or `stripe` |
+| processor            | string     | The payment processor of the dispute. One of `mock`, `braintree` or `stripe` |
 
 ## Submitting a dispute
 
@@ -65,18 +70,18 @@ ch.Disputes.Submit(*chargehound.UpdateDisputeParams)
 > Example request:
 
 ```sh
-curl -X POST https://api.chargehound.com/v1/disputes/dp_123/submit \
-  -u test_123: \
+curl -X POST https://api.chargehound.com/v1/disputes/dp_XXX/submit \
+  -u test_XXX: \
   -d template=unrecognized \
   -d fields[customer_ip]="0.0.0.0" 
 ```
 
 ```js
 var chargehound = require('chargehound')(
-  'test_123'
+  'test_XXX'
 );
 
-chargehound.Disputes.submit('dp_123', {
+chargehound.Disputes.submit('dp_XXX', {
   template: 'unrecognized',
   fields: {
     customer_ip: '0.0.0.0'
@@ -88,9 +93,9 @@ chargehound.Disputes.submit('dp_123', {
 
 ```python
 import chargehound
-chargehound.api_key = 'test_123'
+chargehound.api_key = 'test_XXX'
 
-chargehound.Disputes.submit('dp_123',
+chargehound.Disputes.submit('dp_XXX',
   template='unrecognized',
   fields={
     'customer_ip': '0.0.0.0'
@@ -100,9 +105,9 @@ chargehound.Disputes.submit('dp_123',
 
 ```ruby
 require 'chargehound'
-Chargehound.api_key = 'test_123'
+Chargehound.api_key = 'test_XXX'
 
-Chargehound::Disputes.submit('dp_123',
+Chargehound::Disputes.submit('dp_XXX',
   template: 'unrecognized',
   fields: {
     'customer_ip' => '0.0.0.0'
@@ -115,10 +120,10 @@ import (
   "github.com/chargehound/chargehound-go"
 )
 
-ch := chargehound.New("test_123") 
+ch := chargehound.New("test_XXX") 
 
 params := chargehound.UpdateDisputeParams{
-  ID:       "dp_123",
+  ID:       "dp_XXX",
   Template: "unrecognized",
   Fields: map[string]interface{}{
     "customer_ip": "0.0.0.0",
@@ -132,7 +137,7 @@ dispute, err := ch.Disputes.Submit(&params)
 
 ```json
 {
-  "external_customer": "cus_85B8chA2k4OSlJ",
+  "external_customer": "cus_XXX",
   "livemode": false,
   "currency": "usd",
   "cvc_check": null,
@@ -144,8 +149,8 @@ dispute, err := ch.Disputes.Submit(&params)
   "customer_name": "Susie Chargeback",
   "fee": 1500,
   "due_by": "2016-03-30T23:59:59",
-  "charge": "ch_17p1SvLU6oDzEeR1VPDcd6ZR",
-  "id": "dp_123",
+  "charge": "ch_XXX",
+  "id": "dp_XXX",
   "state": "submitted",
   "template": "unrecognized",
   "is_charge_refundable": false,
@@ -160,7 +165,7 @@ dispute, err := ch.Disputes.Submit(&params)
   "address_zip": null,
   "submitted_at": null,
   "created": "2016-03-14T19:35:17",
-  "url": "/v1/disputes/dp_123",
+  "url": "/v1/disputes/dp_XXX",
   "fields": {
     "customer_ip": "0.0.0.0",
     "customer_name": "Susie Chargeback"
@@ -172,7 +177,7 @@ dispute, err := ch.Disputes.Submit(&params)
 }
 ```
 
-You will want to submit the dispute through Chargehound after you receive a notification from Stripe of a new dispute. With one `POST` request you can update a dispute with the evidence fields and send the generated response to Stripe.
+You will want to submit the dispute through Chargehound after you receive a notification from the source payment processor of a new dispute. With one `POST` request you can update a dispute with the evidence fields and send the generated response to the source payment processor.
 
 The dispute will be in the `submitted` state if the submit was successful. 
 
@@ -193,7 +198,7 @@ The dispute will be in the `submitted` state if the submit was successful.
 
 ## Creating a dispute
 
-Disputes are not created via the REST API. Instead, once your Stripe account is connected we will mirror disputes created in Stripe via [webhooks](https://stripe.com/docs/webhooks). You will reference the dispute with the same id that is used by Stripe.
+Disputes are not created via the REST API. Instead, once your payment processor is connected we will mirror disputes via webhooks. You will reference the dispute with the same id that is used by the payment processor.
 
 ## Retrieving a list of disputes
 
@@ -223,12 +228,12 @@ ch.Disputes.List(*chargehound.ListDisputesParams)
 
 ```sh
 curl https://api.chargehound.com/v1/disputes \
-  -u test_123:
+  -u test_XXX:
 ```
 
 ```js
 var chargehound = require('chargehound')(
-  'test_123'
+  'test_XXX'
 );
 
 chargehound.Disputes.list(), function (err, res) {
@@ -238,14 +243,14 @@ chargehound.Disputes.list(), function (err, res) {
 
 ```python
 import chargehound
-chargehound.api_key = 'test_123'
+chargehound.api_key = 'test_XXX'
 
 chargehound.Disputes.list()
 ```
 
 ```ruby
 require 'chargehound'
-Chargehound.api_key = 'test_123'
+Chargehound.api_key = 'test_XXX'
 
 Chargehound::Disputes.list
 ```
@@ -255,7 +260,7 @@ import (
   "github.com/chargehound/chargehound-go"
 )
 
-ch := chargehound.New("test_123") 
+ch := chargehound.New("test_XXX") 
 
 disputeList, err := ch.Disputes.List(nil)
 ```
@@ -270,7 +275,7 @@ disputeList, err := ch.Disputes.List(nil)
   "object": "list",
   "data": [
     {
-      "external_customer": "cus_85B8chA2k4OSlJ",
+      "external_customer": "cus_XXX",
       "currency": "usd",
       "cvc_check": null,
       "address_line1_check": null,
@@ -281,7 +286,7 @@ disputeList, err := ch.Disputes.List(nil)
       "fee": 1500,
       "due_by": "2016-03-31T23:59:59",
       "charge": "ch_17pPCgLU6oDzEeR14leOmeCC",
-      "id": "dp_123",
+      "id": "dp_XXX",
       "state": "needs_response",
       "template": null,
       "is_charge_refundable": false,
@@ -310,7 +315,7 @@ disputeList, err := ch.Disputes.List(nil)
       "products": []
     },
     {
-      "external_customer": "cus_85B8chA2k4OSlJ",
+      "external_customer": "cus_XXX",
       "currency": "usd",
       "cvc_check": null,
       "address_line1_check": null,
@@ -353,7 +358,7 @@ disputeList, err := ch.Disputes.List(nil)
 }
 ```
 
-This endpoint will list all the disputes that we have synced from Stripe. By default the disputes will be ordered by created with the most recent dispute first. `has_more` will be true if more results are available.
+This endpoint will list all the disputes that we have synced from your payment processor. By default the disputes will be ordered by created with the most recent dispute first. `has_more` will be true if more results are available.
 
 ### Parameters:
 
@@ -390,32 +395,32 @@ ch.Disputes.Retrieve(*chargehound.RetrieveDisputeParams)
 > Example request:
 
 ```sh
-curl https://api.chargehound.com/v1/disputes/dp_123 \
-  -u test_123:
+curl https://api.chargehound.com/v1/disputes/dp_XXX \
+  -u test_XXX:
 ```
 
 ```js
 var chargehound = require('chargehound')(
-  'test_123'
+  'test_XXX'
 );
 
-chargehound.Disputes.retrieve('dp_123'), function (err, res) {
+chargehound.Disputes.retrieve('dp_XXX'), function (err, res) {
   // ...
 });
 ```
 
 ```python
 import chargehound
-chargehound.api_key = 'test_123'
+chargehound.api_key = 'test_XXX'
 
-chargehound.Disputes.retrieve('dp_123')
+chargehound.Disputes.retrieve('dp_XXX')
 ```
 
 ```ruby
 require 'chargehound'
-Chargehound.api_key = 'test_123'
+Chargehound.api_key = 'test_XXX'
 
-Chargehound::Disputes.retrieve('dp_123')
+Chargehound::Disputes.retrieve('dp_XXX')
 ```
 
 ```go
@@ -423,10 +428,10 @@ import (
   "github.com/chargehound/chargehound-go"
 )
 
-ch := chargehound.New("test_123") 
+ch := chargehound.New("test_XXX") 
 
 params := chargehound.RetrieveDisputeParams{
-  ID: "dp_123",
+  ID: "dp_XXX",
 }
 
 dispute, err := ch.Disputes.Retrieve(&params)
@@ -436,7 +441,7 @@ dispute, err := ch.Disputes.Retrieve(&params)
 
 ```json
 {
-  "external_customer": "cus_85B8chA2k4OSlJ",
+  "external_customer": "cus_XXX",
   "livemode": false,
   "currency": "usd",
   "cvc_check": null,
@@ -449,7 +454,7 @@ dispute, err := ch.Disputes.Retrieve(&params)
   "fee": 1500,
   "due_by": "2016-03-31T23:59:59",
   "charge": "ch_17pPCgLU6oDzEeR14leOmeCC",
-  "id": "dp_123",
+  "id": "dp_XXX",
   "state": "needs_response",
   "template": null,
   "is_charge_refundable": false,
@@ -464,7 +469,7 @@ dispute, err := ch.Disputes.Retrieve(&params)
   "address_zip": null,
   "submitted_at": null,
   "created": "2016-03-15T21:35:28",
-  "url": "/v1/disputes/dp_123",
+  "url": "/v1/disputes/dp_XXX",
   "fields": {
     "exp_month": 12,
     "last4": "0259",
@@ -509,18 +514,18 @@ ch.Disputes.Update(*chargehound.UpdateDisputeParams)
 > Example request:
 
 ```sh
-curl -X PUT https://api.chargehound.com/v1/disputes/dp_123/update \
-  -u test_123: \
+curl -X PUT https://api.chargehound.com/v1/disputes/dp_XXX/update \
+  -u test_XXX: \
   -d template=unrecognized \
   -d fields[customer_ip]="0.0.0.0" 
 ```
 
 ```js
 var chargehound = require('chargehound')(
-  'test_123'
+  'test_XXX'
 );
 
-chargehound.Disputes.update('dp_123', {
+chargehound.Disputes.update('dp_XXX', {
   template: 'unrecognized',
   fields: {
     customer_ip: '0.0.0.0'
@@ -532,9 +537,9 @@ chargehound.Disputes.update('dp_123', {
 
 ```python
 import chargehound
-chargehound.api_key = 'test_123'
+chargehound.api_key = 'test_XXX'
 
-chargehound.Disputes.update('dp_123',
+chargehound.Disputes.update('dp_XXX',
   template='unrecognized',
   fields={
     'customer_ip': '0.0.0.0'
@@ -544,9 +549,9 @@ chargehound.Disputes.update('dp_123',
 
 ```ruby
 require 'chargehound'
-Chargehound.api_key = 'test_123'
+Chargehound.api_key = 'test_XXX'
 
-Chargehound::Disputes.update('dp_123',
+Chargehound::Disputes.update('dp_XXX',
   template: 'unrecognized',
   fields: {
     'customer_ip' => '0.0.0.0'
@@ -559,10 +564,10 @@ import (
   "github.com/chargehound/chargehound-go"
 )
 
-ch := chargehound.New("test_123") 
+ch := chargehound.New("test_XXX") 
 
 params := chargehound.UpdateDisputeParams{
-  ID:       "dp_123",
+  ID:       "dp_XXX",
   Template: "unrecognized",
   Fields: map[string]interface{}{
     "customer_ip": "0.0.0.0",
@@ -576,7 +581,7 @@ dispute, err := ch.Disputes.Update(&params)
 
 ```json
 {
-  "external_customer": "cus_85B8chA2k4OSlJ",
+  "external_customer": "cus_XXX",
   "livemode": false,
   "currency": "usd",
   "cvc_check": null,
@@ -588,8 +593,8 @@ dispute, err := ch.Disputes.Update(&params)
   "customer_name": "Susie Chargeback",
   "fee": 1500,
   "due_by": "2016-03-30T23:59:59",
-  "charge": "ch_17p1SvLU6oDzEeR1VPDcd6ZR",
-  "id": "dp_123",
+  "charge": "ch_XXX",
+  "id": "dp_XXX",
   "state": "needs_response",
   "template": "unrecognized",
   "is_charge_refundable": false,
@@ -604,7 +609,7 @@ dispute, err := ch.Disputes.Update(&params)
   "address_zip": null,
   "submitted_at": null,
   "created": "2016-03-14T19:35:17",
-  "url": "/v1/disputes/dp_123",
+  "url": "/v1/disputes/dp_XXX",
   "fields": {
     "customer_ip": "0.0.0.0",
     "customer_name": "Susie Chargeback"
@@ -679,8 +684,8 @@ ch.Disputes.Submit(*chargehound.UpdateDisputeParams)
 > Example request:
 
 ```sh
-curl -X POST https://api.chargehound.com/v1/disputes/dp_123/submit \
-  -u test_123: \
+curl -X POST https://api.chargehound.com/v1/disputes/dp_XXX/submit \
+  -u test_XXX: \
   -d template=unrecognized \
   -d products="[{
                    \"name\" : \"Saxophone\",
@@ -703,10 +708,10 @@ curl -X POST https://api.chargehound.com/v1/disputes/dp_123/submit \
 
 ```js
 var chargehound = require('chargehound')(
-  'test_123'
+  'test_XXX'
 );
 
-chargehound.Disputes.submit('dp_123', {
+chargehound.Disputes.submit('dp_XXX', {
   template: 'unrecognized',
   products: [{
     'name': 'Saxophone',
@@ -732,9 +737,9 @@ chargehound.Disputes.submit('dp_123', {
 
 ```python
 import chargehound
-chargehound.api_key = 'test_123'
+chargehound.api_key = 'test_XXX'
 
-chargehound.Disputes.submit('dp_123',
+chargehound.Disputes.submit('dp_XXX',
   template='unrecognized',
   products=[{
      'name': 'Saxophone',
@@ -758,9 +763,9 @@ chargehound.Disputes.submit('dp_123',
 
 ```ruby
 require 'chargehound'
-Chargehound.api_key = 'test_123'
+Chargehound.api_key = 'test_XXX'
 
-Chargehound::Disputes.submit('dp_123',
+Chargehound::Disputes.submit('dp_XXX',
   template: 'unrecognized',
   products: [{
      'name' => 'Saxophone',
@@ -787,7 +792,7 @@ import (
   "github.com/chargehound/chargehound-go"
 )
 
-ch := chargehound.New("test_123") 
+ch := chargehound.New("test_XXX") 
 
 params := chargehound.UpdateDisputeParams{
   ID:       "dp_2284d5ac6eba4e4e8e9a80df0f9c2287",
@@ -821,7 +826,7 @@ dispute, err := ch.Disputes.Submit(&params)
 
 ```json
 {
-  "external_customer": "cus_85B8chA2k4OSlJ",
+  "external_customer": "cus_XXX",
   "livemode": false,
   "currency": "usd",
   "cvc_check": null,
@@ -833,8 +838,8 @@ dispute, err := ch.Disputes.Submit(&params)
   "customer_name": "Susie Chargeback",
   "fee": 1500,
   "due_by": "2016-03-30T23:59:59",
-  "charge": "ch_17p1SvLU6oDzEeR1VPDcd6ZR",
-  "id": "dp_123",
+  "charge": "ch_XXX",
+  "id": "dp_XXX",
   "state": "submitted",
   "template": "unrecognized",
   "is_charge_refundable": false,
@@ -849,7 +854,7 @@ dispute, err := ch.Disputes.Submit(&params)
   "address_zip": null,
   "submitted_at": null,
   "created": "2016-03-14T19:35:17",
-  "url": "/v1/disputes/dp_123",
+  "url": "/v1/disputes/dp_XXX",
   "products": [{
       "name": "Saxophone",
       "description": "Alto saxophone, with carrying case",
@@ -903,8 +908,8 @@ ch.Disputes.Update(*chargehound.UpdateDisputeParams)
 > Example request:
 
 ```sh
-curl -X PUT https://api.chargehound.com/v1/disputes/dp_123/update \
-  -u test_123: \
+curl -X PUT https://api.chargehound.com/v1/disputes/dp_XXX/update \
+  -u test_XXX: \
   -d products="[{
                    \"name\" : \"Saxophone\",
                    \"description\" : \"Alto saxophone, with carrying case\",
@@ -926,10 +931,10 @@ curl -X PUT https://api.chargehound.com/v1/disputes/dp_123/update \
 
 ```js
 var chargehound = require('chargehound')(
-  'test_123'
+  'test_XXX'
 );
 
-chargehound.Disputes.update('dp_123', {
+chargehound.Disputes.update('dp_XXX', {
   products: [{
     'name': 'Saxophone',
     'description': 'Alto saxophone, with carrying case',
@@ -954,9 +959,9 @@ chargehound.Disputes.update('dp_123', {
 
 ```python
 import chargehound
-chargehound.api_key = 'test_123'
+chargehound.api_key = 'test_XXX'
 
-chargehound.Disputes.update('dp_123',
+chargehound.Disputes.update('dp_XXX',
   products=[{
      'name': 'Saxophone',
      'description': 'Alto saxophone, with carrying case',
@@ -979,9 +984,9 @@ chargehound.Disputes.update('dp_123',
 
 ```ruby
 require 'chargehound'
-Chargehound.api_key = 'test_123'
+Chargehound.api_key = 'test_XXX'
 
-Chargehound::Disputes.update('dp_123',
+Chargehound::Disputes.update('dp_XXX',
   products: [{
      'name' => 'Saxophone',
      'description' => 'Alto saxophone, with carrying case',
@@ -1007,7 +1012,7 @@ import (
   "github.com/chargehound/chargehound-go"
 )
 
-ch := chargehound.New("test_123") 
+ch := chargehound.New("test_XXX") 
 
 params := chargehound.UpdateDisputeParams{
   ID:       "dp_2284d5ac6eba4e4e8e9a80df0f9c2287",
@@ -1041,7 +1046,7 @@ dispute, err := ch.Disputes.Update(&params)
 
 ```json
 {
-  "external_customer": "cus_85B8chA2k4OSlJ",
+  "external_customer": "cus_XXX",
   "livemode": false,
   "currency": "usd",
   "cvc_check": null,
@@ -1053,8 +1058,8 @@ dispute, err := ch.Disputes.Update(&params)
   "customer_name": "Susie Chargeback",
   "fee": 1500,
   "due_by": "2016-03-30T23:59:59",
-  "charge": "ch_17p1SvLU6oDzEeR1VPDcd6ZR",
-  "id": "dp_123",
+  "charge": "ch_XXX",
+  "id": "dp_XXX",
   "state": "needs_response",
   "template": "unrecognized",
   "is_charge_refundable": false,
@@ -1069,7 +1074,7 @@ dispute, err := ch.Disputes.Update(&params)
   "address_zip": null,
   "submitted_at": null,
   "created": "2016-03-14T19:35:17",
-  "url": "/v1/disputes/dp_123",
+  "url": "/v1/disputes/dp_XXX",
   "products": [{
       "name": "Saxophone",
       "description": "Alto saxophone, with carrying case",
@@ -1120,8 +1125,8 @@ ch.Disputes.Submit(*chargehound.UpdateDisputeParams)
 > Example request:
 
 ```sh
-curl -X POST https://api.chargehound.com/v1/disputes/dp_123/submit \
-  -u test_123: \
+curl -X POST https://api.chargehound.com/v1/disputes/dp_XXX/submit \
+  -u test_XXX: \
   -d template=unrecognized \
   -d account_id=acct_xxx \
   -d fields[customer_ip]="0.0.0.0" 
@@ -1129,10 +1134,10 @@ curl -X POST https://api.chargehound.com/v1/disputes/dp_123/submit \
 
 ```js
 var chargehound = require('chargehound')(
-  'test_123'
+  'test_XXX'
 );
 
-chargehound.Disputes.submit('dp_123', {
+chargehound.Disputes.submit('dp_XXX', {
   template: 'unrecognized',
   account_id: 'acct_xxx',
   fields: {
@@ -1145,9 +1150,9 @@ chargehound.Disputes.submit('dp_123', {
 
 ```python
 import chargehound
-chargehound.api_key = 'test_123'
+chargehound.api_key = 'test_XXX'
 
-chargehound.Disputes.submit('dp_123',
+chargehound.Disputes.submit('dp_XXX',
   template='unrecognized',
   account_id='acct_xxx',
   fields={
@@ -1158,9 +1163,9 @@ chargehound.Disputes.submit('dp_123',
 
 ```ruby
 require 'chargehound'
-Chargehound.api_key = 'test_123'
+Chargehound.api_key = 'test_XXX'
 
-Chargehound::Disputes.submit('dp_123',
+Chargehound::Disputes.submit('dp_XXX',
   template: 'unrecognized',
   account_id: 'acct_xxx',
   fields: {
@@ -1174,10 +1179,10 @@ import (
   "github.com/chargehound/chargehound-go"
 )
 
-ch := chargehound.New("test_123") 
+ch := chargehound.New("test_XXX") 
 
 params := chargehound.UpdateDisputeParams{
-  ID:        "dp_123",
+  ID:        "dp_XXX",
   Template:  "unrecognized",
   AccountID: "acct_xxx",
   Fields: map[string]interface{}{
@@ -1192,7 +1197,7 @@ dispute, err := ch.Disputes.Submit(&params)
 
 ```json
 {
-  "external_customer": "cus_85B8chA2k4OSlJ",
+  "external_customer": "cus_XXX",
   "livemode": false,
   "currency": "usd",
   "cvc_check": null,
@@ -1204,8 +1209,8 @@ dispute, err := ch.Disputes.Submit(&params)
   "customer_name": "Susie Chargeback",
   "fee": 1500,
   "due_by": "2016-03-30T23:59:59",
-  "charge": "ch_17p1SvLU6oDzEeR1VPDcd6ZR",
-  "id": "dp_123",
+  "charge": "ch_XXX",
+  "id": "dp_XXX",
   "state": "submitted",
   "template": "unrecognized",
   "is_charge_refundable": false,
@@ -1220,7 +1225,7 @@ dispute, err := ch.Disputes.Submit(&params)
   "address_zip": null,
   "submitted_at": null,
   "created": "2016-03-14T19:35:17",
-  "url": "/v1/disputes/dp_123",
+  "url": "/v1/disputes/dp_XXX",
   "fields": {
     "customer_ip": "0.0.0.0",
     "customer_name": "Susie Chargeback"
@@ -1232,7 +1237,7 @@ dispute, err := ch.Disputes.Submit(&params)
 }
 ```
 
-In order to work with managed or connected account integrations that charge directly, you will need to attach the Stripe account id to the dispute using the `account_id` parameter. When you recieve a webhook to your Connect webhook endpoint, get the `user_id` from the event. The `user_id` is the Stripe account id that you will need to set.
+In order to work with Stripe Managed or Connected account integrations that charge directly, you will need to attach the Stripe account id to the dispute using the `account_id` parameter. When you recieve a webhook to your Connect webhook endpoint, get the `user_id` from the event. The `user_id` is the Stripe account id that you will need to set.
 
 
 ### Parameters:
