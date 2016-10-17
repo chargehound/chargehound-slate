@@ -27,7 +27,6 @@ A Dispute object is:
 | fee                  | integer    | Dispute fee.                                                                                |
 | reversal_amount      | integer    | The amount deducted due to the chargeback. Amounts are in cents (or other minor currency unit.)         |
 | reversal_currency    | string     | Currency code of the deduction amount. e.g. 'USD'.                                           |
-| fee                  | integer    | Dispute fee.                                                                                |
 | external_customer    | string     | Id of the customer (if any). This id is set by the payment processor of the dispute. |
 | customer_name        | string     | Name of the customer (if any).                                                       |
 | customer_email       | string     | Email of the customer (if any).                                                      |
@@ -73,7 +72,7 @@ ch.Disputes.Submit(*chargehound.UpdateDisputeParams)
 curl -X POST https://api.chargehound.com/v1/disputes/dp_XXX/submit \
   -u test_XXX: \
   -d template=unrecognized \
-  -d fields[customer_ip]="0.0.0.0" 
+  -d fields[customer_name]="Susie Chargeback" 
 ```
 
 ```js
@@ -84,7 +83,7 @@ var chargehound = require('chargehound')(
 chargehound.Disputes.submit('dp_XXX', {
   template: 'unrecognized',
   fields: {
-    customer_ip: '0.0.0.0'
+    customer_name: 'Susie Chargeback'
   }
 }, function (err, res) {
   // ...
@@ -98,7 +97,7 @@ chargehound.api_key = 'test_XXX'
 chargehound.Disputes.submit('dp_XXX',
   template='unrecognized',
   fields={
-    'customer_ip': '0.0.0.0'
+    'customer_name': 'Susie Chargeback'
   }
 )
 ```
@@ -110,7 +109,7 @@ Chargehound.api_key = 'test_XXX'
 Chargehound::Disputes.submit('dp_XXX',
   template: 'unrecognized',
   fields: {
-    'customer_ip' => '0.0.0.0'
+    'customer_name' => 'Susie Chargeback'
   }
 )
 ```
@@ -126,7 +125,7 @@ params := chargehound.UpdateDisputeParams{
   ID:       "dp_XXX",
   Template: "unrecognized",
   Fields: map[string]interface{}{
-    "customer_ip": "0.0.0.0",
+    "customer_name": "Susie Chargeback",
   },
 }
 
@@ -139,41 +138,47 @@ dispute, err := ch.Disputes.Submit(&params)
 {
   "external_customer": "cus_XXX",
   "livemode": false,
+  "updated": "2016-10-17T19:01:32.910954+00:00",
   "currency": "usd",
-  "cvc_check": null,
-  "address_line1_check": null,
-  "address_zip_check": null,
   "missing_fields": {},
+  "address_zip_check": "pass",
   "closed_at": null,
-  "statement_descriptor": null,
+  "id": "dp_XXX",
   "customer_name": "Susie Chargeback",
   "fee": 1500,
-  "due_by": "2016-03-30T23:59:59",
-  "charge": "ch_XXX",
-  "id": "dp_XXX",
+  "reversal_amount": null,
+  "due_by": "2016-11-17T19:01:32.905927+00:00",
   "state": "submitted",
+  "statement_descriptor": "COMPANY",
+  "source": "stripe",
+  "charge": "ch_XXX",
+  "reversal_fee": 1500,
   "template": "unrecognized",
+  "charge_currency": "usd",
   "is_charge_refundable": false,
-  "updated": "2016-03-16T20:58:34",
-  "customer_email": null,
+  "cvc_check": "unavailable",
+  "customer_email": "susie@example.com",
+  "account_id": "acct_XXX",
+  "address_line1_check": "pass",
   "object": "dispute",
   "customer_purchase_ip": null,
-  "disputed_at": "2016-03-14T19:35:17",
+  "disputed_at": "2016-09-17T19:01:32.906066+00:00",
   "submitted_count": 0,
   "reason": "unrecognized",
-  "charged_at": "2016-03-14T19:34:57",
+  "reversal_total": null,
+  "charge_amount": 500,
+  "reversal_currency": null,
   "address_zip": null,
-  "submitted_at": null,
-  "created": "2016-03-14T19:35:17",
+  "submitted_at": "2016-10-17T19:01:32.910973+00:00",
+  "created": "2016-09-17T19:01:32.906179+00:00",
   "url": "/v1/disputes/dp_XXX",
   "fields": {
-    "customer_ip": "0.0.0.0",
     "customer_name": "Susie Chargeback"
   },
-  "file_url": null,
-  "amount": 500,
-  "source": "stripe",
-  "products": []
+  "charged_at": "2016-09-17T19:01:32.906128+00:00",
+  "products": [],
+  "amount": 5000,
+  "processor": "stripe"
 }
 ```
 
@@ -276,83 +281,45 @@ disputeList, err := ch.Disputes.List(nil)
   "data": [
     {
       "external_customer": "cus_XXX",
+      "updated": null,
       "currency": "usd",
-      "cvc_check": null,
-      "address_line1_check": null,
-      "address_zip_check": null,
+      "missing_fields": {},
+      "address_zip_check": "pass",
       "closed_at": null,
-      "statement_descriptor": null,
+      "id": "dp_XXX",
       "customer_name": "Susie Chargeback",
       "fee": 1500,
-      "due_by": "2016-03-31T23:59:59",
-      "charge": "ch_17pPCgLU6oDzEeR14leOmeCC",
-      "id": "dp_XXX",
+      "reversal_amount": null,
+      "due_by": "2016-11-17T18:56:17.606381+00:00",
       "state": "needs_response",
+      "statement_descriptor": "COMPANY",
+      "source": "stripe",
+      "charge": "ch_XXX",
+      "reversal_fee": 1500,
       "template": null,
+      "charge_currency": "usd",
       "is_charge_refundable": false,
-      "updated": "2016-03-16T20:58:34",
-      "customer_email": null,
+      "cvc_check": "unavailable",
+      "customer_email": "susie@example.com",
+      "account_id": null,
+      "address_line1_check": "pass",
       "object": "dispute",
       "customer_purchase_ip": null,
-      "disputed_at": "2016-03-15T21:35:28",
+      "disputed_at": "2016-09-17T18:56:17.606518+00:00",
       "submitted_count": 0,
-      "reason": "general",
-      "charged_at": "2016-03-15T20:55:46",
+      "reason": "unrecognized",
+      "reversal_total": null,
+      "charge_amount": 500,
+      "reversal_currency": null,
       "address_zip": null,
       "submitted_at": null,
-      "created": "2016-03-15T21:35:28",
-      "fields": {
-        "exp_month": 12,
-        "last4": "0259",
-        "charged_at": "2016-03-15T20:55:46",
-        "card_brand": "Visa",
-        "exp_year": 2017,
-        "customer_name": "Susie Chargeback"
-      },
-      "file_url": null,
-      "amount": 515,
-      "source": "stripe",
-      "products": []
-    },
-    {
-      "external_customer": "cus_XXX",
-      "currency": "usd",
-      "cvc_check": null,
-      "address_line1_check": null,
-      "address_zip_check": null,
-      "closed_at": null,
-      "statement_descriptor": null,
-      "customer_name": "Susie Chargeback",
-      "fee": 1500,
-      "due_by": "2016-03-31T23:59:59",
-      "charge": "ch_17pMauLU6oDzEeR1CKoB9Ovn",
-      "id": "dp_abc",
-      "state": "submitted",
-      "template": "default",
-      "is_charge_refundable": false,
-      "updated": "2016-03-16T20:58:34",
-      "customer_email": null,
-      "object": "dispute",
-      "customer_purchase_ip": null,
-      "disputed_at": "2016-03-15T18:09:01",
-      "submitted_count": 3,
-      "reason": "general",
-      "charged_at": "2016-03-15T18:08:36",
-      "address_zip": null,
-      "submitted_at": "2016-03-15T18:38:49",
-      "created": "2016-03-15T18:09:01",
-      "fields": {
-        "exp_month": 12,
-        "last4": "0259",
-        "charged_at": "2016-03-15T18:08:36",
-        "card_brand": "Visa",
-        "exp_year": 2017,
-        "customer_name": "Susie Chargeback"
-      },
-      "file_url": null,
-      "amount": 500,
-      "source": "stripe",
-      "products": []
+      "created": "2016-09-17T18:56:17.606631+00:00",
+      "url": "/v1/disputes/dp_XXX",
+      "fields": {},
+      "charged_at": "2016-09-17T18:56:17.606579+00:00",
+      "products": [],
+      "amount": 5000,
+      "processor": "stripe"
     }
   ]
 }
@@ -443,45 +410,45 @@ dispute, err := ch.Disputes.Retrieve(&params)
 {
   "external_customer": "cus_XXX",
   "livemode": false,
+  "updated": null,
   "currency": "usd",
-  "cvc_check": null,
-  "address_line1_check": null,
-  "address_zip_check": null,
   "missing_fields": {},
+  "address_zip_check": "pass",
   "closed_at": null,
-  "statement_descriptor": null,
-  "customer_name": "Customer for test@example.com",
-  "fee": 1500,
-  "due_by": "2016-03-31T23:59:59",
-  "charge": "ch_17pPCgLU6oDzEeR14leOmeCC",
   "id": "dp_XXX",
+  "customer_name": "Susie Chargeback",
+  "fee": 1500,
+  "reversal_amount": null,
+  "due_by": "2016-11-17T18:56:17.606381+00:00",
   "state": "needs_response",
+  "statement_descriptor": "COMPANY",
+  "source": "stripe",
+  "charge": "ch_XXX",
+  "reversal_fee": 1500,
   "template": null,
+  "charge_currency": "usd",
   "is_charge_refundable": false,
-  "updated": "2016-03-16T20:58:34",
-  "customer_email": null,
+  "cvc_check": "unavailable",
+  "customer_email": "susie@example.com",
+  "account_id": null,
+  "address_line1_check": "pass",
   "object": "dispute",
   "customer_purchase_ip": null,
-  "disputed_at": "2016-03-15T21:35:28",
+  "disputed_at": "2016-09-17T18:56:17.606518+00:00",
   "submitted_count": 0,
-  "reason": "general",
-  "charged_at": "2016-03-15T20:55:46",
+  "reason": "unrecognized",
+  "reversal_total": null,
+  "charge_amount": 500,
+  "reversal_currency": null,
   "address_zip": null,
   "submitted_at": null,
-  "created": "2016-03-15T21:35:28",
+  "created": "2016-09-17T18:56:17.606631+00:00",
   "url": "/v1/disputes/dp_XXX",
-  "fields": {
-    "exp_month": 12,
-    "last4": "0259",
-    "charged_at": "2016-03-15T20:55:46",
-    "card_brand": "Visa",
-    "exp_year": 2017,
-    "customer_name": "Susie Chargeback"
-  },
-  "file_url": null,
-  "amount": 515,
-  "source": "stripe",
-  "products": []
+  "fields": {},
+  "charged_at": "2016-09-17T18:56:17.606579+00:00",
+  "products": [],
+  "amount": 5000,
+  "processor": "stripe"
 }
 ```
 
@@ -514,10 +481,10 @@ ch.Disputes.Update(*chargehound.UpdateDisputeParams)
 > Example request:
 
 ```sh
-curl -X PUT https://api.chargehound.com/v1/disputes/dp_XXX/update \
+curl -X PUT https://api.chargehound.com/v1/disputes/dp_XXX \
   -u test_XXX: \
   -d template=unrecognized \
-  -d fields[customer_ip]="0.0.0.0" 
+  -d fields[customer_name]="Susie Chargeback" 
 ```
 
 ```js
@@ -528,7 +495,7 @@ var chargehound = require('chargehound')(
 chargehound.Disputes.update('dp_XXX', {
   template: 'unrecognized',
   fields: {
-    customer_ip: '0.0.0.0'
+    customer_name: 'Susie Chargeback'
   }
 }, function (err, res) {
   // ...
@@ -542,7 +509,7 @@ chargehound.api_key = 'test_XXX'
 chargehound.Disputes.update('dp_XXX',
   template='unrecognized',
   fields={
-    'customer_ip': '0.0.0.0'
+    'customer_name': 'Susie Chargeback'
   }
 )
 ```
@@ -554,7 +521,7 @@ Chargehound.api_key = 'test_XXX'
 Chargehound::Disputes.update('dp_XXX',
   template: 'unrecognized',
   fields: {
-    'customer_ip' => '0.0.0.0'
+    'customer_name' => 'Susie Chargeback'
   }
 )
 ```
@@ -570,7 +537,7 @@ params := chargehound.UpdateDisputeParams{
   ID:       "dp_XXX",
   Template: "unrecognized",
   Fields: map[string]interface{}{
-    "customer_ip": "0.0.0.0",
+    "customer_name": "Susie Chargeback",
   },
 }
 
@@ -583,41 +550,47 @@ dispute, err := ch.Disputes.Update(&params)
 {
   "external_customer": "cus_XXX",
   "livemode": false,
+  "updated": "2016-10-17T19:01:32.910331+00:00",
   "currency": "usd",
-  "cvc_check": null,
-  "address_line1_check": null,
-  "address_zip_check": null,
   "missing_fields": {},
+  "address_zip_check": "pass",
   "closed_at": null,
-  "statement_descriptor": null,
+  "id": "dp_XXX",
   "customer_name": "Susie Chargeback",
   "fee": 1500,
-  "due_by": "2016-03-30T23:59:59",
-  "charge": "ch_XXX",
-  "id": "dp_XXX",
+  "reversal_amount": null,
+  "due_by": "2016-11-17T19:01:32.905927+00:00",
   "state": "needs_response",
+  "statement_descriptor": "COMPANY",
+  "source": "stripe",
+  "charge": "ch_XXX",
+  "reversal_fee": 1500,
   "template": "unrecognized",
+  "charge_currency": "usd",
   "is_charge_refundable": false,
-  "updated": "2016-03-16T21:48:34",
-  "customer_email": null,
+  "cvc_check": "unavailable",
+  "customer_email": "susie@example.com",
+  "account_id": "acct_XXX",
+  "address_line1_check": "pass",
   "object": "dispute",
   "customer_purchase_ip": null,
-  "disputed_at": "2016-03-14T19:35:17",
+  "disputed_at": "2016-09-17T19:01:32.906066+00:00",
   "submitted_count": 0,
   "reason": "unrecognized",
-  "charged_at": "2016-03-14T19:34:57",
+  "reversal_total": null,
+  "charge_amount": 500,
+  "reversal_currency": null,
   "address_zip": null,
   "submitted_at": null,
-  "created": "2016-03-14T19:35:17",
+  "created": "2016-09-17T19:01:32.906179+00:00",
   "url": "/v1/disputes/dp_XXX",
   "fields": {
-    "customer_ip": "0.0.0.0",
     "customer_name": "Susie Chargeback"
   },
-  "file_url": null,
-  "amount": 500,
-  "source": "stripe",
-  "products": []
+  "charged_at": "2016-09-17T19:01:32.906128+00:00",
+  "products": [],
+  "amount": 5000,
+  "processor": "stripe"
 }
 ```
 
@@ -655,233 +628,7 @@ If a customer purchased multiple products in a disputed order, those products ca
 | url          | url               | (Optional) The URL of the purchased item, if it is listed online.                           |
 
 
-## Submitting product data with a dispute
-
-Product data can be sent when a dispute is submitted.
-
-> Definition:
-
-```sh
-POST /v1/disputes/{{dispute_id}}/submit
-```
-
-```js
-chargehound.Disputes.submit();
-```
-
-```python
-chargehound.Disputes.submit()
-```
-
-```ruby
-Chargehound::Disputes.submit
-```
-
-```go
-ch.Disputes.Submit(*chargehound.UpdateDisputeParams)
-```
-
-> Example request:
-
-```sh
-curl -X POST https://api.chargehound.com/v1/disputes/dp_XXX/submit \
-  -u test_XXX: \
-  -d template=unrecognized \
-  -d products="[{
-                   \"name\" : \"Saxophone\",
-                   \"description\" : \"Alto saxophone, with carrying case\",
-                   \"image\" : \"http://s3.amazonaws.com/chargehound/saxophone.png\",
-                   \"sku\" : \"17283001272\",
-                   \"quantity\" : 1,
-                   \"amount\" : 20000,
-                   \"url\" : \"http://www.example.com\"
-                },{
-                   \"name\" : \"Milk\",
-                   \"description\" : \"Semi-skimmed Organic\",
-                   \"image\" : \"http://s3.amazonaws.com/chargehound/milk.png\",
-                   \"sku\" : \"26377382910\",
-                   \"quantity\" : \"64oz\",
-                   \"amount\" : 400,
-                   \"url\" : \"http://www.example.com\"
-                }]"
-```
-
-```js
-var chargehound = require('chargehound')(
-  'test_XXX'
-);
-
-chargehound.Disputes.submit('dp_XXX', {
-  template: 'unrecognized',
-  products: [{
-    'name': 'Saxophone',
-    'description': 'Alto saxophone, with carrying case',
-    'image': 'http://s3.amazonaws.com/chargehound/saxophone.png',
-    'sku': '17283001272',
-    'quantity': 1,
-    'amount': 20000,
-    'url': 'http://www.example.com'
-  },{
-    'name': 'Milk',
-    'description': 'Semi-skimmed Organic',
-    'image': 'http://s3.amazonaws.com/chargehound/milk.png',
-    'sku': '26377382910',
-    'quantity': '64oz',
-    'amount': 400,
-    'url': 'http://www.example.com'
-  }]
-}, function (err, res) {
-  // ...
-});
-```
-
-```python
-import chargehound
-chargehound.api_key = 'test_XXX'
-
-chargehound.Disputes.submit('dp_XXX',
-  template='unrecognized',
-  products=[{
-     'name': 'Saxophone',
-     'description': 'Alto saxophone, with carrying case',
-     'image': 'http://s3.amazonaws.com/chargehound/saxophone.png',
-     'sku': '17283001272',
-     'quantity': 1,
-     'amount': 20000,
-     'url': 'http://www.example.com'
-  }, {
-     'name': 'Milk',
-     'description': 'Semi-skimmed Organic',
-     'image': 'http://s3.amazonaws.com/chargehound/milk.png',
-     'sku': '26377382910',
-     'quantity': '64oz',
-     'amount': 400,
-     'url': 'http://www.example.com'
-  }]
-)
-```
-
-```ruby
-require 'chargehound'
-Chargehound.api_key = 'test_XXX'
-
-Chargehound::Disputes.submit('dp_XXX',
-  template: 'unrecognized',
-  products: [{
-     'name' => 'Saxophone',
-     'description' => 'Alto saxophone, with carrying case',
-     'image' => 'http =>//s3.amazonaws.com/chargehound/saxophone.png',
-     'sku' => '17283001272',
-     'quantity' => 1,
-     'amount' => 20000,
-     'url' => 'http =>//www.example.com'
-  },{
-     'name' => 'Milk',
-     'description' => 'Semi-skimmed Organic',
-     'image' => 'http =>//s3.amazonaws.com/chargehound/milk.png',
-     'sku' => '26377382910',
-     'quantity' => '64oz',
-     'amount' => 400,
-     'url' => 'http =>//www.example.com'
-  }]
-)
-```
-
-```go
-import (
-  "github.com/chargehound/chargehound-go"
-)
-
-ch := chargehound.New("test_XXX") 
-
-params := chargehound.UpdateDisputeParams{
-  ID:       "dp_2284d5ac6eba4e4e8e9a80df0f9c2287",
-  Template: "unrecognized",
-  Products: []chargehound.Product{
-    {
-      Name:        "Saxophone",
-      Description: "Alto saxophone, with carrying case",
-      Image:       "http://s3.amazonaws.com/chargehound/saxophone.png",
-      Sku:         "17283001272",
-      Quantity:    1,
-      Amount:      20000,
-      Url:         "http://www.example.com",
-    },
-    {
-      Name:        "Milk",
-      Description: "Semi-skimmed Organic",
-      Image:       "http://s3.amazonaws.com/chargehound/milk.png",
-      Sku:         "26377382910",
-      Quantity:    "64oz",
-      Amount:      400,
-      Url:         "http://www.example.com",
-    },
-  },
-}
-
-dispute, err := ch.Disputes.Submit(&params)
-```
-
-> Example response:
-
-```json
-{
-  "external_customer": "cus_XXX",
-  "livemode": false,
-  "currency": "usd",
-  "cvc_check": null,
-  "address_line1_check": null,
-  "address_zip_check": null,
-  "missing_fields": {},
-  "closed_at": null,
-  "statement_descriptor": null,
-  "customer_name": "Susie Chargeback",
-  "fee": 1500,
-  "due_by": "2016-03-30T23:59:59",
-  "charge": "ch_XXX",
-  "id": "dp_XXX",
-  "state": "submitted",
-  "template": "unrecognized",
-  "is_charge_refundable": false,
-  "updated": "2016-03-16T20:58:34",
-  "customer_email": null,
-  "object": "dispute",
-  "customer_purchase_ip": null,
-  "disputed_at": "2016-03-14T19:35:17",
-  "submitted_count": 0,
-  "reason": "unrecognized",
-  "charged_at": "2016-03-14T19:34:57",
-  "address_zip": null,
-  "submitted_at": null,
-  "created": "2016-03-14T19:35:17",
-  "url": "/v1/disputes/dp_XXX",
-  "products": [{
-      "name": "Saxophone",
-      "description": "Alto saxophone, with carrying case",
-      "image": "http://s3.amazonaws.com/chargehound/saxophone.png",
-      "sku": "17283001272",
-      "quantity": "1",
-      "amount": 20000,
-      "url": "http://www.example.com"
-    },{
-      "name": "Milk",
-      "description": "Semi-skimmed Organic",
-      "image": "http://s3.amazonaws.com/chargehound/milk.png",
-      "sku": "26377382910",
-      "quantity": "64oz",
-      "amount": 400,
-      "url": "http://www.example.com"
-  }],
-  "file_url": null,
-  "amount": 21900,
-  "source": "stripe"
-}
-```
-
-
 ## Updating product data 
-
-You can update the product data on a dispute.
 
 > Definition:
 
@@ -908,7 +655,7 @@ ch.Disputes.Update(*chargehound.UpdateDisputeParams)
 > Example request:
 
 ```sh
-curl -X PUT https://api.chargehound.com/v1/disputes/dp_XXX/update \
+curl -X PUT https://api.chargehound.com/v1/disputes/dp_XXX \
   -u test_XXX: \
   -d products="[{
                    \"name\" : \"Saxophone\",
@@ -1048,57 +795,81 @@ dispute, err := ch.Disputes.Update(&params)
 {
   "external_customer": "cus_XXX",
   "livemode": false,
+  "updated": null,
   "currency": "usd",
-  "cvc_check": null,
-  "address_line1_check": null,
-  "address_zip_check": null,
   "missing_fields": {},
+  "address_zip_check": "pass",
   "closed_at": null,
-  "statement_descriptor": null,
+  "id": "dp_XXX",
   "customer_name": "Susie Chargeback",
   "fee": 1500,
-  "due_by": "2016-03-30T23:59:59",
-  "charge": "ch_XXX",
-  "id": "dp_XXX",
+  "reversal_amount": null,
+  "due_by": "2016-11-17T18:56:17.606381+00:00",
   "state": "needs_response",
-  "template": "unrecognized",
+  "statement_descriptor": "COMPANY",
+  "source": "stripe",
+  "charge": "ch_XXX",
+  "reversal_fee": 1500,
+  "template": null,
+  "charge_currency": "usd",
   "is_charge_refundable": false,
-  "updated": "2016-03-16T21:48:34",
-  "customer_email": null,
+  "cvc_check": "unavailable",
+  "customer_email": "susie@example.com",
+  "account_id": null,
+  "address_line1_check": "pass",
   "object": "dispute",
   "customer_purchase_ip": null,
-  "disputed_at": "2016-03-14T19:35:17",
+  "disputed_at": "2016-09-17T18:56:17.606518+00:00",
   "submitted_count": 0,
   "reason": "unrecognized",
-  "charged_at": "2016-03-14T19:34:57",
+  "reversal_total": null,
+  "charge_amount": 500,
+  "reversal_currency": null,
   "address_zip": null,
   "submitted_at": null,
-  "created": "2016-03-14T19:35:17",
+  "created": "2016-09-17T18:56:17.606631+00:00",
   "url": "/v1/disputes/dp_XXX",
-  "products": [{
-      "name": "Saxophone",
-      "description": "Alto saxophone, with carrying case",
-      "image": "http://s3.amazonaws.com/chargehound/saxophone.png",
+  "fields": {},
+  "charged_at": "2016-09-17T18:56:17.606579+00:00",
+  "products": [
+    {
       "sku": "17283001272",
-      "quantity": "1",
+      "name": "Saxophone",
+      "url": "http://www.example.com",
+      "image": "http://s3.amazonaws.com/chargehound/saxophone.png",
       "amount": 20000,
-      "url": "http://www.example.com"
-    },{
-      "name": "Milk",
-      "description": "Semi-skimmed Organic",
-      "image": "http://s3.amazonaws.com/chargehound/milk.png",
+      "quantity": "1",
+      "description": "Alto saxophone, with carrying case"
+    },
+    {
       "sku": "26377382910",
-      "quantity": "64oz",
+      "name": "Milk",
+      "url": "http://www.example.com",
+      "image": "http://s3.amazonaws.com/chargehound/milk.png",
       "amount": 400,
-      "url": "http://www.example.com"
-  }],
-  "file_url": null,
-  "amount": 21900,
-  "source": "stripe"
+      "quantity": "64oz",
+      "description": "Semi-skimmed Organic"
+    }
+  ],
+  "amount": 5000,
+  "processor": "stripe"
 }
 ```
 
+### Parameters:
+
+| Parameter      | Type       | Required?  | Description                                                                                                           |
+| -------------  | ---------  |------------|-----------------------------------------------------------------------------------------------------------------------|
+| template       | string     | optional   | The id of the template to use.                                                                                        |
+| fields         | dictionary | optional   | Key value pairs to hydrate the template's evidence fields.                                                            |
+| products       | array      | optional   | List of products the customer purchased.                                                                              |
+| account_id | string     | optional   | Set the account id for Connected accounts that are charged directly through Stripe. |
+
 ## Connected accounts
+
+In order to work with Stripe Managed or Connected account integrations that charge directly, you will need to attach the Stripe account id to the dispute using the `account_id` parameter. When you recieve a webhook to your Connect webhook endpoint, get the `user_id` from the event. The `user_id` is the Stripe account id that you will need to set.
+
+### Updating Connected accounts
 
 > Definition:
 
@@ -1128,8 +899,7 @@ ch.Disputes.Submit(*chargehound.UpdateDisputeParams)
 curl -X POST https://api.chargehound.com/v1/disputes/dp_XXX/submit \
   -u test_XXX: \
   -d template=unrecognized \
-  -d account_id=acct_xxx \
-  -d fields[customer_ip]="0.0.0.0" 
+  -d account_id=acct_xxx 
 ```
 
 ```js
@@ -1139,10 +909,7 @@ var chargehound = require('chargehound')(
 
 chargehound.Disputes.submit('dp_XXX', {
   template: 'unrecognized',
-  account_id: 'acct_xxx',
-  fields: {
-    customer_ip: '0.0.0.0'
-  }
+  account_id: 'acct_xxx'
 }, function (err, res) {
   // ...
 });
@@ -1154,10 +921,7 @@ chargehound.api_key = 'test_XXX'
 
 chargehound.Disputes.submit('dp_XXX',
   template='unrecognized',
-  account_id='acct_xxx',
-  fields={
-    'customer_ip': '0.0.0.0'
-  }
+  account_id='acct_xxx'
 )
 ```
 
@@ -1167,10 +931,7 @@ Chargehound.api_key = 'test_XXX'
 
 Chargehound::Disputes.submit('dp_XXX',
   template: 'unrecognized',
-  account_id: 'acct_xxx',
-  fields: {
-    'customer_ip' => '0.0.0.0'
-  }
+  account_id: 'acct_xxx'
 )
 ```
 
@@ -1185,9 +946,6 @@ params := chargehound.UpdateDisputeParams{
   ID:        "dp_XXX",
   Template:  "unrecognized",
   AccountID: "acct_xxx",
-  Fields: map[string]interface{}{
-    "customer_ip": "0.0.0.0",
-  },
 }
 
 dispute, err := ch.Disputes.Submit(&params)
@@ -1199,46 +957,47 @@ dispute, err := ch.Disputes.Submit(&params)
 {
   "external_customer": "cus_XXX",
   "livemode": false,
+  "updated": null,
   "currency": "usd",
-  "cvc_check": null,
-  "address_line1_check": null,
-  "address_zip_check": null,
   "missing_fields": {},
+  "address_zip_check": "pass",
   "closed_at": null,
-  "statement_descriptor": null,
+  "id": "dp_XXX",
   "customer_name": "Susie Chargeback",
   "fee": 1500,
-  "due_by": "2016-03-30T23:59:59",
+  "reversal_amount": null,
+  "due_by": "2016-11-17T18:56:17.606381+00:00",
+  "state": "needs_response",
+  "statement_descriptor": "COMPANY",
+  "source": "stripe",
   "charge": "ch_XXX",
-  "id": "dp_XXX",
-  "state": "submitted",
-  "template": "unrecognized",
+  "reversal_fee": 1500,
+  "template": null,
+  "charge_currency": "usd",
   "is_charge_refundable": false,
-  "updated": "2016-03-16T20:58:34",
-  "customer_email": null,
+  "cvc_check": "unavailable",
+  "customer_email": "susie@example.com",
+  "account_id": "acct_XXX",
+  "address_line1_check": "pass",
   "object": "dispute",
   "customer_purchase_ip": null,
-  "disputed_at": "2016-03-14T19:35:17",
+  "disputed_at": "2016-09-17T18:56:17.606518+00:00",
   "submitted_count": 0,
   "reason": "unrecognized",
-  "charged_at": "2016-03-14T19:34:57",
+  "reversal_total": null,
+  "charge_amount": 500,
+  "reversal_currency": null,
   "address_zip": null,
   "submitted_at": null,
-  "created": "2016-03-14T19:35:17",
+  "created": "2016-09-17T18:56:17.606631+00:00",
   "url": "/v1/disputes/dp_XXX",
-  "fields": {
-    "customer_ip": "0.0.0.0",
-    "customer_name": "Susie Chargeback"
-  },
-  "file_url": null,
-  "amount": 500,
-  "source": "stripe",
-  "products": []
+  "fields": {},
+  "charged_at": "2016-09-17T18:56:17.606579+00:00",
+  "products": [],
+  "amount": 5000,
+  "processor": "stripe"
 }
 ```
-
-In order to work with Stripe Managed or Connected account integrations that charge directly, you will need to attach the Stripe account id to the dispute using the `account_id` parameter. When you recieve a webhook to your Connect webhook endpoint, get the `user_id` from the event. The `user_id` is the Stripe account id that you will need to set.
-
 
 ### Parameters:
 
