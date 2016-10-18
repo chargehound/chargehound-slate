@@ -138,7 +138,7 @@ dispute, err := ch.Disputes.Submit(&params)
 {
   "external_customer": "cus_XXX",
   "livemode": false,
-  "updated": "2016-10-17T19:01:32.910954+00:00",
+  "updated": "2016-10-17T19:01:32",
   "currency": "usd",
   "missing_fields": {},
   "address_zip_check": "pass",
@@ -147,7 +147,7 @@ dispute, err := ch.Disputes.Submit(&params)
   "customer_name": "Susie Chargeback",
   "fee": 1500,
   "reversal_amount": null,
-  "due_by": "2016-11-17T19:01:32.905927+00:00",
+  "due_by": "2016-11-17T19:01:32",
   "state": "submitted",
   "statement_descriptor": "COMPANY",
   "source": "stripe",
@@ -158,24 +158,24 @@ dispute, err := ch.Disputes.Submit(&params)
   "is_charge_refundable": false,
   "cvc_check": "unavailable",
   "customer_email": "susie@example.com",
-  "account_id": "acct_XXX",
+  "account_id": null,
   "address_line1_check": "pass",
   "object": "dispute",
   "customer_purchase_ip": null,
-  "disputed_at": "2016-09-17T19:01:32.906066+00:00",
+  "disputed_at": "2016-09-17T19:01:32",
   "submitted_count": 0,
   "reason": "unrecognized",
   "reversal_total": null,
   "charge_amount": 500,
   "reversal_currency": null,
   "address_zip": null,
-  "submitted_at": "2016-10-17T19:01:32.910973+00:00",
-  "created": "2016-09-17T19:01:32.906179+00:00",
+  "submitted_at": "2016-10-17T19:01:32",
+  "created": "2016-09-17T19:01:32",
   "url": "/v1/disputes/dp_XXX",
   "fields": {
     "customer_name": "Susie Chargeback"
   },
-  "charged_at": "2016-09-17T19:01:32.906128+00:00",
+  "charged_at": "2016-09-17T19:01:32",
   "products": [],
   "amount": 5000,
   "processor": "stripe"
@@ -290,7 +290,7 @@ disputeList, err := ch.Disputes.List(nil)
       "customer_name": "Susie Chargeback",
       "fee": 1500,
       "reversal_amount": null,
-      "due_by": "2016-11-17T18:56:17.606381+00:00",
+      "due_by": "2016-11-17T18:56:17",
       "state": "needs_response",
       "statement_descriptor": "COMPANY",
       "source": "stripe",
@@ -305,7 +305,7 @@ disputeList, err := ch.Disputes.List(nil)
       "address_line1_check": "pass",
       "object": "dispute",
       "customer_purchase_ip": null,
-      "disputed_at": "2016-09-17T18:56:17.606518+00:00",
+      "disputed_at": "2016-09-17T18:56:17",
       "submitted_count": 0,
       "reason": "unrecognized",
       "reversal_total": null,
@@ -313,10 +313,10 @@ disputeList, err := ch.Disputes.List(nil)
       "reversal_currency": null,
       "address_zip": null,
       "submitted_at": null,
-      "created": "2016-09-17T18:56:17.606631+00:00",
+      "created": "2016-09-17T18:56:17",
       "url": "/v1/disputes/dp_XXX",
       "fields": {},
-      "charged_at": "2016-09-17T18:56:17.606579+00:00",
+      "charged_at": "2016-09-17T18:56:17",
       "products": [],
       "amount": 5000,
       "processor": "stripe"
@@ -419,7 +419,7 @@ dispute, err := ch.Disputes.Retrieve(&params)
   "customer_name": "Susie Chargeback",
   "fee": 1500,
   "reversal_amount": null,
-  "due_by": "2016-11-17T18:56:17.606381+00:00",
+  "due_by": "2016-11-17T18:56:17",
   "state": "needs_response",
   "statement_descriptor": "COMPANY",
   "source": "stripe",
@@ -434,7 +434,7 @@ dispute, err := ch.Disputes.Retrieve(&params)
   "address_line1_check": "pass",
   "object": "dispute",
   "customer_purchase_ip": null,
-  "disputed_at": "2016-09-17T18:56:17.606518+00:00",
+  "disputed_at": "2016-09-17T18:56:17",
   "submitted_count": 0,
   "reason": "unrecognized",
   "reversal_total": null,
@@ -442,10 +442,10 @@ dispute, err := ch.Disputes.Retrieve(&params)
   "reversal_currency": null,
   "address_zip": null,
   "submitted_at": null,
-  "created": "2016-09-17T18:56:17.606631+00:00",
+  "created": "2016-09-17T18:56:17",
   "url": "/v1/disputes/dp_XXX",
   "fields": {},
-  "charged_at": "2016-09-17T18:56:17.606579+00:00",
+  "charged_at": "2016-09-17T18:56:17",
   "products": [],
   "amount": 5000,
   "processor": "stripe"
@@ -550,7 +550,7 @@ dispute, err := ch.Disputes.Update(&params)
 {
   "external_customer": "cus_XXX",
   "livemode": false,
-  "updated": "2016-10-17T19:01:32.910331+00:00",
+  "updated": "2016-10-17T19:01:32",
   "currency": "usd",
   "missing_fields": {},
   "address_zip_check": "pass",
@@ -559,7 +559,7 @@ dispute, err := ch.Disputes.Update(&params)
   "customer_name": "Susie Chargeback",
   "fee": 1500,
   "reversal_amount": null,
-  "due_by": "2016-11-17T19:01:32.905927+00:00",
+  "due_by": "2016-11-17T19:01:32",
   "state": "needs_response",
   "statement_descriptor": "COMPANY",
   "source": "stripe",
@@ -570,11 +570,11 @@ dispute, err := ch.Disputes.Update(&params)
   "is_charge_refundable": false,
   "cvc_check": "unavailable",
   "customer_email": "susie@example.com",
-  "account_id": "acct_XXX",
+  "account_id": null,
   "address_line1_check": "pass",
   "object": "dispute",
   "customer_purchase_ip": null,
-  "disputed_at": "2016-09-17T19:01:32.906066+00:00",
+  "disputed_at": "2016-09-17T19:01:32",
   "submitted_count": 0,
   "reason": "unrecognized",
   "reversal_total": null,
@@ -582,12 +582,12 @@ dispute, err := ch.Disputes.Update(&params)
   "reversal_currency": null,
   "address_zip": null,
   "submitted_at": null,
-  "created": "2016-09-17T19:01:32.906179+00:00",
+  "created": "2016-09-17T19:01:32",
   "url": "/v1/disputes/dp_XXX",
   "fields": {
     "customer_name": "Susie Chargeback"
   },
-  "charged_at": "2016-09-17T19:01:32.906128+00:00",
+  "charged_at": "2016-09-17T19:01:32",
   "products": [],
   "amount": 5000,
   "processor": "stripe"
@@ -804,7 +804,7 @@ dispute, err := ch.Disputes.Update(&params)
   "customer_name": "Susie Chargeback",
   "fee": 1500,
   "reversal_amount": null,
-  "due_by": "2016-11-17T18:56:17.606381+00:00",
+  "due_by": "2016-11-17T18:56:17",
   "state": "needs_response",
   "statement_descriptor": "COMPANY",
   "source": "stripe",
@@ -819,7 +819,7 @@ dispute, err := ch.Disputes.Update(&params)
   "address_line1_check": "pass",
   "object": "dispute",
   "customer_purchase_ip": null,
-  "disputed_at": "2016-09-17T18:56:17.606518+00:00",
+  "disputed_at": "2016-09-17T18:56:17",
   "submitted_count": 0,
   "reason": "unrecognized",
   "reversal_total": null,
@@ -827,10 +827,10 @@ dispute, err := ch.Disputes.Update(&params)
   "reversal_currency": null,
   "address_zip": null,
   "submitted_at": null,
-  "created": "2016-09-17T18:56:17.606631+00:00",
+  "created": "2016-09-17T18:56:17",
   "url": "/v1/disputes/dp_XXX",
   "fields": {},
-  "charged_at": "2016-09-17T18:56:17.606579+00:00",
+  "charged_at": "2016-09-17T18:56:17",
   "products": [
     {
       "sku": "17283001272",
@@ -899,7 +899,7 @@ ch.Disputes.Submit(*chargehound.UpdateDisputeParams)
 curl -X POST https://api.chargehound.com/v1/disputes/dp_XXX/submit \
   -u test_XXX: \
   -d template=unrecognized \
-  -d account_id=acct_xxx 
+  -d account_id=acct_XXX 
 ```
 
 ```js
@@ -909,7 +909,7 @@ var chargehound = require('chargehound')(
 
 chargehound.Disputes.submit('dp_XXX', {
   template: 'unrecognized',
-  account_id: 'acct_xxx'
+  account_id: 'acct_XXX'
 }, function (err, res) {
   // ...
 });
@@ -921,7 +921,7 @@ chargehound.api_key = 'test_XXX'
 
 chargehound.Disputes.submit('dp_XXX',
   template='unrecognized',
-  account_id='acct_xxx'
+  account_id='acct_XXX'
 )
 ```
 
@@ -931,7 +931,7 @@ Chargehound.api_key = 'test_XXX'
 
 Chargehound::Disputes.submit('dp_XXX',
   template: 'unrecognized',
-  account_id: 'acct_xxx'
+  account_id: 'acct_XXX'
 )
 ```
 
@@ -945,7 +945,7 @@ ch := chargehound.New("test_XXX")
 params := chargehound.UpdateDisputeParams{
   ID:        "dp_XXX",
   Template:  "unrecognized",
-  AccountID: "acct_xxx",
+  AccountID: "acct_XXX",
 }
 
 dispute, err := ch.Disputes.Submit(&params)
@@ -966,7 +966,7 @@ dispute, err := ch.Disputes.Submit(&params)
   "customer_name": "Susie Chargeback",
   "fee": 1500,
   "reversal_amount": null,
-  "due_by": "2016-11-17T18:56:17.606381+00:00",
+  "due_by": "2016-11-17T18:56:17",
   "state": "needs_response",
   "statement_descriptor": "COMPANY",
   "source": "stripe",
@@ -981,7 +981,7 @@ dispute, err := ch.Disputes.Submit(&params)
   "address_line1_check": "pass",
   "object": "dispute",
   "customer_purchase_ip": null,
-  "disputed_at": "2016-09-17T18:56:17.606518+00:00",
+  "disputed_at": "2016-09-17T18:56:17",
   "submitted_count": 0,
   "reason": "unrecognized",
   "reversal_total": null,
@@ -989,10 +989,10 @@ dispute, err := ch.Disputes.Submit(&params)
   "reversal_currency": null,
   "address_zip": null,
   "submitted_at": null,
-  "created": "2016-09-17T18:56:17.606631+00:00",
+  "created": "2016-09-17T18:56:17",
   "url": "/v1/disputes/dp_XXX",
   "fields": {},
-  "charged_at": "2016-09-17T18:56:17.606579+00:00",
+  "charged_at": "2016-09-17T18:56:17",
   "products": [],
   "amount": 5000,
   "processor": "stripe"
