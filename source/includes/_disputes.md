@@ -40,7 +40,7 @@ A Dispute object is:
 | created              | string     | ISO 8601 timestamp.                                                                         |
 | updated              | string     | ISO 8601 timestamp.                                                                         |
 | source               | string     | The source of the dispute. One of `mock`, `braintree`, `api` or `stripe` |
-| processor            | string     | The payment processor of the dispute. One of `mock`, `braintree` or `stripe` |
+| processor            | string     | The payment processor of the dispute. One of `braintree` or `stripe` |
 
 ## Submitting a dispute
 
