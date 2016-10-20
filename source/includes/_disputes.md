@@ -191,6 +191,7 @@ The dispute will be in the `submitted` state if the submit was successful.
 | fields         | dictionary | optional   | Key value pairs to hydrate the template's evidence fields.                                                            |
 | products       | array      | optional   | List of products the customer purchased.                                                                              |
 | account_id | string     | optional   | Set the account id for Connected accounts that are charged directly through Stripe. |
+| charge | string     | optional   | You will need to send the transaction id if the payment processor is Braintree. |
 
 ### Possible errors:
 
@@ -592,6 +593,7 @@ You can update the template and the fields on a dispute.
 | fields         | dictionary | optional   | Key value pairs to hydrate the template's evidence fields.                                                            |
 | products       | array      | optional   | (Optional) List of products the customer purchased. (See [Product data](#product-data) for details.)                  |
 | account_id | string     | optional   | Set the account id for Connected accounts that are charged directly through Stripe. |
+| charge | string     | optional   | You will need to send the transaction id if the payment processor is Braintree. |
 
 ### Possible errors:
 
@@ -849,6 +851,7 @@ dispute, err := ch.Disputes.Update(&params)
 | fields         | dictionary | optional   | Key value pairs to hydrate the template's evidence fields.                                                            |
 | products       | array      | optional   | List of products the customer purchased.                                                                              |
 | account_id | string     | optional   | Set the account id for Connected accounts that are charged directly through Stripe. |
+| charge | string     | optional   | You will need to send the transaction id if the payment processor is Braintree. |
 
 ## Connected accounts
 
@@ -989,3 +992,4 @@ dispute, err := ch.Disputes.Submit(&params)
 | fields         | dictionary | optional   | Key value pairs to hydrate the template's evidence fields.                                                            |
 | products       | array      | optional   | List of products the customer purchased.                                                                              |
 | account_id | string     | optional   | Set the account id for Connected accounts that are charged directly through Stripe. |
+| charge | string     | optional   | You will need to send the transaction id if the payment processor is Braintree. |
