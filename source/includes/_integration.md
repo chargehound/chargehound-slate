@@ -12,9 +12,11 @@ In order to submit a dispute you will also need to specify the template to use. 
 
 Depending on the template that you want to use, you will need to collect specific evidence in order to submit a dispute. The `fields` hash on a dispute represents this evidence. Chargehound will fill some of the evidence fields automatically, but it is unlikely that we can get all the evidence we need without your help. Using the API you can identify the missing fields that represent the evidence you will need to collect yourself.
 
-When your organization first connected to Stripe, Chargehound imported your current queue of disputes needing response. In order to figure out what evidence you need to collect we will need to look at one of these real disputes, but don't worry, we aren't going to submit the dispute yet. List your disputes using the [list endpoint](#retrieving-a-list-of-disputes), and choose one.
+When your organization first connected to your payment processor, Chargehound likely imported your current queue of disputes needing response. In order to figure out what evidence you need to collect we will need to look at one of these real disputes, but don't worry, we aren't going to submit the dispute yet. List your disputes using the [list endpoint](#retrieving-a-list-of-disputes), and choose one.
 
 Once you have chosen a dispute, choose the template that you want to use and copy its ID. Next, attach the template to the dispute using the [update endpoint](#updating-a-dispute). In the response body look for the `missing_fields` hash. The `missing_fields` hash shows which fields are still needed in order to submit the dispute with the chosen template. Now you can figure out how to collected the needed evidence.
+
+If you don't have a real dispute for reference, go to the [templates page](https://www.chargehound.com/templates) and view the customized documentation for a template.
 
 ## Formatting fields
 
@@ -31,17 +33,28 @@ When submitting evidence you will encounter a few different types of fields in t
 
 Once you have all your evidence properly formatted, use the [submit endpoint](#submitting-a-dispute) to submit a dispute. The submit endpoint adds the template and evidence fields to a dispute just like the [update endpoint](#updating-a-dispute), and it also submits the evidence to be reviewed. If you get a `400` response code or `ChargehoundBadRequestError` after a submit or update it is probably because one of the evidence fields is not properly formatted. When you get a `201` response code the dispute was successfully submitted and you are done.
 
-## Setting up Stripe Webhooks
+## Setting up Webhooks
 
-In order to automatically submit responses whenever you get a dispute, you will need to set up a webhook handler and handle Stripe's `charge.dispute.created` event. It's best to refer to Stripe's [own documentation regarding webhooks](https://stripe.com/docs/webhooks), but here's a quick checklist of what you need to do:
+In order to automatically submit responses whenever you get a dispute, you will need to set up a webhook handler and handle your payment processor's dispute created webhook.
+
+### Setting up Stripe Webhooks
+
+It's best to refer to Stripe's [own documentation regarding webhooks](https://stripe.com/docs/webhooks), but here's a quick checklist of what you need to do:
 
 - Configure your Stripe [webhook settings](https://dashboard.stripe.com/account/webhooks) to send webhooks to your server.
 - Stripe can send you all events, or a set of events of your choosing. Ensure that you are subscribed to the `charge.dispute.created` event.
 - For security, ensure that you are confirming the event data with Stripe before acting upon it. When you receive an event from Stripe, parse the event id and use Stripe's [retrieve event](https://stripe.com/docs/api#retrieve_event) endpoint to fetch the event. Then, act on the fetched data. This ensures that the event was authentic.
 
+### Setting up Braintree Webhooks
+
+It's best to refer to Braintree's [own documentation regarding webhooks](https://developers.braintreepayments.com/guides/webhooks/overview), but here's a quick checklist of what you need to do:
+
+- Go to your Braintree webhook settings in the settings menu.
+- Create a webhook and select the Dispute Opened event.
+
 ## Using a job queue
 
-You do not need to immediately POST your evidence to the [submit endpoint](#submitting-a-dispute) when you receive a `charge.dispute.created` event from Stripe. This is a good time to use a [job queue](https://en.wikipedia.org/wiki/Job_queue) if you have one. Simply pass the dispute id and (if you need it) the charge id to the job. The task worker can then query your database for the needed evidence and POST the submit to Chargehound when it's ready.
+You do not need to immediately POST your evidence to the [submit endpoint](#submitting-a-dispute) when you receive a dispute created event. This is a good time to use a [job queue](https://en.wikipedia.org/wiki/Job_queue) if you have one. Simply pass the dispute id and (if you need it) the charge id to the job. The task worker can then query your database for the needed evidence and POST the submit to Chargehound when it's ready.
 
 ## Testing
 
@@ -315,3 +328,7 @@ _, err := ch.Disputes.Submit(&params)
 ```
 
 Because Chargehound creates live mode disputes with [webhooks](https://stripe.com/docs/webhooks) from Stripe, testing end to end requires creating a dispute in Stripe. You can do this by creating a charge with a [test card that simulates a dispute](https://stripe.com/docs/testing#how-do-i-test-disputes). You can create a charge with a [simple curl request](https://stripe.com/docs/api#create_charge), or via the [Stripe dashboard](https://support.stripe.com/questions/how-do-i-create-a-charge-via-the-dashboard).
+
+### End to end with Braintree
+
+Braintree does not support disputes in the Braintree Sandbox at this time.
