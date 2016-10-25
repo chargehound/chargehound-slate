@@ -80,9 +80,10 @@ Chargehound uses conventional HTTP response codes to indicate success or failure
 |--------|--------|
 | 200 - OK | Everything worked as expected. |
 | 201 - Created | The resource was successfully created. |
+| 202 - Accepted | The request was successfully processed but not completed. |
 | 400 - Bad Request | The request data was invalid or incomplete. |
-| 401 - Unauthorized | No valid API key provided. |
-| 403 - Forbidden | Error with your API key or insecure connection. |
+| 401 - Unauthorized | Invalid API key provided. |
+| 403 - Forbidden | Insecure connection. |
 | 404 - Not Found | Resource could note be found. |
 | 500 - Server Error | Something went wrong on Chargehound's end. |
 
