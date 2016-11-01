@@ -9,8 +9,9 @@ language_tabs:
   - go: Go
 
 includes:
-  - integration
   - disputes
+  - integration
+  - standalone
 
 search: false
 ---
