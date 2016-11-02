@@ -210,7 +210,7 @@ Chargehound offers wrapper libraries in the following languages:
 > When sending a body along with `Content-Type: application/json`, the Chargehound API expects [JSON](http://www.json.org/).
 
 ```
-curl -X PUT https://api.chargehound.com/v1/disputes/dp_123 \
+curl -X PUT https://api.chargehound.com/v1/disputes/dp_XXX \
   -u test_XXX: \
   -H "Content-Type: application/json" \
   -d "{\"fields\": { \"product_url\":  \"http://www.example.com/products/cool\" } }"
@@ -219,7 +219,7 @@ curl -X PUT https://api.chargehound.com/v1/disputes/dp_123 \
 > When sending a body along with `Content-Type: application/x-www-form-urlencoded`, the Chargehound API expects [form data](https://en.wikipedia.org/wiki/Percent-encoding#The_application.2Fx-www-form-urlencoded_type). This Content Type is set automatically by curl. Dictionaries can be expressed with square brackets.
 
 ```
-curl -X PUT https://api.chargehound.com/v1/disputes/dp_123 \
+curl -X PUT https://api.chargehound.com/v1/disputes/dp_XXX \
   -u test_XXX: \
   -d fields[product_url]=http://www.example.com/products/cool
 ```
