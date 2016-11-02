@@ -75,7 +75,7 @@ If you are setting authentication in the HTTP Headers with the form `Authorizati
 
 Chargehound uses conventional HTTP response codes to indicate success or failure of an API request. In general, codes in the 2xx range indicate success, codes in the 4xx range indicate an error that resulted from the provided information (e.g. a required parameter was missing, a payment failed, etc.), and codes in the 5xx range indicate an error with our servers. 
 
-### HTTP Status Code Summary
+### HTTP status code summary
 
 | Status | Description |
 |--------|--------|
