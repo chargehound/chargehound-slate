@@ -6,7 +6,7 @@ A standalone integration gives you the responsibilty and control over creating d
 
 ## Creating a dispute
 
-You will need to create a dispute in Chargehound when you recieve a notification from your payment processor.
+You will need to create a dispute in Chargehound when you receive a notification from your payment processor.
 
 > Definition:
 
@@ -210,7 +210,7 @@ dispute, err := ch.Disputes.Create(&params)
 | external_identifier | string | required | The id of the dispute in your payment processor. |
 | external_charge | string | required | The id of the disputed charge in your payment processor. |
 | external_customer | string | optional | The id of the charged customer in your payment processor. |
-| reason | string | required | The bank provided reason for the dispute. One of `general`, `fraudulent`, `duplicate`, `subscription_canceled`, `product_unacceptable`, `product_not_received`, `unrecognized`, `credit_not_processed`, `incorrect_account_details`, `insufficient_funds`, `bank_cannot_process`, `debit_not_authorized`. |
+| reason | string | required | The bank provided reason for the dispute. One of `general`, `fraudulent`, `duplicate`, `subscription_canceled`, `product_unacceptable`, `product_not_received`, `unrecognized`, `credit_not_processed`, `incorrect_account_details`, `insufficient_funds`, `bank_cannot_process`, `debit_not_authorized`, `goods_services_returned_or_refused`, `goods_services_cancelled`, `transaction_amount_differs`. |
 | charged_at | string | required | ISO 8601 timestamp - when the charge was made. |
 | disputed_at | string | required | ISO 8601 timestamp - when the charge was disputed. |
 | due_by | string | required | ISO 8601 timestamp - when dispute evidence needs to be disputed by. |

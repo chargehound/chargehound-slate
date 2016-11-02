@@ -9,8 +9,8 @@ A dispute object is:
 | Field                | Type       | Description                                                                                 |
 | ---------------------|------------|---------------------------------------------------------------------------------------------|
 | id                   | string     | A unique identifier for the dispute. This id is set by the payment processor of the dispute. |
-| state                | string     | State of the dispute. One of `needs_response`,`submitted`, `under_review`, `won`, `lost`, `warning_needs_response`, `warning_under_review`, `warning_closed` , `response_disabled`, `charge_refunded`.                                                  |
-| reason               | string     | Reason for the dispute. One of `fraudulent`, `unrecognized`, `general`, `duplicate`, `subscription_canceled`, `product_unacceptable`, `product_not_received`, `credit_not_processed`, `incorrect_account_details`, `insufficient_funds`, `bank_cannot_process`, `debit_not_authorized`, `goods_services_returned_or_refused`, `goods_services_cancelled` | 
+| state                | string     | State of the dispute. One of `needs_response`,`submitted`, `under_review`, `won`, `lost`, `warning_needs_response`, `warning_under_review`, `warning_closed` , `response_disabled`, `charge_refunded`, `requires_review`. |
+| reason               | string     | Reason for the dispute. One of `general`, `fraudulent`, `duplicate`, `subscription_canceled`, `product_unacceptable`, `product_not_received`, `unrecognized`, `credit_not_processed`, `incorrect_account_details`, `insufficient_funds`, `bank_cannot_process`, `debit_not_authorized`, `goods_services_returned_or_refused`, `goods_services_cancelled`, `transaction_amount_differs` | 
 | charged_at           | string     | ISO 8601 timestamp - when the charge was made.                                              |
 | disputed_at          | string     | ISO 8601 timestamp - when the charge was disputed.                                          |
 | due_by               | string     | ISO 8601 timestamp - when dispute evidence needs to be disputed by.                         |
@@ -22,11 +22,11 @@ A dispute object is:
 | fields               | dictionary | Evidence fields attached to the dispute.                                                    |
 | missing_fields       | dictionary | Any fields required by the template that have not yet been provided.                        |
 | products             | array      | A list of products in the disputed order. (See [Product data](#product-data) for details.) |
-| charge               | string     | Id of the disputed charge.                                                                  |
+| charge               | string     | Id of the disputed charge. This id is set by the payment processor of the dispute. |
 | is_charge_refundable | boolean    | Can the charge be refunded.                                                                 |
 | amount               | integer    | Amount of the disputed charge. Amounts are in cents (or other minor currency unit.)         |
 | currency             | string     | Currency code of the disputed charge. e.g. 'USD'.                                           |
-| fee                  | integer    | Dispute fee.                                                                                |
+| fee                  | integer    | The amount deducted due to the payment processor's chargeback fee. Amounts are in cents (or other minor currency unit.) |
 | reversal_amount      | integer    | The amount deducted due to the chargeback. Amounts are in cents (or other minor currency unit.)         |
 | reversal_currency    | string     | Currency code of the deduction amount. e.g. 'USD'.                                           |
 | external_customer    | string     | Id of the customer (if any). This id is set by the payment processor of the dispute. |
@@ -39,8 +39,8 @@ A dispute object is:
 | cvc_check            | string     | State of cvc check (if available). One of `pass`, `fail`, `unavailable`, `checked`.         |
 | statement_descriptor | string     | The descriptor that appears on the customer's credit card statement for this change.        |
 | account_id           | string     | The account id for Connected accounts that are charged directly through Stripe (if any). (See [Stripe charging directly](#stripe-charging-directly) for details.) |
-| created              | string     | ISO 8601 timestamp.                                                                         |
-| updated              | string     | ISO 8601 timestamp.                                                                         |
+| created              | string     | ISO 8601 timestamp - when the dispute was created in Chargehound. |
+| updated              | string     | ISO 8601 timestamp - when the dispute was last updated in Chargehound. |
 | source               | string     | The source of the dispute. One of `mock`, `braintree`, `api` or `stripe` |
 | processor            | string     | The payment processor of the dispute. One of `braintree` or `stripe` |
 
@@ -926,4 +926,4 @@ params := chargehound.UpdateDisputeParams{
 dispute, err := ch.Disputes.Submit(&params)
 ```
 
-In order to work with Stripe Managed or Connected account integrations that [charge directly](https://stripe.com/docs/connect/payments-fees#charging-directly), you will need to attach the Stripe account id to the dispute using the `account_id` parameter. When you recieve a webhook to your Connect webhook endpoint, get the `user_id` from the event. The `user_id` is the Stripe account id that you will need to set.
+In order to work with Stripe Managed or Connected account integrations that [charge directly](https://stripe.com/docs/connect/payments-fees#charging-directly), you will need to attach the Stripe account id to the dispute using the `account_id` parameter. When you receive a webhook to your Connect webhook endpoint, get the `user_id` from the event. The `user_id` is the Stripe account id that you will need to set.
