@@ -1,10 +1,12 @@
 # Standalone Integration
 
-In typical, Connected integrations, Chargehound has third party access to your payment processor. This allows Chargehound to automatically sync your disputes as they are created, update your disputes with relevant information, and upload the response to your payment processor after you submit a dispute in Chargehound. A Connected integration is the least effort for you, however, in some cases a Connected integration may not be possible or desired.
+In typical connected integrations Chargehound has third party access to your payment processor. This allows Chargehound to automatically sync your disputes as they are created, update your disputes with relevant information, and upload the response to your payment processor after you submit a dispute. A connected integration is the least effort for you, however, in some cases a connected integration may not be possible or desired.
 
-A Standalone integration gives you responsibilty and control over creating disputes in Chargehound and uploading the generated response evidence to your payment processor when it is ready. You will create a dispute via API and when the response is ready you will recieve a webhook notification from Chargehound. You can then fetch the response information, including the PDF document generated from your template, and upload the response to your payment processor.
+A standalone integration gives you the responsibilty and control over creating disputes in Chargehound and uploading the generated response to your payment processor when it is ready. You will create a dispute via API and when the response is ready you will receive a webhook notification from Chargehound. You can then fetch the response information, including the PDF document generated from your template, and upload the response to your payment processor.
 
 ## Creating a dispute
+
+You will need to create a dispute in Chargehound when you recieve a notification from your payment processor.
 
 > Definition:
 
@@ -201,18 +203,20 @@ dispute, err := ch.Disputes.Create(&params)
 }
 ```
 
+### Parameters
+
 | Parameter | Type | Required? | Description |
 |---------------------|---------|-----------|-----------|
-| external_identifier | string | required | The id of the dispute in your payment processor. For Stripe looks like `dp_XXX`. |
-| external_charge | string | required | The id of the disputed charge in your payment processor. For Stripe looks like `ch_XXX`. |
-| external_customer | string | optional | The id of the charged customer in your payment processor. For Stripe looks like `cus_XXX`. |
+| external_identifier | string | required | The id of the dispute in your payment processor. |
+| external_charge | string | required | The id of the disputed charge in your payment processor. |
+| external_customer | string | optional | The id of the charged customer in your payment processor. |
 | reason | string | required | The bank provided reason for the dispute. One of `general`, `fraudulent`, `duplicate`, `subscription_canceled`, `product_unacceptable`, `product_not_received`, `unrecognized`, `credit_not_processed`, `incorrect_account_details`, `insufficient_funds`, `bank_cannot_process`, `debit_not_authorized`. |
 | charged_at | string | required | ISO 8601 timestamp - when the charge was made. |
 | disputed_at | string | required | ISO 8601 timestamp - when the charge was disputed. |
 | due_by | string | required | ISO 8601 timestamp - when dispute evidence needs to be disputed by. |
 | currency | string | required | The currency code of the disputed charge. e.g. 'USD'. |
 | amount | integer | required | The amount of the disputed charge. Amounts are in cents (or other minor currency unit.) |
-| processor | string | optional | The payment processor for the charge. Currently the only possible value is `stripe`. |
+| processor | string | optional | The payment processor for the charge. One of `stripe`, `braintree`. |
 | state | string | optional | The state of the dispute. One of `needs_response`, `warning_needs_response`. |
 | reversal_currency | string | optional | The currency code of the dispute balance withdrawal. e.g. 'USD'. |
 | fee | integer | optional | The amount of the dispute fee. Amounts are in cents (or other minor currency unit.) |
@@ -226,9 +230,15 @@ dispute, err := ch.Disputes.Create(&params)
 | template | string     | optional | The id of the template to use. |
 | fields | dictionary | optional | Key value pairs to hydrate the template's evidence fields. |
 | products | array | optional | List of products the customer purchased. (See [Product data](#product-data) for details.) |
-| account_id | string | optional | Set the account id for Connected accounts that are charged directly through Stripe. (See [Stripe Charging directly](#stripe-charging-directly) for details.) |
+| account_id | string | optional | Set the account id for Connected accounts that are charged directly through Stripe. (See [Stripe charging directly](#stripe-charging-directly) for details.) |
 | submit | boolean | optional | Submit dispute evidence immediately after creation. |
-| force | boolean | optional | Skip the Manual Review filters or submit a dispute in Manual Review. (See [Manual review](#manual-review) for details.) |
+| force | boolean | optional | Skip the manual review filters or submit a dispute in manual review. (See [Manual review](#manual-review) for details.) |
+
+### Possible errors
+
+| Error code           | Description                                                          |
+| ---------------------|-------------------------------------------------                     |
+| 400 Bad Request      | Dispute is missing data, or is missing fields required by template. |
 
 ## Dispute response ready
 
@@ -260,7 +270,7 @@ The response webhook object is:
 | external_charge | string| The id of the disputed charge. |
 | response_url | string | The url of the generated response pdf. This url is a temporary access url. |
 | evidence | dictionary | Key value pairs for the dispute response evidence object. |
-| account_id | string | The account id for Connected accounts that are charged directly through Stripe (if any). (See [Stripe Charging directly](#stripe-charging-directly) for details.) |
+| account_id | string | The account id for Connected accounts that are charged directly through Stripe (if any). (See [Stripe charging directly](#stripe-charging-directly) for details.) |
 
 ## Retrieving a dispute response
 
@@ -357,4 +367,4 @@ The response object is:
 | external_charge | string| The id of the disputed charge. |
 | response_url | string | The url of the generated response pdf. This url is a temporary access url. |
 | evidence | dictionary | Key value pairs for the dispute response evidence object. |
-| account_id | string | The account id for Connected accounts that are charged directly through Stripe (if any). (See [Stripe Charging directly](#stripe-charging-directly) for details.) |
+| account_id | string | The account id for Connected accounts that are charged directly through Stripe (if any). (See [Stripe charging directly](#stripe-charging-directly) for details.) |

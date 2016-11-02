@@ -1,10 +1,10 @@
 # Disputes
 
-## The Dispute object
+## The dispute object
 
-Dispute objects represent a dispute created on a charge. They can also be referred to as chargebacks. In order to contest a dispute, attach a Template and update the dispute with the Template's required fields.
+Dispute objects represent a dispute created on a charge. They can also be referred to as chargebacks. In order to contest a dispute, attach a template and update the dispute with the template's required fields.
 
-A Dispute object is:
+A dispute object is:
 
 | Field                | Type       | Description                                                                                 |
 | ---------------------|------------|---------------------------------------------------------------------------------------------|
@@ -38,7 +38,7 @@ A Dispute object is:
 | address_zip_check    | string     | State of address zip check (if available). One of `pass`, `fail`, `unavailable`, `checked`. |
 | cvc_check            | string     | State of cvc check (if available). One of `pass`, `fail`, `unavailable`, `checked`.         |
 | statement_descriptor | string     | The descriptor that appears on the customer's credit card statement for this change.        |
-| account_id           | string     | The account id for Connected accounts that are charged directly through Stripe (if any). (See [Stripe Charging directly](#stripe-charging-directly) for details.) |
+| account_id           | string     | The account id for Connected accounts that are charged directly through Stripe (if any). (See [Stripe charging directly](#stripe-charging-directly) for details.) |
 | created              | string     | ISO 8601 timestamp.                                                                         |
 | updated              | string     | ISO 8601 timestamp.                                                                         |
 | source               | string     | The source of the dispute. One of `mock`, `braintree`, `api` or `stripe` |
@@ -185,18 +185,18 @@ You will want to submit the dispute through Chargehound after you receive a noti
 
 The dispute will be in the `submitted` state if the submit was successful. 
 
-### Parameters:
+### Parameters
 
 | Parameter      | Type       | Required?  | Description |
 | -------------  | ---------  |------------|-----------------------------------------------------------------------------------------------------------------------|
 | template       | string     | optional   | The id of the template to use. |
 | fields         | dictionary | optional   | Key value pairs to hydrate the template's evidence fields. |
 | products       | array      | optional   | List of products the customer purchased. (See [Product data](#product-data) for details.) |
-| force | boolean | optional | Skip the Manual Review filters or submit a dispute in Manual Review. (See [Manual review](#manual-review) for details.) |
-| account_id | string | optional | Set the account id for accounts that are charged directly through Stripe. (See [Stripe Charging directly](#stripe-charging-directly) for details.) |
+| force | boolean | optional | Skip the manual review filters or submit a dispute in manual review. (See [Manual review](#manual-review) for details.) |
+| account_id | string | optional | Set the account id for accounts that are charged directly through Stripe. (See [Stripe charging directly](#stripe-charging-directly) for details.) |
 | charge | string | optional | You will need to send the transaction id if the payment processor is Braintree. (See [Braintree disputes](#braintree-disputes) for details.) |
 
-### Possible errors:
+### Possible errors
 
 | Error code           | Description                                                          |
 | ---------------------|-------------------------------------------------                     |
@@ -204,7 +204,7 @@ The dispute will be in the `submitted` state if the submit was successful.
 
 ## Creating a dispute
 
-Disputes are usually not created via the REST API. Instead, once your payment processor is connected we will mirror disputes via webhooks. You will reference the dispute with the same id that is used by the payment processor. If you are working on a Standalone integration, please refer to [this section](#creating-a-dispute23).
+Disputes are usually not created via the REST API. Instead, once your payment processor is connected we will mirror disputes via webhooks. You will reference the dispute with the same id that is used by the payment processor. If you are working on a standalone integration, please refer to [this section](#creating-a-dispute23).
 
 ## Retrieving a list of disputes
 
@@ -325,7 +325,7 @@ disputeList, err := ch.Disputes.List(nil)
 
 This endpoint will list all the disputes that we have synced from your payment processor. By default the disputes will be ordered by created with the most recent dispute first. `has_more` will be true if more results are available.
 
-### Parameters:
+### Parameters
 
 | Parameter      | Type       | Required?  | Description                                                          |
 | -------------  | ---------- | ---------- | -------------------------------------------------------------------- |
@@ -588,17 +588,17 @@ dispute, err := ch.Disputes.Update(&params)
 
 You can update the template and the fields on a dispute.
 
-### Parameters:
+### Parameters
 
 | Parameter      | Type       | Required?  | Description |
 | -------------  | ---------- | ---------- | --------------------------------------------------------------------------------------------------------------------- |
 | template       | string     | optional   | The id of the template to use. |
 | fields         | dictionary | optional   | Key value pairs to hydrate the template's evidence fields. |
 | products       | array      | optional   | List of products the customer purchased. (See [Product data](#product-data) for details.) |
-| account_id | string     | optional   | Set the account id for accounts that are charged directly through Stripe. (See [Stripe Charging directly](#stripe-charging-directly) for details.) |
+| account_id | string     | optional   | Set the account id for accounts that are charged directly through Stripe. (See [Stripe charging directly](#stripe-charging-directly) for details.) |
 | charge | string     | optional   | You will need to send the transaction id if the payment processor is Braintree. (See [Braintree disputes](#braintree-disputes) for details.) |
 
-### Possible errors:
+### Possible errors
 
 | Error code           | Description                                                          |
 | ---------------------|-------------------------------------------------                     |
@@ -756,7 +756,7 @@ dispute, err := ch.Disputes.Update(&params)
 | sku          | string            | optional |The stock-keeping unit.                                                          |
 | url          | url               | optional |The URL of the purchased item, if it is listed online.                           |
 
-## Manual Review
+## Manual review
 
 > Example usage:
 
@@ -810,7 +810,7 @@ params := chargehound.UpdateDisputeParams{
 dispute, err := ch.Disputes.Submit(&params)
 ```
 
-If you have rules set for the Manual Review queue and a dispute is flagged for Manual Review, you can mark a dispute as reviewed and submit it by submitting the dispute with the `force` parameter.
+If you have rules set for the manual review queue and a dispute is flagged for manual review, you can mark a dispute as reviewed and submit it by submitting the dispute with the `force` parameter.
 
 ## Braintree disputes
 
