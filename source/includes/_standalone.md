@@ -336,14 +336,18 @@ params := chargehound.RetrieveDisputeParams{
 dispute, err := ch.Disputes.Response(&params)
 ```
 
-```
-> Example response
+> Example response:
 
 ```json
 {
-  "response_url": "https://chargehound.s3.amazonaws.com/XXX.pdf?Signature=XXX&Expires=XXX&AWSAccessKeyId=XXX",
+  "object": "response",
+  "livemode": true,
+  "dispute_id": "dp_XXX",
+  "external_charge": "ch_XXX",
+  "account_id": null,
   "evidence": {
-    "customer_ip": "0.0.0.0"
+    "customer_name": "Susie Chargeback"
   },
+  "response_url": "https://chargehound.s3.amazonaws.com/XXX.pdf?Signature=XXX&Expires=XXX&AWSAccessKeyId=XXX"
 }
 ```
