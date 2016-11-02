@@ -810,7 +810,11 @@ params := chargehound.UpdateDisputeParams{
 dispute, err := ch.Disputes.Submit(&params)
 ```
 
-If you have rules set for the manual review queue and a dispute is flagged for manual review, you can mark a dispute as reviewed and submit it by submitting the dispute with the `force` parameter.
+You might want to have the chance to look over some disputes before you submit your response to the bank, so we allow you create rules to mark certain disputes for manual review.
+
+In order submit a dispute that has been marked for review via the API, you will need to pass an extra `force` parameter or the dispute will stay in the manual review queue.
+
+You can tell a dispute has been marked for manual review if when you submit it you receive a 202 status and the state does not change to submitted.
 
 ## Braintree disputes
 
