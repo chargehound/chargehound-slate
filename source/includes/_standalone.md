@@ -238,7 +238,7 @@ dispute, err := ch.Disputes.Create(&params)
 
 | Error code           | Description                                                          |
 | ---------------------|-------------------------------------------------                     |
-| 400 Bad Request      | Dispute is missing data, or is missing fields required by template. |
+| 400 Bad Request      | Dispute is missing data, or is missing fields required by the template. |
 
 ## Dispute response ready
 
