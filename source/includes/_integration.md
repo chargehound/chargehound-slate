@@ -24,7 +24,7 @@ When submitting evidence you will encounter a few different types of fields in t
 
 | Field  | Type   | Validation |
 |--------|--------|------------|
-| text | string | Multi-line strings are ok, but be sensitive to your template layout, you might be adding a line break to the middle of a paragraph. |
+| text | string | Multi-line strings are ok, but be sensitive to your template layout. |
 | date | string | Submitted responses will be reviewed by humans so try to format dates to be human readable and friendly, although no specific format is enforced. This is not the place for Unix timestamps. |
 | number | integer | A number should be an integer, not a float. |
 | amount | integer | An amount should be an integer that represents the cents (or other minor currency unit) value. E.g. $1 is 100. |

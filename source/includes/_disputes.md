@@ -1,5 +1,7 @@
 # Disputes
 
+## The Dispute object
+
 Dispute objects represent a dispute created on a charge. They can also be referred to as chargebacks. In order to contest a dispute, attach a Template and update the dispute with the Template's required fields.
 
 A Dispute object is:
@@ -19,7 +21,7 @@ A Dispute object is:
 | template             | string     | Id of the template attached to the dispute.                                                 |
 | fields               | dictionary | Evidence fields attached to the dispute.                                                    |
 | missing_fields       | dictionary | Any fields required by the template that have not yet been provided.                        |
-| products             | array      | (Optional) A list of products in the disputed order. (See [Product data](#product-data) for details.) |
+| products             | array      | A list of products in the disputed order. (See [Product data](#product-data) for details.) |
 | charge               | string     | Id of the disputed charge.                                                                  |
 | is_charge_refundable | boolean    | Can the charge be refunded.                                                                 |
 | amount               | integer    | Amount of the disputed charge. Amounts are in cents (or other minor currency unit.)         |
@@ -36,7 +38,7 @@ A Dispute object is:
 | address_zip_check    | string     | State of address zip check (if available). One of `pass`, `fail`, `unavailable`, `checked`. |
 | cvc_check            | string     | State of cvc check (if available). One of `pass`, `fail`, `unavailable`, `checked`.         |
 | statement_descriptor | string     | The descriptor that appears on the customer's credit card statement for this change.        |
-| account_id           | string     | The account id for Connected accounts that are charged directly through Stripe (if any).
+| account_id           | string     | The account id for Connected accounts that are charged directly through Stripe (if any). (See [Stripe Charging directly](#stripe-charging-directly) for details.) |
 | created              | string     | ISO 8601 timestamp.                                                                         |
 | updated              | string     | ISO 8601 timestamp.                                                                         |
 | source               | string     | The source of the dispute. One of `mock`, `braintree`, `api` or `stripe` |
@@ -185,13 +187,14 @@ The dispute will be in the `submitted` state if the submit was successful.
 
 ### Parameters:
 
-| Parameter      | Type       | Required?  | Description                                                                                                           |
+| Parameter      | Type       | Required?  | Description |
 | -------------  | ---------  |------------|-----------------------------------------------------------------------------------------------------------------------|
-| template       | string     | optional   | The id of the template to use.                                                                                        |
-| fields         | dictionary | optional   | Key value pairs to hydrate the template's evidence fields.                                                            |
-| products       | array      | optional   | List of products the customer purchased.                                                                              |
-| account_id | string     | optional   | Set the account id for Connected accounts that are charged directly through Stripe. |
-| charge | string     | optional   | You will need to send the transaction id if the payment processor is Braintree. |
+| template       | string     | optional   | The id of the template to use. |
+| fields         | dictionary | optional   | Key value pairs to hydrate the template's evidence fields. |
+| products       | array      | optional   | List of products the customer purchased. (See [Product data](#product-data) for details.) |
+| force | boolean | optional | Skip the Manual Review filters or submit a dispute in Manual Review. (See [Manual review](#manual-review) for details.) |
+| account_id | string | optional | Set the account id for accounts that are charged directly through Stripe. (See [Stripe Charging directly](#stripe-charging-directly) for details.) |
+| charge | string | optional | You will need to send the transaction id if the payment processor is Braintree. (See [Braintree disputes](#braintree-disputes) for details.) |
 
 ### Possible errors:
 
@@ -201,7 +204,7 @@ The dispute will be in the `submitted` state if the submit was successful.
 
 ## Creating a dispute
 
-Disputes are usually not created via the REST API. Instead, once your payment processor is connected we will mirror disputes via webhooks. You will reference the dispute with the same id that is used by the payment processor.
+Disputes are usually not created via the REST API. Instead, once your payment processor is connected we will mirror disputes via webhooks. You will reference the dispute with the same id that is used by the payment processor. If you are working on a Standalone integration, please refer to [this section](#creating-a-dispute23).
 
 ## Retrieving a list of disputes
 
@@ -587,13 +590,13 @@ You can update the template and the fields on a dispute.
 
 ### Parameters:
 
-| Parameter      | Type       | Required?  | Description                                                                                                           |
+| Parameter      | Type       | Required?  | Description |
 | -------------  | ---------- | ---------- | --------------------------------------------------------------------------------------------------------------------- |
-| template       | string     | optional   | The id of the template to use.                                                                                        |
-| fields         | dictionary | optional   | Key value pairs to hydrate the template's evidence fields.                                                            |
-| products       | array      | optional   | (Optional) List of products the customer purchased. (See [Product data](#product-data) for details.)                  |
-| account_id | string     | optional   | Set the account id for Connected accounts that are charged directly through Stripe. |
-| charge | string     | optional   | You will need to send the transaction id if the payment processor is Braintree. |
+| template       | string     | optional   | The id of the template to use. |
+| fields         | dictionary | optional   | Key value pairs to hydrate the template's evidence fields. |
+| products       | array      | optional   | List of products the customer purchased. (See [Product data](#product-data) for details.) |
+| account_id | string     | optional   | Set the account id for accounts that are charged directly through Stripe. (See [Stripe Charging directly](#stripe-charging-directly) for details.) |
+| charge | string     | optional   | You will need to send the transaction id if the payment processor is Braintree. (See [Braintree disputes](#braintree-disputes) for details.) |
 
 ### Possible errors:
 
@@ -603,46 +606,9 @@ You can update the template and the fields on a dispute.
 
 ## Product data
 
-If a customer purchased multiple products in a disputed order, those products can be individually attached to a dispute. Each product has the following properties:
+If a customer purchased multiple products in a disputed order, those products can be individually attached to a dispute when updating or submitting the dispute. Each product has the following properties:
 
-### Product data fields
-
-| Field        | Type              | Description                                                                                 |
-| -------------|-------------------|---------------------------------------------------------------------------------------------|
-| name         | string            | The name of the product ordered.                                                            |
-| quantity     | string or integer | The number or quantity of this product (e.g. 10 or "64oz").                                 |
-| amount       | integer           | The price paid for this item, in cents (or other minor currency unit).                      |
-| description  | string            | (Optional) A product description - for example, the size or color.                          |
-| image        | url               | (Optional) A URL showing the product image.                                                 |
-| sku          | string            | (Optional) The stock-keeping unit.                                                          |
-| url          | url               | (Optional) The URL of the purchased item, if it is listed online.                           |
-
-
-## Updating product data 
-
-> Definition:
-
-```sh
-PUT /v1/disputes/{{dispute_id}}
-```
-
-```js
-chargehound.Disputes.update();
-```
-
-```python
-chargehound.Disputes.update()
-```
-
-```ruby
-Chargehound::Disputes.update
-```
-
-```go
-ch.Disputes.Update(*chargehound.UpdateDisputeParams)
-```
-
-> Example request:
+> Example usage:
 
 ```sh
 curl -X PUT https://api.chargehound.com/v1/disputes/dp_XXX \
@@ -753,7 +719,6 @@ ch := chargehound.New("test_XXX")
 
 params := chargehound.UpdateDisputeParams{
   ID:       "dp_2284d5ac6eba4e4e8e9a80df0f9c2287",
-  Template: "unrecognized",
   Products: []chargehound.Product{
     {
       Name:        "Saxophone",
@@ -779,115 +744,26 @@ params := chargehound.UpdateDisputeParams{
 dispute, err := ch.Disputes.Update(&params)
 ```
 
-> Example response:
+### Product data fields
 
-```json
-{
-  "external_customer": "cus_XXX",
-  "livemode": false,
-  "updated": null,
-  "currency": "usd",
-  "missing_fields": {},
-  "address_zip_check": "pass",
-  "closed_at": null,
-  "id": "dp_XXX",
-  "customer_name": "Susie Chargeback",
-  "fee": 1500,
-  "reversal_amount": 500,
-  "due_by": "2016-11-18T20:38:51",
-  "state": "needs_response",
-  "statement_descriptor": "COMPANY",
-  "source": "stripe",
-  "charge": "ch_XXX",
-  "template": null,
-  "is_charge_refundable": false,
-  "cvc_check": "unavailable",
-  "customer_email": "susie@example.com",
-  "account_id": null,
-  "address_line1_check": "pass",
-  "object": "dispute",
-  "customer_purchase_ip": null,
-  "disputed_at": "2016-09-18T20:38:51",
-  "submitted_count": 0,
-  "reason": "unrecognized",
-  "reversal_total": 2000,
-  "reversal_currency": "usd",
-  "address_zip": null,
-  "submitted_at": null,
-  "created": "2016-09-18T20:38:51",
-  "url": "/v1/disputes/dp_XXX",
-  "fields": {},
-  "charged_at": "2016-09-18T20:38:51",
-  "products": [
-    {
-      "sku": "17283001272",
-      "name": "Saxophone",
-      "url": "http://www.example.com",
-      "image": "http://s3.amazonaws.com/chargehound/saxophone.png",
-      "amount": 20000,
-      "quantity": "1",
-      "description": "Alto saxophone, with carrying case"
-    },
-    {
-      "sku": "26377382910",
-      "name": "Milk",
-      "url": "http://www.example.com",
-      "image": "http://s3.amazonaws.com/chargehound/milk.png",
-      "amount": 400,
-      "quantity": "64oz",
-      "description": "Semi-skimmed Organic"
-    }
-  ],
-  "amount": 500,
-  "processor": "stripe"
-}
-```
+| Field        | Type              |  Required?  | Description                                                                                 |
+| -------------|-------------------|-------------|--------------------------------------------------------------------------------|
+| name         | string            | required |The name of the product ordered.                                                            |
+| quantity     | string or integer | required |The number or quantity of this product (e.g. 10 or "64oz").                                 |
+| amount       | integer           | required |The price paid for this item, in cents (or other minor currency unit).                      |
+| description  | string            | optional |A product description - for example, the size or color.                          |
+| image        | url               | optional |A URL showing the product image.                                                 |
+| sku          | string            | optional |The stock-keeping unit.                                                          |
+| url          | url               | optional |The URL of the purchased item, if it is listed online.                           |
 
-### Parameters:
+## Manual Review
 
-| Parameter      | Type       | Required?  | Description                                                                                                           |
-| -------------  | ---------  |------------|-----------------------------------------------------------------------------------------------------------------------|
-| template       | string     | optional   | The id of the template to use.                                                                                        |
-| fields         | dictionary | optional   | Key value pairs to hydrate the template's evidence fields.                                                            |
-| products       | array      | optional   | List of products the customer purchased.                                                                              |
-| account_id | string     | optional   | Set the account id for Connected accounts that are charged directly through Stripe. |
-| charge | string     | optional   | You will need to send the transaction id if the payment processor is Braintree. |
-
-## Connected accounts
-
-In order to work with Stripe Managed or Connected account integrations that charge directly, you will need to attach the Stripe account id to the dispute using the `account_id` parameter. When you recieve a webhook to your Connect webhook endpoint, get the `user_id` from the event. The `user_id` is the Stripe account id that you will need to set.
-
-### Updating Connected accounts
-
-> Definition:
-
-```sh
-POST /v1/disputes/{{dispute_id}}/submit
-```
-
-```js
-chargehound.Disputes.submit();
-```
-
-```python
-chargehound.Disputes.submit()
-```
-
-```ruby
-Chargehound::Disputes.submit
-```
-
-```go
-ch.Disputes.Submit(*chargehound.UpdateDisputeParams)
-```
-
-> Example request:
+> Example usage:
 
 ```sh
 curl -X POST https://api.chargehound.com/v1/disputes/dp_XXX/submit \
   -u test_XXX: \
-  -d template=unrecognized \
-  -d account_id=acct_XXX 
+  -d force=true
 ```
 
 ```js
@@ -896,7 +772,118 @@ var chargehound = require('chargehound')(
 );
 
 chargehound.Disputes.submit('dp_XXX', {
-  template: 'unrecognized',
+  force: true
+}, function (err, res) {
+  // ...
+});
+```
+
+```python
+import chargehound
+chargehound.api_key = 'test_XXX'
+
+chargehound.Disputes.submit('dp_XXX',
+  force=True
+)
+```
+
+```ruby
+require 'chargehound'
+Chargehound.api_key = 'test_XXX'
+
+Chargehound::Disputes.submit('dp_XXX',
+  force: true
+)
+```
+
+```go
+import (
+  "github.com/chargehound/chargehound-go"
+)
+
+ch := chargehound.New("test_XXX") 
+
+params := chargehound.UpdateDisputeParams{
+  Force: true
+}
+
+dispute, err := ch.Disputes.Submit(&params)
+```
+
+If you have rules set for the Manual Review queue and a dispute is flagged for Manual Review, you can mark a dispute as reviewed and submit it by submitting the dispute with the `force` parameter.
+
+## Braintree disputes
+
+> Example usage:
+
+```sh
+curl -X POST https://api.chargehound.com/v1/disputes/dp_XXX/submit \
+  -u test_XXX: \
+  -d charge=ch_XXX
+```
+
+```js
+var chargehound = require('chargehound')(
+  'test_XXX'
+);
+
+chargehound.Disputes.submit('dp_XXX', {
+  charge: 'ch_XXX'
+}, function (err, res) {
+  // ...
+});
+```
+
+```python
+import chargehound
+chargehound.api_key = 'test_XXX'
+
+chargehound.Disputes.submit('dp_XXX',
+  charge='ch_XXX'
+)
+```
+
+```ruby
+require 'chargehound'
+Chargehound.api_key = 'test_XXX'
+
+Chargehound::Disputes.submit('dp_XXX',
+  charge: 'ch_XXX'
+)
+```
+
+```go
+import (
+  "github.com/chargehound/chargehound-go"
+)
+
+ch := chargehound.New("test_XXX") 
+
+params := chargehound.UpdateDisputeParams{
+  Charge: "ch_XXX"
+}
+
+dispute, err := ch.Disputes.Submit(&params)
+```
+
+In order to submit a Braintree dispute, you will also need to attach the Braintree transaction id using the `charge` parameter. 
+
+## Stripe charging directly
+
+> Example usage:
+
+```sh
+curl -X POST https://api.chargehound.com/v1/disputes/dp_XXX/submit \
+  -u test_XXX: \
+  -d account_id=acct_XXX
+```
+
+```js
+var chargehound = require('chargehound')(
+  'test_XXX'
+);
+
+chargehound.Disputes.submit('dp_XXX', {
   account_id: 'acct_XXX'
 }, function (err, res) {
   // ...
@@ -908,7 +895,6 @@ import chargehound
 chargehound.api_key = 'test_XXX'
 
 chargehound.Disputes.submit('dp_XXX',
-  template='unrecognized',
   account_id='acct_XXX'
 )
 ```
@@ -918,7 +904,6 @@ require 'chargehound'
 Chargehound.api_key = 'test_XXX'
 
 Chargehound::Disputes.submit('dp_XXX',
-  template: 'unrecognized',
   account_id: 'acct_XXX'
 )
 ```
@@ -931,65 +916,10 @@ import (
 ch := chargehound.New("test_XXX") 
 
 params := chargehound.UpdateDisputeParams{
-  ID:        "dp_XXX",
-  Template:  "unrecognized",
-  AccountID: "acct_XXX",
+  AccountID: "acct_XXX"
 }
 
 dispute, err := ch.Disputes.Submit(&params)
 ```
 
-> Example response:
-
-```json
-{
-  "external_customer": "cus_XXX",
-  "livemode": false,
-  "updated": null,
-  "currency": "usd",
-  "missing_fields": {},
-  "address_zip_check": "pass",
-  "closed_at": null,
-  "id": "dp_XXX",
-  "customer_name": "Susie Chargeback",
-  "fee": 1500,
-  "reversal_amount": 500,
-  "due_by": "2016-11-18T20:38:51",
-  "state": "needs_response",
-  "statement_descriptor": "COMPANY",
-  "source": "stripe",
-  "charge": "ch_XXX",
-  "template": null,
-  "is_charge_refundable": false,
-  "cvc_check": "unavailable",
-  "customer_email": "susie@example.com",
-  "account_id": "acct_XXX",
-  "address_line1_check": "pass",
-  "object": "dispute",
-  "customer_purchase_ip": null,
-  "disputed_at": "2016-09-18T20:38:51",
-  "submitted_count": 0,
-  "reason": "unrecognized",
-  "reversal_total": 2000,
-  "reversal_currency": "usd",
-  "address_zip": null,
-  "submitted_at": null,
-  "created": "2016-09-18T20:38:51",
-  "url": "/v1/disputes/dp_XXX",
-  "fields": {},
-  "charged_at": "2016-09-18T20:38:51",
-  "products": [],
-  "amount": 500,
-  "processor": "stripe"
-}
-```
-
-### Parameters:
-
-| Parameter      | Type       | Required?  | Description                                                                                                           |
-| -------------  | ---------  |------------|-----------------------------------------------------------------------------------------------------------------------|
-| template       | string     | optional   | The id of the template to use.                                                                                        |
-| fields         | dictionary | optional   | Key value pairs to hydrate the template's evidence fields.                                                            |
-| products       | array      | optional   | List of products the customer purchased.                                                                              |
-| account_id | string     | optional   | Set the account id for Connected accounts that are charged directly through Stripe. |
-| charge | string     | optional   | You will need to send the transaction id if the payment processor is Braintree. |
+In order to work with Stripe Managed or Connected account integrations that [charge directly](https://stripe.com/docs/connect/payments-fees#charging-directly), you will need to attach the Stripe account id to the dispute using the `account_id` parameter. When you recieve a webhook to your Connect webhook endpoint, get the `user_id` from the event. The `user_id` is the Stripe account id that you will need to set.

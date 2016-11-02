@@ -1,6 +1,8 @@
-# Standalone Integration Guide
+# Standalone Integration
 
-This section walks through some of the technical details of completing a stan Chargehound integration.
+In typical, Connected integrations, Chargehound has third party access to your payment processor. This allows Chargehound to automatically sync your disputes as they are created, update your disputes with relevant information, and upload the response to your payment processor after you submit a dispute in Chargehound. A Connected integration is the least effort for you, however, in some cases a Connected integration may not be possible or desired.
+
+A Standalone integration gives you responsibilty and control over creating disputes in Chargehound and uploading the generated response evidence to your payment processor when it is ready. You will create a dispute via API and when the response is ready you will recieve a webhook notification from Chargehound. You can then fetch the response information, including the PDF document generated from your template, and upload the response to your payment processor.
 
 ## Creating a dispute
 
@@ -223,17 +225,14 @@ dispute, err := ch.Disputes.Create(&params)
 | cvc_check | string | optional | State of cvc check (if available). One of `pass`, `fail`, `unavailable`, `checked`. |
 | template | string     | optional | The id of the template to use. |
 | fields | dictionary | optional | Key value pairs to hydrate the template's evidence fields. |
-| products | array | optional | List of products the customer purchased. |
-| account_id | string | optional | Set the account id for Connected accounts that are charged directly through Stripe. |
+| products | array | optional | List of products the customer purchased. (See [Product data](#product-data) for details.) |
+| account_id | string | optional | Set the account id for Connected accounts that are charged directly through Stripe. (See [Stripe Charging directly](#stripe-charging-directly) for details.) |
 | submit | boolean | optional | Submit dispute evidence immediately after creation. |
+| force | boolean | optional | Skip the Manual Review filters or submit a dispute in Manual Review. (See [Manual review](#manual-review) for details.) |
 
 ## Dispute response ready
 
-When Chargehound has generated a response we will send the result to your server URL. The webhook server URL is configured here ...
-
-```sh
-POST /my/chargehound/webhook
-```
+When Chargehound has generated a response we will send the result to your server with a webhook. The webhook server URL is configured in your team settings page [here](https://www.chargehound.com/team#webhook-urls).
 
 > Example request:
 
@@ -251,19 +250,21 @@ POST /my/chargehound/webhook
 }
 ```
 
-| Parameter | Type | Required? | Description |
-|---------------------|---------|-----------|-----------|
-| type | string | required | The event type.
-| livemode | boolean | required | Is this a test or live mode dispute. |
-| dispute_id | string | required | The id of the dispute. |
-| external_charge | string | required| The id of the disputed charge. |
-| response_url | string | required | The url of the generated response pdf. This url is a temporary access url. |
-| evidence | dictionary | optional | Key value pairs for the dispute response evidence object. |
-| account_id | string | optional | The Stripe Connected account. |
+The response webhook object is:
+
+| Field | Type | Description |
+|---------------------|---------|-----------|
+| type | string | The event type.
+| livemode | boolean | Is this a test or live mode dispute. |
+| dispute_id | string | The id of the dispute. |
+| external_charge | string| The id of the disputed charge. |
+| response_url | string | The url of the generated response pdf. This url is a temporary access url. |
+| evidence | dictionary | Key value pairs for the dispute response evidence object. |
+| account_id | string | The account id for Connected accounts that are charged directly through Stripe (if any). (See [Stripe Charging directly](#stripe-charging-directly) for details.) |
 
 ## Retrieving a dispute response
 
-Fetching the Chargehound response.
+Once the response is generated, you can fetch the response data from the Chargehound API.
 
 > Definition:
 
@@ -347,3 +348,13 @@ dispute, err := ch.Disputes.Response(&params)
   "response_url": "https://chargehound.s3.amazonaws.com/XXX.pdf?Signature=XXX&Expires=XXX&AWSAccessKeyId=XXX"
 }
 ```
+
+The response object is:
+
+| Field | Type | Description |
+|---------------------|---------|-----------|
+| dispute_id | string | The id of the dispute. |
+| external_charge | string| The id of the disputed charge. |
+| response_url | string | The url of the generated response pdf. This url is a temporary access url. |
+| evidence | dictionary | Key value pairs for the dispute response evidence object. |
+| account_id | string | The account id for Connected accounts that are charged directly through Stripe (if any). (See [Stripe Charging directly](#stripe-charging-directly) for details.) |
