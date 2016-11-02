@@ -10,10 +10,6 @@ This section walks through some of the technical details of completing a stan Ch
 POST /v1/disputes
 ```
 
-```sh
-POST /v1/disputes
-```
-
 ```js
 chargehound.Disputes.create();
 ```
