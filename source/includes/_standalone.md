@@ -210,7 +210,7 @@ dispute, err := ch.Disputes.Create(&params)
 | external_identifier | string | required | The id of the dispute in your payment processor. |
 | external_charge | string | required | The id of the disputed charge in your payment processor. |
 | external_customer | string | optional | The id of the charged customer in your payment processor. |
-| reason | string | required | The bank provided reason for the dispute. One of `general`, `fraudulent`, `duplicate`, `subscription_canceled`, `product_unacceptable`, `product_not_received`, `unrecognized`, `credit_not_processed`, `incorrect_account_details`, `insufficient_funds`, `bank_cannot_process`, `debit_not_authorized`, `goods_services_returned_or_refused`, `goods_services_cancelled`, `transaction_amount_differs`. |
+| reason | string | required | The bank provided reason for the dispute. One of `general`, `fraudulent`, `duplicate`, `subscription_canceled`, `product_unacceptable`, `product_not_received`, `unrecognized`, `credit_not_processed`, `incorrect_account_details`, `insufficient_funds`, `bank_cannot_process`, `debit_not_authorized`, `goods_services_returned_or_refused`, `goods_services_cancelled`, `transaction_amount_differs`, `retrieved`. |
 | charged_at | string | required | ISO 8601 timestamp - when the charge was made. |
 | disputed_at | string | required | ISO 8601 timestamp - when the charge was disputed. |
 | due_by | string | required | ISO 8601 timestamp - when dispute evidence needs to be disputed by. |
