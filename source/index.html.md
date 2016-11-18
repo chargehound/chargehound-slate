@@ -9,8 +9,9 @@ language_tabs:
   - go: Go
 
 includes:
-  - integration
   - disputes
+  - integration
+  - standalone
 
 search: false
 ---
@@ -24,23 +25,23 @@ All requests must be made over [HTTPS](https://en.wikipedia.org/wiki/HTTPS).
 ## Authentication
 
 ```sh
-curl -u test_123:
+curl -u test_XXX:
 ```
 
 ```js
 var chargehound = require('chargehound')(
-  'test_123'
+  'test_XXX'
 );
 ```
 
 ```python
 import chargehound
-chargehound.api_key = 'test_123'
+chargehound.api_key = 'test_XXX'
 ```
 
 ```ruby
 require 'chargehound'
-Chargehound.api_key = 'test_123'
+Chargehound.api_key = 'test_XXX'
 ```
 
 ```go
@@ -48,16 +49,16 @@ import (
   "github.com/chargehound/chargehound-go"
 )
 
-ch := chargehound.New("test_123") 
+ch := chargehound.New("test_XXX") 
 ```
 
-> Make sure to replace `test_123` with your API key.
+> Make sure to replace `test_XXX` with your API key.
+
+You have two API keys, one for test and one for live data.
 
 Authentication to the API is performed via [HTTP Basic Auth](https://en.wikipedia.org/wiki/Basic_access_authentication). Your API key serves as your username. You do not need to provide a password, so the full authorization string should have the form `{{key}}:`.
 
-If you are setting authentication in the HTTP Headers with the form `Authorization: Basic {{credentials}}` be sure to [base 64](https://en.wikipedia.org/wiki/Base64) encode the credentials so that, for example, `test_123:` becomes `dGVzdF8xMjM6`.
-
-You have two API keys, one for test and one for live data.
+If you are setting authentication in the HTTP Headers with the form `Authorization: Basic {{credentials}}` be sure to [base 64](https://en.wikipedia.org/wiki/Base64) encode the credentials so that, for example, `test_XXX:` becomes `dGVzdF9YWFg6`.
 
 ## Errors
 
@@ -74,22 +75,23 @@ You have two API keys, one for test and one for live data.
 
 Chargehound uses conventional HTTP response codes to indicate success or failure of an API request. In general, codes in the 2xx range indicate success, codes in the 4xx range indicate an error that resulted from the provided information (e.g. a required parameter was missing, a payment failed, etc.), and codes in the 5xx range indicate an error with our servers. 
 
-### HTTP Status Code Summary
+### HTTP status code summary
 
 | Status | Description |
 |--------|--------|
 | 200 - OK | Everything worked as expected. |
 | 201 - Created | The resource was successfully created. |
+| 202 - Accepted | The request was successfully processed but not completed. |
 | 400 - Bad Request | The request data was invalid or incomplete. |
-| 401 - Unauthorized | No valid API key provided. |
-| 403 - Forbidden | Error with your API key or insecure connection. |
+| 401 - Unauthorized | Invalid API key provided. |
+| 403 - Forbidden | Insecure connection. |
 | 404 - Not Found | Resource could note be found. |
 | 500 - Server Error | Something went wrong on Chargehound's end. |
 
 ### Handling errors
 
 ```js
-var Chargehound = require('chargehound')('test_123')
+var Chargehound = require('chargehound')('test_XXX')
 
 // Use the Chargehound library to make a request
 .then(function () {
@@ -208,8 +210,8 @@ Chargehound offers wrapper libraries in the following languages:
 > When sending a body along with `Content-Type: application/json`, the Chargehound API expects [JSON](http://www.json.org/).
 
 ```
-curl -X PUT https://api.chargehound.com/v1/disputes/dp_123 \
-  -u test_123: \
+curl -X PUT https://api.chargehound.com/v1/disputes/dp_XXX \
+  -u test_XXX: \
   -H "Content-Type: application/json" \
   -d "{\"fields\": { \"product_url\":  \"http://www.example.com/products/cool\" } }"
 ```
@@ -217,8 +219,8 @@ curl -X PUT https://api.chargehound.com/v1/disputes/dp_123 \
 > When sending a body along with `Content-Type: application/x-www-form-urlencoded`, the Chargehound API expects [form data](https://en.wikipedia.org/wiki/Percent-encoding#The_application.2Fx-www-form-urlencoded_type). This Content Type is set automatically by curl. Dictionaries can be expressed with square brackets.
 
 ```
-curl -X PUT https://api.chargehound.com/v1/disputes/dp_123 \
-  -u test_123: \
+curl -X PUT https://api.chargehound.com/v1/disputes/dp_XXX \
+  -u test_XXX: \
   -d fields[product_url]=http://www.example.com/products/cool
 ```
 
