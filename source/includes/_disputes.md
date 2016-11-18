@@ -204,7 +204,7 @@ The dispute will be in the `submitted` state if the submit was successful.
 
 ## Creating a dispute
 
-Disputes are usually not created via the REST API. Instead, once your payment processor is connected we will mirror disputes via webhooks. You will reference the dispute with the same id that is used by the payment processor. If you are working on a standalone integration, please refer to [this section](#creating-a-dispute23).
+Disputes are usually not created via the REST API. Instead, once your payment processor is connected we will mirror disputes via webhooks. You will reference the dispute with the same id that is used by the payment processor. If you are working on a standalone integration, please refer to [this section](#creating-a-dispute-via-api).
 
 ## Retrieving a list of disputes
 
