@@ -4,7 +4,7 @@ This section walks through some of the technical details of completing a Chargeh
 
 ## Getting started
 
-Before you can use the Chargehound API, you will need your API keys. Your API keys can be found on the [team settings page](https://www.chargehound.com/team) in the "View API keys" section.
+Before you can use the Chargehound API, you will need your API keys. Your API keys can be found on the [settings page](https://www.chargehound.com/dashboard/settings/api) in the "View API keys" section.
 
 In order to submit a dispute you will also need to specify the template to use. Templates are referenced by an ID. You can see a list of your organization's templates and their IDs on the [templates page](https://www.chargehound.com/templates).
 

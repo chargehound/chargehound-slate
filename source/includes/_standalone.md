@@ -242,7 +242,7 @@ dispute, err := ch.Disputes.Create(&params)
 
 ## Dispute response ready
 
-When Chargehound has generated a response we will send the result to your server with a webhook. The webhook server URL is configured in your team settings page [here](https://www.chargehound.com/team#webhook-urls).
+When Chargehound has generated a response we will send the result to your server with a webhook. The webhook server URL is configured on the [settings page](https://www.chargehound.com/dashboard/settings/api) in the "Webhook URLs" section.
 
 > Example request:
 
