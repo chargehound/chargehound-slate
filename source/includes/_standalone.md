@@ -310,7 +310,7 @@ var chargehound = require('chargehound')(
   'test_XXX'
 );
 
-chargehound.Disputes.response('dp_XXX'), function (err, res) {
+chargehound.Disputes.response('dp_XXX', function (err, res) {
   // ...
 });
 ```
@@ -340,7 +340,7 @@ params := chargehound.RetrieveDisputeParams{
   ID: "dp_XXX",
 }
 
-dispute, err := ch.Disputes.Response(&params)
+response, err := ch.Disputes.Response(&params)
 ```
 
 > Example response:
