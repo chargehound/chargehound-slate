@@ -44,7 +44,7 @@ curl -X POST https://api.chargehound.com/v1/disputes?submit=true \
   -d reason=unrecognized \
   -d charged_at="2016-10-01T22:20:53" \
   -d disputed_at="2016-10-01T22:20:53" \
-  -d due_by="2016-12-01T22:20:53" \ 
+  -d due_by="2016-12-01T22:20:53" \
   -d currency=usd \
   -d amount=500 \
   -d reversal_currency=usd \
@@ -231,6 +231,7 @@ dispute, err := ch.Disputes.Create(&params)
 | fields | dictionary | optional | Key value pairs to hydrate the template's evidence fields. |
 | products | array | optional | List of products the customer purchased. (See [Product data](#product-data) for details.) |
 | account_id | string | optional | Set the account id for Connected accounts that are charged directly through Stripe. (See [Stripe charging directly](#stripe-charging-directly) for details.) |
+| kind | string | optional | Type of dispute (if available). One of `chargeback`, `retrieval`, `pre_arbitration`. |
 | submit | boolean | optional | Submit dispute evidence immediately after creation. |
 | force | boolean | optional | Skip the manual review filters or submit a dispute in manual review. (See [Manual review](#manual-review) for details.) |
 
