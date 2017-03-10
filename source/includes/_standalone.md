@@ -37,9 +37,9 @@ curl -X POST https://api.chargehound.com/v1/disputes?submit=true \
   -u test_XXX: \
   -d template=unrecognized \
   -d fields[customer_name]="Susie Chargeback" \
-  -d external_identifier=dp_XXX \
-  -d external_charge=ch_XXX \
-  -d external_customer=cus_XXX \
+  -d id=dp_XXX \
+  -d charge=ch_XXX \
+  -d customer=cus_XXX \
   -d processor=stripe \
   -d reason=unrecognized \
   -d charged_at="2016-10-01T22:20:53" \
@@ -62,9 +62,9 @@ chargehound.Disputes.create({
   fields: {
     customer_name: 'Susie Chargeback'
   },
-  external_identifier: 'dp_XXX',
-  external_charge: 'ch_XXX',
-  external_customer: 'cus_XXX',
+  id: 'dp_XXX',
+  charge: 'ch_XXX',
+  customer: 'cus_XXX',
   processor: 'stripe',
   reason: 'unrecognized',
   charged_at: '2016-10-01T22:20:53',
@@ -89,9 +89,9 @@ chargehound.Disputes.create(
   fields = {
     customer_name: 'Susie Chargeback'
   },
-  external_identifier = 'dp_XXX',
-  external_charge = 'ch_XXX',
-  external_customer = 'cus_XXX',
+  id = 'dp_XXX',
+  charge = 'ch_XXX',
+  customer = 'cus_XXX',
   processor = 'stripe',
   reason = 'unrecognized',
   charged_at = '2016-10-01T22 =20 =53',
@@ -114,9 +114,9 @@ Chargehound::Disputes.create(
   fields: {
     customer_name => 'Susie Chargeback'
   },
-  external_identifier: 'dp_XXX',
-  external_charge: 'ch_XXX',
-  external_customer: 'cus_XXX',
+  id: 'dp_XXX',
+  charge: 'ch_XXX',
+  customer: 'cus_XXX',
   processor: 'stripe',
   reason: 'unrecognized',
   charged_at: '2016-10-01T22:20:53',
@@ -164,7 +164,7 @@ dispute, err := ch.Disputes.Create(&params)
 
 ```json
 {
-  "external_customer": "cus_XXX",
+  "customer": "cus_XXX",
   "livemode": false,
   "currency": "usd",
   "missing_fields": {},
@@ -182,7 +182,7 @@ dispute, err := ch.Disputes.Create(&params)
   "is_charge_refundable": false,
   "cvc_check": "unavailable",
   "customer_email": null,
-  "account_id": null,
+  "user_id": null,
   "address_line1_check": "pass",
   "object": "dispute",
   "customer_purchase_ip": null,
@@ -207,9 +207,9 @@ dispute, err := ch.Disputes.Create(&params)
 
 | Parameter | Type | Required? | Description |
 |---------------------|---------|-----------|-----------|
-| external_identifier | string | required | The id of the dispute in your payment processor. |
-| external_charge | string | required | The id of the disputed charge in your payment processor. |
-| external_customer | string | optional | The id of the charged customer in your payment processor. |
+| id | string | required | The id of the dispute in your payment processor. |
+| charge | string | required | The id of the disputed charge in your payment processor. |
+| customer | string | optional | The id of the charged customer in your payment processor. |
 | reason | string | required | The bank provided reason for the dispute. One of `general`, `fraudulent`, `duplicate`, `subscription_canceled`, `product_unacceptable`, `product_not_received`, `unrecognized`, `credit_not_processed`, `incorrect_account_details`, `insufficient_funds`, `bank_cannot_process`, `debit_not_authorized`, `goods_services_returned_or_refused`, `goods_services_cancelled`, `transaction_amount_differs`, `retrieved`. |
 | charged_at | string | required | ISO 8601 timestamp - when the charge was made. |
 | disputed_at | string | required | ISO 8601 timestamp - when the charge was disputed. |
@@ -230,7 +230,7 @@ dispute, err := ch.Disputes.Create(&params)
 | template | string     | optional | The id of the template to use. |
 | fields | dictionary | optional | Key value pairs to hydrate the template's evidence fields. |
 | products | array | optional | List of products the customer purchased. (See [Product data](#product-data) for details.) |
-| account_id | string | optional | Set the account id for Connected accounts that are charged directly through Stripe. (See [Stripe charging directly](#stripe-charging-directly) for details.) |
+| user_id | string | optional | Set the account id for Connected accounts that are charged directly through Stripe. (See [Stripe charging directly](#stripe-charging-directly) for details.) |
 | kind | string | optional | Type of dispute (if available). One of `chargeback`, `retrieval`, `pre_arbitration`. |
 | submit | boolean | optional | Submit dispute evidence immediately after creation. |
 | force | boolean | optional | Skip the manual review filters or submit a dispute in manual review. (See [Manual review](#manual-review) for details.) |
@@ -251,9 +251,9 @@ When Chargehound has generated a response we will send the result to your server
 {
   "type": "dispute.response.generated",
   "livemode": true,
-  "dispute_id": "dp_XXX",
-  "external_charge": "ch_XXX",
-  "account_id": null,
+  "dispute": "dp_XXX",
+  "charge": "ch_XXX",
+  "user_id": null,
   "evidence": {
     "customer_name": "Susie Chargeback"
   },
@@ -267,11 +267,11 @@ The response webhook object is:
 |---------------------|---------|-----------|
 | type | string | The event type.
 | livemode | boolean | Is this a test or live mode dispute. |
-| dispute_id | string | The id of the dispute. |
-| external_charge | string| The id of the disputed charge. |
+| dispute | string | The id of the dispute. |
+| charge | string| The id of the disputed charge. |
 | response_url | string | The url of the generated response pdf. This url is a temporary access url. |
 | evidence | dictionary | Key value pairs for the dispute response evidence object. |
-| account_id | string | The account id for Connected accounts that are charged directly through Stripe (if any). (See [Stripe charging directly](#stripe-charging-directly) for details.) |
+| user_id | string | The account id for Connected accounts that are charged directly through Stripe (if any). (See [Stripe charging directly](#stripe-charging-directly) for details.) |
 
 ## Retrieving a dispute response
 
@@ -350,9 +350,9 @@ response, err := ch.Disputes.Response(&params)
 {
   "object": "response",
   "livemode": true,
-  "dispute_id": "dp_XXX",
-  "external_charge": "ch_XXX",
-  "account_id": null,
+  "dispute": "dp_XXX",
+  "charge": "ch_XXX",
+  "user_id": null,
   "evidence": {
     "customer_name": "Susie Chargeback"
   },
@@ -364,8 +364,8 @@ The response object is:
 
 | Field | Type | Description |
 |---------------------|---------|-----------|
-| dispute_id | string | The id of the dispute. |
-| external_charge | string| The id of the disputed charge. |
+| dispute | string | The id of the dispute. |
+| charge | string| The id of the disputed charge. |
 | response_url | string | The url of the generated response pdf. This url is a temporary access url. |
 | evidence | dictionary | Key value pairs for the dispute response evidence object. |
-| account_id | string | The account id for Connected accounts that are charged directly through Stripe (if any). (See [Stripe charging directly](#stripe-charging-directly) for details.) |
+| user_id | string | The account id for Connected accounts that are charged directly through Stripe (if any). (See [Stripe charging directly](#stripe-charging-directly) for details.) |
