@@ -1,3 +1,4 @@
+
 # Disputes
 
 ## The dispute object
@@ -921,7 +922,7 @@ import (
 ch := chargehound.New("test_XXX") 
 
 params := chargehound.UpdateDisputeParams{
-  AccountID: "acct_XXX"
+  UserID: "acct_XXX"
 }
 
 dispute, err := ch.Disputes.Submit(&params)

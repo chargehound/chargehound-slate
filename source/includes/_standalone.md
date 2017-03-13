@@ -142,9 +142,9 @@ params := chargehound.CreateDisputeParams{
   Fields: map[string]interface{}{
     "customer_name": "Susie Chargeback",
   },
-  ExternalIdentifier: "dp_XXX",
-  ExternalCharge: "ch_XXX",
-  ExternalCustomer: "cus_XXX",
+  ID: "dp_XXX",
+  Charge: "ch_XXX",
+  Customer: "cus_XXX",
   Processor: "stripe",
   Reason: "unrecognized",
   ChargedAt: "2016-10-01T22:20:53",
