@@ -6,7 +6,7 @@ This section walks through some of the technical details of completing a Chargeh
 
 Before you can use the Chargehound API, you will need your API keys. Your API keys can be found on the [settings page](https://www.chargehound.com/dashboard/settings/api#api-keys) in the "View API keys" section.
 
-In order to submit a dispute you will also need to specify the template to use. Templates are referenced by an ID. You can see a list of your organization's templates and their IDs on the [templates page](https://www.chargehound.com/templates).
+In order to submit a dispute you will also need to specify the template to use. Templates are referenced by an ID. You can see a list of your organization's templates and their IDs on the [templates page](https://www.chargehound.com/dashboard/templates).
 
 ## Collecting evidence
 
@@ -16,7 +16,7 @@ When your organization first connected to your payment processor, Chargehound li
 
 Once you have chosen a dispute, choose the template that you want to use and copy its ID. Next, attach the template to the dispute using the [update endpoint](#updating-a-dispute). In the response body look for the `missing_fields` hash. The `missing_fields` hash shows which fields are still needed in order to submit the dispute with the chosen template. Now you can figure out how to collected the needed evidence.
 
-If you don't have a real dispute for reference, go to the [templates page](https://www.chargehound.com/templates) and view the customized documentation for a template.
+If you don't have a real dispute for reference, go to the [templates page](https://www.chargehound.com/dashboard/templates) and view the customized documentation for a template.
 
 ## Formatting fields
 
