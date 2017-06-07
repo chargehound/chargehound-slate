@@ -44,6 +44,7 @@ A dispute object is:
 | updated              | string     | ISO 8601 timestamp - when the dispute was last updated in Chargehound. |
 | source               | string     | The source of the dispute. One of `mock`, `braintree`, `api` or `stripe` |
 | processor            | string     | The payment processor of the dispute. One of `braintree` or `stripe` |
+| kind                 | string     | The kind of the dispute. One of `chargeback`, `pre_arbitration` or `retrieval` |
 
 ## Submitting a dispute
 
