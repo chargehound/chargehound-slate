@@ -334,6 +334,7 @@ This endpoint will list all the disputes that we have synced from your payment p
 | limit          | integer    | optional   | Maximum number of disputes to return. Default is 20, maximum is 100. |
 | starting_after | string     | optional   | A dispute id. Fetch disputes created after this dispute.             |
 | ending_before  | string     | optional   | A dispute id. Fetch disputes created before this dispute.            |
+| state          | string     | optional   | Dispute state. Will only fetch disputes in the state.            |
 
 ## Retrieving a dispute
 
