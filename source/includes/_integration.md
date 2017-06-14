@@ -37,20 +37,7 @@ Once you have all your evidence properly formatted, use the [submit endpoint](#s
 
 In order to automatically submit responses whenever you get a dispute, you will need to set up a webhook handler and handle your payment processor's dispute created webhook.
 
-### Setting up Stripe webhooks
-
-It's best to refer to Stripe's [own documentation regarding webhooks](https://stripe.com/docs/webhooks), but here's a quick checklist of what you need to do:
-
-- Configure your Stripe [webhook settings](https://dashboard.stripe.com/account/webhooks) to send webhooks to your server.
-- Stripe can send you all events, or a set of events of your choosing. Ensure that you are subscribed to the `charge.dispute.created` event.
-- For security, ensure that you are confirming the event data with Stripe before acting upon it. When you receive an event from Stripe, parse the event id and use Stripe's [retrieve event](https://stripe.com/docs/api#retrieve_event) endpoint to fetch the event. Then, act on the fetched data. This ensures that the event was authentic.
-
-### Setting up Braintree webhooks
-
-It's best to refer to Braintree's [own documentation regarding webhooks](https://developers.braintreepayments.com/guides/webhooks/overview), but here's a quick checklist of what you need to do:
-
-- Go to your Braintree webhook settings in the settings menu.
-- Create a webhook and select the Dispute Opened event.
+... TODO
 
 ## Using a job queue
 

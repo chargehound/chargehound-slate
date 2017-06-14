@@ -2,7 +2,7 @@
 
 In typical connected integrations Chargehound has third party access to your payment processor. This allows Chargehound to automatically sync your disputes as they are created, update your disputes with relevant information, and upload the response to your payment processor after you submit a dispute. A connected integration is the least effort for you, however, in some cases a connected integration may not be possible or desired.
 
-A standalone integration gives you the responsibilty and control over creating disputes in Chargehound and uploading the generated response to your payment processor when it is ready. You will create a dispute via API and when the response is ready you will receive a webhook notification from Chargehound. You can then fetch the response information, including the PDF document generated from your template, and upload the response to your payment processor.
+A standalone integration gives you the responsibilty and control over creating disputes in Chargehound and uploading the generated response to your payment processor when it is ready. You will create a dispute via API and when the response is ready you will receive a [response generated](#dispute-response-ready) webhook notification from Chargehound. You can then fetch the response information, including the PDF document generated from your template, and upload the response to your payment processor.
 
 ## Creating a dispute via API
 
@@ -241,41 +241,10 @@ dispute, err := ch.Disputes.Create(&params)
 | ---------------------|-------------------------------------------------                     |
 | 400 Bad Request      | Dispute is missing data, or is missing fields required by the template. |
 
-## Dispute response ready
-
-When Chargehound has generated a response we will send the result to your server with a webhook. The webhook server URL is configured on the [settings page](https://www.chargehound.com/dashboard/settings/api#webhook-urls) in the "Webhook URLs" section.
-
-> Example request:
-
-```json
-{
-  "type": "dispute.response.generated",
-  "livemode": true,
-  "dispute": "dp_XXX",
-  "charge": "ch_XXX",
-  "user_id": null,
-  "evidence": {
-    "customer_name": "Susie Chargeback"
-  },
-  "response_url": "https://chargehound.s3.amazonaws.com/XXX.pdf?Signature=XXX&Expires=XXX&AWSAccessKeyId=XXX"
-}
-```
-
-The response webhook object is:
-
-| Field | Type | Description |
-|---------------------|---------|-----------|
-| type | string | The event type.
-| livemode | boolean | Is this a test or live mode dispute. |
-| dispute | string | The id of the dispute. |
-| charge | string| The id of the disputed charge. |
-| response_url | string | The url of the generated response pdf. This url is a temporary access url. |
-| evidence | dictionary | Key value pairs for the dispute response evidence object. |
-| user_id | string | The account id for Connected accounts that are charged directly through Stripe (if any). (See [Stripe charging directly](#stripe-charging-directly) for details.) |
 
 ## Retrieving a dispute response
 
-Once the response is generated, you can fetch the response data from the Chargehound API.
+Once the [response is generated](#dispute-response-ready), you can fetch the response data from the Chargehound API.
 
 > Definition:
 

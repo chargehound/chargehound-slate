@@ -11,6 +11,7 @@ language_tabs:
 includes:
   - disputes
   - integration
+  - webhooks
   - standalone
 
 search: false
