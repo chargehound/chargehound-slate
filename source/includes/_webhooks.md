@@ -11,8 +11,7 @@ Notification that Chargehound has received a new dispute from your payment proce
   "type": "dispute.created",
   "object": "event",
   "livemode": true,
-  "dispute": "dp_XXX",
-  "charge": "ch_XXX"
+  "dispute": "dp_XXX"
 }
 ```
 
@@ -23,7 +22,6 @@ The response webhook object is:
 | type | string | The event type.
 | livemode | boolean | Is this a test or live mode dispute. |
 | dispute | string | The id of the dispute. |
-| charge | string| The id of the disputed charge. |
 
 ## Dispute updated
 
@@ -36,8 +34,7 @@ Notification that a dispute has been updated.
   "type": "dispute.updated",
   "object": "event",
   "livemode": true,
-  "dispute": "dp_XXX",
-  "charge": "ch_XXX"
+  "dispute": "dp_XXX"
 }
 ```
 
@@ -48,7 +45,6 @@ The response webhook object is:
 | type | string | The event type.
 | livemode | boolean | Is this a test or live mode dispute. |
 | dispute | string | The id of the dispute. |
-| charge | string| The id of the disputed charge. |
 
 ## Dispute submitted
 
@@ -61,8 +57,7 @@ Notification that a dispute has been submitted.
   "type": "dispute.submitted",
   "object": "event",
   "livemode": true,
-  "dispute": "dp_XXX",
-  "charge": "ch_XXX"
+  "dispute": "dp_XXX"
 }
 ```
 
@@ -73,7 +68,6 @@ The response webhook object is:
 | type | string | The event type.
 | livemode | boolean | Is this a test or live mode dispute. |
 | dispute | string | The id of the dispute. |
-| charge | string| The id of the disputed charge. |
 
 ## Dispute closed
 
@@ -86,8 +80,7 @@ Notification that a dispute was closed (won, lost, charge_refunded, or warning_c
   "type": "dispute.closed",
   "object": "event",
   "livemode": true,
-  "dispute": "dp_XXX",
-  "charge": "ch_XXX"
+  "dispute": "dp_XXX"
 }
 ```
 
@@ -98,7 +91,6 @@ The response webhook object is:
 | type | string | The event type.
 | livemode | boolean | Is this a test or live mode dispute. |
 | dispute | string | The id of the dispute. |
-| charge | string| The id of the disputed charge. |
 
 ## Dispute response ready
 
