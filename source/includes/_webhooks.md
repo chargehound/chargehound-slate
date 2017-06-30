@@ -1,5 +1,7 @@
 # Webhooks
 
+Webhooks let you register a URL that Chargehound will notify when an event occurs. You might want to use webhooks to be notified when a dispute is created so that you can automatically submit a response. You can configure your webhook URLs on your [team settings page](https://www.chargehound.com/dashboard/settings/api#webhook-urls), clicking <strong>Add webhook url</strong> on that page reveals a form to add a new URL for receiving webhooks. You can select what events you would like to receive a notification for. The events are `dispute.created`, `dispute.updated`, `dispute.submitted`, `dispute.closed` and `dispute.response.generated`.
+
 ## Dispute created
 
 Notification that Chargehound has received a new dispute from your payment processor.
@@ -8,6 +10,7 @@ Notification that Chargehound has received a new dispute from your payment proce
 
 ```json
 {
+  "id": "req_XXX",
   "type": "dispute.created",
   "object": "event",
   "livemode": true,
@@ -15,11 +18,12 @@ Notification that Chargehound has received a new dispute from your payment proce
 }
 ```
 
-The response webhook object is:
+The webhook object is:
 
 | Field | Type | Description |
 |---------------------|---------|-----------|
-| type | string | The event type.
+| id | string | A unique identifier for the webhook request. |
+| type | string | The event type. |
 | livemode | boolean | Is this a test or live mode dispute. |
 | dispute | string | The id of the dispute. |
 
@@ -31,6 +35,7 @@ Notification that a dispute has been updated.
 
 ```json
 {
+  "id": "req_XXX",
   "type": "dispute.updated",
   "object": "event",
   "livemode": true,
@@ -38,11 +43,12 @@ Notification that a dispute has been updated.
 }
 ```
 
-The response webhook object is:
+The webhook object is:
 
 | Field | Type | Description |
 |---------------------|---------|-----------|
-| type | string | The event type.
+| id | string | A unique identifier for the webhook request. |
+| type | string | The event type. |
 | livemode | boolean | Is this a test or live mode dispute. |
 | dispute | string | The id of the dispute. |
 
@@ -54,6 +60,7 @@ Notification that a dispute has been submitted.
 
 ```json
 {
+  "id": "req_XXX",
   "type": "dispute.submitted",
   "object": "event",
   "livemode": true,
@@ -61,22 +68,24 @@ Notification that a dispute has been submitted.
 }
 ```
 
-The response webhook object is:
+The webhook object is:
 
 | Field | Type | Description |
 |---------------------|---------|-----------|
-| type | string | The event type.
+| id | string | A unique identifier for the webhook request. |
+| type | string | The event type. |
 | livemode | boolean | Is this a test or live mode dispute. |
 | dispute | string | The id of the dispute. |
 
 ## Dispute closed
 
-Notification that a dispute was closed (won, lost, charge_refunded, or warning_closed).
+Notification that a dispute was closed (`won`, `lost`, `charge_refunded`, or `warning_closed`).
 
 > Example request:
 
 ```json
 {
+  "id": "req_XXX",
   "type": "dispute.closed",
   "object": "event",
   "livemode": true,
@@ -84,22 +93,24 @@ Notification that a dispute was closed (won, lost, charge_refunded, or warning_c
 }
 ```
 
-The response webhook object is:
+The webhook object is:
 
 | Field | Type | Description |
 |---------------------|---------|-----------|
-| type | string | The event type.
+| id | string | A unique identifier for the webhook request. |
+| type | string | The event type. |
 | livemode | boolean | Is this a test or live mode dispute. |
 | dispute | string | The id of the dispute. |
 
 ## Dispute response ready
 
-When Chargehound has generated a response we will send the result to your server with a webhook. The webhook server URL is configured on the [settings page](https://www.chargehound.com/dashboard/settings/api#webhook-urls) in the "Webhook URLs" section.
+Notification that Chargehound has generated a response for a dispute. This event is typically used for standalone integrations, where you are responsible for uploading the response evidence document yourself.
 
 > Example request:
 
 ```json
 {
+  "id": "req_XXX",
   "type": "dispute.response.generated",
   "object": "event",
   "livemode": true,
@@ -113,11 +124,12 @@ When Chargehound has generated a response we will send the result to your server
 }
 ```
 
-The response webhook object is:
+The webhook object is:
 
 | Field | Type | Description |
 |---------------------|---------|-----------|
-| type | string | The event type.
+| id | string | A unique identifier for the webhook request. |
+| type | string | The event type. |
 | livemode | boolean | Is this a test or live mode dispute. |
 | dispute | string | The id of the dispute. |
 | charge | string| The id of the disputed charge. |
