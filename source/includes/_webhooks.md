@@ -16,7 +16,7 @@ Notification that Chargehound has received a new dispute from your payment proce
 {
   "id": "wh_XXX",
   "type": "dispute.created",
-  "object": "event",
+  "object": "webhook",
   "livemode": true,
   "dispute": "dp_XXX"
 }
@@ -41,7 +41,7 @@ Notification that a dispute has been updated.
 {
   "id": "wh_XXX",
   "type": "dispute.updated",
-  "object": "event",
+  "object": "webhook",
   "livemode": true,
   "dispute": "dp_XXX"
 }
@@ -66,7 +66,7 @@ Notification that a dispute has been submitted.
 {
   "id": "wh_XXX",
   "type": "dispute.submitted",
-  "object": "event",
+  "object": "webhook",
   "livemode": true,
   "dispute": "dp_XXX"
 }
@@ -91,7 +91,7 @@ Notification that a dispute was closed (`won`, `lost`, `charge_refunded`, or `wa
 {
   "id": "wh_XXX",
   "type": "dispute.closed",
-  "object": "event",
+  "object": "webhook",
   "livemode": true,
   "dispute": "dp_XXX"
 }
@@ -116,7 +116,7 @@ Notification that Chargehound has generated a response for a dispute. This event
 {
   "id": "wh_XXX",
   "type": "dispute.response.generated",
-  "object": "event",
+  "object": "webhook",
   "livemode": true,
   "dispute": "dp_XXX",
   "charge": "ch_XXX",
