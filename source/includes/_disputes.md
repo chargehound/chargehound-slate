@@ -183,7 +183,7 @@ dispute, err := ch.Disputes.Submit(&params)
 }
 ```
 
-You will want to submit the dispute through Chargehound after you receive a notification from the source payment processor of a new dispute. With one `POST` request you can update a dispute with the evidence fields and send the generated response to the source payment processor.
+You will want to submit the dispute through Chargehound after you receive the `dispute.created` [webhook notification](#webhooks). With one `POST` request you can update a dispute with the evidence fields and send the generated response to the source payment processor.
 
 The dispute will be in the `submitted` state if the submit was successful. 
 

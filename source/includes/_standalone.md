@@ -2,7 +2,7 @@
 
 In typical connected integrations Chargehound has third party access to your payment processor. This allows Chargehound to automatically sync your disputes as they are created, update your disputes with relevant information, and upload the response to your payment processor after you submit a dispute. A connected integration is the least effort for you, however, in some cases a connected integration may not be possible or desired.
 
-A standalone integration gives you the responsibilty and control over creating disputes in Chargehound and uploading the generated response to your payment processor when it is ready. You will create a dispute via API and when the response is ready you will receive a [response generated](#dispute-response-ready) webhook notification from Chargehound. You can then fetch the response information, including the PDF document generated from your template, and upload the response to your payment processor.
+A standalone integration gives you the responsibilty and control over creating disputes in Chargehound and uploading the generated response to your payment processor when it is ready. You will create a dispute via API and when the response is ready you will receive a `dispute.response.generated` [webhook notification](#webhooks) from Chargehound. You can then fetch the response information, including the PDF document generated from your template, and upload the response to your payment processor.
 
 ## Creating a dispute via API
 

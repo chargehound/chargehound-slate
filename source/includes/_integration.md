@@ -35,7 +35,7 @@ Once you have all your evidence properly formatted, use the [submit endpoint](#s
 
 ## Setting up webhooks
 
-In order to automatically submit responses whenever you get a dispute, you will need to set up a webhook handler and handle [Chargehound's dispute created webhook](#webhooks). 
+In order to automatically submit responses whenever you get a dispute, you will need to set up a webhook handler and handle the `dispute.created` [webhook notification](#webhooks). 
 
 ## Using a job queue
 

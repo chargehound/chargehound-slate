@@ -1,6 +1,10 @@
 # Webhooks
 
-Webhooks let you register a URL that Chargehound will notify when an event occurs. You might want to use webhooks to be notified when a dispute is created so that you can automatically submit a response. You can configure your webhook URLs on your [team settings page](https://www.chargehound.com/dashboard/settings/api#webhook-urls), clicking <strong>Add webhook url</strong> on that page reveals a form to add a new URL for receiving webhooks. You can select what events you would like to receive a notification for. The events are `dispute.created`, `dispute.updated`, `dispute.submitted`, `dispute.closed` and `dispute.response.generated`.
+Webhooks let you register a URL that Chargehound will notify when an event occurs. You might want to use webhooks to be notified when a dispute is created so that you can automatically submit a response. You can configure your webhook URLs on your [team settings page](https://www.chargehound.com/dashboard/settings/api#webhook-urls), clicking *Add webhook url* on that page reveals a form to add a new URL for receiving webhooks. You can select what events you would like to receive a notification for. The events are `dispute.created`, `dispute.updated`, `dispute.submitted`, `dispute.closed` and `dispute.response.generated`.
+
+## Responding to a webhook
+
+To acknowledge successful receipt of a webhook, your endpoint should return a `2xx` HTTP status code. Any other information returned in the request headers or request body is ignored. All response codes outside this range, including `3xx` codes, will be treated as a failure. If a webhook is not successfully received for any reason, Charhound will continue trying to send the webhook once every half hour for up to 3 days.
 
 ## Dispute created
 
