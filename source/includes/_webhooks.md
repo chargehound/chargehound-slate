@@ -10,7 +10,7 @@ Notification that Chargehound has received a new dispute from your payment proce
 
 ```json
 {
-  "id": "req_XXX",
+  "id": "wh_XXX",
   "type": "dispute.created",
   "object": "event",
   "livemode": true,
@@ -35,7 +35,7 @@ Notification that a dispute has been updated.
 
 ```json
 {
-  "id": "req_XXX",
+  "id": "wh_XXX",
   "type": "dispute.updated",
   "object": "event",
   "livemode": true,
@@ -60,7 +60,7 @@ Notification that a dispute has been submitted.
 
 ```json
 {
-  "id": "req_XXX",
+  "id": "wh_XXX",
   "type": "dispute.submitted",
   "object": "event",
   "livemode": true,
@@ -85,7 +85,7 @@ Notification that a dispute was closed (`won`, `lost`, `charge_refunded`, or `wa
 
 ```json
 {
-  "id": "req_XXX",
+  "id": "wh_XXX",
   "type": "dispute.closed",
   "object": "event",
   "livemode": true,
@@ -110,7 +110,7 @@ Notification that Chargehound has generated a response for a dispute. This event
 
 ```json
 {
-  "id": "req_XXX",
+  "id": "wh_XXX",
   "type": "dispute.response.generated",
   "object": "event",
   "livemode": true,
