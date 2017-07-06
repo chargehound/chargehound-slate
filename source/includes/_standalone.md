@@ -335,6 +335,6 @@ The response object is:
 |---------------------|---------|-----------|
 | dispute | string | The id of the dispute. |
 | charge | string| The id of the disputed charge. |
-| response_url | string | The URL of the generated response pdf. This URL is a temporary access URL. |
+| response_url | string | The URL of the generated response PDF. This URL is a temporary access URL. |
 | evidence | dictionary | Key value pairs for the dispute response evidence object. |
 | user_id | string | The account id for Connected accounts that are charged directly through Stripe (if any). (See [Stripe charging directly](#stripe-charging-directly) for details.) |
