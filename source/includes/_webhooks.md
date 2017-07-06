@@ -1,6 +1,6 @@
 # Webhooks
 
-Webhooks let you register a URL that Chargehound will notify when an event occurs. You might want to use webhooks to be notified when a dispute is created so that you can automatically submit a response. You can configure your webhook URLs on your [team settings page](https://www.chargehound.com/dashboard/settings/api#webhook-urls), clicking *Add webhook url* on that page reveals a form to add a new URL for receiving webhooks. You can select what events you would like to receive a notification for. The events are `dispute.created`, `dispute.updated`, `dispute.submitted`, `dispute.closed` and `dispute.response.generated`.
+Webhooks let you register a URL that Chargehound will notify when an event occurs. You might want to use webhooks to be notified when a dispute is created so that you can automatically submit a response. You can configure your webhook URLs on your [team settings page](https://www.chargehound.com/dashboard/settings/api#webhook-urls), clicking *Add webhook URL* on that page reveals a form to add a new URL for receiving webhooks. You can select what events you would like to receive a notification for. The events are `dispute.created`, `dispute.updated`, `dispute.submitted`, `dispute.closed` and `dispute.response.generated`.
 
 ## Responding to a webhook
 
@@ -137,6 +137,6 @@ The webhook object is:
 | livemode | boolean | Is this a test or live mode dispute. |
 | dispute | string | The id of the dispute. |
 | charge | string| The id of the disputed charge. |
-| response_url | string | The url of the generated response pdf. This url is a temporary access url. |
+| response_url | string | The URL of the generated response pdf. This URL is a temporary access URL. |
 | evidence | dictionary | Key value pairs for the dispute response evidence object. |
 | user_id | string | The account id for Connected accounts that are charged directly through Stripe (if any). (See [Stripe charging directly](#stripe-charging-directly) for details.) |

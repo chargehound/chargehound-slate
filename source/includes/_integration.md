@@ -28,7 +28,7 @@ When submitting evidence you will encounter a few different types of fields in t
 | date | string | Submitted responses will be reviewed by humans so try to format dates to be human readable and friendly, although no specific format is enforced. This is not the place for Unix timestamps. |
 | number | integer | A number should be an integer, not a float. |
 | amount | integer | An amount should be an integer that represents the cents (or other minor currency unit) value. E.g. $1 is 100. |
-| url | string | A url hould be a fully qualified url including the scheme (`http:// ` or `https://`). |
+| url | string | A URL hould be a fully qualified URL including the scheme (`http:// ` or `https://`). |
 | email | string | An email should be a valid email address. |
 
 Once you have all your evidence properly formatted, use the [submit endpoint](#submitting-a-dispute) to submit a dispute. The submit endpoint adds the template and evidence fields to a dispute just like the [update endpoint](#updating-a-dispute), and it also submits the evidence to be reviewed. If you get a `400` response code or `ChargehoundBadRequestError` after a submit or update it is probably because one of the evidence fields is not properly formatted. When you get a `201` response code the dispute was successfully submitted and you are done.
