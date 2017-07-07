@@ -28,29 +28,14 @@ When submitting evidence you will encounter a few different types of fields in t
 | date | string | Submitted responses will be reviewed by humans so try to format dates to be human readable and friendly, although no specific format is enforced. This is not the place for Unix timestamps. |
 | number | integer | A number should be an integer, not a float. |
 | amount | integer | An amount should be an integer that represents the cents (or other minor currency unit) value. E.g. $1 is 100. |
-| url | string | A url hould be a fully qualified url including the scheme (`http:// ` or `https://`). |
+| url | string | A URL should be a fully qualified URL including the scheme (`http:// ` or `https://`). |
 | email | string | An email should be a valid email address. |
 
 Once you have all your evidence properly formatted, use the [submit endpoint](#submitting-a-dispute) to submit a dispute. The submit endpoint adds the template and evidence fields to a dispute just like the [update endpoint](#updating-a-dispute), and it also submits the evidence to be reviewed. If you get a `400` response code or `ChargehoundBadRequestError` after a submit or update it is probably because one of the evidence fields is not properly formatted. When you get a `201` response code the dispute was successfully submitted and you are done.
 
 ## Setting up webhooks
 
-In order to automatically submit responses whenever you get a dispute, you will need to set up a webhook handler and handle your payment processor's dispute created webhook.
-
-### Setting up Stripe webhooks
-
-It's best to refer to Stripe's [own documentation regarding webhooks](https://stripe.com/docs/webhooks), but here's a quick checklist of what you need to do:
-
-- Configure your Stripe [webhook settings](https://dashboard.stripe.com/account/webhooks) to send webhooks to your server.
-- Stripe can send you all events, or a set of events of your choosing. Ensure that you are subscribed to the `charge.dispute.created` event.
-- For security, ensure that you are confirming the event data with Stripe before acting upon it. When you receive an event from Stripe, parse the event id and use Stripe's [retrieve event](https://stripe.com/docs/api#retrieve_event) endpoint to fetch the event. Then, act on the fetched data. This ensures that the event was authentic.
-
-### Setting up Braintree webhooks
-
-It's best to refer to Braintree's [own documentation regarding webhooks](https://developers.braintreepayments.com/guides/webhooks/overview), but here's a quick checklist of what you need to do:
-
-- Go to your Braintree webhook settings in the settings menu.
-- Create a webhook and select the Dispute Opened event.
+In order to automatically submit responses whenever you get a dispute, you will need to set up a webhook handler and handle the `dispute.created` [webhook notification](#webhooks). 
 
 ## Using a job queue
 
