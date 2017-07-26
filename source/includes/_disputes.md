@@ -612,7 +612,9 @@ You can update the template and the fields on a dispute.
 
 ## Queuing for submission
 
-Queuing a dispute for submission allows you to stage evidence that will be automatically submitted on the dispute's due date. Typically a payment processor only allows a dispute response to be submitted once, making it impossible to edit the response. Queuing a dispute for submission allows you to make changes to the dispute's response while being confident that the dispute will be submitted on time. You can queue a dispute by setting the `queue` parameter to `true` when making a request to [submit](#submitting-a-dispute), [update](#updating-a-dispute), or [create](#creating-a-dispute-via-api) a dispute.
+Queuing a dispute for submission allows you to stage evidence that will be automatically submitted on the dispute's due date. Typically a payment processor only allows a dispute response to be submitted once, making it impossible to edit the response. Queuing a dispute for submission allows you to make changes to the dispute's response while being confident that the dispute will be submitted on time. 
+
+You can queue a dispute by setting the `queue` parameter to `true` when making a request to [submit](#submitting-a-dispute), [update](#updating-a-dispute), or [create](#creating-a-dispute-via-api) a dispute. The dispute will be in the `queued` state if the request was successful.
 
 ## Accepting a dispute
 
