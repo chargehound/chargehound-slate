@@ -233,6 +233,7 @@ dispute, err := ch.Disputes.Create(&params)
 | user_id | string | optional | Set the account id for Connected accounts that are charged directly through Stripe. (See [Stripe charging directly](#stripe-charging-directly) for details.) |
 | kind | string | optional | Type of dispute (if available). One of `chargeback`, `retrieval`, `pre_arbitration`. |
 | submit | boolean | optional | Submit dispute evidence immediately after creation. |
+| queue | boolean | optional | Queue the dispute for submission on its due date. (See [Queuing for submission](#queuing-for-submission) for details.) |
 | force | boolean | optional | Skip the manual review filters or submit a dispute in manual review. (See [Manual review](#manual-review) for details.) |
 
 ### Possible errors

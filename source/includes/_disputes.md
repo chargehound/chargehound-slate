@@ -194,7 +194,7 @@ The dispute will be in the `submitted` state if the submit was successful.
 | template       | string     | optional   | The id of the template to use. |
 | fields         | dictionary | optional   | Key value pairs to hydrate the template's evidence fields. |
 | products       | array      | optional   | List of products the customer purchased. (See [Product data](#product-data) for details.) |
-| queue | boolean | optional | Queue the dispute for submission on its due date. |
+| queue | boolean | optional | Queue the dispute for submission on its due date. (See [Queuing for submission](#queuing-for-submission) for details.) |
 | force | boolean | optional | Skip the manual review filters or submit a dispute in manual review. (See [Manual review](#manual-review) for details.) |
 | user_id | string | optional | Set the account id for accounts that are charged directly through Stripe. (See [Stripe charging directly](#stripe-charging-directly) for details.) |
 | charge | string | optional | You will need to send the transaction id if the payment processor is Braintree. (See [Braintree disputes](#braintree-disputes) for details.) |
@@ -599,6 +599,7 @@ You can update the template and the fields on a dispute.
 | -------------  | ---------- | ---------- | --------------------------------------------------------------------------------------------------------------------- |
 | template       | string     | optional   | The id of the template to use. |
 | fields         | dictionary | optional   | Key value pairs to hydrate the template's evidence fields. |
+| queue | boolean | optional | Queue the dispute for submission on its due date. (See [Queuing for submission](#queuing-for-submission) for details.) |
 | products       | array      | optional   | List of products the customer purchased. (See [Product data](#product-data) for details.) |
 | user_id | string     | optional   | Set the account id for accounts that are charged directly through Stripe. (See [Stripe charging directly](#stripe-charging-directly) for details.) |
 | charge | string     | optional   | You will need to send the transaction id if the payment processor is Braintree. (See [Braintree disputes](#braintree-disputes) for details.) |
@@ -608,6 +609,10 @@ You can update the template and the fields on a dispute.
 | Error code           | Description                                                          |
 | ---------------------|-------------------------------------------------                     |
 | 400 Bad Request      | Dispute has no template, or missing fields required by the template. |
+
+## Queuing for submission
+
+Queuing a dispute for submission allows you to stage evidence that will be automatically submitted on the dispute's due date. Typically a payment processor only allows a dispute response to be submitted once, making it impossible to edit the response. Queuing a dispute for submission allows you to make changes to the dispute's response while being confident that the dispute will be submitted on time. You can queue a dispute by setting the `queue` parameter to true when making a request to [submit](#submitting-a-dispute), [update](#updating-a-dispute), or [create](#creating-a-dispute-via-api) a dispute.
 
 ## Accepting a dispute
 
