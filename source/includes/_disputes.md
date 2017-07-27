@@ -10,7 +10,7 @@ A dispute object is:
 | Field                | Type       | Description                                                                                 |
 | ---------------------|------------|---------------------------------------------------------------------------------------------|
 | id                   | string     | A unique identifier for the dispute. This id is set by the payment processor of the dispute. |
-| state                | string     | State of the dispute. One of `needs_response`,`submitted`, `under_review`, `won`, `lost`, `warning_needs_response`, `warning_under_review`, `warning_closed` , `response_disabled`, `charge_refunded`, `requires_review`, `accepted`. |
+| state                | string     | State of the dispute. One of `needs_response`,`submitted`, `under_review`, `won`, `lost`, `warning_needs_response`, `warning_under_review`, `warning_closed` , `response_disabled`, `charge_refunded`, `requires_review`, `accepted`, `queued`. |
 | reason               | string     | Reason for the dispute. One of `general`, `fraudulent`, `duplicate`, `subscription_canceled`, `product_unacceptable`, `product_not_received`, `unrecognized`, `credit_not_processed`, `incorrect_account_details`, `insufficient_funds`, `bank_cannot_process`, `debit_not_authorized`, `goods_services_returned_or_refused`, `goods_services_cancelled`, `transaction_amount_differs`, `retrieved`, `customer_initiated` | 
 | charged_at           | string     | ISO 8601 timestamp - when the charge was made.                                              |
 | disputed_at          | string     | ISO 8601 timestamp - when the charge was disputed.                                          |
@@ -194,6 +194,7 @@ The dispute will be in the `submitted` state if the submit was successful.
 | template       | string     | optional   | The id of the template to use. |
 | fields         | dictionary | optional   | Key value pairs to hydrate the template's evidence fields. |
 | products       | array      | optional   | List of products the customer purchased. (See [Product data](#product-data) for details.) |
+| queue | boolean | optional | Queue the dispute for submission on its due date. (See [Queuing for submission](#queuing-for-submission) for details.) |
 | force | boolean | optional | Skip the manual review filters or submit a dispute in manual review. (See [Manual review](#manual-review) for details.) |
 | user_id | string | optional | Set the account id for accounts that are charged directly through Stripe. (See [Stripe charging directly](#stripe-charging-directly) for details.) |
 | charge | string | optional | You will need to send the transaction id if the payment processor is Braintree. (See [Braintree disputes](#braintree-disputes) for details.) |
@@ -607,6 +608,130 @@ You can update the template and the fields on a dispute.
 | Error code           | Description                                                          |
 | ---------------------|-------------------------------------------------                     |
 | 400 Bad Request      | Dispute has no template, or missing fields required by the template. |
+
+## Queuing for submission
+
+Queuing a dispute for submission allows you to stage evidence that will be automatically submitted on the dispute's due date. Typically a payment processor only allows a dispute response to be submitted once, making it impossible to edit the response. Queuing a dispute for submission allows you to make changes to the dispute's response while being confident that the dispute will be submitted on time. 
+
+You can queue a dispute by setting the `queue` parameter to `true` when making a request to [submit](#submitting-a-dispute) or [create](#creating-a-dispute-via-api) a dispute. The dispute will be in the `queued` state if the request was successful.
+
+## Accepting a dispute
+
+> Definition:
+
+```sh
+POST /v1/disputes/{{dispute_id}}/accept
+```
+
+```js
+chargehound.Disputes.accept();
+```
+
+```python
+chargehound.Disputes.accept()
+```
+
+```ruby
+Chargehound::Disputes.accept
+```
+
+```go
+ch.Disputes.Accept(*chargehound.AcceptDisputeParams)
+```
+
+> Example request:
+
+```sh
+curl -X POST https://api.chargehound.com/v1/disputes/dp_XXX/accept \
+  -u test_XXX:
+```
+
+```js
+var chargehound = require('chargehound')(
+  'test_XXX'
+);
+
+chargehound.Disputes.accept('dp_XXX'), function (err, res) {
+  // ...
+});
+```
+
+```python
+import chargehound
+chargehound.api_key = 'test_XXX'
+
+chargehound.Disputes.accept('dp_XXX')
+```
+
+```ruby
+require 'chargehound'
+Chargehound.api_key = 'test_XXX'
+
+Chargehound::Disputes.accept('dp_XXX')
+```
+
+```go
+import (
+  "github.com/chargehound/chargehound-go"
+)
+
+ch := chargehound.New("test_XXX") 
+
+params := chargehound.AcceptDisputeParams{
+  ID:       "dp_XXX"
+}
+
+dispute, err := ch.Disputes.Accept(&params)
+```
+
+> Example response:
+
+```json
+{
+  "customer": "cus_XXX",
+  "livemode": false,
+  "updated": "2016-10-18T20:38:51",
+  "currency": "usd",
+  "missing_fields": {},
+  "address_zip_check": "pass",
+  "closed_at": null,
+  "id": "dp_XXX",
+  "customer_name": "Susie Chargeback",
+  "fee": 1500,
+  "reversal_amount": 500,
+  "due_by": "2016-11-18T20:38:51",
+  "state": "accepted",
+  "statement_descriptor": "COMPANY",
+  "source": "stripe",
+  "charge": "ch_XXX",
+  "template": "unrecognized",
+  "is_charge_refundable": false,
+  "cvc_check": "unavailable",
+  "customer_email": "susie@example.com",
+  "user_id": null,
+  "address_line1_check": "pass",
+  "object": "dispute",
+  "customer_purchase_ip": null,
+  "disputed_at": "2016-09-18T20:38:51",
+  "submitted_count": 0,
+  "reason": "unrecognized",
+  "reversal_total": 2000,
+  "reversal_currency": "usd",
+  "address_zip": null,
+  "submitted_at": "2016-10-18T20:38:51",
+  "created": "2016-09-18T20:38:51",
+  "url": "/v1/disputes/dp_XXX",
+  "fields": {},
+  "charged_at": "2016-09-18T20:38:51",
+  "products": [],
+  "amount": 500,
+  "processor": "stripe"
+}
+```
+
+If you do not wish to respond to a dispute you can accept the dispute. Accepting a dispute will remove the dispute from your queue of disputes that need response. This is intented to help you organize your disputes.
+
+The dispute will be in the `accepted` state if the request was successful. 
 
 ## Product data
 
