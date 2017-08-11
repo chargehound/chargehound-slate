@@ -602,6 +602,9 @@ You can update the template and the fields on a dispute.
 | products       | array      | optional   | List of products the customer purchased. (See [Product data](#product-data) for details.) |
 | user_id | string     | optional   | Set the account id for accounts that are charged directly through Stripe. (See [Stripe charging directly](#stripe-charging-directly) for details.) |
 | charge | string     | optional   | You will need to send the transaction id if the payment processor is Braintree. (See [Braintree disputes](#braintree-disputes) for details.) |
+| submit | boolean | optional | Submit dispute evidence immediately after update. If the submit fails, updated fields will still be saved. |
+| queue | boolean | optional | Queue the dispute for submission on its due date. (See [Queuing for submission](#queuing-for-submission) for details.) |
+| force | boolean | optional | Skip the manual review filters or submit a dispute in manual review. (See [Manual review](#manual-review) for details.) |
 
 ### Possible errors
 
