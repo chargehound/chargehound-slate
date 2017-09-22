@@ -1058,4 +1058,4 @@ params := chargehound.UpdateDisputeParams{
 dispute, err := ch.Disputes.Submit(&params)
 ```
 
-In order to work with Stripe Managed or Connected account integrations that [charge directly](https://stripe.com/docs/connect/payments-fees#charging-directly), you will need to attach the Stripe account id to the dispute using the `user_id` parameter. When you receive a webhook to your Connect webhook endpoint, get the `user_id` from the event. The `user_id` is the Stripe account id that you will need to set.
+In order to work with Stripe Managed or Connected account integrations that [charge directly](https://stripe.com/docs/connect/direct-charges), you will need to attach the Stripe account id to the dispute using the `user_id` parameter. When you receive a webhook to your Connect webhook endpoint, get the `user_id` from the event. The `user_id` is the Stripe account id that you will need to set.
