@@ -52,7 +52,8 @@ under the License.
         <%= image_tag('navbar.png') %>
       </span>
     </a>
-    <div class="toc-wrapper">
+<<<<<<< HEAD
+    <div class="tocify-wrapper">
       <!-- <%= image_tag "logo.png" %> -->
       <div class="ch-title">
         <a href="https://www.chargehound.com/">
@@ -65,7 +66,12 @@ under the License.
           <span>API</span>
         </a>
       </div>
+      <% if language_tabs %>
+=======
+    <div class="toc-wrapper">
+      <%= image_tag "logo.png", class: 'logo' %>
       <% if language_tabs.any? %>
+>>>>>>> upstream/master
         <div class="lang-selector">
           <% language_tabs.each do |lang| %>
             <% if lang.is_a? Hash %>
