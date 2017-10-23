@@ -9,11 +9,11 @@ language_tabs:
   - go: Go
 
 includes:
+  - versioning
   - disputes
   - integration
   - webhooks
   - standalone
-  - versions
 
 search: false
 ---
