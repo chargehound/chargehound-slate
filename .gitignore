@@ -12,10 +12,11 @@ test/tmp
 test/version_tmp
 tmp
 *.DS_STORE
-build/
+build/current
 .cache
 .vagrant
 .sass-cache
+.orig
 
 # YARD artifacts
 .yardoc

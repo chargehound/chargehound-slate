@@ -19,6 +19,9 @@ set :js_dir, 'javascripts'
 set :images_dir, 'images'
 set :fonts_dir, 'fonts'
 
+# Custom build dir
+set :build_dir, "build/current"
+
 # Activate the syntax highlighter
 activate :syntax
 ready do
@@ -36,6 +39,7 @@ end
 # Github pages require relative links
 activate :relative_assets
 set :relative_links, true
+
 
 # Build Configuration
 configure :build do

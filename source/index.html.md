@@ -13,6 +13,7 @@ includes:
   - integration
   - webhooks
   - standalone
+  - versions
 
 search: false
 ---
