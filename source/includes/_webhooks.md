@@ -120,7 +120,7 @@ Notification that Chargehound has generated a response for a dispute. This event
   "livemode": true,
   "dispute": "dp_XXX",
   "charge": "ch_XXX",
-  "user_id": null,
+  "account_id": null,
   "evidence": {
     "customer_name": "Susie Chargeback"
   },
@@ -136,7 +136,10 @@ The webhook object is:
 | type | string | The event type. |
 | livemode | boolean | Is this a test or live mode dispute. |
 | dispute | string | The id of the dispute. |
+| dispute_id | string | The id of the dispute. (Deprecated, use "dispute" instead). |
 | charge | string| The id of the disputed charge. |
+| external_identifier | string| The id of the disputed charge. (Deprecated, use "charge" instead). |
 | response_url | string | The URL of the generated response PDF. This URL is a temporary access URL. |
 | evidence | dictionary | Key value pairs for the dispute response evidence object. |
-| user_id | string | The account id for Connected accounts that are charged directly through Stripe (if any). (See [Stripe charging directly](#stripe-charging-directly) for details.) |
+| account_id | string | The account id for Connected accounts that are charged directly through Stripe (if any). (See [Stripe charging directly](#stripe-charging-directly) for details.) |
+| user_id | string | The account id for Connected accounts that are charged directly through Stripe (if any). (Deprecated, use "account_id" instead). |

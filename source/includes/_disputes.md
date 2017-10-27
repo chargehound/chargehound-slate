@@ -39,7 +39,7 @@ A dispute object is:
 | address_zip_check    | string     | State of address zip check (if available). One of `pass`, `fail`, `unavailable`, `checked`. |
 | cvc_check            | string     | State of cvc check (if available). One of `pass`, `fail`, `unavailable`, `checked`.         |
 | statement_descriptor | string     | The descriptor that appears on the customer's credit card statement for this change.        |
-| user_id           | string     | The account id for Connected accounts that are charged directly through Stripe (if any). (See [Stripe charging directly](#stripe-charging-directly) for details.) |
+| account_id           | string     | The account id for Connected accounts that are charged directly through Stripe (if any). (See [Stripe charging directly](#stripe-charging-directly) for details.) |
 | created              | string     | ISO 8601 timestamp - when the dispute was created in Chargehound. |
 | updated              | string     | ISO 8601 timestamp - when the dispute was last updated in Chargehound. |
 | source               | string     | The source of the dispute. One of `mock`, `braintree`, `api` or `stripe` |
@@ -160,7 +160,7 @@ dispute, err := ch.Disputes.Submit(&params)
   "is_charge_refundable": false,
   "cvc_check": "unavailable",
   "customer_email": "susie@example.com",
-  "user_id": null,
+  "account_id": null,
   "address_line1_check": "pass",
   "object": "dispute",
   "customer_purchase_ip": null,
@@ -196,9 +196,13 @@ The dispute will be in the `submitted` state if the submit was successful.
 | products       | array      | optional   | List of products the customer purchased. (See [Product data](#product-data) for details.) |
 | queue | boolean | optional | Queue the dispute for submission on its due date. (See [Queuing for submission](#queuing-for-submission) for details.) |
 | force | boolean | optional | Skip the manual review filters or submit a dispute in manual review. (See [Manual review](#manual-review) for details.) |
-| user_id | string | optional | Set the account id for accounts that are charged directly through Stripe. (See [Stripe charging directly](#stripe-charging-directly) for details.) |
+| account_id | string | optional | Set the account id for accounts that are charged directly through Stripe. (See [Stripe charging directly](#stripe-charging-directly) for details.) |
 | charge | string | optional | You will need to send the transaction id if the payment processor is Braintree. (See [Braintree disputes](#braintree-disputes) for details.) |
-| account    | string     | optional   | Id of the connected account for this dispute (if multiple accounts are connected) |
+| account    | string     | optional   | Id of the connected account for this dispute (if multiple accounts are connected). View your connected accounts in the Chargehound dashboard settings page [here](/dashboard/settings/processors). |
+| customer_name  | string     | optional   | Update the customer name. Will also update the customer name in the evidence fields. (Deprecated, set the "customer_name" attribute in the fields object). |
+| customer_email | string     | optional   | Update the customer email. Will also update the customer email in the evidence fields. Must be a valid email address. (Deprecated, set the "customer_name" attribute in the fields object). |
+| user_id | string | optional | The account id for Connected accounts that are charged directly through Stripe (if any). (Deprecated, use "account_id" instead). |
+
 
 ### Possible errors
 
@@ -304,7 +308,7 @@ disputeList, err := ch.Disputes.List(nil)
       "is_charge_refundable": false,
       "cvc_check": "unavailable",
       "customer_email": "susie@example.com",
-      "user_id": null,
+      "account_id": null,
       "address_line1_check": "pass",
       "object": "dispute",
       "customer_purchase_ip": null,
@@ -431,7 +435,7 @@ dispute, err := ch.Disputes.Retrieve(&params)
   "is_charge_refundable": false,
   "cvc_check": "unavailable",
   "customer_email": "susie@example.com",
-  "user_id": null,
+  "account_id": null,
   "address_line1_check": "pass",
   "object": "dispute",
   "customer_purchase_ip": null,
@@ -568,7 +572,7 @@ dispute, err := ch.Disputes.Update(&params)
   "is_charge_refundable": false,
   "cvc_check": "unavailable",
   "customer_email": "susie@example.com",
-  "user_id": null,
+  "account_id": null,
   "address_line1_check": "pass",
   "object": "dispute",
   "customer_purchase_ip": null,
@@ -600,11 +604,15 @@ You can update the template and the fields on a dispute.
 | template       | string     | optional   | The id of the template to use. |
 | fields         | dictionary | optional   | Key value pairs to hydrate the template's evidence fields. |
 | products       | array      | optional   | List of products the customer purchased. (See [Product data](#product-data) for details.) |
-| user_id | string     | optional   | Set the account id for accounts that are charged directly through Stripe. (See [Stripe charging directly](#stripe-charging-directly) for details.) |
+| account_id | string     | optional   | Set the account id for accounts that are charged directly through Stripe. (See [Stripe charging directly](#stripe-charging-directly) for details.) |
 | charge | string     | optional   | You will need to send the transaction id if the payment processor is Braintree. (See [Braintree disputes](#braintree-disputes) for details.) |
 | submit | boolean | optional | Submit dispute evidence immediately after update. If the submit fails, updated fields will still be saved. |
 | queue | boolean | optional | Queue the dispute for submission on its due date. (See [Queuing for submission](#queuing-for-submission) for details.) |
 | force | boolean | optional | Skip the manual review filters or submit a dispute in manual review. (See [Manual review](#manual-review) for details.) |
+| customer_name  | string     | optional   | Update the customer name. Will also update the customer name in the evidence fields. (Deprecated, set the "customer_name" attribute in the fields object). |
+| customer_email | string     | optional   | Update the customer email. Will also update the customer email in the evidence fields. Must be a valid email address. (Deprecated, set the "customer_name" attribute in the fields object). |
+| user_id | string | optional | The account id for Connected accounts that are charged directly through Stripe (if any). (Deprecated, use "account_id" instead). |
+
 
 ### Possible errors
 
@@ -711,7 +719,7 @@ dispute, err := ch.Disputes.Accept(&params)
   "is_charge_refundable": false,
   "cvc_check": "unavailable",
   "customer_email": "susie@example.com",
-  "user_id": null,
+  "account_id": null,
   "address_line1_check": "pass",
   "object": "dispute",
   "customer_purchase_ip": null,
@@ -1011,7 +1019,7 @@ In order to submit a Braintree dispute, you will also need to attach the Braintr
 ```sh
 curl -X POST https://api.chargehound.com/v1/disputes/dp_XXX/submit \
   -u test_XXX: \
-  -d user_id=acct_XXX
+  -d account_id=acct_XXX
 ```
 
 ```js
@@ -1020,7 +1028,7 @@ var chargehound = require('chargehound')(
 );
 
 chargehound.Disputes.submit('dp_XXX', {
-  user_id: 'acct_XXX'
+  account_id: 'acct_XXX'
 }, function (err, res) {
   // ...
 });
@@ -1031,7 +1039,7 @@ import chargehound
 chargehound.api_key = 'test_XXX'
 
 chargehound.Disputes.submit('dp_XXX',
-  user_id='acct_XXX'
+  account_id='acct_XXX'
 )
 ```
 
@@ -1040,7 +1048,7 @@ require 'chargehound'
 Chargehound.api_key = 'test_XXX'
 
 Chargehound::Disputes.submit('dp_XXX',
-  user_id: 'acct_XXX'
+  account_id: 'acct_XXX'
 )
 ```
 
@@ -1058,4 +1066,4 @@ params := chargehound.UpdateDisputeParams{
 dispute, err := ch.Disputes.Submit(&params)
 ```
 
-In order to work with Stripe Managed or Connected account integrations that [charge directly](https://stripe.com/docs/connect/direct-charges), you will need to attach the Stripe account id to the dispute using the `user_id` parameter. When you receive a webhook to your Connect webhook endpoint, get the `user_id` from the event. The `user_id` is the Stripe account id that you will need to set.
+In order to work with Stripe Managed or Connected account integrations that [charge directly](https://stripe.com/docs/connect/direct-charges), you will need to attach the Stripe account id to the dispute using the `account_id` parameter. When you receive a webhook to your Connect webhook endpoint, get the `account` from the event. The `account_id` is the Stripe account id that you will need to set.

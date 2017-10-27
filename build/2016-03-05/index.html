@@ -346,9 +346,6 @@
                   </li>
               </ul>
           </li>
-          <li>
-            <a href="#previous-versions" class="toc-h1 toc-link" data-title="Previous Versions">Previous Versions</a>
-          </li>
       </div>
     </div>
     <div class="page-wrapper">
@@ -713,7 +710,7 @@
 <td>The descriptor that appears on the customer&#39;s credit card statement for this change.</td>
 </tr>
 <tr>
-<td>user_id</td>
+<td>account_id</td>
 <td>string</td>
 <td>The account id for Connected accounts that are charged directly through Stripe (if any). (See <a href="#stripe-charging-directly">Stripe charging directly</a> for details.)</td>
 </tr>
@@ -830,7 +827,7 @@
   </span><span class="s2">"is_charge_refundable"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
   </span><span class="s2">"cvc_check"</span><span class="p">:</span><span class="w"> </span><span class="s2">"unavailable"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"customer_email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"susie@example.com"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"user_id"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"account_id"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
   </span><span class="s2">"address_line1_check"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pass"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"object"</span><span class="p">:</span><span class="w"> </span><span class="s2">"dispute"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"customer_purchase_ip"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
@@ -895,7 +892,7 @@
 <td>Skip the manual review filters or submit a dispute in manual review. (See <a href="#manual-review">Manual review</a> for details.)</td>
 </tr>
 <tr>
-<td>user_id</td>
+<td>account_id</td>
 <td>string</td>
 <td>optional</td>
 <td>Set the account id for accounts that are charged directly through Stripe. (See <a href="#stripe-charging-directly">Stripe charging directly</a> for details.)</td>
@@ -910,7 +907,25 @@
 <td>account</td>
 <td>string</td>
 <td>optional</td>
-<td>Id of the connected account for this dispute (if multiple accounts are connected)</td>
+<td>Id of the connected account for this dispute (if multiple accounts are connected). View your connected accounts in the Chargehound dashboard settings page <a href="/dashboard/settings/processors">here</a>.</td>
+</tr>
+<tr>
+<td>customer_name</td>
+<td>string</td>
+<td>optional</td>
+<td>Update the customer name. Will also update the customer name in the evidence fields. (Deprecated, set the &quot;customer_name&quot; attribute in the fields object).</td>
+</tr>
+<tr>
+<td>customer_email</td>
+<td>string</td>
+<td>optional</td>
+<td>Update the customer email. Will also update the customer email in the evidence fields. Must be a valid email address. (Deprecated, set the &quot;customer_name&quot; attribute in the fields object).</td>
+</tr>
+<tr>
+<td>user_id</td>
+<td>string</td>
+<td>optional</td>
+<td>The account id for Connected accounts that are charged directly through Stripe (if any). (Deprecated, use &quot;account_id&quot; instead).</td>
 </tr>
 </tbody></table>
 <h3 id='possible-errors'>Possible errors</h3>
@@ -994,7 +1009,7 @@
       </span><span class="s2">"is_charge_refundable"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
       </span><span class="s2">"cvc_check"</span><span class="p">:</span><span class="w"> </span><span class="s2">"unavailable"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"customer_email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"susie@example.com"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"user_id"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"account_id"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
       </span><span class="s2">"address_line1_check"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pass"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"object"</span><span class="p">:</span><span class="w"> </span><span class="s2">"dispute"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"customer_purchase_ip"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
@@ -1117,7 +1132,7 @@
   </span><span class="s2">"is_charge_refundable"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
   </span><span class="s2">"cvc_check"</span><span class="p">:</span><span class="w"> </span><span class="s2">"unavailable"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"customer_email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"susie@example.com"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"user_id"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"account_id"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
   </span><span class="s2">"address_line1_check"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pass"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"object"</span><span class="p">:</span><span class="w"> </span><span class="s2">"dispute"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"customer_purchase_ip"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
@@ -1225,7 +1240,7 @@
   </span><span class="s2">"is_charge_refundable"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
   </span><span class="s2">"cvc_check"</span><span class="p">:</span><span class="w"> </span><span class="s2">"unavailable"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"customer_email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"susie@example.com"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"user_id"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"account_id"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
   </span><span class="s2">"address_line1_check"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pass"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"object"</span><span class="p">:</span><span class="w"> </span><span class="s2">"dispute"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"customer_purchase_ip"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
@@ -1276,7 +1291,7 @@
 <td>List of products the customer purchased. (See <a href="#product-data">Product data</a> for details.)</td>
 </tr>
 <tr>
-<td>user_id</td>
+<td>account_id</td>
 <td>string</td>
 <td>optional</td>
 <td>Set the account id for accounts that are charged directly through Stripe. (See <a href="#stripe-charging-directly">Stripe charging directly</a> for details.)</td>
@@ -1304,6 +1319,24 @@
 <td>boolean</td>
 <td>optional</td>
 <td>Skip the manual review filters or submit a dispute in manual review. (See <a href="#manual-review">Manual review</a> for details.)</td>
+</tr>
+<tr>
+<td>customer_name</td>
+<td>string</td>
+<td>optional</td>
+<td>Update the customer name. Will also update the customer name in the evidence fields. (Deprecated, set the &quot;customer_name&quot; attribute in the fields object).</td>
+</tr>
+<tr>
+<td>customer_email</td>
+<td>string</td>
+<td>optional</td>
+<td>Update the customer email. Will also update the customer email in the evidence fields. Must be a valid email address. (Deprecated, set the &quot;customer_name&quot; attribute in the fields object).</td>
+</tr>
+<tr>
+<td>user_id</td>
+<td>string</td>
+<td>optional</td>
+<td>The account id for Connected accounts that are charged directly through Stripe (if any). (Deprecated, use &quot;account_id&quot; instead).</td>
 </tr>
 </tbody></table>
 <h3 id='possible-errors-2'>Possible errors</h3>
@@ -1388,7 +1421,7 @@
   </span><span class="s2">"is_charge_refundable"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
   </span><span class="s2">"cvc_check"</span><span class="p">:</span><span class="w"> </span><span class="s2">"unavailable"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"customer_email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"susie@example.com"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"user_id"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"account_id"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
   </span><span class="s2">"address_line1_check"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pass"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"object"</span><span class="p">:</span><span class="w"> </span><span class="s2">"dispute"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"customer_purchase_ip"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
@@ -1680,13 +1713,13 @@
 </blockquote>
 <pre class="highlight sh tab-shell"><code>curl -X POST https://api.chargehound.com/v1/disputes/dp_XXX/submit <span class="se">\</span>
   -u test_XXX: <span class="se">\</span>
-  -d <span class="nv">user_id</span><span class="o">=</span>acct_XXX
+  -d <span class="nv">account_id</span><span class="o">=</span>acct_XXX
 </code></pre><pre class="highlight javascript"><code><span class="kd">var</span> <span class="nx">chargehound</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'chargehound'</span><span class="p">)(</span>
   <span class="s1">'test_XXX'</span>
 <span class="p">);</span>
 
 <span class="nx">chargehound</span><span class="p">.</span><span class="nx">Disputes</span><span class="p">.</span><span class="nx">submit</span><span class="p">(</span><span class="s1">'dp_XXX'</span><span class="p">,</span> <span class="p">{</span>
-  <span class="na">user_id</span><span class="p">:</span> <span class="s1">'acct_XXX'</span>
+  <span class="na">account_id</span><span class="p">:</span> <span class="s1">'acct_XXX'</span>
 <span class="p">},</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
   <span class="c1">// ...</span>
 <span class="p">});</span>
@@ -1694,13 +1727,13 @@
 <span class="n">chargehound</span><span class="o">.</span><span class="n">api_key</span> <span class="o">=</span> <span class="s">'test_XXX'</span>
 
 <span class="n">chargehound</span><span class="o">.</span><span class="n">Disputes</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="s">'dp_XXX'</span><span class="p">,</span>
-  <span class="n">user_id</span><span class="o">=</span><span class="s">'acct_XXX'</span>
+  <span class="n">account_id</span><span class="o">=</span><span class="s">'acct_XXX'</span>
 <span class="p">)</span>
 </code></pre><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'chargehound'</span>
 <span class="no">Chargehound</span><span class="p">.</span><span class="nf">api_key</span> <span class="o">=</span> <span class="s1">'test_XXX'</span>
 
 <span class="no">Chargehound</span><span class="o">::</span><span class="no">Disputes</span><span class="p">.</span><span class="nf">submit</span><span class="p">(</span><span class="s1">'dp_XXX'</span><span class="p">,</span>
-  <span class="ss">user_id: </span><span class="s1">'acct_XXX'</span>
+  <span class="ss">account_id: </span><span class="s1">'acct_XXX'</span>
 <span class="p">)</span>
 </code></pre><pre class="highlight go tab-go"><code><span class="k">import</span><span class="x"> </span><span class="p">(</span><span class="x">
   </span><span class="s">"github.com/chargehound/chargehound-go"</span><span class="x">
@@ -1714,7 +1747,7 @@
 
 </span><span class="n">dispute</span><span class="p">,</span><span class="x"> </span><span class="n">err</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="n">ch</span><span class="o">.</span><span class="n">Disputes</span><span class="o">.</span><span class="n">Submit</span><span class="p">(</span><span class="o">&amp;</span><span class="n">params</span><span class="p">)</span><span class="x">
 </span></code></pre>
-<p>In order to work with Stripe Managed or Connected account integrations that <a href="https://stripe.com/docs/connect/direct-charges">charge directly</a>, you will need to attach the Stripe account id to the dispute using the <code>user_id</code> parameter. When you receive a webhook to your Connect webhook endpoint, get the <code>user_id</code> from the event. The <code>user_id</code> is the Stripe account id that you will need to set.</p>
+<p>In order to work with Stripe Managed or Connected account integrations that <a href="https://stripe.com/docs/connect/direct-charges">charge directly</a>, you will need to attach the Stripe account id to the dispute using the <code>account_id</code> parameter. When you receive a webhook to your Connect webhook endpoint, get the <code>account</code> from the event. The <code>account_id</code> is the Stripe account id that you will need to set.</p>
 <h1 id='integration-guide'>Integration Guide</h1>
 <p>This section walks through some of the technical details of completing a Chargehound integration.</p>
 <h2 id='getting-started'>Getting started</h2>
@@ -2173,7 +2206,7 @@
   </span><span class="s2">"livemode"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
   </span><span class="s2">"dispute"</span><span class="p">:</span><span class="w"> </span><span class="s2">"dp_XXX"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"charge"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ch_XXX"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"user_id"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"account_id"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
   </span><span class="s2">"evidence"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
     </span><span class="s2">"customer_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Susie Chargeback"</span><span class="w">
   </span><span class="p">},</span><span class="w">
@@ -2210,9 +2243,19 @@
 <td>The id of the dispute.</td>
 </tr>
 <tr>
+<td>dispute_id</td>
+<td>string</td>
+<td>The id of the dispute. (Deprecated, use &quot;dispute&quot; instead).</td>
+</tr>
+<tr>
 <td>charge</td>
 <td>string</td>
 <td>The id of the disputed charge.</td>
+</tr>
+<tr>
+<td>external_identifier</td>
+<td>string</td>
+<td>The id of the disputed charge. (Deprecated, use &quot;charge&quot; instead).</td>
 </tr>
 <tr>
 <td>response_url</td>
@@ -2225,9 +2268,14 @@
 <td>Key value pairs for the dispute response evidence object.</td>
 </tr>
 <tr>
-<td>user_id</td>
+<td>account_id</td>
 <td>string</td>
 <td>The account id for Connected accounts that are charged directly through Stripe (if any). (See <a href="#stripe-charging-directly">Stripe charging directly</a> for details.)</td>
+</tr>
+<tr>
+<td>user_id</td>
+<td>string</td>
+<td>The account id for Connected accounts that are charged directly through Stripe (if any). (Deprecated, use &quot;account_id&quot; instead).</td>
 </tr>
 </tbody></table>
 <h1 id='standalone-integration'>Standalone Integration</h1>
@@ -2385,7 +2433,7 @@
   </span><span class="s2">"is_charge_refundable"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
   </span><span class="s2">"cvc_check"</span><span class="p">:</span><span class="w"> </span><span class="s2">"unavailable"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"customer_email"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"user_id"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"account_id"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
   </span><span class="s2">"address_line1_check"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pass"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"object"</span><span class="p">:</span><span class="w"> </span><span class="s2">"dispute"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"customer_purchase_ip"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
@@ -2552,7 +2600,7 @@
 <td>List of products the customer purchased. (See <a href="#product-data">Product data</a> for details.)</td>
 </tr>
 <tr>
-<td>user_id</td>
+<td>account_id</td>
 <td>string</td>
 <td>optional</td>
 <td>Set the account id for Connected accounts that are charged directly through Stripe. (See <a href="#stripe-charging-directly">Stripe charging directly</a> for details.)</td>
@@ -2580,6 +2628,12 @@
 <td>boolean</td>
 <td>optional</td>
 <td>Skip the manual review filters or submit a dispute in manual review. (See <a href="#manual-review">Manual review</a> for details.)</td>
+</tr>
+<tr>
+<td>user_id</td>
+<td>string</td>
+<td>optional</td>
+<td>The account id for Connected accounts that are charged directly through Stripe (if any). (Deprecated, use &quot;account_id&quot; instead).</td>
 </tr>
 </tbody></table>
 <h3 id='possible-errors'>Possible errors</h3>
@@ -2645,8 +2699,8 @@
   </span><span class="s2">"object"</span><span class="p">:</span><span class="w"> </span><span class="s2">"response"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"livemode"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
   </span><span class="s2">"dispute"</span><span class="p">:</span><span class="w"> </span><span class="s2">"dp_XXX"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"charge"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ch_XXX"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"user_id"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"external_identifier"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ch_XXX"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"account_id"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
   </span><span class="s2">"evidence"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
     </span><span class="s2">"customer_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Susie Chargeback"</span><span class="w">
   </span><span class="p">},</span><span class="w">
@@ -2668,9 +2722,19 @@
 <td>The id of the dispute.</td>
 </tr>
 <tr>
+<td>dispute_id</td>
+<td>string</td>
+<td>The id of the dispute. (Deprecated, use &quot;dispute&quot; instead).</td>
+</tr>
+<tr>
 <td>charge</td>
 <td>string</td>
 <td>The id of the disputed charge.</td>
+</tr>
+<tr>
+<td>external_identifier</td>
+<td>string</td>
+<td>The id of the disputed charge. (Deprecated, use &quot;charge&quot; instead).</td>
 </tr>
 <tr>
 <td>response_url</td>
@@ -2683,18 +2747,16 @@
 <td>Key value pairs for the dispute response evidence object.</td>
 </tr>
 <tr>
-<td>user_id</td>
+<td>account_id</td>
 <td>string</td>
 <td>The account id for Connected accounts that are charged directly through Stripe (if any). (See <a href="#stripe-charging-directly">Stripe charging directly</a> for details.)</td>
 </tr>
+<tr>
+<td>user_id</td>
+<td>string</td>
+<td>The account id for Connected accounts that are charged directly through Stripe (if any). (Deprecated, use &quot;account_id&quot; instead).</td>
+</tr>
 </tbody></table>
-<h1 id='previous-versions'>Previous Versions</h1>
-<p>Documentation is available for all previous releases:</p>
-
-<ul>
-<li><a href="../current/">Latest</a></li>
-<li><a href="../2016-03-05/">2016-03-05</a></li>
-</ul>
 
       </div>
       <div class="dark-box">

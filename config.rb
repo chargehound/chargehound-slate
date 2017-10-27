@@ -20,11 +20,11 @@ set :images_dir, 'images'
 set :fonts_dir, 'fonts'
 
 # Custom build dir
-# To generate a past version, run the build with the directory reconfigured to
-# the name of the past version, such as "build/2017-08-01"
-# then add a link to the past version in the _versioning include.
+# To generate a previous version, run the build with the directory reconfigured to
+# the name of the previous version, such as "build/2017-08-01"
+# then add a link to the previous version in the _versioning include.
 # When you generate the new version, be sure to document the changes in the changelog.
-set :build_dir, "build/current"
+set :build_dir, "build/2016-03-05"
 
 # Activate the syntax highlighter
 activate :syntax

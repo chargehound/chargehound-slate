@@ -182,7 +182,7 @@ dispute, err := ch.Disputes.Create(&params)
   "is_charge_refundable": false,
   "cvc_check": "unavailable",
   "customer_email": null,
-  "user_id": null,
+  "account_id": null,
   "address_line1_check": "pass",
   "object": "dispute",
   "customer_purchase_ip": null,
@@ -230,11 +230,13 @@ dispute, err := ch.Disputes.Create(&params)
 | template | string     | optional | The id of the template to use. |
 | fields | dictionary | optional | Key value pairs to hydrate the template's evidence fields. |
 | products | array | optional | List of products the customer purchased. (See [Product data](#product-data) for details.) |
-| user_id | string | optional | Set the account id for Connected accounts that are charged directly through Stripe. (See [Stripe charging directly](#stripe-charging-directly) for details.) |
+| account_id | string | optional | Set the account id for Connected accounts that are charged directly through Stripe. (See [Stripe charging directly](#stripe-charging-directly) for details.) |
 | kind | string | optional | Type of dispute (if available). One of `chargeback`, `retrieval`, `pre_arbitration`. |
 | submit | boolean | optional | Submit dispute evidence immediately after creation. |
 | queue | boolean | optional | Queue the dispute for submission on its due date. (See [Queuing for submission](#queuing-for-submission) for details.) |
 | force | boolean | optional | Skip the manual review filters or submit a dispute in manual review. (See [Manual review](#manual-review) for details.) |
+| user_id | string | optional | The account id for Connected accounts that are charged directly through Stripe (if any). (Deprecated, use "account_id" instead). |
+
 
 ### Possible errors
 
@@ -321,8 +323,8 @@ response, err := ch.Disputes.Response(&params)
   "object": "response",
   "livemode": true,
   "dispute": "dp_XXX",
-  "charge": "ch_XXX",
-  "user_id": null,
+  "external_identifier": "ch_XXX",
+  "account_id": null,
   "evidence": {
     "customer_name": "Susie Chargeback"
   },
@@ -335,7 +337,10 @@ The response object is:
 | Field | Type | Description |
 |---------------------|---------|-----------|
 | dispute | string | The id of the dispute. |
+| dispute_id | string | The id of the dispute. (Deprecated, use "dispute" instead). |
 | charge | string| The id of the disputed charge. |
+| external_identifier | string| The id of the disputed charge. (Deprecated, use "charge" instead). |
 | response_url | string | The URL of the generated response PDF. This URL is a temporary access URL. |
 | evidence | dictionary | Key value pairs for the dispute response evidence object. |
-| user_id | string | The account id for Connected accounts that are charged directly through Stripe (if any). (See [Stripe charging directly](#stripe-charging-directly) for details.) |
+| account_id | string | The account id for Connected accounts that are charged directly through Stripe (if any). (See [Stripe charging directly](#stripe-charging-directly) for details.) |
+| user_id | string | The account id for Connected accounts that are charged directly through Stripe (if any). (Deprecated, use "account_id" instead). |

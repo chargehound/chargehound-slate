@@ -9,7 +9,6 @@ language_tabs:
   - go: Go
 
 includes:
-  - versioning
   - disputes
   - integration
   - webhooks
