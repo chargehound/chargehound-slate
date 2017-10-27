@@ -367,7 +367,7 @@
   </span><span class="s">"github.com/chargehound/chargehound-go"</span><span class="x">
 </span><span class="p">)</span><span class="x">
 
-</span><span class="n">ch</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="n">chargehound</span><span class="o">.</span><span class="n">New</span><span class="p">(</span><span class="s">"test_XXX"</span><span class="p">)</span><span class="x"> 
+</span><span class="n">ch</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="n">chargehound</span><span class="o">.</span><span class="n">New</span><span class="p">(</span><span class="s">"test_XXX"</span><span class="p">)</span><span class="x">
 </span></code></pre>
 <blockquote>
 <p>Make sure to replace <code>test_XXX</code> with your API key.</p>
@@ -450,7 +450,7 @@
   <span class="p">}</span>
 <span class="p">})</span>
 </code></pre><pre class="highlight python tab-python"><code><span class="kn">from</span> <span class="nn">chargehound.error</span> <span class="kn">import</span> <span class="p">(</span>
-  <span class="n">ChargehoundError</span><span class="p">,</span> <span class="n">ChargehoundBadRequestError</span><span class="p">,</span> 
+  <span class="n">ChargehoundError</span><span class="p">,</span> <span class="n">ChargehoundBadRequestError</span><span class="p">,</span>
   <span class="n">ChargehoundAuthenticationError</span>
 <span class="p">)</span>
 
@@ -756,7 +756,7 @@
 <pre class="highlight sh tab-shell"><code>curl -X POST https://api.chargehound.com/v1/disputes/dp_XXX/submit <span class="se">\</span>
   -u test_XXX: <span class="se">\</span>
   -d <span class="nv">template</span><span class="o">=</span>unrecognized <span class="se">\</span>
-  -d fields[customer_name]<span class="o">=</span><span class="s2">"Susie Chargeback"</span> 
+  -d fields[customer_name]<span class="o">=</span><span class="s2">"Susie Chargeback"</span>
 </code></pre><pre class="highlight javascript"><code><span class="kd">var</span> <span class="nx">chargehound</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'chargehound'</span><span class="p">)(</span>
   <span class="s1">'test_XXX'</span>
 <span class="p">);</span>
@@ -791,7 +791,7 @@
   </span><span class="s">"github.com/chargehound/chargehound-go"</span><span class="x">
 </span><span class="p">)</span><span class="x">
 
-</span><span class="n">ch</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="n">chargehound</span><span class="o">.</span><span class="n">New</span><span class="p">(</span><span class="s">"test_XXX"</span><span class="p">)</span><span class="x"> 
+</span><span class="n">ch</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="n">chargehound</span><span class="o">.</span><span class="n">New</span><span class="p">(</span><span class="s">"test_XXX"</span><span class="p">)</span><span class="x">
 
 </span><span class="n">params</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="n">chargehound</span><span class="o">.</span><span class="n">UpdateDisputeParams</span><span class="p">{</span><span class="x">
   </span><span class="n">ID</span><span class="o">:</span><span class="x">       </span><span class="s">"dp_XXX"</span><span class="p">,</span><span class="x">
@@ -976,7 +976,7 @@
   </span><span class="s">"github.com/chargehound/chargehound-go"</span><span class="x">
 </span><span class="p">)</span><span class="x">
 
-</span><span class="n">ch</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="n">chargehound</span><span class="o">.</span><span class="n">New</span><span class="p">(</span><span class="s">"test_XXX"</span><span class="p">)</span><span class="x"> 
+</span><span class="n">ch</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="n">chargehound</span><span class="o">.</span><span class="n">New</span><span class="p">(</span><span class="s">"test_XXX"</span><span class="p">)</span><span class="x">
 
 </span><span class="n">disputeList</span><span class="p">,</span><span class="x"> </span><span class="n">err</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="n">ch</span><span class="o">.</span><span class="n">Disputes</span><span class="o">.</span><span class="n">List</span><span class="p">(</span><span class="no">nil</span><span class="p">)</span><span class="x">
 </span></code></pre>
@@ -1100,7 +1100,7 @@
   </span><span class="s">"github.com/chargehound/chargehound-go"</span><span class="x">
 </span><span class="p">)</span><span class="x">
 
-</span><span class="n">ch</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="n">chargehound</span><span class="o">.</span><span class="n">New</span><span class="p">(</span><span class="s">"test_XXX"</span><span class="p">)</span><span class="x"> 
+</span><span class="n">ch</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="n">chargehound</span><span class="o">.</span><span class="n">New</span><span class="p">(</span><span class="s">"test_XXX"</span><span class="p">)</span><span class="x">
 
 </span><span class="n">params</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="n">chargehound</span><span class="o">.</span><span class="n">RetrieveDisputeParams</span><span class="p">{</span><span class="x">
   </span><span class="n">ID</span><span class="o">:</span><span class="x"> </span><span class="s">"dp_XXX"</span><span class="p">,</span><span class="x">
@@ -1169,7 +1169,7 @@
 <pre class="highlight sh tab-shell"><code>curl -X PUT https://api.chargehound.com/v1/disputes/dp_XXX <span class="se">\</span>
   -u test_XXX: <span class="se">\</span>
   -d <span class="nv">template</span><span class="o">=</span>unrecognized <span class="se">\</span>
-  -d fields[customer_name]<span class="o">=</span><span class="s2">"Susie Chargeback"</span> 
+  -d fields[customer_name]<span class="o">=</span><span class="s2">"Susie Chargeback"</span>
 </code></pre><pre class="highlight javascript"><code><span class="kd">var</span> <span class="nx">chargehound</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'chargehound'</span><span class="p">)(</span>
   <span class="s1">'test_XXX'</span>
 <span class="p">);</span>
@@ -1204,7 +1204,7 @@
   </span><span class="s">"github.com/chargehound/chargehound-go"</span><span class="x">
 </span><span class="p">)</span><span class="x">
 
-</span><span class="n">ch</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="n">chargehound</span><span class="o">.</span><span class="n">New</span><span class="p">(</span><span class="s">"test_XXX"</span><span class="p">)</span><span class="x"> 
+</span><span class="n">ch</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="n">chargehound</span><span class="o">.</span><span class="n">New</span><span class="p">(</span><span class="s">"test_XXX"</span><span class="p">)</span><span class="x">
 
 </span><span class="n">params</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="n">chargehound</span><span class="o">.</span><span class="n">UpdateDisputeParams</span><span class="p">{</span><span class="x">
   </span><span class="n">ID</span><span class="o">:</span><span class="x">       </span><span class="s">"dp_XXX"</span><span class="p">,</span><span class="x">
@@ -1389,7 +1389,7 @@
   </span><span class="s">"github.com/chargehound/chargehound-go"</span><span class="x">
 </span><span class="p">)</span><span class="x">
 
-</span><span class="n">ch</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="n">chargehound</span><span class="o">.</span><span class="n">New</span><span class="p">(</span><span class="s">"test_XXX"</span><span class="p">)</span><span class="x"> 
+</span><span class="n">ch</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="n">chargehound</span><span class="o">.</span><span class="n">New</span><span class="p">(</span><span class="s">"test_XXX"</span><span class="p">)</span><span class="x">
 
 </span><span class="n">params</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="n">chargehound</span><span class="o">.</span><span class="n">AcceptDisputeParams</span><span class="p">{</span><span class="x">
   </span><span class="n">ID</span><span class="o">:</span><span class="x">       </span><span class="s">"dp_XXX"</span><span class="x">
@@ -1542,7 +1542,7 @@
   </span><span class="s">"github.com/chargehound/chargehound-go"</span><span class="x">
 </span><span class="p">)</span><span class="x">
 
-</span><span class="n">ch</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="n">chargehound</span><span class="o">.</span><span class="n">New</span><span class="p">(</span><span class="s">"test_XXX"</span><span class="p">)</span><span class="x"> 
+</span><span class="n">ch</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="n">chargehound</span><span class="o">.</span><span class="n">New</span><span class="p">(</span><span class="s">"test_XXX"</span><span class="p">)</span><span class="x">
 
 </span><span class="n">params</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="n">chargehound</span><span class="o">.</span><span class="n">UpdateDisputeParams</span><span class="p">{</span><span class="x">
   </span><span class="n">ID</span><span class="o">:</span><span class="x">       </span><span class="s">"dp_2284d5ac6eba4e4e8e9a80df0f9c2287"</span><span class="p">,</span><span class="x">
@@ -1653,7 +1653,7 @@
   </span><span class="s">"github.com/chargehound/chargehound-go"</span><span class="x">
 </span><span class="p">)</span><span class="x">
 
-</span><span class="n">ch</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="n">chargehound</span><span class="o">.</span><span class="n">New</span><span class="p">(</span><span class="s">"test_XXX"</span><span class="p">)</span><span class="x"> 
+</span><span class="n">ch</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="n">chargehound</span><span class="o">.</span><span class="n">New</span><span class="p">(</span><span class="s">"test_XXX"</span><span class="p">)</span><span class="x">
 
 </span><span class="n">params</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="n">chargehound</span><span class="o">.</span><span class="n">UpdateDisputeParams</span><span class="p">{</span><span class="x">
   </span><span class="n">Force</span><span class="o">:</span><span class="x"> </span><span class="no">true</span><span class="x">
@@ -1698,7 +1698,7 @@
   </span><span class="s">"github.com/chargehound/chargehound-go"</span><span class="x">
 </span><span class="p">)</span><span class="x">
 
-</span><span class="n">ch</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="n">chargehound</span><span class="o">.</span><span class="n">New</span><span class="p">(</span><span class="s">"test_XXX"</span><span class="p">)</span><span class="x"> 
+</span><span class="n">ch</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="n">chargehound</span><span class="o">.</span><span class="n">New</span><span class="p">(</span><span class="s">"test_XXX"</span><span class="p">)</span><span class="x">
 
 </span><span class="n">params</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="n">chargehound</span><span class="o">.</span><span class="n">UpdateDisputeParams</span><span class="p">{</span><span class="x">
   </span><span class="n">Charge</span><span class="o">:</span><span class="x"> </span><span class="s">"ch_XXX"</span><span class="x">
@@ -1739,7 +1739,7 @@
   </span><span class="s">"github.com/chargehound/chargehound-go"</span><span class="x">
 </span><span class="p">)</span><span class="x">
 
-</span><span class="n">ch</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="n">chargehound</span><span class="o">.</span><span class="n">New</span><span class="p">(</span><span class="s">"test_XXX"</span><span class="p">)</span><span class="x"> 
+</span><span class="n">ch</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="n">chargehound</span><span class="o">.</span><span class="n">New</span><span class="p">(</span><span class="s">"test_XXX"</span><span class="p">)</span><span class="x">
 
 </span><span class="n">params</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="n">chargehound</span><span class="o">.</span><span class="n">UpdateDisputeParams</span><span class="p">{</span><span class="x">
   </span><span class="n">UserID</span><span class="o">:</span><span class="x"> </span><span class="s">"acct_XXX"</span><span class="x">
@@ -1976,7 +1976,7 @@
 <span class="no">Chargehound</span><span class="p">.</span><span class="nf">api_key</span> <span class="o">=</span> <span class="s1">'{{your_chargehound_test_key}}'</span>
 
 <span class="no">Chargehound</span><span class="o">::</span><span class="no">Disputes</span><span class="p">.</span><span class="nf">retrieve</span><span class="p">(</span><span class="s1">'{{dispute_from_step_3}}'</span><span class="p">)</span>
-</code></pre><pre class="highlight go tab-go"><code><span class="n">ch</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="n">chargehound</span><span class="o">.</span><span class="n">New</span><span class="p">(</span><span class="s">"{{your_chargehound_test_key}}"</span><span class="p">)</span><span class="x"> 
+</code></pre><pre class="highlight go tab-go"><code><span class="n">ch</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="n">chargehound</span><span class="o">.</span><span class="n">New</span><span class="p">(</span><span class="s">"{{your_chargehound_test_key}}"</span><span class="p">)</span><span class="x">
 
 </span><span class="n">params</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="n">chargehound</span><span class="o">.</span><span class="n">RetrieveDisputeParams</span><span class="p">{</span><span class="x">
   </span><span class="n">ID</span><span class="o">:</span><span class="x"> </span><span class="s">"{{dispute_from_step_3}}"</span><span class="p">,</span><span class="x">
@@ -2002,7 +2002,7 @@
 <span class="no">Chargehound</span><span class="p">.</span><span class="nf">api_key</span> <span class="o">=</span> <span class="s1">'{{your_chargehound_test_key}}'</span>
 
 <span class="no">Chargehound</span><span class="o">::</span><span class="no">Disputes</span><span class="p">.</span><span class="nf">submit</span><span class="p">(</span><span class="s1">'{{dispute_from_step_3}}'</span><span class="p">)</span>
-</code></pre><pre class="highlight go tab-go"><code><span class="n">ch</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="n">chargehound</span><span class="o">.</span><span class="n">New</span><span class="p">(</span><span class="s">"{{your_chargehound_test_key}}"</span><span class="p">)</span><span class="x"> 
+</code></pre><pre class="highlight go tab-go"><code><span class="n">ch</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="n">chargehound</span><span class="o">.</span><span class="n">New</span><span class="p">(</span><span class="s">"{{your_chargehound_test_key}}"</span><span class="p">)</span><span class="x">
 
 </span><span class="n">params</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="n">chargehound</span><span class="o">.</span><span class="n">UpdateDisputeParams</span><span class="p">{</span><span class="x">
   </span><span class="n">ID</span><span class="o">:</span><span class="x"> </span><span class="s">"{{dispute_from_step_3}}"</span><span class="p">,</span><span class="x">
@@ -2253,7 +2253,7 @@
 <td>The id of the disputed charge.</td>
 </tr>
 <tr>
-<td>external_identifier</td>
+<td>external_charge</td>
 <td>string</td>
 <td>The id of the disputed charge. (Deprecated, use &quot;charge&quot; instead).</td>
 </tr>
@@ -2387,7 +2387,7 @@
   </span><span class="s">"github.com/chargehound/chargehound-go"</span><span class="x">
 </span><span class="p">)</span><span class="x">
 
-</span><span class="n">ch</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="n">chargehound</span><span class="o">.</span><span class="n">New</span><span class="p">(</span><span class="s">"test_XXX"</span><span class="p">)</span><span class="x"> 
+</span><span class="n">ch</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="n">chargehound</span><span class="o">.</span><span class="n">New</span><span class="p">(</span><span class="s">"test_XXX"</span><span class="p">)</span><span class="x">
 
 </span><span class="n">params</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="n">chargehound</span><span class="o">.</span><span class="n">CreateDisputeParams</span><span class="p">{</span><span class="x">
   </span><span class="n">Template</span><span class="o">:</span><span class="x"> </span><span class="s">"unrecognized"</span><span class="p">,</span><span class="x">
@@ -2684,7 +2684,7 @@
   </span><span class="s">"github.com/chargehound/chargehound-go"</span><span class="x">
 </span><span class="p">)</span><span class="x">
 
-</span><span class="n">ch</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="n">chargehound</span><span class="o">.</span><span class="n">New</span><span class="p">(</span><span class="s">"test_XXX"</span><span class="p">)</span><span class="x"> 
+</span><span class="n">ch</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="n">chargehound</span><span class="o">.</span><span class="n">New</span><span class="p">(</span><span class="s">"test_XXX"</span><span class="p">)</span><span class="x">
 
 </span><span class="n">params</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="n">chargehound</span><span class="o">.</span><span class="n">RetrieveDisputeParams</span><span class="p">{</span><span class="x">
   </span><span class="n">ID</span><span class="o">:</span><span class="x"> </span><span class="s">"dp_XXX"</span><span class="p">,</span><span class="x">
@@ -2732,7 +2732,7 @@
 <td>The id of the disputed charge.</td>
 </tr>
 <tr>
-<td>external_identifier</td>
+<td>external_charge</td>
 <td>string</td>
 <td>The id of the disputed charge. (Deprecated, use &quot;charge&quot; instead).</td>
 </tr>

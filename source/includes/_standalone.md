@@ -235,8 +235,6 @@ dispute, err := ch.Disputes.Create(&params)
 | submit | boolean | optional | Submit dispute evidence immediately after creation. |
 | queue | boolean | optional | Queue the dispute for submission on its due date. (See [Queuing for submission](#queuing-for-submission) for details.) |
 | force | boolean | optional | Skip the manual review filters or submit a dispute in manual review. (See [Manual review](#manual-review) for details.) |
-| user_id | string | optional | The account id for Connected accounts that are charged directly through Stripe (if any). (Deprecated, use "account_id" instead). |
-
 
 ### Possible errors
 
@@ -337,10 +335,7 @@ The response object is:
 | Field | Type | Description |
 |---------------------|---------|-----------|
 | dispute | string | The id of the dispute. |
-| dispute_id | string | The id of the dispute. (Deprecated, use "dispute" instead). |
 | charge | string| The id of the disputed charge. |
-| external_identifier | string| The id of the disputed charge. (Deprecated, use "charge" instead). |
 | response_url | string | The URL of the generated response PDF. This URL is a temporary access URL. |
 | evidence | dictionary | Key value pairs for the dispute response evidence object. |
 | account_id | string | The account id for Connected accounts that are charged directly through Stripe (if any). (See [Stripe charging directly](#stripe-charging-directly) for details.) |
-| user_id | string | The account id for Connected accounts that are charged directly through Stripe (if any). (Deprecated, use "account_id" instead). |

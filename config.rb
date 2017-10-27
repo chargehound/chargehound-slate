@@ -24,7 +24,7 @@ set :fonts_dir, 'fonts'
 # the name of the previous version, such as "build/2017-08-01"
 # then add a link to the previous version in the _versioning include.
 # When you generate the new version, be sure to document the changes in the changelog.
-set :build_dir, "build/2016-03-05"
+set :build_dir, "build/current"
 
 # Activate the syntax highlighter
 activate :syntax
