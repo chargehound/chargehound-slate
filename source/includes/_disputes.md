@@ -39,12 +39,13 @@ A dispute object is:
 | address_zip_check    | string     | State of address zip check (if available). One of `pass`, `fail`, `unavailable`, `checked`. |
 | cvc_check            | string     | State of cvc check (if available). One of `pass`, `fail`, `unavailable`, `checked`.         |
 | statement_descriptor | string     | The descriptor that appears on the customer's credit card statement for this change.        |
-| account_id           | string     | The account id for Connected accounts that are charged directly through Stripe (if any). (See [Stripe charging directly](#stripe-charging-directly) for details.) |
+| account_id           | string     | The account id for accounts that are charged directly through Stripe (if any). (See [Stripe charging directly](#stripe-charging-directly) for details.) |
 | created              | string     | ISO 8601 timestamp - when the dispute was created in Chargehound. |
 | updated              | string     | ISO 8601 timestamp - when the dispute was last updated in Chargehound. |
 | source               | string     | The source of the dispute. One of `mock`, `braintree`, `api` or `stripe` |
 | processor            | string     | The payment processor of the dispute. One of `braintree` or `stripe` |
 | kind                 | string     | The kind of the dispute. One of `chargeback`, `pre_arbitration` or `retrieval` |
+| account              | string     | The Id of the connected account for this dispute |
 
 ## Submitting a dispute
 
@@ -179,7 +180,8 @@ dispute, err := ch.Disputes.Submit(&params)
   "charged_at": "2016-09-18T20:38:51",
   "products": [],
   "amount": 500,
-  "processor": "stripe"
+  "processor": "stripe",
+  "account": "default"
 }
 ```
 
@@ -323,7 +325,8 @@ disputeList, err := ch.Disputes.List(nil)
       "charged_at": "2016-09-18T20:38:51",
       "products": [],
       "amount": 500,
-      "processor": "stripe"
+      "processor": "stripe",
+      "account": "default"
     }
   ]
 }
@@ -450,7 +453,8 @@ dispute, err := ch.Disputes.Retrieve(&params)
   "charged_at": "2016-09-18T20:38:51",
   "products": [],
   "amount": 500,
-  "processor": "stripe"
+  "processor": "stripe",
+  "account": "default"
 }
 ```
 
@@ -589,7 +593,8 @@ dispute, err := ch.Disputes.Update(&params)
   "charged_at": "2016-09-18T20:38:51",
   "products": [],
   "amount": 500,
-  "processor": "stripe"
+  "processor": "stripe",
+  "account": "default"
 }
 ```
 
@@ -730,7 +735,8 @@ dispute, err := ch.Disputes.Accept(&params)
   "charged_at": "2016-09-18T20:38:51",
   "products": [],
   "amount": 500,
-  "processor": "stripe"
+  "processor": "stripe",
+  "account": "default"
 }
 ```
 

@@ -35,19 +35,19 @@ To set the API version on a specific request, send a `Chargehound-Version` heade
 
 ### Version 2017-10-30
 
-In this API version, we’ve cleaned up some attribute names in order to make them more consistent and intuitive. This is also the first backward incompatible version, so a new "Versioning" section was added to the API documentation.
+In this API version, we’ve cleaned up some attribute names in order to make them more consistent and intuitive.
 
-- [Dispute response webhook](#dispute-response-ready) The `dispute_id` attribute was renamed to `dispute`. The `external_charge` attribute was renamed to `charge`. The `user_id` attribute was removed in favor of `account_id`.
+- [Dispute response webhook](#dispute-response-ready): The `dispute_id` attribute was removed in favor of `dispute`. The `external_charge` attribute was removed in favor of `charge`. The `user_id` attribute was removed in favor of `account_id`.
 
-- [Dispute response endpoint](#retrieving-a-dispute-response) The `dispute_id` attribute was renamed to `dispute`. The `external_charge` attribute was renamed to `charge`. The `user_id` attribute was removed in favor of `account_id`.
+- [Dispute response endpoint](#retrieving-a-dispute-response): The `dispute_id` attribute was removed in favor of `dispute`. The `external_charge` attribute was removed in favor of `charge`. The `user_id` attribute was removed in favor of `account_id`.
 
-- [Dispute create endpoint](#creating-a-dispute) The `external_identifier` attribute was renamed to `id`. The `external_charge` attribute was renamed to `charge`. The `external_customer` attribute was renamed to 'customer'. The `user_id` parameter was removed in favor of `account_id`.
+- [Dispute create endpoint](#creating-a-dispute): The `external_identifier` attribute was removed in favor of `id`. The `external_charge` attribute was removed in favor of `charge`. The `external_customer` attribute was removed in favor of `customer`. The `user_id` parameter was removed in favor of `account_id`.
 
-- [Dispute submit endpoint](#submitting-a-dispute) and [dispute update endpoint](#updating-a-dispute) The `customer_name` parameter was removed, set the `customer_name` in the fields object instead. The `customer_email` parameter was removed, set the `customer_email` in the fields object instead. The `user_id` parameter was removed in favor of `account_id`.
+- [Dispute submit endpoint](#submitting-a-dispute) and [dispute update endpoint](#updating-a-dispute): The `customer_name` parameter was removed, set the `customer_name` in the fields object instead. The `customer_email` parameter was removed, set the `customer_email` in the fields object instead. The `user_id` parameter was removed in favor of `account_id`.
 
 ## Documentation
 
-Documentation is available for all releases:
+Documentation is available for all previous releases:
 
-* [2017-10-30 (Latest)](../current/)
+* [Latest](../current/)
 * [2016-03-05](../2016-03-05/)

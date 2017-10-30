@@ -249,6 +249,23 @@
               </ul>
           </li>
           <li>
+            <a href="#versioning" class="toc-h1 toc-link" data-title="Versioning">Versioning</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#about-versioning" class="toc-h2 toc-link" data-title="Versioning">About Versioning</a>
+                  </li>
+                  <li>
+                    <a href="#upgrade-your-api-version" class="toc-h2 toc-link" data-title="Versioning">Upgrade your API Version</a>
+                  </li>
+                  <li>
+                    <a href="#changelog" class="toc-h2 toc-link" data-title="Versioning">Changelog</a>
+                  </li>
+                  <li>
+                    <a href="#documentation" class="toc-h2 toc-link" data-title="Versioning">Documentation</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
             <a href="#disputes" class="toc-h1 toc-link" data-title="Disputes">Disputes</a>
               <ul class="toc-list-h2">
                   <li>
@@ -547,6 +564,46 @@
   -d fields[product_url]=http://www.example.com/products/cool
 </code></pre>
 <p>If you are making HTTP requests directly, be sure to set the <code>Content-Type</code> header in PUT/POST requests to specify the format of the body. The Chargehound API supports JSON and URL encoding. </p>
+<h1 id='versioning'>Versioning</h1>
+<p>The Chargehound API uses versioning to roll out backwards-incompatible changes over time.</p>
+<h2 id='about-versioning'>About Versioning</h2>
+<p>The API version will control the API and webhook behaviors, such as parameters accepted in requests, and response properties. Your account is automatically set to the latest version when you make your first request to the API.</p>
+
+<p>A new version of the API is released when backwards-incompatible changes are made to the API. To avoid breaking your code, we will never force you to upgrade until you’re ready.</p>
+
+<p>We will be releasing backwards-compatible changes without introducing new versions. Your code will be able to handle these changes no matter what version it&#39;s on.</p>
+
+<p>Examples of backwards-incompatible changes:</p>
+
+<ul>
+<li>Removing response attributes from an existing resource</li>
+<li>Removing request parameters from an existing resource</li>
+</ul>
+
+<p>Examples of backwards-compatible changes:</p>
+
+<ul>
+<li>Adding new API endpoints</li>
+<li>Adding new optional response attributes to an existing resource</li>
+<li>Adding new optional request attributes</li>
+</ul>
+<h2 id='upgrade-your-api-version'>Upgrade your API Version</h2>
+<p>We recommend staying up-to-date with the current API version to take advantage of latest improvements to the Chargehound API.</p>
+
+<p>To see your current version and upgrade to the latest, visit the API tab on the Chargehound dashboard <a href="/dashboard/settings/api">here</a>.</p>
+
+<p>All requests will use your organization API settings, unless you override the API version. Versioning of the Chargehound API will be released as dates, displayed as: <code>YYYY-MM-DD</code></p>
+
+<p>To set the API version on a specific request, send a <code>Chargehound-Version</code> header.</p>
+<h2 id='changelog'>Changelog</h2>
+
+<h2 id='documentation'>Documentation</h2>
+<p>Documentation is available for all previous releases:</p>
+
+<ul>
+<li><a href="../current/">Latest</a></li>
+</ul>
+
 <h1 id='disputes'>Disputes</h1><h2 id='the-dispute-object'>The dispute object</h2>
 <p>Dispute objects represent a dispute created on a charge. They can also be referred to as chargebacks. In order to contest a dispute, attach a template and update the dispute with the template&#39;s required fields.</p>
 
@@ -2630,6 +2687,18 @@
 <td>Skip the manual review filters or submit a dispute in manual review. (See <a href="#manual-review">Manual review</a> for details.)</td>
 </tr>
 <tr>
+<tr>
+<td>external_identifier</td>
+<td>string</td>
+<td>optional</td>
+<td>The id of the dispute in your payment processor. (Deprecated, use &quot;id&quot; instead).</td>
+</tr>
+<tr>
+<td>external_charge</td>
+<td>string</td>
+<td>optional</td>
+<td>The id of the disputed charge in your payment processor. (Deprecated, use &quot;charge&quot; instead).</td>
+</tr>
 <td>user_id</td>
 <td>string</td>
 <td>optional</td>
