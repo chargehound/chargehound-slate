@@ -32,3 +32,20 @@
     text-decoration: none;
   }
 }
+
+#version-selector {
+  color: #fff;
+}
+
+#version-selector li.dropdown {
+  list-style-type: none;
+  padding-left: 25px;
+  margin-bottom: 20px;
+}
+#version-selector li.dropdown a {
+  color: #fff;
+}
+#version-selector li.dropdown .arrow{
+  font-size: 0.6em;
+  padding-left: 5px;
+}

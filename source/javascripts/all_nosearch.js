@@ -1,8 +1,10 @@
 //= require ./lib/_energize
 //= require ./app/_toc
 //= require ./app/_lang
+//= require ./app/_chargehound
 
 $(function() {
+  setupVersion();
   loadToc($('#toc'), '.toc-link', '.toc-list-h2', 10);
   setupLanguages($('body').data('languages'));
   $('.content').imagesLoaded( function() {
