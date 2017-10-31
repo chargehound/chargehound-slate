@@ -67,10 +67,10 @@ under the License.
       </div>
       <div id="version-selector">
         <div role="presentation" class="dropdown">
-          <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><span class="version-selected">Version</span><span class="arrow">▼</span></a>
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><span class="version-selected">Version <%= current_page.data.version %></span><span class="arrow">▼</span></a>
           <ul class="dropdown-menu">
             <% config[:versions].each do |version| %>
-              <li data-version="<%= version %>" ><a href="/<%= version %>"><%= version %></a></li>
+              <li data-version="<%= version %>" ><a href="../<%= version %>"><%= version %></a></li>
             <% end %>
           </ul>
         </div>

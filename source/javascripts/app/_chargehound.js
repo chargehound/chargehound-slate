@@ -28,7 +28,6 @@
   }
 
   function selectVersion (version) {
-    $('#version-selector .version-selected').text('Version ' + version);
     $('#version-selector li').each(function () {
       var versionLi = $(this);
       if (versionLi.data().version === version) {
