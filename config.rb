@@ -19,13 +19,6 @@ set :js_dir, 'javascripts'
 set :images_dir, 'images'
 set :fonts_dir, 'fonts'
 
-# Custom build dir
-# To generate a previous version, run the build with the directory reconfigured to
-# the name of the previous version, such as "build/2017-08-01"
-# then add a link to the previous version in the _versioning include.
-# When you generate the new version, be sure to document the changes in the changelog.
-set :build_dir, "build/current"
-
 # Activate the syntax highlighter
 activate :syntax
 ready do
@@ -59,6 +52,14 @@ end
 # Deploy Configuration
 # If you want Middleman to listen on a different port, you can set that below
 set :port, 4567
+
+# The list of available versions, in reverse chronological order
+config[:versions] = [
+  '2017-10-30',
+  '2016-03-05'
+]
+
+page '/index.html', :layout => false
 
 helpers do
   require './lib/toc_data.rb'

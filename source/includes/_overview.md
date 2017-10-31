@@ -1,28 +1,3 @@
----
-title: Chargehound API Reference
-
-language_tabs:
-  - shell: cURL
-  - javascript: Node
-  - python: Python
-  - ruby: Ruby
-  - go: Go
-
-includes:
-  - versioning
-  - disputes
-  - integration
-  - webhooks
-  - standalone
-
-search: false
-
-versions:
-  - 2017-10-30
-  - 2016-03-05
-  
----
-
 # Overview
 
 Chargehound's API is organized around REST. [JSON](http://www.json.org/) is returned by all API responses, including errors, although our [API libraries](#libraries) convert responses to appropriate language-specific objects. All API URLs listed in this documentation are relative to `https://api.chargehound.com/v1/`. For example, the `/disputes/` resource is located at `https://api.chargehound.com/v1/disputes`.

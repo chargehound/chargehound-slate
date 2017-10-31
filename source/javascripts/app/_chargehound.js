@@ -28,7 +28,7 @@
   }
 
   function selectVersion (version) {
-    $('#version-selector .dropdown-toggle').text('Version ' + version);
+    $('#version-selector .version-selected').text('Version ' + version);
     $('#version-selector li').each(function () {
       var versionLi = $(this);
       if (versionLi.data().version === version) {
@@ -50,5 +50,21 @@
 
     selectVersion(selectedVersion);
   }
+
+  // if we click on the version dropdowm, show the list of versions
+  $(function () {
+    $('.dropdown-toggle').on('click', function () {
+      $(this).parent().toggleClass('open');
+      return false;
+    });
+
+    $('#version-selector').on('click', function (ev) {
+      ev.stopPropagation();
+    });
+
+    $('html').click(function() {
+      $('.dropdown-toggle').parent().removeClass('open');
+    })
+  });
 })();
 

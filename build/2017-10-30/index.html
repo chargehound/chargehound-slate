@@ -203,7 +203,7 @@
     <script src="/tracking.js"> </script>
   </head>
 
-  <body class="x2016-03-05 x2016-03-05_index" data-languages="[&quot;shell&quot;,&quot;javascript&quot;,&quot;python&quot;,&quot;ruby&quot;,&quot;go&quot;]">
+  <body class="x2017-10-30 x2017-10-30_index" data-languages="[&quot;shell&quot;,&quot;javascript&quot;,&quot;python&quot;,&quot;ruby&quot;,&quot;go&quot;]">
     <a href="#" id="nav-button">
       <span>
         NAV
@@ -785,7 +785,7 @@
 <tr>
 <td>account_id</td>
 <td>string</td>
-<td>The account id for Connected accounts that are charged directly through Stripe (if any). (See <a href="#stripe-charging-directly">Stripe charging directly</a> for details.)</td>
+<td>The account id for accounts that are charged directly through Stripe (if any). (See <a href="#stripe-charging-directly">Stripe charging directly</a> for details.)</td>
 </tr>
 <tr>
 <td>created</td>
@@ -811,6 +811,11 @@
 <td>kind</td>
 <td>string</td>
 <td>The kind of the dispute. One of <code>chargeback</code>, <code>pre_arbitration</code> or <code>retrieval</code></td>
+</tr>
+<tr>
+<td>account</td>
+<td>string</td>
+<td>The Id of the connected account for this dispute</td>
 </tr>
 </tbody></table>
 <h2 id='submitting-a-dispute'>Submitting a dispute</h2>
@@ -919,7 +924,8 @@
   </span><span class="s2">"charged_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-09-18T20:38:51"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"products"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
   </span><span class="s2">"amount"</span><span class="p">:</span><span class="w"> </span><span class="mi">500</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"processor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"stripe"</span><span class="w">
+  </span><span class="s2">"processor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"stripe"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"account"</span><span class="p">:</span><span class="w"> </span><span class="s2">"default"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <p>You will want to submit the dispute through Chargehound after you receive the <code>dispute.created</code> <a href="#webhooks">webhook notification</a>. With one <code>POST</code> request you can update a dispute with the evidence fields and send the generated response to the source payment processor.</p>
@@ -981,24 +987,6 @@
 <td>string</td>
 <td>optional</td>
 <td>Id of the connected account for this dispute (if multiple accounts are connected). View your connected accounts in the Chargehound dashboard settings page <a href="/dashboard/settings/processors">here</a>.</td>
-</tr>
-<tr>
-<td>customer_name</td>
-<td>string</td>
-<td>optional</td>
-<td>Update the customer name. Will also update the customer name in the evidence fields. (Deprecated, set the &quot;customer_name&quot; attribute in the fields object).</td>
-</tr>
-<tr>
-<td>customer_email</td>
-<td>string</td>
-<td>optional</td>
-<td>Update the customer email. Will also update the customer email in the evidence fields. Must be a valid email address. (Deprecated, set the &quot;customer_name&quot; attribute in the fields object).</td>
-</tr>
-<tr>
-<td>user_id</td>
-<td>string</td>
-<td>optional</td>
-<td>The account id for Connected accounts that are charged directly through Stripe (if any). (Deprecated, use &quot;account_id&quot; instead).</td>
 </tr>
 </tbody></table>
 <h3 id='possible-errors'>Possible errors</h3>
@@ -1099,7 +1087,8 @@
       </span><span class="s2">"charged_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-09-18T20:38:51"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"products"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
       </span><span class="s2">"amount"</span><span class="p">:</span><span class="w"> </span><span class="mi">500</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"processor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"stripe"</span><span class="w">
+      </span><span class="s2">"processor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"stripe"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"account"</span><span class="p">:</span><span class="w"> </span><span class="s2">"default"</span><span class="w">
     </span><span class="p">}</span><span class="w">
   </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
@@ -1222,7 +1211,8 @@
   </span><span class="s2">"charged_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-09-18T20:38:51"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"products"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
   </span><span class="s2">"amount"</span><span class="p">:</span><span class="w"> </span><span class="mi">500</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"processor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"stripe"</span><span class="w">
+  </span><span class="s2">"processor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"stripe"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"account"</span><span class="p">:</span><span class="w"> </span><span class="s2">"default"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <p>You can retrieve a single dispute by its id.</p>
@@ -1332,7 +1322,8 @@
   </span><span class="s2">"charged_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-09-18T20:38:51"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"products"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
   </span><span class="s2">"amount"</span><span class="p">:</span><span class="w"> </span><span class="mi">500</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"processor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"stripe"</span><span class="w">
+  </span><span class="s2">"processor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"stripe"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"account"</span><span class="p">:</span><span class="w"> </span><span class="s2">"default"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <p>You can update the template and the fields on a dispute.</p>
@@ -1392,24 +1383,6 @@
 <td>boolean</td>
 <td>optional</td>
 <td>Skip the manual review filters or submit a dispute in manual review. (See <a href="#manual-review">Manual review</a> for details.)</td>
-</tr>
-<tr>
-<td>customer_name</td>
-<td>string</td>
-<td>optional</td>
-<td>Update the customer name. Will also update the customer name in the evidence fields. (Deprecated, set the &quot;customer_name&quot; attribute in the fields object).</td>
-</tr>
-<tr>
-<td>customer_email</td>
-<td>string</td>
-<td>optional</td>
-<td>Update the customer email. Will also update the customer email in the evidence fields. Must be a valid email address. (Deprecated, set the &quot;customer_name&quot; attribute in the fields object).</td>
-</tr>
-<tr>
-<td>user_id</td>
-<td>string</td>
-<td>optional</td>
-<td>The account id for Connected accounts that are charged directly through Stripe (if any). (Deprecated, use &quot;account_id&quot; instead).</td>
 </tr>
 </tbody></table>
 <h3 id='possible-errors-2'>Possible errors</h3>
@@ -1511,7 +1484,8 @@
   </span><span class="s2">"charged_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-09-18T20:38:51"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"products"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
   </span><span class="s2">"amount"</span><span class="p">:</span><span class="w"> </span><span class="mi">500</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"processor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"stripe"</span><span class="w">
+  </span><span class="s2">"processor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"stripe"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"account"</span><span class="p">:</span><span class="w"> </span><span class="s2">"default"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <p>If you do not wish to respond to a dispute you can accept the dispute. Accepting a dispute will remove the dispute from your queue of disputes that need response. This is intented to help you organize your disputes.</p>
@@ -2316,19 +2290,9 @@
 <td>The id of the dispute.</td>
 </tr>
 <tr>
-<td>dispute_id</td>
-<td>string</td>
-<td>The id of the dispute. (Deprecated, use &quot;dispute&quot; instead).</td>
-</tr>
-<tr>
 <td>charge</td>
 <td>string</td>
 <td>The id of the disputed charge.</td>
-</tr>
-<tr>
-<td>external_identifier</td>
-<td>string</td>
-<td>The id of the disputed charge. (Deprecated, use &quot;charge&quot; instead).</td>
 </tr>
 <tr>
 <td>response_url</td>
@@ -2344,11 +2308,6 @@
 <td>account_id</td>
 <td>string</td>
 <td>The account id for Connected accounts that are charged directly through Stripe (if any). (See <a href="#stripe-charging-directly">Stripe charging directly</a> for details.)</td>
-</tr>
-<tr>
-<td>user_id</td>
-<td>string</td>
-<td>The account id for Connected accounts that are charged directly through Stripe (if any). (Deprecated, use &quot;account_id&quot; instead).</td>
 </tr>
 </tbody></table>
 <h1 id='standalone-integration'>Standalone Integration</h1>
@@ -2702,24 +2661,6 @@
 <td>optional</td>
 <td>Skip the manual review filters or submit a dispute in manual review. (See <a href="#manual-review">Manual review</a> for details.)</td>
 </tr>
-<tr>
-<td>user_id</td>
-<td>string</td>
-<td>optional</td>
-<td>The account id for Connected accounts that are charged directly through Stripe (if any). (Deprecated, use &quot;account_id&quot; instead).</td>
-</tr>
-<tr>
-<td>external_charge</td>
-<td>string</td>
-<td>optional</td>
-<td>The id of the disputed charge in your payment processor. (Deprecated, use &quot;charge&quot; instead).</td>
-</tr>
-<tr>
-<td>external_customer</td>
-<td>string</td>
-<td>optional</td>
-<td>The id of the charged customer in your payment processor. (Deprecated, use &quot;customer&quot; instead).</td>
-</tr>
 </tbody></table>
 <h3 id='possible-errors'>Possible errors</h3>
 <table><thead>
@@ -2807,19 +2748,9 @@
 <td>The id of the dispute.</td>
 </tr>
 <tr>
-<td>dispute_id</td>
-<td>string</td>
-<td>The id of the dispute. (Deprecated, use &quot;dispute&quot; instead).</td>
-</tr>
-<tr>
 <td>charge</td>
 <td>string</td>
 <td>The id of the disputed charge.</td>
-</tr>
-<tr>
-<td>external_identifier</td>
-<td>string</td>
-<td>The id of the disputed charge. (Deprecated, use &quot;charge&quot; instead).</td>
 </tr>
 <tr>
 <td>response_url</td>
@@ -2835,11 +2766,6 @@
 <td>account_id</td>
 <td>string</td>
 <td>The account id for Connected accounts that are charged directly through Stripe (if any). (See <a href="#stripe-charging-directly">Stripe charging directly</a> for details.)</td>
-</tr>
-<tr>
-<td>user_id</td>
-<td>string</td>
-<td>The account id for Connected accounts that are charged directly through Stripe (if any). (Deprecated, use &quot;account_id&quot; instead).</td>
 </tr>
 </tbody></table>
 
