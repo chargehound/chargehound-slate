@@ -10,7 +10,7 @@ All requests must be made over [HTTPS](https://en.wikipedia.org/wiki/HTTPS).
 curl -u test_XXX:
 ```
 
-```js
+```javascript
 var chargehound = require('chargehound')(
   'test_XXX'
 );

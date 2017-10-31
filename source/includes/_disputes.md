@@ -55,7 +55,7 @@ A dispute object is:
 POST /v1/disputes/{{dispute_id}}/submit
 ```
 
-```js
+```javascript
 chargehound.Disputes.submit();
 ```
 
@@ -80,7 +80,7 @@ curl -X POST https://api.chargehound.com/v1/disputes/dp_XXX/submit \
   -d fields[customer_name]="Susie Chargeback" 
 ```
 
-```js
+```javascript
 var chargehound = require('chargehound')(
   'test_XXX'
 );
@@ -222,7 +222,7 @@ Disputes are usually not created via the REST API. Instead, once your payment pr
 GET /v1/disputes
 ```
 
-```js
+```javascript
 chargehound.Disputes.list();
 ```
 
@@ -245,7 +245,7 @@ curl https://api.chargehound.com/v1/disputes \
   -u test_XXX:
 ```
 
-```js
+```javascript
 var chargehound = require('chargehound')(
   'test_XXX'
 );
@@ -351,7 +351,7 @@ This endpoint will list all the disputes that we have synced from your payment p
 GET /v1/disputes/{{dispute_id}}
 ```
 
-```js
+```javascript
 chargehound.Disputes.retrieve();
 ```
 
@@ -374,7 +374,7 @@ curl https://api.chargehound.com/v1/disputes/dp_XXX \
   -u test_XXX:
 ```
 
-```js
+```javascript
 var chargehound = require('chargehound')(
   'test_XXX'
 );
@@ -468,7 +468,7 @@ You can retrieve a single dispute by its id.
 PUT /v1/disputes/{{dispute_id}}
 ```
 
-```js
+```javascript
 chargehound.Disputes.update();
 ```
 
@@ -493,7 +493,7 @@ curl -X PUT https://api.chargehound.com/v1/disputes/dp_XXX \
   -d fields[customer_name]="Susie Chargeback" 
 ```
 
-```js
+```javascript
 var chargehound = require('chargehound')(
   'test_XXX'
 );
@@ -633,7 +633,7 @@ You can queue a dispute by setting the `queue` parameter to `true` when making a
 POST /v1/disputes/{{dispute_id}}/accept
 ```
 
-```js
+```javascript
 chargehound.Disputes.accept();
 ```
 
@@ -656,7 +656,7 @@ curl -X POST https://api.chargehound.com/v1/disputes/dp_XXX/accept \
   -u test_XXX:
 ```
 
-```js
+```javascript
 var chargehound = require('chargehound')(
   'test_XXX'
 );
@@ -696,7 +696,7 @@ dispute, err := ch.Disputes.Accept(&params)
 
 > Example response:
 
-```json
+```javascripton
 {
   "customer": "cus_XXX",
   "livemode": false,
@@ -772,7 +772,7 @@ curl -X PUT https://api.chargehound.com/v1/disputes/dp_XXX \
                 }]"
 ```
 
-```js
+```javascript
 var chargehound = require('chargehound')(
   'test_XXX'
 );
@@ -906,7 +906,7 @@ curl -X POST https://api.chargehound.com/v1/disputes/dp_XXX/submit \
   -d force=true
 ```
 
-```js
+```javascript
 var chargehound = require('chargehound')(
   'test_XXX'
 );
@@ -966,7 +966,7 @@ curl -X POST https://api.chargehound.com/v1/disputes/dp_XXX/submit \
   -d charge=ch_XXX
 ```
 
-```js
+```javascript
 var chargehound = require('chargehound')(
   'test_XXX'
 );

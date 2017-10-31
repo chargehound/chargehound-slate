@@ -47,7 +47,7 @@ In this API version, we’ve cleaned up some attribute names in order to make th
 
 ## Documentation
 
-Documentation is available for all previous releases:
+Documentation is available for all releases:
 
-* [Latest](../current/)
+* [2017-10-30 (Latest)](../2017-10-30/)
 * [2016-03-05](../2016-03-05/)

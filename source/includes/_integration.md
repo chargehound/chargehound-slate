@@ -62,7 +62,7 @@ curl https://api.stripe.com/v1/tokens \
   -d card[cvc]=123
 ```
 
-```js
+```javascript
 var stripe = require('stripe')(
   '{{your_stripe_test_key}}'
 );
@@ -129,7 +129,7 @@ curl https://api.stripe.com/v1/customers \
   -d source={{token_from_step_1}}
 ```
 
-```js
+```javascript
 var stripe = require('stripe')(
   '{{your_stripe_test_key}}'
 );
@@ -183,7 +183,7 @@ curl https://api.stripe.com/v1/charges \
   -d description="Triggering a dispute"
 ```
 
-```js
+```javascript
 var stripe = require('stripe')(
   '{{your_stripe_test_key}}'
 );
@@ -241,7 +241,7 @@ curl https://api.chargehound.com/v1/disputes/{{dispute_from_step_3}} \
   -u {{your_chargehound_test_key}}:
 ```
 
-```js
+```javascript
 var chargehound = require('chargehound')('{{your_chargehound_test_key}}');
 
 chargehound.Disputes.retrieve('{{dispute_from_step_3}}'), function (err, res) {
@@ -280,7 +280,7 @@ curl https://api.chargehound.com/v1/disputes/{{dispute_from_step_3}}/submit \
   -u {{your_chargehound_test_key}}:
 ```
 
-```js
+```javascript
 var chargehound = require('chargehound')('{{your_chargehound_test_key}}');
 
 chargehound.Disputes.submit('{{dispute_from_step_3}}'), function (err, res) {

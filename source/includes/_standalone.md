@@ -14,7 +14,7 @@ In a standalone integration, you will need to create a dispute in Chargehound wh
 POST /v1/disputes
 ```
 
-```js
+```javascript
 chargehound.Disputes.create();
 ```
 
@@ -52,7 +52,7 @@ curl -X POST https://api.chargehound.com/v1/disputes?submit=true \
   -d reversal_amount=500
 ```
 
-```js
+```javascript
 var chargehound = require('chargehound')(
   'test_XXX'
 );
@@ -253,7 +253,7 @@ Once the [response is generated](#dispute-response-ready), you can fetch the res
 GET /v1/disputes/{{dispute_id}}/response
 ```
 
-```js
+```javascript
 chargehound.Disputes.response();
 ```
 
@@ -276,7 +276,7 @@ curl https://api.chargehound.com/v1/disputes/dp_XXX/response \
   -u test_XXX:
 ```
 
-```js
+```javascript
 var chargehound = require('chargehound')(
   'test_XXX'
 );
