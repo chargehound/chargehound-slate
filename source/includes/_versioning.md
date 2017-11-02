@@ -25,11 +25,21 @@ Examples of backwards-compatible changes:
 
 We recommend staying up-to-date with the current API version to take advantage of latest improvements to the Chargehound API.
 
-To see your current version and upgrade to the latest, visit the API tab on the Chargehound dashboard [here](/dashboard/settings/api).
+To see your current version and upgrade to the latest, visit the API Version section of the API tab on the Chargehound dashboard [here](/dashboard/settings/api).
 
-All requests will use your organization API settings, unless you override the API version. Versioning of the Chargehound API will be released as dates, displayed as: `YYYY-MM-DD`
+All requests to the API will use your organization API settings, unless you override the API version. Versioning of the Chargehound API will be released as dates, displayed as: `YYYY-MM-DD`
 
-To set the API version on a specific request, send a `Chargehound-Version` header.
+The API version used by your webhooks can be configured individually for each webhook URL you have configured in the Webhook URLs section of the API tab on the Chargehound dashboard [here](/dashboard/settings/api).
+
+## Testing
+
+To set the API version on a specific request, send a `Chargehound-Version` header. The API version will be set to the version that you specify for that individual request.
+
+```sh
+curl -X POST https://api.chargehound.com/v1/disputes \
+  -u test_XXX: \
+  -H "Chargehound-Version: YYYY-MM-DD"
+```
 
 ## Changelog
 
