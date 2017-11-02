@@ -14,11 +14,11 @@ Notification that Chargehound has received a new dispute from your payment proce
 
 ```json
 {
-  "id": "wh_XXX",
+  "id": "wh_123",
   "type": "dispute.created",
   "object": "webhook",
   "livemode": true,
-  "dispute": "dp_XXX"
+  "dispute": "dp_123"
 }
 ```
 
@@ -39,11 +39,11 @@ Notification that a dispute has been updated.
 
 ```json
 {
-  "id": "wh_XXX",
+  "id": "wh_123",
   "type": "dispute.updated",
   "object": "webhook",
   "livemode": true,
-  "dispute": "dp_XXX"
+  "dispute": "dp_123"
 }
 ```
 
@@ -64,11 +64,11 @@ Notification that a dispute has been submitted.
 
 ```json
 {
-  "id": "wh_XXX",
+  "id": "wh_123",
   "type": "dispute.submitted",
   "object": "webhook",
   "livemode": true,
-  "dispute": "dp_XXX"
+  "dispute": "dp_123"
 }
 ```
 
@@ -89,11 +89,11 @@ Notification that a dispute was closed (`won`, `lost`, `charge_refunded`, or `wa
 
 ```json
 {
-  "id": "wh_XXX",
+  "id": "wh_123",
   "type": "dispute.closed",
   "object": "webhook",
   "livemode": true,
-  "dispute": "dp_XXX"
+  "dispute": "dp_123"
 }
 ```
 
@@ -114,12 +114,12 @@ Notification that Chargehound has generated a response for a dispute. This event
 
 ```json
 {
-  "id": "wh_XXX",
+  "id": "wh_123",
   "type": "dispute.response.generated",
   "object": "webhook",
   "livemode": true,
-  "dispute": "dp_XXX",
-  "charge": "ch_XXX",
+  "dispute": "dp_123",
+  "charge": "ch_123",
   "account_id": null,
   "evidence": {
     "customer_name": "Susie Chargeback"

@@ -34,12 +34,12 @@ ch.Disputes.Create(*chargehound.CreateDisputeParams)
 
 ```sh
 curl -X POST https://api.chargehound.com/v1/disputes?submit=true \
-  -u test_XXX: \
+  -u test_123: \
   -d template=unrecognized \
   -d fields[customer_name]="Susie Chargeback" \
-  -d id=dp_XXX \
-  -d charge=ch_XXX \
-  -d customer=cus_XXX \
+  -d id=dp_123 \
+  -d charge=ch_123 \
+  -d customer=cus_123 \
   -d processor=stripe \
   -d reason=unrecognized \
   -d charged_at="2016-10-01T22:20:53" \
@@ -54,7 +54,7 @@ curl -X POST https://api.chargehound.com/v1/disputes?submit=true \
 
 ```javascript
 var chargehound = require('chargehound')(
-  'test_XXX'
+  'test_123'
 );
 
 chargehound.Disputes.create({
@@ -62,9 +62,9 @@ chargehound.Disputes.create({
   fields: {
     customer_name: 'Susie Chargeback'
   },
-  id: 'dp_XXX',
-  charge: 'ch_XXX',
-  customer: 'cus_XXX',
+  id: 'dp_123',
+  charge: 'ch_123',
+  customer: 'cus_123',
   processor: 'stripe',
   reason: 'unrecognized',
   charged_at: '2016-10-01T22:20:53',
@@ -82,16 +82,16 @@ chargehound.Disputes.create({
 
 ```python
 import chargehound
-chargehound.api_key = 'test_XXX'
+chargehound.api_key = 'test_123'
 
 chargehound.Disputes.create(
   template = 'unrecognized',
   fields = {
     customer_name: 'Susie Chargeback'
   },
-  id = 'dp_XXX',
-  charge = 'ch_XXX',
-  customer = 'cus_XXX',
+  id = 'dp_123',
+  charge = 'ch_123',
+  customer = 'cus_123',
   processor = 'stripe',
   reason = 'unrecognized',
   charged_at = '2016-10-01T22 =20 =53',
@@ -107,16 +107,16 @@ chargehound.Disputes.create(
 
 ```ruby
 require 'chargehound'
-Chargehound.api_key = 'test_XXX'
+Chargehound.api_key = 'test_123'
 
 Chargehound::Disputes.create(
   template: 'unrecognized',
   fields: {
     customer_name => 'Susie Chargeback'
   },
-  id: 'dp_XXX',
-  charge: 'ch_XXX',
-  customer: 'cus_XXX',
+  id: 'dp_123',
+  charge: 'ch_123',
+  customer: 'cus_123',
   processor: 'stripe',
   reason: 'unrecognized',
   charged_at: '2016-10-01T22:20:53',
@@ -135,16 +135,16 @@ import (
   "github.com/chargehound/chargehound-go"
 )
 
-ch := chargehound.New("test_XXX") 
+ch := chargehound.New("test_123") 
 
 params := chargehound.CreateDisputeParams{
   Template: "unrecognized",
   Fields: map[string]interface{}{
     "customer_name": "Susie Chargeback",
   },
-  ID: "dp_XXX",
-  Charge: "ch_XXX",
-  Customer: "cus_XXX",
+  ID: "dp_123",
+  Charge: "ch_123",
+  Customer: "cus_123",
   Processor: "stripe",
   Reason: "unrecognized",
   ChargedAt: "2016-10-01T22:20:53",
@@ -164,12 +164,12 @@ dispute, err := ch.Disputes.Create(&params)
 
 ```javascripton
 {
-  "customer": "cus_XXX",
+  "customer": "cus_123",
   "livemode": false,
   "currency": "usd",
   "missing_fields": {},
   "address_zip_check": "pass",
-  "id": "dp_XXX",
+  "id": "dp_123",
   "customer_name": "Susie Chargeback",
   "fee": 1500,
   "reversal_amount": 500,
@@ -177,7 +177,7 @@ dispute, err := ch.Disputes.Create(&params)
   "state": "needs_response",
   "statement_descriptor": null,
   "source": "api",
-  "charge": "ch_XXX",
+  "charge": "ch_123",
   "template": "unrecognized",
   "is_charge_refundable": false,
   "cvc_check": "unavailable",
@@ -193,7 +193,7 @@ dispute, err := ch.Disputes.Create(&params)
   "charged_at": "2016-10-01T22:20:53",
   "reversal_currency": "usd",
   "address_zip": null,
-  "url": "/v1/disputes/dp_XXX",
+  "url": "/v1/disputes/dp_123",
   "fields": {
     "customer_name": "Susie Chargeback"
   },
@@ -276,32 +276,32 @@ ch.Disputes.Response(*chargehound.RetrieveDisputeParams)
 > Example request:
 
 ```sh
-curl https://api.chargehound.com/v1/disputes/dp_XXX/response \
-  -u test_XXX:
+curl https://api.chargehound.com/v1/disputes/dp_123/response \
+  -u test_123:
 ```
 
 ```js
 var chargehound = require('chargehound')(
-  'test_XXX'
+  'test_123'
 );
 
-chargehound.Disputes.response('dp_XXX', function (err, res) {
+chargehound.Disputes.response('dp_123', function (err, res) {
   // ...
 });
 ```
 
 ```python
 import chargehound
-chargehound.api_key = 'test_XXX'
+chargehound.api_key = 'test_123'
 
-chargehound.Disputes.response('dp_XXX')
+chargehound.Disputes.response('dp_123')
 ```
 
 ```ruby
 require 'chargehound'
-Chargehound.api_key = 'test_XXX'
+Chargehound.api_key = 'test_123'
 
-Chargehound::Disputes.response('dp_XXX')
+Chargehound::Disputes.response('dp_123')
 ```
 
 ```go
@@ -309,10 +309,10 @@ import (
   "github.com/chargehound/chargehound-go"
 )
 
-ch := chargehound.New("test_XXX") 
+ch := chargehound.New("test_123") 
 
 params := chargehound.RetrieveDisputeParams{
-  ID: "dp_XXX",
+  ID: "dp_123",
 }
 
 response, err := ch.Disputes.Response(&params)
@@ -324,8 +324,8 @@ response, err := ch.Disputes.Response(&params)
 {
   "object": "response",
   "livemode": true,
-  "dispute": "dp_XXX",
-  "external_identifier": "ch_XXX",
+  "dispute": "dp_123",
+  "external_identifier": "ch_123",
   "account_id": null,
   "evidence": {
     "customer_name": "Susie Chargeback"

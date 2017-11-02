@@ -37,7 +37,7 @@ To set the API version on a specific request, send a `Chargehound-Version` heade
 
 ```sh
 curl -X POST https://api.chargehound.com/v1/disputes \
-  -u test_XXX: \
+  -u test_123: \
   -H "Chargehound-Version: YYYY-MM-DD"
 ```
 
