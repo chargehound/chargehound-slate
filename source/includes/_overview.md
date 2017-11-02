@@ -1,22 +1,3 @@
----
-title: Chargehound API Reference
-
-language_tabs:
-  - shell: cURL
-  - javascript: Node
-  - python: Python
-  - ruby: Ruby
-  - go: Go
-
-includes:
-  - disputes
-  - integration
-  - webhooks
-  - standalone
-
-search: false
----
-
 # Overview
 
 Chargehound's API is organized around REST. [JSON](http://www.json.org/) is returned by all API responses, including errors, although our [API libraries](#libraries) convert responses to appropriate language-specific objects. All API URLs listed in this documentation are relative to `https://api.chargehound.com/v1/`. For example, the `/disputes/` resource is located at `https://api.chargehound.com/v1/disputes`.
@@ -26,23 +7,23 @@ All requests must be made over [HTTPS](https://en.wikipedia.org/wiki/HTTPS).
 ## Authentication
 
 ```sh
-curl -u test_XXX:
+curl -u test_123:
 ```
 
-```js
+```javascript
 var chargehound = require('chargehound')(
-  'test_XXX'
+  'test_123'
 );
 ```
 
 ```python
 import chargehound
-chargehound.api_key = 'test_XXX'
+chargehound.api_key = 'test_123'
 ```
 
 ```ruby
 require 'chargehound'
-Chargehound.api_key = 'test_XXX'
+Chargehound.api_key = 'test_123'
 ```
 
 ```go
@@ -50,16 +31,16 @@ import (
   "github.com/chargehound/chargehound-go"
 )
 
-ch := chargehound.New("test_XXX") 
+ch := chargehound.New("test_123") 
 ```
 
-> Make sure to replace `test_XXX` with your API key.
+> Make sure to replace `test_123` with your API key.
 
 You have two API keys, one for test and one for live data.
 
 Authentication to the API is performed via [HTTP Basic Auth](https://en.wikipedia.org/wiki/Basic_access_authentication). Your API key serves as your username. You do not need to provide a password, so the full authorization string should have the form `{{key}}:`.
 
-If you are setting authentication in the HTTP Headers with the form `Authorization: Basic {{credentials}}` be sure to [base 64](https://en.wikipedia.org/wiki/Base64) encode the credentials so that, for example, `test_XXX:` becomes `dGVzdF9YWFg6`.
+If you are setting authentication in the HTTP Headers with the form `Authorization: Basic {{credentials}}` be sure to [base 64](https://en.wikipedia.org/wiki/Base64) encode the credentials so that, for example, `test_123:` becomes `dGVzdF9YWFg6`.
 
 ## Errors
 
@@ -92,7 +73,7 @@ Chargehound uses conventional HTTP response codes to indicate success or failure
 ### Handling errors
 
 ```js
-var Chargehound = require('chargehound')('test_XXX')
+var Chargehound = require('chargehound')('test_123')
 
 // Use the Chargehound library to make a request
 .then(function () {
@@ -211,8 +192,8 @@ Chargehound offers wrapper libraries in the following languages:
 > When sending a body along with `Content-Type: application/json`, the Chargehound API expects [JSON](http://www.json.org/).
 
 ```
-curl -X PUT https://api.chargehound.com/v1/disputes/dp_XXX \
-  -u test_XXX: \
+curl -X PUT https://api.chargehound.com/v1/disputes/dp_123 \
+  -u test_123: \
   -H "Content-Type: application/json" \
   -d "{\"fields\": { \"product_url\":  \"http://www.example.com/products/cool\" } }"
 ```
@@ -220,8 +201,8 @@ curl -X PUT https://api.chargehound.com/v1/disputes/dp_XXX \
 > When sending a body along with `Content-Type: application/x-www-form-urlencoded`, the Chargehound API expects [form data](https://en.wikipedia.org/wiki/Percent-encoding#The_application.2Fx-www-form-urlencoded_type). This Content Type is set automatically by curl. Dictionaries can be expressed with square brackets.
 
 ```
-curl -X PUT https://api.chargehound.com/v1/disputes/dp_XXX \
-  -u test_XXX: \
+curl -X PUT https://api.chargehound.com/v1/disputes/dp_123 \
+  -u test_123: \
   -d fields[product_url]=http://www.example.com/products/cool
 ```
 

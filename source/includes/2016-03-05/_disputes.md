@@ -39,13 +39,12 @@ A dispute object is:
 | address_zip_check    | string     | State of address zip check (if available). One of `pass`, `fail`, `unavailable`, `checked`. |
 | cvc_check            | string     | State of cvc check (if available). One of `pass`, `fail`, `unavailable`, `checked`.         |
 | statement_descriptor | string     | The descriptor that appears on the customer's credit card statement for this change.        |
-| account_id           | string     | The account id for accounts that are charged directly through Stripe (if any). (See [Stripe charging directly](#stripe-charging-directly) for details.) |
+| account_id           | string     | The account id for Connected accounts that are charged directly through Stripe (if any). (See [Stripe charging directly](#stripe-charging-directly) for details.) |
 | created              | string     | ISO 8601 timestamp - when the dispute was created in Chargehound. |
 | updated              | string     | ISO 8601 timestamp - when the dispute was last updated in Chargehound. |
 | source               | string     | The source of the dispute. One of `mock`, `braintree`, `api` or `stripe` |
 | processor            | string     | The payment processor of the dispute. One of `braintree` or `stripe` |
 | kind                 | string     | The kind of the dispute. One of `chargeback`, `pre_arbitration` or `retrieval` |
-| account              | string     | The Id of the connected account for this dispute |
 
 ## Submitting a dispute
 
@@ -180,8 +179,7 @@ dispute, err := ch.Disputes.Submit(&params)
   "charged_at": "2016-09-18T20:38:51",
   "products": [],
   "amount": 500,
-  "processor": "stripe",
-  "account": "default"
+  "processor": "stripe"
 }
 ```
 
@@ -201,7 +199,9 @@ The dispute will be in the `submitted` state if the submit was successful.
 | account_id | string | optional | Set the account id for accounts that are charged directly through Stripe. (See [Stripe charging directly](#stripe-charging-directly) for details.) |
 | charge | string | optional | You will need to send the transaction id if the payment processor is Braintree. (See [Braintree disputes](#braintree-disputes) for details.) |
 | account    | string     | optional   | Id of the connected account for this dispute (if multiple accounts are connected). View your connected accounts in the Chargehound dashboard settings page [here](/dashboard/settings/processors). |
-
+| customer_name  | string     | optional   | Update the customer name. Will also update the customer name in the evidence fields. (Deprecated, set the "customer_name" attribute in the fields object). |
+| customer_email | string     | optional   | Update the customer email. Will also update the customer email in the evidence fields. Must be a valid email address. (Deprecated, set the "customer_name" attribute in the fields object). |
+| user_id | string | optional | The account id for Connected accounts that are charged directly through Stripe (if any). (Deprecated, use "account_id" instead). |
 
 
 ### Possible errors
@@ -325,8 +325,7 @@ disputeList, err := ch.Disputes.List(nil)
       "charged_at": "2016-09-18T20:38:51",
       "products": [],
       "amount": 500,
-      "processor": "stripe",
-      "account": "default"
+      "processor": "stripe"
     }
   ]
 }
@@ -453,8 +452,7 @@ dispute, err := ch.Disputes.Retrieve(&params)
   "charged_at": "2016-09-18T20:38:51",
   "products": [],
   "amount": 500,
-  "processor": "stripe",
-  "account": "default"
+  "processor": "stripe"
 }
 ```
 
@@ -593,8 +591,7 @@ dispute, err := ch.Disputes.Update(&params)
   "charged_at": "2016-09-18T20:38:51",
   "products": [],
   "amount": 500,
-  "processor": "stripe",
-  "account": "default"
+  "processor": "stripe"
 }
 ```
 
@@ -612,6 +609,10 @@ You can update the template and the fields on a dispute.
 | submit | boolean | optional | Submit dispute evidence immediately after update. If the submit fails, updated fields will still be saved. |
 | queue | boolean | optional | Queue the dispute for submission on its due date. (See [Queuing for submission](#queuing-for-submission) for details.) |
 | force | boolean | optional | Skip the manual review filters or submit a dispute in manual review. (See [Manual review](#manual-review) for details.) |
+| customer_name  | string     | optional   | Update the customer name. Will also update the customer name in the evidence fields. (Deprecated, set the "customer_name" attribute in the fields object). |
+| customer_email | string     | optional   | Update the customer email. Will also update the customer email in the evidence fields. Must be a valid email address. (Deprecated, set the "customer_name" attribute in the fields object). |
+| user_id | string | optional | The account id for Connected accounts that are charged directly through Stripe (if any). (Deprecated, use "account_id" instead). |
+
 
 ### Possible errors
 
@@ -696,7 +697,7 @@ dispute, err := ch.Disputes.Accept(&params)
 
 > Example response:
 
-```javascripton
+```json
 {
   "customer": "cus_123",
   "livemode": false,
@@ -735,8 +736,7 @@ dispute, err := ch.Disputes.Accept(&params)
   "charged_at": "2016-09-18T20:38:51",
   "products": [],
   "amount": 500,
-  "processor": "stripe",
-  "account": "default"
+  "processor": "stripe"
 }
 ```
 
@@ -1022,7 +1022,7 @@ curl -X POST https://api.chargehound.com/v1/disputes/dp_123/submit \
   -d account_id=acct_123
 ```
 
-```js
+```javascript
 var chargehound = require('chargehound')(
   'test_123'
 );
