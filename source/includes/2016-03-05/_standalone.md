@@ -325,7 +325,7 @@ response, err := ch.Disputes.Response(&params)
   "object": "response",
   "livemode": true,
   "dispute": "dp_123",
-  "external_identifier": "ch_123",
+  "external_charge": "ch_123",
   "account_id": null,
   "evidence": {
     "customer_name": "Susie Chargeback"
@@ -341,7 +341,7 @@ The response object is:
 | dispute | string | The id of the dispute. |
 | dispute_id | string | The id of the dispute. (Deprecated, use "dispute" instead). |
 | charge | string| The id of the disputed charge. |
-| external_identifier | string| The id of the disputed charge. (Deprecated, use "charge" instead). |
+| external_charge | string| The id of the disputed charge. (Deprecated, use "charge" instead). |
 | response_url | string | The URL of the generated response PDF. This URL is a temporary access URL. |
 | evidence | dictionary | Key value pairs for the dispute response evidence object. |
 | account_id | string | The account id for Connected accounts that are charged directly through Stripe (if any). (See [Stripe charging directly](#stripe-charging-directly) for details.) |
