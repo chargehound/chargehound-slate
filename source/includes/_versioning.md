@@ -64,7 +64,8 @@ import (
   "github.com/chargehound/chargehound-go"
 )
 
-ch := chargehound.New("test_123", &chargehound.ClientParams{APIVersion: "YYYY-MM-DD"})
+ch := chargehound.New("test_123",
+  &chargehound.ClientParams{APIVersion: "YYYY-MM-DD"})
 ```
 
 ## Changelog
