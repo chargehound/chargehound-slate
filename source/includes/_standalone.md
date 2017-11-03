@@ -135,7 +135,7 @@ import (
   "github.com/chargehound/chargehound-go"
 )
 
-ch := chargehound.New("test_123") 
+ch := chargehound.New("test_123", nil)
 
 params := chargehound.CreateDisputeParams{
   Template: "unrecognized",
@@ -305,7 +305,7 @@ import (
   "github.com/chargehound/chargehound-go"
 )
 
-ch := chargehound.New("test_123") 
+ch := chargehound.New("test_123", nil)
 
 params := chargehound.RetrieveDisputeParams{
   ID: "dp_123",
