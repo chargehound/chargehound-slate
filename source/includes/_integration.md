@@ -264,7 +264,7 @@ Chargehound::Disputes.retrieve('{{dispute_from_step_3}}')
 ```
 
 ```go
-ch := chargehound.New("{{your_chargehound_test_key}}") 
+ch := chargehound.New("{{your_chargehound_test_key}}", nil)
 
 params := chargehound.RetrieveDisputeParams{
   ID: "{{dispute_from_step_3}}",
@@ -303,7 +303,7 @@ Chargehound::Disputes.submit('{{dispute_from_step_3}}')
 ```
 
 ```go
-ch := chargehound.New("{{your_chargehound_test_key}}") 
+ch := chargehound.New("{{your_chargehound_test_key}}", nil)
 
 params := chargehound.UpdateDisputeParams{
   ID: "{{dispute_from_step_3}}",

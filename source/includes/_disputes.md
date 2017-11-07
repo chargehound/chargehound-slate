@@ -124,7 +124,7 @@ import (
   "github.com/chargehound/chargehound-go"
 )
 
-ch := chargehound.New("test_123") 
+ch := chargehound.New("test_123", nil)
 
 params := chargehound.UpdateDisputeParams{
   ID:       "dp_123",
@@ -274,7 +274,7 @@ import (
   "github.com/chargehound/chargehound-go"
 )
 
-ch := chargehound.New("test_123") 
+ch := chargehound.New("test_123", nil)
 
 disputeList, err := ch.Disputes.List(nil)
 ```
@@ -403,7 +403,7 @@ import (
   "github.com/chargehound/chargehound-go"
 )
 
-ch := chargehound.New("test_123") 
+ch := chargehound.New("test_123", nil)
 
 params := chargehound.RetrieveDisputeParams{
   ID: "dp_123",
@@ -537,7 +537,7 @@ import (
   "github.com/chargehound/chargehound-go"
 )
 
-ch := chargehound.New("test_123") 
+ch := chargehound.New("test_123", nil)
 
 params := chargehound.UpdateDisputeParams{
   ID:       "dp_123",
@@ -685,7 +685,7 @@ import (
   "github.com/chargehound/chargehound-go"
 )
 
-ch := chargehound.New("test_123") 
+ch := chargehound.New("test_123", nil)
 
 params := chargehound.AcceptDisputeParams{
   ID:       "dp_123"
@@ -855,7 +855,7 @@ import (
   "github.com/chargehound/chargehound-go"
 )
 
-ch := chargehound.New("test_123") 
+ch := chargehound.New("test_123", nil)
 
 params := chargehound.UpdateDisputeParams{
   ID:       "dp_2284d5ac6eba4e4e8e9a80df0f9c2287",
@@ -941,7 +941,7 @@ import (
   "github.com/chargehound/chargehound-go"
 )
 
-ch := chargehound.New("test_123") 
+ch := chargehound.New("test_123", nil)
 
 params := chargehound.UpdateDisputeParams{
   Force: true
@@ -1001,7 +1001,7 @@ import (
   "github.com/chargehound/chargehound-go"
 )
 
-ch := chargehound.New("test_123") 
+ch := chargehound.New("test_123", nil)
 
 params := chargehound.UpdateDisputeParams{
   Charge: "ch_123"
@@ -1057,7 +1057,7 @@ import (
   "github.com/chargehound/chargehound-go"
 )
 
-ch := chargehound.New("test_123") 
+ch := chargehound.New("test_123", nil)
 
 params := chargehound.UpdateDisputeParams{
   UserID: "acct_123"

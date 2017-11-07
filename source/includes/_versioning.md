@@ -41,6 +41,33 @@ curl -X POST https://api.chargehound.com/v1/disputes \
   -H "Chargehound-Version: YYYY-MM-DD"
 ```
 
+```javascript
+var chargehound = require('chargehound')('test_123', {
+  version: 'YYYY-MM-DD'
+});
+```
+
+```python
+import chargehound
+chargehound.api_key = 'test_123'
+chargehound.version = 'YYYY-MM-DD'
+```
+
+```ruby
+require 'chargehound'
+Chargehound.api_key = 'test_123'
+Chargehound.version = 'YYYY-MM-DD'
+```
+
+```go
+import (
+  "github.com/chargehound/chargehound-go"
+)
+
+ch := chargehound.New("test_123",
+  &chargehound.ClientParams{APIVersion: "YYYY-MM-DD"})
+```
+
 ## Changelog
 
 ### Version 2017-10-30
