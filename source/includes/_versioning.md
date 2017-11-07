@@ -4,7 +4,7 @@ The Chargehound API uses versioning to roll out backwards-incompatible changes o
 
 ## About Versioning
 
-The API version will control the API and webhook behaviors, such as parameters accepted in requests, and response properties. Your account is automatically set to the latest version when you make your first request to the API.
+The API version will control the API and webhook behaviors, such as parameters accepted in requests, and response properties. Your account was automatically set to the latest version when you signed up.
 
 A new version of the API is released when backwards-incompatible changes are made to the API. To avoid breaking your code, we will never force you to upgrade until you’re ready.
 
