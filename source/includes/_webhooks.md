@@ -4,7 +4,7 @@ Webhooks let you register a URL that Chargehound will notify when an event occur
 
 ## Responding to a webhook
 
-To acknowledge successful receipt of a webhook, your endpoint should return a `2xx` HTTP status code. Any other information returned in the request headers or request body is ignored. All response codes outside this range, including `3xx` codes, will be treated as a failure. If a webhook is not successfully received for any reason, Charhound will continue trying to send the webhook once every half hour for up to 3 days.
+To acknowledge successful receipt of a webhook, your endpoint should return a `2xx` HTTP status code. Any other information returned in the request headers or request body is ignored. All response codes outside this range, including `3xx` codes, will be treated as a failure. If a webhook is not successfully received for any reason, Chargehound will continue trying to send the webhook once every half hour for up to 3 days.
 
 ## Dispute created
 
