@@ -21,7 +21,7 @@ Examples of backwards-compatible changes:
 - Adding new optional response attributes to an existing resource
 - Adding new optional request attributes
 
-## Upgrade your API Version
+## Upgrading API Version
 
 We recommend staying up-to-date with the current API version to take advantage of latest improvements to the Chargehound API.
 
@@ -31,7 +31,7 @@ All requests to the API will use your organization API settings, unless you over
 
 The API version used by your webhooks can be configured individually for each webhook URL you have configured in the Webhook URLs section of the API tab on the Chargehound dashboard [here](/dashboard/settings/api).
 
-## Testing
+## Testing API Version
 
 To set the API version on a specific request, send a `Chargehound-Version` header. The API version will be set to the version that you specify for that individual request.
 
