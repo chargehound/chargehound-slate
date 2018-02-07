@@ -43,13 +43,13 @@ You do not need to immediately POST your evidence to the [submit endpoint](#subm
 
 ## Testing
 
-### Generating disputes
+## Testing with generated disputes
 
 It's possible to create disputes with randomly generated data in test mode. You can update and submit these disputes as normal, and you will be able to view the generated response. This is a good way to become familiar with Chargehound's API and dashboard.
 
-You can create a dispute from the Chargehound dashboard when in test mode by clicking the "Create a Test Dispute" button: [Chargehound test dashboard](https://www.chargehound.com/test/dashboard/disputes).
+You can create a dispute from the Chargehound dashboard when in test mode by clicking the "Create a Test Dispute" button: [Chargehound test dashboard](https://www.chargehound.com/test/dashboard/disputes) or simply visiting the [create dispute page](https://www.chargehound.com/test/dashboard/mock/disputes).
 
-### End to end with Stripe
+## Testing end to end with Stripe
 
 > 1) Create a token for a card with the dispute trigger code.
 
@@ -314,6 +314,106 @@ _, err := ch.Disputes.Submit(&params)
 
 Because Chargehound creates live mode disputes with [webhooks](https://stripe.com/docs/webhooks) from Stripe, testing end to end requires creating a dispute in Stripe. You can do this by creating a charge with a [test card that simulates a dispute](https://stripe.com/docs/testing#how-do-i-test-disputes). You can create a charge with a [simple curl request](https://stripe.com/docs/api#create_charge), or via the [Stripe dashboard](https://support.stripe.com/questions/how-do-i-create-a-charge-via-the-dashboard).
 
-### End to end with Braintree
+## Testing end to end with Braintree
 
-Braintree does not support disputes in the Braintree Sandbox at this time.
+> 1) Create a transaction that will trigger a dispute. You can view the resulting dispute in the Braintree dashboard.
+
+```javascript
+gateway.transaction.sale({
+  amount: "10.00",
+  creditCard: {
+    'number': '4023898493988028',
+    'expiration_date': '05/2020',
+    'cvv': '222'
+  },
+  options: {
+    submitForSettlement: true
+  }
+}, function (err, result) {
+  if (result.success) {
+    // See result.transaction for details
+  } else {
+    // Handle errors
+  }
+})
+```
+
+```python
+braintree.Transaction.sale({
+  'amount': '10.00',
+  'credit_card': {
+      'number': '4023898493988028',
+      'expiration_date': '05/2020',
+      'cvv': '222'
+  },
+  'options': {
+    'submit_for_settlement': True
+  }
+})
+```
+
+```ruby
+gateway.transaction.sale(
+  :amount => '10.00',
+  :credit_card => {
+    :number => '4023898493988028',
+    :expiration_date => '05/2020',
+    :cvv => '222'
+  },
+  :options => {
+    :submit_for_settlement => true
+  }
+)
+```
+
+> 2) Once the dispute is created in Braintree, you will see it mirrored in Chargehound.
+
+```javascript
+var chargehound = require('chargehound')('{{your_chargehound_test_key}}');
+
+chargehound.Disputes.retrieve('{{dispute_from_step_1}}'), function (err, res) {
+  // ...
+});
+```
+
+```python
+import chargehound
+chargehound.api_key = '{{your_chargehound_test_key}}'
+
+chargehound.Disputes.retrieve('{{dispute_from_step_1}}')
+```
+
+```ruby
+require 'chargehound'
+Chargehound.api_key = '{{your_chargehound_test_key}}'
+
+Chargehound::Disputes.retrieve('{{dispute_from_step_1}}')
+```
+
+> 3) Using your test API key, you can then update and submit the dispute.
+
+```javascript
+var chargehound = require('chargehound')('{{your_chargehound_test_key}}');
+
+chargehound.Disputes.submit('{{dispute_from_step_1}}'), function (err, res) {
+  // ...
+});
+```
+
+```python
+import chargehound
+chargehound.api_key = '{{your_chargehound_test_key}}'
+
+chargehound.Disputes.submit('{{dispute_from_step_1}}')
+```
+
+```ruby
+require 'chargehound'
+Chargehound.api_key = '{{your_chargehound_test_key}}'
+
+Chargehound::Disputes.submit('{{dispute_from_step_1}}')
+```
+
+If you have a Braintree sandbox, you can test your integration using Chargehound's test mode and Braintree's sandox environment. First, you'll need to connect your Braintree sandbox to Chargehound and setup the webhooks, just as you did for the production Braintree environment. You can connect a Braintree sandox from the settings page [here](https://www.chargehound.com/dashboard/settings/processors).
+
+Because Chargehound creates live mode disputes with [webhooks](https://developers.braintreepayments.com/guides/webhooks/overview) from Braintree, testing end to end requires creating a dispute in Braintree. You can do this by creating a transaction with a [test card number that simulates a dispute](https://developers.braintreepayments.com/reference/general/testing#creating-a-disputed-test-transaction). You can create a transaction using [one of the Braintree SDKs](https://developers.braintreepayments.com/reference/request/transaction/sale), or via the [Braintree dashboard](https://articles.braintreepayments.com/control-panel/transactions/create).
