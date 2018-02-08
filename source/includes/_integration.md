@@ -49,7 +49,7 @@ It's possible to create disputes with randomly generated data in test mode. You 
 
 You can create a dispute from the Chargehound dashboard when in test mode by clicking the "Create a Test Dispute" button: [Chargehound test dashboard](https://www.chargehound.com/test/dashboard/disputes) or simply visiting the [create dispute page](https://www.chargehound.com/test/dashboard/mock/disputes).
 
-## Testing end to end with Stripe
+## Testing with Stripe
 
 > 1) Create a token for a card with the dispute trigger code.
 
@@ -314,9 +314,9 @@ _, err := ch.Disputes.Submit(&params)
 
 Because Chargehound creates live mode disputes with [webhooks](https://stripe.com/docs/webhooks) from Stripe, testing end to end requires creating a dispute in Stripe. You can do this by creating a charge with a [test card that simulates a dispute](https://stripe.com/docs/testing#how-do-i-test-disputes). You can create a charge with a [simple curl request](https://stripe.com/docs/api#create_charge), or via the [Stripe dashboard](https://support.stripe.com/questions/how-do-i-create-a-charge-via-the-dashboard).
 
-## Testing end to end with Braintree
+## Testing with Braintree
 
-> 1) Create a transaction that will trigger a dispute. You can view the resulting dispute in the [Braintree dashboard](https://sandbox.braintreegateway.com/merchants/ft376dpmk9mt9ztk/disputes).
+> 1) Create a transaction that will trigger a dispute. You can view the resulting dispute in the [Braintree dashboard](https://sandbox.braintreegateway.com) on the disputes page.
 
 ```javascript
 gateway.transaction.sale({
