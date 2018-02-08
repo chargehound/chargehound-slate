@@ -42,8 +42,8 @@ A dispute object is:
 | account_id           | string     | The account id for accounts that are charged directly through Stripe (if any). (See [Stripe charging directly](#stripe-charging-directly) for details.) |
 | created              | string     | ISO 8601 timestamp - when the dispute was created in Chargehound. |
 | updated              | string     | ISO 8601 timestamp - when the dispute was last updated in Chargehound. |
-| source               | string     | The source of the dispute. One of `mock`, `braintree`, `api` or `stripe` |
-| processor            | string     | The payment processor of the dispute. One of `braintree` or `stripe` |
+| source               | string     | The source of the dispute. One of `mock`, `braintree`, `vantiv`, `adyen`, `api` or `stripe` |
+| processor            | string     | The payment processor of the dispute. One of `braintree`, `vantiv`, `adyen` or `stripe` |
 | kind                 | string     | The kind of the dispute. One of `chargeback`, `pre_arbitration` or `retrieval` |
 | account              | string     | The Id of the connected account for this dispute |
 
@@ -199,10 +199,7 @@ The dispute will be in the `submitted` state if the submit was successful.
 | queue | boolean | optional | Queue the dispute for submission on its due date. (See [Queuing for submission](#queuing-for-submission) for details.) |
 | force | boolean | optional | Skip the manual review filters or submit a dispute in manual review. (See [Manual review](#manual-review) for details.) |
 | account_id | string | optional | Set the account id for accounts that are charged directly through Stripe. (See [Stripe charging directly](#stripe-charging-directly) for details.) |
-| charge | string | optional | You will need to send the transaction id if the payment processor is Braintree. (See [Braintree disputes](#braintree-disputes) for details.) |
 | account    | string     | optional   | Id of the connected account for this dispute (if multiple accounts are connected). View your connected accounts in the Chargehound dashboard settings page [here](/dashboard/settings/processors). |
-
-
 
 ### Possible errors
 
@@ -608,7 +605,6 @@ You can update the template and the fields on a dispute.
 | fields         | dictionary | optional   | Key value pairs to hydrate the template's evidence fields. |
 | products       | array      | optional   | List of products the customer purchased. (See [Product data](#product-data) for details.) |
 | account_id | string     | optional   | Set the account id for accounts that are charged directly through Stripe. (See [Stripe charging directly](#stripe-charging-directly) for details.) |
-| charge | string     | optional   | You will need to send the transaction id if the payment processor is Braintree. (See [Braintree disputes](#braintree-disputes) for details.) |
 | submit | boolean | optional | Submit dispute evidence immediately after update. If the submit fails, updated fields will still be saved. |
 | queue | boolean | optional | Queue the dispute for submission on its due date. (See [Queuing for submission](#queuing-for-submission) for details.) |
 | force | boolean | optional | Skip the manual review filters or submit a dispute in manual review. (See [Manual review](#manual-review) for details.) |
@@ -956,7 +952,7 @@ In order submit a dispute that has been marked for review via the API, you will 
 
 You can tell a dispute has been marked for manual review if when you submit it you receive a 202 status and the state does not change to submitted.
 
-## Braintree disputes
+## Braintree read only
 
 > Example usage:
 
@@ -1010,7 +1006,11 @@ params := chargehound.UpdateDisputeParams{
 dispute, err := ch.Disputes.Submit(&params)
 ```
 
-In order to submit a Braintree dispute, you will also need to attach the Braintree transaction id using the `charge` parameter. 
+If Chargehound does not have access to the Braintree disputes API, you'll need to create a Braintree user with disputes access and add their credentials to your Chargehound account. Login to Braintree and create a Braintree user [here](https://articles.braintreepayments.com/control-panel/basics/users-roles) with role permissions that include viewing and editing disputes. Add the credentials for that user on your settings page [here](/dashboard/settings/processors).
+
+You will also need to attach the Braintree transaction id using the `charge` parameter when updating or submit disputes using the Chargehound API.
+
+You can always reconnect your Braintree account from the settings page [here](/dashboard/settings/processors) to grant Chargehound access to the disputes API, this will make your integration easier.
 
 ## Stripe charging directly
 
