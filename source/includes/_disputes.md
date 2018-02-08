@@ -201,8 +201,6 @@ The dispute will be in the `submitted` state if the submit was successful.
 | account_id | string | optional | Set the account id for accounts that are charged directly through Stripe. (See [Stripe charging directly](#stripe-charging-directly) for details.) |
 | account    | string     | optional   | Id of the connected account for this dispute (if multiple accounts are connected). View your connected accounts in the Chargehound dashboard settings page [here](/dashboard/settings/processors). |
 
-
-
 ### Possible errors
 
 | Error code           | Description                                                          |
@@ -1008,11 +1006,11 @@ params := chargehound.UpdateDisputeParams{
 dispute, err := ch.Disputes.Submit(&params)
 ```
 
-In order to work with Braintree integrations that did not grant access to the disputes API, there are a couple of extra steps. You can always reconnect your Braintree account from the settings page [here](/dashboard/settings/processors) to grant Chargehound access to the disputes API, this will make your integration easier. The Braintree disputes API was added in December, 2017, so older Chargehound integrations simply did not have the option to use it.
-
-If Chargehound does not have access to the disputes API, you'll need to create a Braintree user with disputes access and add their credentials to your Chargehound account. Login to Braintree and create a Braintree user [here](https://articles.braintreepayments.com/control-panel/basics/users-roles) with role permissions that include viewing and editing disputes. Add the credentials for that user on your settings page [here](/dashboard/settings/processors).
+If Chargehound does not have access to the Braintree disputes API, you'll need to create a Braintree user with disputes access and add their credentials to your Chargehound account. Login to Braintree and create a Braintree user [here](https://articles.braintreepayments.com/control-panel/basics/users-roles) with role permissions that include viewing and editing disputes. Add the credentials for that user on your settings page [here](/dashboard/settings/processors).
 
 You will also need to attach the Braintree transaction id using the `charge` parameter when updating or submit disputes using the Chargehound API.
+
+You can always reconnect your Braintree account from the settings page [here](/dashboard/settings/processors) to grant Chargehound access to the disputes API, this will make your integration easier.
 
 ## Stripe charging directly
 

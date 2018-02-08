@@ -316,7 +316,7 @@ Because Chargehound creates live mode disputes with [webhooks](https://stripe.co
 
 ## Testing end to end with Braintree
 
-> 1) Create a transaction that will trigger a dispute. You can view the resulting dispute in the Braintree dashboard.
+> 1) Create a transaction that will trigger a dispute. You can view the resulting dispute in the [Braintree dashboard](https://sandbox.braintreegateway.com/merchants/ft376dpmk9mt9ztk/disputes).
 
 ```javascript
 gateway.transaction.sale({
@@ -414,6 +414,6 @@ Chargehound.api_key = '{{your_chargehound_test_key}}'
 Chargehound::Disputes.submit('{{dispute_from_step_1}}')
 ```
 
-If you have a Braintree sandbox, you can test your integration using Chargehound's test mode and Braintree's sandox environment. First, you'll need to connect your Braintree sandbox to Chargehound and setup the webhooks, just as you did for the production Braintree environment. You can connect a Braintree sandox from the settings page [here](https://www.chargehound.com/dashboard/settings/processors).
+If you have a Braintree sandbox, you can test your integration using Chargehound's test mode and Braintree's sandox environment. First, you'll need to connect your Braintree sandbox to Chargehound and set up the webhook, just as you did for your production Braintree environment. You can connect a Braintree sandbox from the settings page [here](https://www.chargehound.com/dashboard/settings/processors).
 
-Because Chargehound creates live mode disputes with [webhooks](https://developers.braintreepayments.com/guides/webhooks/overview) from Braintree, testing end to end requires creating a dispute in Braintree. You can do this by creating a transaction with a [test card number that simulates a dispute](https://developers.braintreepayments.com/reference/general/testing#creating-a-disputed-test-transaction). You can create a transaction using [one of the Braintree SDKs](https://developers.braintreepayments.com/reference/request/transaction/sale), or via the [Braintree dashboard](https://articles.braintreepayments.com/control-panel/transactions/create).
+Because Chargehound creates live mode disputes with [webhooks](https://developers.braintreepayments.com/guides/webhooks/overview) from Braintree, testing end to end requires creating a dispute in Braintree. You can do this by creating a transaction with a [test card number that triggers a dispute](https://developers.braintreepayments.com/reference/general/testing#creating-a-disputed-test-transaction). You can create a transaction using [one of the Braintree SDKs](https://developers.braintreepayments.com/reference/request/transaction/sale), or via the [Braintree dashboard](https://articles.braintreepayments.com/control-panel/transactions/create).
