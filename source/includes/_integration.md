@@ -316,7 +316,7 @@ Because Chargehound creates live mode disputes with [webhooks](https://stripe.co
 
 ## Testing end to end with Braintree
 
-> 1) Create a transaction that will trigger a dispute. You can view the resulting dispute in the [Braintree dashboard](https://sandbox.braintreegateway.com/merchants/ft376dpmk9mt9ztk/disputes).
+> 1) Create a transaction that will trigger a dispute. You can view the resulting dispute in the [Braintree dashboard](https://sandbox.braintreegateway.com) on the disputes page.
 
 ```javascript
 gateway.transaction.sale({
