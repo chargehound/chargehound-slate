@@ -1008,7 +1008,7 @@ dispute, err := ch.Disputes.Submit(&params)
 
 If Chargehound does not have access to the Braintree disputes API, you'll need to create a Braintree user with disputes access and add their credentials to your Chargehound account. Login to Braintree and create a Braintree user [here](https://articles.braintreepayments.com/control-panel/basics/users-roles) with role permissions that include viewing and editing disputes. Add the credentials for that user on your settings page [here](/dashboard/settings/processors).
 
-You will also need to attach the Braintree transaction id using the `charge` parameter when updating or submit disputes using the Chargehound API.
+You will also need to attach the Braintree transaction id using the `charge` parameter when updating or submitting disputes using the Chargehound API.
 
 You can always reconnect your Braintree account from the settings page [here](/dashboard/settings/processors) to grant Chargehound access to the disputes API, this will make your integration easier.
 
