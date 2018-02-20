@@ -216,7 +216,7 @@ dispute, err := ch.Disputes.Create(&params)
 | due_by | string | required | ISO 8601 timestamp - when dispute evidence needs to be disputed by. |
 | currency | string | required | The currency code of the disputed charge. e.g. 'USD'. |
 | amount | integer | required | The amount of the disputed charge. Amounts are in cents (or other minor currency unit.) |
-| processor | string | optional | The payment processor for the charge. One of `stripe`, `braintree`. |
+| processor | string | optional | The payment processor for the charge. One of `braintree`, `vantiv`, `adyen`, `worldpay` or `stripe`. |
 | state | string | optional | The state of the dispute. One of `needs_response`, `warning_needs_response`. |
 | reversal_currency | string | optional | The currency code of the dispute balance withdrawal. e.g. 'USD'. |
 | fee | integer | optional | The amount of the dispute fee. Amounts are in cents (or other minor currency unit.) |
