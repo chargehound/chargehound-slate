@@ -42,8 +42,8 @@ A dispute object is:
 | account_id           | string     | The account id for Connected accounts that are charged directly through Stripe (if any). (See [Stripe charging directly](#stripe-charging-directly) for details.) |
 | created              | string     | ISO 8601 timestamp - when the dispute was created in Chargehound. |
 | updated              | string     | ISO 8601 timestamp - when the dispute was last updated in Chargehound. |
-| source               | string     | The source of the dispute. One of `mock`, `braintree`, `api` or `stripe` |
-| processor            | string     | The payment processor of the dispute. One of `braintree` or `stripe` |
+| source               | string     | The source of the dispute. One of `mock`, `api`, `braintree`, `vantiv`, `adyen`, `worldpay` or `stripe` |
+| processor            | string     | The payment processor of the dispute. One of `braintree`, `vantiv`, `adyen`, `worldpay` or `stripe` |
 | kind                 | string     | The kind of the dispute. One of `chargeback`, `pre_arbitration` or `retrieval` |
 
 ## Submitting a dispute
