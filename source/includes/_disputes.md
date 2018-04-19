@@ -196,7 +196,7 @@ The dispute will be in the `submitted` state if the submit was successful.
 | template       | string     | optional   | The id of the template to use. |
 | fields         | dictionary | optional   | Key value pairs to hydrate the template's evidence fields. |
 | products       | array      | optional   | List of products the customer purchased. (See [Product data](#product-data) for details.) |
-| queue | boolean | optional | Queue the dispute for submission on its due date. (See [Queuing for submission](#queuing-for-submission) for details.) |
+| queue | boolean | optional | Queue the dispute for submission. (See [Queuing for submission](#queuing-for-submission) for details.) |
 | force | boolean | optional | Skip the manual review filters or submit a dispute in manual review. (See [Manual review](#manual-review) for details.) |
 | account_id | string | optional | Set the account id for accounts that are charged directly through Stripe. (See [Stripe charging directly](#stripe-charging-directly) for details.) |
 | account    | string     | optional   | Id of the connected account for this dispute (if multiple accounts are connected). View your connected accounts in the Chargehound dashboard settings page [here](/dashboard/settings/processors). |
@@ -606,7 +606,7 @@ You can update the template and the fields on a dispute.
 | products       | array      | optional   | List of products the customer purchased. (See [Product data](#product-data) for details.) |
 | account_id | string     | optional   | Set the account id for accounts that are charged directly through Stripe. (See [Stripe charging directly](#stripe-charging-directly) for details.) |
 | submit | boolean | optional | Submit dispute evidence immediately after update. If the submit fails, updated fields will still be saved. |
-| queue | boolean | optional | Queue the dispute for submission on its due date. (See [Queuing for submission](#queuing-for-submission) for details.) |
+| queue | boolean | optional | Queue the dispute for submission. (See [Queuing for submission](#queuing-for-submission) for details.) |
 | force | boolean | optional | Skip the manual review filters or submit a dispute in manual review. (See [Manual review](#manual-review) for details.) |
 
 ### Possible errors
@@ -617,7 +617,7 @@ You can update the template and the fields on a dispute.
 
 ## Queuing for submission
 
-Queuing a dispute for submission allows you to stage evidence that will be automatically submitted on the dispute's due date. Typically a payment processor only allows a dispute response to be submitted once, making it impossible to edit the response. Queuing a dispute for submission allows you to make changes to the dispute's response while being confident that the dispute will be submitted on time. 
+Queuing a dispute for submission allows you to stage evidence that will be automatically submitted at a later time. Typically a payment processor only allows a dispute response to be submitted once, making it impossible to edit the response. Queuing a dispute for submission allows you to make changes to the dispute's response while being confident that the dispute will be submitted on time. 
 
 You can queue a dispute by setting the `queue` parameter to `true` when making a request to [submit](#submitting-a-dispute) or [create](#creating-a-dispute-via-api) a dispute. The dispute will be in the `queued` state if the request was successful.
 
