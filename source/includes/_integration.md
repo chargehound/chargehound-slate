@@ -430,17 +430,16 @@ var chargehound = require('chargehound')(
   'test_123'
 );
 
-function respondToBacklog () {
-  chargehound.Disputes.list({state: 'needs_response'} , function (err, res) {
-    res.data.forEach(function (dispute) {
-      // submit the dispute
-    });
-
-    if (res.has_more) {
-      // recurse to address all of the open disputes
-      respondToBacklog();
-    }
+async function respondToBacklog () {
+  const res = await chargehound.Disputes.list({state: 'needs_response'});
+  await Promise.all(res.data.map(async function (dispute) {
+    // submit the dispute
   });
+
+  if (res.has_more) {
+    // recurse to address all of the open disputes
+    await respondToBacklog();
+  }
 }
 ```
 
