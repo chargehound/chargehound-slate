@@ -425,7 +425,7 @@ curl https://api.chargehound.com/v1/disputes?state=needs_response \
   -u test_123
 ```
 
-```js
+```javascript
 var chargehound = require('chargehound')(
   'test_123'
 );
