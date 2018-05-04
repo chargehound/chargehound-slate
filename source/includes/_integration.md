@@ -431,7 +431,7 @@ var chargehound = require('chargehound')(
 );
 
 async function respondToBacklog () {
-  const res = await chargehound.Disputes.list({state: 'needs_response'});
+  var res = await chargehound.Disputes.list({state: 'needs_response'});
   await Promise.all(res.data.map(async function (dispute) {
     // submit the dispute
   });
