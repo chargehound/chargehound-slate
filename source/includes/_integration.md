@@ -420,7 +420,7 @@ Because Chargehound creates live mode disputes with [webhooks](https://developer
 
 Before integrating with Chargehound you might have accrued a dispute backlog, but you can easily respond to all of those disputes by writing a simple script and running it as the final integration step.
 
-```curl
+```sh
 curl https://api.chargehound.com/v1/disputes?state=needs_response \
   -u test_123
 ```
