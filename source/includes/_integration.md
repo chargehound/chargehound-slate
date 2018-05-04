@@ -41,8 +41,6 @@ In order to automatically submit responses whenever you get a dispute, you will 
 
 You do not need to immediately POST your evidence to the [submit endpoint](#submitting-a-dispute) when you receive a dispute created event. This is a good time to use a [job queue](https://en.wikipedia.org/wiki/Job_queue) if you have one. Simply pass the dispute id and (if you need it) the charge id to the job. The task worker can then query your database for the needed evidence and POST the submit to Chargehound when it's ready.
 
-## Testing
-
 ## Testing with generated disputes
 
 It's possible to create disputes with randomly generated data in test mode. You can update and submit these disputes as normal, and you will be able to view the generated response. This is a good way to become familiar with Chargehound's API and dashboard.
@@ -417,3 +415,87 @@ Chargehound::Disputes.submit('{{dispute_from_step_1}}')
 If you have a Braintree sandbox, you can test your integration using Chargehound's test mode and Braintree's sandox environment. First, you'll need to connect your Braintree sandbox to Chargehound and set up the webhook, just as you did for your production Braintree environment. You can connect a Braintree sandbox from the settings page [here](https://www.chargehound.com/dashboard/settings/processors).
 
 Because Chargehound creates live mode disputes with [webhooks](https://developers.braintreepayments.com/guides/webhooks/overview) from Braintree, testing end to end requires creating a dispute in Braintree. You can do this by creating a transaction with a [test card number that triggers a dispute](https://developers.braintreepayments.com/reference/general/testing#creating-a-disputed-test-transaction). You can create a transaction using [one of the Braintree SDKs](https://developers.braintreepayments.com/reference/request/transaction/sale), or via the [Braintree dashboard](https://articles.braintreepayments.com/control-panel/transactions/create).
+
+## Responding to your backlog
+
+Before integrating with Chargehound you might have accrued a dispute backlog, but you can easily respond to all of those disputes by writing a simple script and running it as the final integration step.
+
+```curl
+curl https://api.chargehound.com/v1/disputes?state=needs_response \
+  -u test_123
+```
+
+```js
+var chargehound = require('chargehound')(
+  'test_123'
+);
+
+function respondToBacklog () {
+  chargehound.Disputes.list({state: 'needs_response'} , function (err, res) {
+    res.data.forEach(function (dispute) {
+      // submit the dispute
+    });
+
+    if (res.has_more) {
+      // recurse to address all of the open disputes
+      respondToBacklog();
+    }
+  });
+}
+```
+
+```python
+import chargehound
+chargehound.api_key = 'test_123'
+
+def respond_to_backlog():
+  res = chargehound.Disputes.list(state='needs_response')
+  for dispute in res['data']:
+    # submit the dispute
+
+  if res['has_more']:
+    # recurse to address all of the open disputes
+    respond_to_backlog()
+```
+
+```ruby
+require 'chargehound'
+Chargehound.api_key = 'test_123'
+
+def respond_to_backlog()
+  res = Chargehound::Disputes.list(state: 'needs_response')
+  res['data'].each { |dispute|
+    # submit the dispute
+  }
+
+  if res['has_more']
+    # recurse to address all of the open disputes
+    respond_to_backlog()
+  end
+end
+```
+
+```go
+import (
+  "github.com/chargehound/chargehound-go"
+)
+
+ch := chargehound.New("test_123", nil)
+
+func respondToBacklog () {
+  params := chargehound.ListDisputesParams{
+    State: "needs_response",
+  }
+
+  response, err := ch.Disputes.List(&params)
+
+  for _, dispute := range response.Data {
+    // submit the dispute
+  }
+
+  if response.HasMore == true {
+    // recurse to address all of the open disputes
+    respondToBacklog()
+  }
+}
+```
