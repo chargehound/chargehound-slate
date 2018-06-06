@@ -28,10 +28,19 @@ When submitting evidence you will encounter a few different types of fields in t
 | date | string | Submitted responses will be reviewed by humans so try to format dates to be human readable and friendly, although no specific format is enforced. This is not the place for Unix timestamps. |
 | number | integer | A number should be an integer, not a float. |
 | amount | integer | An amount should be an integer that represents the cents (or other minor currency unit) value. E.g. $1 is 100. |
-| url | string | A URL should be a fully qualified URL including the scheme (`http:// ` or `https://`). |
+| url | string | A URL should be a fully qualified URL including the scheme (`http://` or `https://`). |
 | email | string | An email should be a valid email address. |
 
-Once you have all your evidence properly formatted, use the [submit endpoint](#submitting-a-dispute) to submit a dispute. The submit endpoint adds the template and evidence fields to a dispute just like the [update endpoint](#updating-a-dispute), and it also submits the evidence to be reviewed. If you get a `400` response code or `ChargehoundBadRequestError` after a submit or update it is probably because one of the evidence fields is not properly formatted. When you get a `201` response code the dispute was successfully submitted and you are done.
+Once you have all your evidence properly formatted, use the [submit endpoint](#submitting-a-dispute) to submit a dispute. The submit endpoint adds the template and evidence fields to a dispute just like the [update endpoint](#updating-a-dispute), and it also submits the evidence to be reviewed. If you get a `400` response code or `ChargehoundBadRequestError` after a submit or update it is probably because one of the 
+evidence fields is not properly formatted. When you get a `201` response code the dispute was successfully submitted and you are done.
+
+## Metadata and Custom Fields
+
+If you connected a Stripe account, Chargehound can automatically collect data from your metadata fields. If you connected a Braintree account, Chargehound can automaticaly collect data from your custom fields. On the Processors tab of your team settings page [here](https://www.chargehound.com/dashboard/settings#metadata-settings) you can define the whitelist of the fields that you would like to automatically collect. These fields will be automatically copied to the evidence fields of your disputes when they are created in Chargehound. 
+
+## Queue settings
+
+When you submit a dispute, you can set the `queue` flag to true so that the dispute is not submitted immediately, but will be submitted before the due date. This gives your team time to review the evidence while being assured that every dispute will be addressed. You can configure when queued disputes will be submitted on the Workflow your team settings page [here](https://www.chargehound.com/dashboard/settings/workflow#queue-settings). Queued disputes will always be submitted before the due date.
 
 ## Setting up webhooks
 
@@ -39,7 +48,7 @@ In order to automatically submit responses whenever you get a dispute, you will 
 
 ### Testing webhooks
 
-You can create a test mode [webhook](#webhooks) in the Chargehound dashboard on your api settings page [here](https://www.chargehound.com/dashboard/settings/api#webhook-urls). The webhook will only send notifications for disputes created in the Chargehound test mode. For testing locally, we recommend using a tool like [ultrahook](http://www.ultrahook.com/) to forward the webhooks to a developement machine. Once you have tested, remember to configure a live mode webhook.
+You can create a test mode [webhook](#webhooks) in the Chargehound dashboard on the Webhooks & API tab of your team settings page [here](https://www.chargehound.com/dashboard/settings/api#webhook-urls). The webhook will only send notifications for disputes created in the Chargehound test mode. For testing locally, we recommend using a tool like [ultrahook](http://www.ultrahook.com/) to forward the webhooks to a developement machine. Once you have tested, remember to configure a live mode webhook.
 
 ## Using a job queue
 
