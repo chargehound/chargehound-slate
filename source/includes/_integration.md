@@ -35,7 +35,11 @@ Once you have all your evidence properly formatted, use the [submit endpoint](#s
 
 ## Setting up webhooks
 
-In order to automatically submit responses whenever you get a dispute, you will need to set up a webhook handler and handle the `dispute.created` [webhook notification](#webhooks). 
+In order to automatically submit responses whenever you get a dispute, you will need to set up a webhook handler and handle the `dispute.created` [webhook notification](#webhooks).
+
+### Testing webhooks
+
+You can create a test mode [webhook](#webhooks) in the Chargehound dashboard on your api settings page [here](https://www.chargehound.com/dashboard/settings/api#webhook-urls). The webhook will only send notifications for disputes created in the Chargehound test mode. For testing locally, we recommend using a tool like [ultrahook](http://www.ultrahook.com/) to forward the webhooks to a developement machine. Once you have tested, remember to configure a live mode webhook.
 
 ## Using a job queue
 
