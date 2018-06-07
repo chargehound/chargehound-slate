@@ -28,14 +28,37 @@ When submitting evidence you will encounter a few different types of fields in t
 | date | string | Submitted responses will be reviewed by humans so try to format dates to be human readable and friendly, although no specific format is enforced. This is not the place for Unix timestamps. |
 | number | integer | A number should be an integer, not a float. |
 | amount | integer | An amount should be an integer that represents the cents (or other minor currency unit) value. E.g. $1 is 100. |
-| url | string | A URL should be a fully qualified URL including the scheme (`http:// ` or `https://`). |
+| url | string | A URL should be a fully qualified URL including the scheme (`http://` or `https://`). |
 | email | string | An email should be a valid email address. |
 
-Once you have all your evidence properly formatted, use the [submit endpoint](#submitting-a-dispute) to submit a dispute. The submit endpoint adds the template and evidence fields to a dispute just like the [update endpoint](#updating-a-dispute), and it also submits the evidence to be reviewed. If you get a `400` response code or `ChargehoundBadRequestError` after a submit or update it is probably because one of the evidence fields is not properly formatted. When you get a `201` response code the dispute was successfully submitted and you are done.
+Once you have all your evidence properly formatted, use the [submit endpoint](#submitting-a-dispute) to submit a dispute. The submit endpoint adds the template and evidence fields to a dispute just like the [update endpoint](#updating-a-dispute), and it also submits the evidence to be reviewed. If you get a `400` response code or `ChargehoundBadRequestError` after a submit or update it is probably because one of the 
+evidence fields is not properly formatted. When you get a `201` response code the dispute was successfully submitted and you are done.
+
+## Metadata and custom fields
+
+Chargehound tries to automatically collect standard information from your payment processor when a dispute is created. You can also define a whitelist of custom fields and metadata fields that you would like to automatically collect on the processors tab of your team settings page [here](https://www.chargehound.com/dashboard/settings#metadata-settings). These fields will be automatically copied to the evidence fields of your disputes when they are created in Chargehound.
+
+For example, if you add an "order_id" to your Stripe Charges with metadata fields, you could easily access that ID in the fields of the disputes created in Chargehound.  You could use the ID to find more relevant evidence data in your system, and/or use the ID in your templates.
+
+### Stripe metadata
+
+If you connected a Stripe account, Chargehound can automatically collect data from your `Charge`, `Customer`, or `Subscription` metadata fields.
+
+### Braintree custom fields
+
+If you connected a Braintree account, Chargehound can automaticaly collect data from your `Transaction` or `Customer` custom fields. Your Braintree custom fields should be "Store-and-pass-back" fields, and the field name given to Chargehound should be the API name.
+
+## Queue settings
+
+When you submit a dispute, you can set the `queue` flag to true so that the dispute is not submitted immediately. This gives your team time to review the evidence while being assured that every dispute will be addressed. You can configure when queued disputes will be submitted on the workflow tab of your team settings page [here](https://www.chargehound.com/dashboard/settings/workflow#queue-settings). Queued disputes will always be submitted before the due date.
 
 ## Setting up webhooks
 
-In order to automatically submit responses whenever you get a dispute, you will need to set up a webhook handler and handle the `dispute.created` [webhook notification](#webhooks). 
+In order to automatically submit responses whenever you get a dispute, you will need to set up a webhook handler and handle the `dispute.created` [webhook notification](#webhooks).
+
+### Testing webhooks
+
+You can create a test mode [webhook](#webhooks) in the Chargehound dashboard on the webhooks & API tab of your team settings page [here](https://www.chargehound.com/dashboard/settings/api#webhook-urls). The webhook will only send notifications for disputes created in the Chargehound test mode. For testing locally, we recommend using a tool like [ultrahook](http://www.ultrahook.com/) to forward the webhooks to a development machine. Once you have tested, remember to configure a live mode webhook.
 
 ## Using a job queue
 
