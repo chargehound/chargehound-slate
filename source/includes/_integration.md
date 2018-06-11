@@ -265,7 +265,7 @@ curl https://api.chargehound.com/v1/disputes/{{dispute_from_step_3}} \
 ```javascript
 var chargehound = require('chargehound')('{{your_chargehound_test_key}}');
 
-chargehound.Disputes.retrieve('{{dispute_from_step_3}}'), function (err, res) {
+chargehound.Disputes.retrieve('{{dispute_from_step_3}}', function (err, res) {
   // ...
 });
 ```
@@ -304,7 +304,7 @@ curl https://api.chargehound.com/v1/disputes/{{dispute_from_step_3}}/submit \
 ```javascript
 var chargehound = require('chargehound')('{{your_chargehound_test_key}}');
 
-chargehound.Disputes.submit('{{dispute_from_step_3}}'), function (err, res) {
+chargehound.Disputes.submit('{{dispute_from_step_3}}', function (err, res) {
   // ...
 });
 ```
@@ -392,7 +392,7 @@ gateway.transaction.sale(
 ```javascript
 var chargehound = require('chargehound')('{{your_chargehound_test_key}}');
 
-chargehound.Disputes.retrieve('{{dispute_from_step_1}}'), function (err, res) {
+chargehound.Disputes.retrieve('{{dispute_from_step_1}}', function (err, res) {
   // ...
 });
 ```
@@ -416,7 +416,7 @@ Chargehound::Disputes.retrieve('{{dispute_from_step_1}}')
 ```javascript
 var chargehound = require('chargehound')('{{your_chargehound_test_key}}');
 
-chargehound.Disputes.submit('{{dispute_from_step_1}}'), function (err, res) {
+chargehound.Disputes.submit('{{dispute_from_step_1}}', function (err, res) {
   // ...
 });
 ```
