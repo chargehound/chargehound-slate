@@ -378,7 +378,7 @@ var chargehound = require('chargehound')(
   'test_123'
 );
 
-chargehound.Disputes.retrieve('dp_123'), function (err, res) {
+chargehound.Disputes.retrieve('dp_123', function (err, res) {
   // ...
 });
 ```
