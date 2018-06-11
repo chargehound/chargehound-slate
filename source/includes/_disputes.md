@@ -247,7 +247,7 @@ var chargehound = require('chargehound')(
   'test_123'
 );
 
-chargehound.Disputes.list(), function (err, res) {
+chargehound.Disputes.list(null, function (err, res) {
   // ...
 });
 ```
@@ -376,7 +376,7 @@ var chargehound = require('chargehound')(
   'test_123'
 );
 
-chargehound.Disputes.retrieve('dp_123'), function (err, res) {
+chargehound.Disputes.retrieve('dp_123', function (err, res) {
   // ...
 });
 ```
@@ -657,7 +657,7 @@ var chargehound = require('chargehound')(
   'test_123'
 );
 
-chargehound.Disputes.accept('dp_123'), function (err, res) {
+chargehound.Disputes.accept('dp_123', function (err, res) {
   // ...
 });
 ```
