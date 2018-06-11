@@ -250,7 +250,7 @@ var chargehound = require('chargehound')(
   'test_123'
 );
 
-chargehound.Disputes.list(), function (err, res) {
+chargehound.Disputes.list(null, function (err, res) {
   // ...
 });
 ```
