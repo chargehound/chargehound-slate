@@ -34,8 +34,8 @@ under the License.
     <style>
       <%= Rouge::Themes::MonokaiSublime.render(:scope => '.highlight') %>
     </style>
-    <link charset="utf-8" rel="stylesheet" type="text/css" href="<%=stylesheet_path screen.css%>" media="screen">
-    <link charset="utf-8" rel="stylesheet" type="text/css" href="<%=stylesheet_path print.css%>" media="print">
+    <link charset="utf-8" rel="stylesheet" type="text/css" href="<%=stylesheet_path screen%>" media="screen">
+    <link charset="utf-8" rel="stylesheet" type="text/css" href="<%=stylesheet_path print%>" media="print">
     <% if current_page.data.search %>
       <script charset="utf-8" src="<%=javascript_path all%>"> </script>
     <% else %>
