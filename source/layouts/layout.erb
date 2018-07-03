@@ -30,16 +30,16 @@ under the License.
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title><%= current_page.data.title || "API Documentation" %></title>
-    <link charset="utf-8" rel="stylesheet" type="text/css" href="/docs/api/stylesheets/screen.css" media="screen">
-    <link charset="utf-8" rel="stylesheet" type="text/css" href="/docs/api/stylesheets/print.css" media="print">
+
     <style>
       <%= Rouge::Themes::MonokaiSublime.render(:scope => '.highlight') %>
     </style>
-
+    <%= stylesheet_link_tag :screen, media: :screen, charset: 'utf-8' %>
+    <%= stylesheet_link_tag :print, media: :print, charset: 'utf-8' %>
     <% if current_page.data.search %>
-      <script charset="utf-8" src="/docs/api/javascripts/all.js"> </script>
+      <%= javascript_include_tag  "all", charset: 'utf-8' %>
     <% else %>
-      <script charset="utf-8" src="/docs/api/javascripts/all_nosearch.js"> </script>
+      <%= javascript_include_tag  "all_nosearch", charset: 'utf-8' %>
     <% end %>
 
     <script charset="utf-8" src="/tracking.js"> </script>
