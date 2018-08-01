@@ -235,6 +235,7 @@ dispute, err := ch.Disputes.Create(&params)
 | submit | boolean | optional | Submit dispute evidence immediately after creation. |
 | queue | boolean | optional | Queue the dispute for submission on its due date. (See [Queuing for submission](#queuing-for-submission) for details.) |
 | force | boolean | optional | Skip the manual review filters or submit a dispute in manual review. (See [Manual review](#manual-review) for details.) |
+| reference_url  | string     | optional   | Custom URL with dispute information, such as the dispute or charge in your company dashboard. |
 
 ### Possible errors
 
