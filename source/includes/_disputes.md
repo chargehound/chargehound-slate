@@ -45,7 +45,8 @@ A dispute object is:
 | source               | string     | The source of the dispute. One of `mock`, `api`, `braintree`, `vantiv`, `adyen`, `worldpay` or `stripe` |
 | processor            | string     | The payment processor of the dispute. One of `braintree`, `vantiv`, `adyen`, `worldpay` or `stripe` |
 | kind                 | string     | The kind of the dispute. One of `chargeback`, `pre_arbitration` or `retrieval` |
-| account              | string     | The Id of the connected account for this dispute |
+| account              | string     | The Id of the connected account for this dispute. |
+| reference_url        | string     | Custom URL with dispute information, such as the dispute or charge in your company dashboard. |
 
 ## Submitting a dispute
 
@@ -200,6 +201,7 @@ The dispute will be in the `submitted` state if the submit was successful.
 | force | boolean | optional | Skip the manual review filters or submit a dispute in manual review. (See [Manual review](#manual-review) for details.) |
 | account_id | string | optional | Set the account id for accounts that are charged directly through Stripe. (See [Stripe charging directly](#stripe-charging-directly) for details.) |
 | account    | string     | optional   | Id of the connected account for this dispute (if multiple accounts are connected). View your connected accounts in the Chargehound dashboard settings page [here](/dashboard/settings/processors). |
+| reference_url  | string     | optional   | Custom URL with dispute information, such as the dispute or charge in your company dashboard. |
 
 ### Possible errors
 
@@ -608,6 +610,7 @@ You can update the template and the fields on a dispute.
 | submit | boolean | optional | Submit dispute evidence immediately after update. If the submit fails, updated fields will still be saved. |
 | queue | boolean | optional | Queue the dispute for submission. (See [Queuing for submission](#queuing-for-submission) for details.) |
 | force | boolean | optional | Skip the manual review filters or submit a dispute in manual review. (See [Manual review](#manual-review) for details.) |
+| reference_url  | string     | optional   | Custom URL with dispute information, such as the dispute or charge in your company dashboard. |
 
 ### Possible errors
 

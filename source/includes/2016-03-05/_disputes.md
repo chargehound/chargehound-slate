@@ -45,6 +45,7 @@ A dispute object is:
 | source               | string     | The source of the dispute. One of `mock`, `api`, `braintree`, `vantiv`, `adyen`, `worldpay` or `stripe` |
 | processor            | string     | The payment processor of the dispute. One of `braintree`, `vantiv`, `adyen`, `worldpay` or `stripe` |
 | kind                 | string     | The kind of the dispute. One of `chargeback`, `pre_arbitration` or `retrieval` |
+| reference_url        | string     | Custom URL with dispute information, such as the dispute or charge in your company dashboard. |
 
 ## Submitting a dispute
 
@@ -202,6 +203,7 @@ The dispute will be in the `submitted` state if the submit was successful.
 | customer_name  | string     | optional   | Update the customer name. Will also update the customer name in the evidence fields. (Deprecated, set the "customer_name" attribute in the fields object). |
 | customer_email | string     | optional   | Update the customer email. Will also update the customer email in the evidence fields. Must be a valid email address. (Deprecated, set the "customer_name" attribute in the fields object). |
 | user_id | string | optional | The account id for Connected accounts that are charged directly through Stripe (if any). (Deprecated, use "account_id" instead). |
+| reference_url  | string     | optional   | Custom URL with dispute information, such as the dispute or charge in your company dashboard. |
 
 
 ### Possible errors
@@ -612,6 +614,7 @@ You can update the template and the fields on a dispute.
 | customer_name  | string     | optional   | Update the customer name. Will also update the customer name in the evidence fields. (Deprecated, set the "customer_name" attribute in the fields object). |
 | customer_email | string     | optional   | Update the customer email. Will also update the customer email in the evidence fields. Must be a valid email address. (Deprecated, set the "customer_name" attribute in the fields object). |
 | user_id | string | optional | The account id for Connected accounts that are charged directly through Stripe (if any). (Deprecated, use "account_id" instead). |
+| reference_url  | string     | optional   | Custom URL with dispute information, such as the dispute or charge in your company dashboard. |
 
 
 ### Possible errors
