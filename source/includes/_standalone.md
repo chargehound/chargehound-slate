@@ -178,6 +178,7 @@ dispute, err := ch.Disputes.Create(&params)
   "statement_descriptor": null,
   "source": "api",
   "charge": "ch_123",
+  "reference_url": null,
   "template": "unrecognized",
   "is_charge_refundable": false,
   "cvc_check": "unavailable",
@@ -230,12 +231,12 @@ dispute, err := ch.Disputes.Create(&params)
 | template | string     | optional | The id of the template to use. |
 | fields | dictionary | optional | Key value pairs to hydrate the template's evidence fields. |
 | products | array | optional | List of products the customer purchased. (See [Product data](#product-data) for details.) |
+| reference_url  | string     | optional   | Custom URL with dispute information, such as the dispute or charge in your company dashboard. |
 | account_id | string | optional | Set the account id for Connected accounts that are charged directly through Stripe. (See [Stripe charging directly](#stripe-charging-directly) for details.) |
 | kind | string | optional | Type of dispute (if available). One of `chargeback`, `retrieval`, `pre_arbitration`. |
 | submit | boolean | optional | Submit dispute evidence immediately after creation. |
 | queue | boolean | optional | Queue the dispute for submission on its due date. (See [Queuing for submission](#queuing-for-submission) for details.) |
 | force | boolean | optional | Skip the manual review filters or submit a dispute in manual review. (See [Manual review](#manual-review) for details.) |
-| reference_url  | string     | optional   | Custom URL with dispute information, such as the dispute or charge in your company dashboard. |
 
 ### Possible errors
 

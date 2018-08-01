@@ -18,7 +18,6 @@ A dispute object is:
 | submitted_at         | string     | ISO 8601 timestamp - when dispute evidence was submitted.                                   |
 | closed_at            | string     | ISO 8601 timestamp - when the dispute was resolved.                                         |
 | submitted_count      | integer    | Number of times the dispute evidence has been submitted.                                    |
-| file_url             | string     | Location of the generated evidence document.                                                |
 | template             | string     | Id of the template attached to the dispute.                                                 |
 | fields               | dictionary | Evidence fields attached to the dispute.                                                    |
 | missing_fields       | dictionary | Any fields required by the template that have not yet been provided.                        |
@@ -179,6 +178,7 @@ dispute, err := ch.Disputes.Submit(&params)
   },
   "charged_at": "2016-09-18T20:38:51",
   "products": [],
+  "reference_url": null,
   "amount": 500,
   "processor": "stripe"
 }
@@ -195,6 +195,7 @@ The dispute will be in the `submitted` state if the submit was successful.
 | template       | string     | optional   | The id of the template to use. |
 | fields         | dictionary | optional   | Key value pairs to hydrate the template's evidence fields. |
 | products       | array      | optional   | List of products the customer purchased. (See [Product data](#product-data) for details.) |
+| reference_url  | string     | optional   | Custom URL with dispute information, such as the dispute or charge in your company dashboard. |
 | queue | boolean | optional | Queue the dispute for submission. (See [Queuing for submission](#queuing-for-submission) for details.) |
 | force | boolean | optional | Skip the manual review filters or submit a dispute in manual review. (See [Manual review](#manual-review) for details.) |
 | account_id | string | optional | Set the account id for accounts that are charged directly through Stripe. (See [Stripe charging directly](#stripe-charging-directly) for details.) |
@@ -203,7 +204,6 @@ The dispute will be in the `submitted` state if the submit was successful.
 | customer_name  | string     | optional   | Update the customer name. Will also update the customer name in the evidence fields. (Deprecated, set the "customer_name" attribute in the fields object). |
 | customer_email | string     | optional   | Update the customer email. Will also update the customer email in the evidence fields. Must be a valid email address. (Deprecated, set the "customer_name" attribute in the fields object). |
 | user_id | string | optional | The account id for Connected accounts that are charged directly through Stripe (if any). (Deprecated, use "account_id" instead). |
-| reference_url  | string     | optional   | Custom URL with dispute information, such as the dispute or charge in your company dashboard. |
 
 
 ### Possible errors
@@ -326,6 +326,7 @@ disputeList, err := ch.Disputes.List(nil)
       "fields": {},
       "charged_at": "2016-09-18T20:38:51",
       "products": [],
+      "reference_url": null,
       "amount": 500,
       "processor": "stripe"
     }
@@ -453,6 +454,7 @@ dispute, err := ch.Disputes.Retrieve(&params)
   "fields": {},
   "charged_at": "2016-09-18T20:38:51",
   "products": [],
+  "reference_url": null,
   "amount": 500,
   "processor": "stripe"
 }
@@ -592,6 +594,7 @@ dispute, err := ch.Disputes.Update(&params)
   },
   "charged_at": "2016-09-18T20:38:51",
   "products": [],
+  "reference_url": null,
   "amount": 500,
   "processor": "stripe"
 }
@@ -606,6 +609,7 @@ You can update the template and the fields on a dispute.
 | template       | string     | optional   | The id of the template to use. |
 | fields         | dictionary | optional   | Key value pairs to hydrate the template's evidence fields. |
 | products       | array      | optional   | List of products the customer purchased. (See [Product data](#product-data) for details.) |
+| reference_url  | string     | optional   | Custom URL with dispute information, such as the dispute or charge in your company dashboard. |
 | account_id | string     | optional   | Set the account id for accounts that are charged directly through Stripe. (See [Stripe charging directly](#stripe-charging-directly) for details.) |
 | charge | string     | optional   | You will need to send the transaction id if the payment processor is Braintree. (See [Braintree disputes](#braintree-disputes) for details.) |
 | submit | boolean | optional | Submit dispute evidence immediately after update. If the submit fails, updated fields will still be saved. |
@@ -614,7 +618,6 @@ You can update the template and the fields on a dispute.
 | customer_name  | string     | optional   | Update the customer name. Will also update the customer name in the evidence fields. (Deprecated, set the "customer_name" attribute in the fields object). |
 | customer_email | string     | optional   | Update the customer email. Will also update the customer email in the evidence fields. Must be a valid email address. (Deprecated, set the "customer_name" attribute in the fields object). |
 | user_id | string | optional | The account id for Connected accounts that are charged directly through Stripe (if any). (Deprecated, use "account_id" instead). |
-| reference_url  | string     | optional   | Custom URL with dispute information, such as the dispute or charge in your company dashboard. |
 
 
 ### Possible errors
@@ -738,6 +741,7 @@ dispute, err := ch.Disputes.Accept(&params)
   "fields": {},
   "charged_at": "2016-09-18T20:38:51",
   "products": [],
+  "reference_url": null,
   "amount": 500,
   "processor": "stripe"
 }
