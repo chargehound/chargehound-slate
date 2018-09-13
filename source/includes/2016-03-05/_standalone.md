@@ -196,7 +196,7 @@ chargehound.disputes.create(
 
 > Example response:
 
-```javascripton
+```json
 {
   "customer": "cus_123",
   "livemode": false,
@@ -318,7 +318,7 @@ curl https://api.chargehound.com/v1/disputes/dp_123/response \
   -u test_123:
 ```
 
-```js
+```javascript
 var chargehound = require('chargehound')(
   'test_123'
 );

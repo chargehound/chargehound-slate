@@ -78,7 +78,7 @@ Chargehound uses conventional HTTP response codes to indicate success or failure
 
 ### Handling errors
 
-```js
+```javascript
 var Chargehound = require('chargehound')('test_123')
 
 // Use the Chargehound library to make a request

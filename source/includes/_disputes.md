@@ -776,7 +776,7 @@ chargehound.disputes.accept("dp_123");
 
 > Example response:
 
-```javascripton
+```json
 {
   "customer": "cus_123",
   "livemode": false,
@@ -1171,7 +1171,7 @@ curl -X POST https://api.chargehound.com/v1/disputes/dp_123/submit \
   -d account_id=acct_123
 ```
 
-```js
+```javascript
 var chargehound = require('chargehound')(
   'test_123'
 );
@@ -1209,7 +1209,7 @@ import (
 ch := chargehound.New("test_123", nil)
 
 params := chargehound.UpdateDisputeParams{
-  UserID: "acct_123"
+  AccountID: "acct_123"
 }
 
 dispute, err := ch.Disputes.Submit(&params)
@@ -1223,7 +1223,7 @@ Chargehound chargehound = new Chargehound("test_123");
 
 chargehound.disputes.submit("dp_123",
   new Dispute.UpdateParams.Builder()
-  .userId("acct_123")
+  .accountId("acct_123")
   .finish()
 );
 ```

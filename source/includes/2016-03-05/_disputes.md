@@ -1209,7 +1209,7 @@ import (
 ch := chargehound.New("test_123", nil)
 
 params := chargehound.UpdateDisputeParams{
-  UserID: "acct_123"
+  AccountID: "acct_123"
 }
 
 dispute, err := ch.Disputes.Submit(&params)
@@ -1223,7 +1223,7 @@ Chargehound chargehound = new Chargehound("test_123");
 
 chargehound.disputes.submit("dp_123",
   new Dispute.UpdateParams.Builder()
-  .userId("acct_123")
+  .accountId("acct_123")
   .finish()
 );
 ```
