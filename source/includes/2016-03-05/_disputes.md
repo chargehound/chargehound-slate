@@ -70,6 +70,10 @@ Chargehound::Disputes.submit
 ch.Disputes.Submit(*chargehound.UpdateDisputeParams)
 ```
 
+```java
+chargehound.disputes.submit();
+```
+
 > Example request:
 
 ```sh
@@ -134,6 +138,23 @@ params := chargehound.UpdateDisputeParams{
 }
 
 dispute, err := ch.Disputes.Submit(&params)
+```
+
+```java
+import com.chargehound.Chargehound;
+import com.chargehound.models.Dispute;
+
+Chargehound chargehound = new Chargehound("test_123");
+
+Map<String, Object> fields = new HashMap<String, Object>();
+fields.put("customer_name", "Susie Chargeback");
+
+chargehound.disputes.submit("dp_123",
+  new Dispute.UpdateParams.Builder()
+  .template("unrecognized")
+  .fields(fields)
+  .finish()
+);
 ```
 
 > Example response:
@@ -240,6 +261,10 @@ Chargehound::Disputes.list
 ch.Disputes.List(*chargehound.ListDisputesParams)
 ```
 
+```java
+chargehound.disputes.list();
+```
+
 > Example request:
 
 ```sh
@@ -279,6 +304,14 @@ import (
 ch := chargehound.New("test_123", nil)
 
 disputeList, err := ch.Disputes.List(nil)
+```
+
+```java
+import com.chargehound.Chargehound;
+
+Chargehound chargehound = new Chargehound("test_123");
+
+chargehound.disputes.list();
 ```
 
 > Example response:
@@ -369,6 +402,10 @@ Chargehound::Disputes.retrieve
 ch.Disputes.Retrieve(*chargehound.RetrieveDisputeParams)
 ```
 
+```java
+chargehound.disputes.retrieve();
+```
+
 > Example request:
 
 ```sh
@@ -412,6 +449,14 @@ params := chargehound.RetrieveDisputeParams{
 }
 
 dispute, err := ch.Disputes.Retrieve(&params)
+```
+
+```java
+import com.chargehound.Chargehound;
+
+Chargehound chargehound = new Chargehound("test_123");
+
+chargehound.disputes.retrieve("dp_123");
 ```
 
 > Example response:
@@ -486,6 +531,10 @@ Chargehound::Disputes.update
 ch.Disputes.Update(*chargehound.UpdateDisputeParams)
 ```
 
+```java
+chargehound.disputes.update();
+```
+
 > Example request:
 
 ```sh
@@ -550,6 +599,23 @@ params := chargehound.UpdateDisputeParams{
 }
 
 dispute, err := ch.Disputes.Update(&params)
+```
+
+```java
+import com.chargehound.Chargehound;
+import com.chargehound.models.Dispute;
+
+Chargehound chargehound = new Chargehound("test_123");
+
+Map<String, Object> fields = new HashMap<String, Object>();
+fields.put("customer_name", "Susie Chargeback");
+
+chargehound.disputes.update("dp_123",
+  new Dispute.UpdateParams.Builder()
+  .template("unrecognized")
+  .fields(fields)
+  .finish()
+);
 ```
 
 > Example response:
@@ -656,6 +722,10 @@ Chargehound::Disputes.accept
 ch.Disputes.Accept(*chargehound.AcceptDisputeParams)
 ```
 
+```java
+chargehound.disputes.accept();
+```
+
 > Example request:
 
 ```sh
@@ -699,6 +769,14 @@ params := chargehound.AcceptDisputeParams{
 }
 
 dispute, err := ch.Disputes.Accept(&params)
+```
+
+```java
+import com.chargehound.Chargehound;
+
+Chargehound chargehound = new Chargehound("test_123");
+
+chargehound.disputes.accept("dp_123");
 ```
 
 > Example response:
@@ -891,6 +969,44 @@ params := chargehound.UpdateDisputeParams{
 dispute, err := ch.Disputes.Update(&params)
 ```
 
+```java
+import com.chargehound.Chargehound;
+import com.chargehound.models.Dispute;
+import com.chargehound.models.Product;
+
+Chargehound chargehound = new Chargehound("test_123");
+
+Product saxophoneProduct = new Product.Builder()
+  .name("Saxophone")
+  .description("Alto saxophone, with carrying case")
+  .image("http://s3.amazonaws.com/chargehound/saxophone.png")
+  .sku("17283001272")
+  .quantity(1)
+  .amount(20000)
+  .url("http://www.example.com")
+  .finish();
+
+Product milkProduct = new Product.Builder()
+  .name("Milk")
+  .description("Semi-skimmed Organic")
+  .image("http://s3.amazonaws.com/chargehound/milk.png")
+  .sku("26377382910")
+  .quantity("64oz")
+  .amount(400)
+  .url("http://www.example.com")
+  .finish();
+
+List<Product> products = new ArrayList<Product>();
+products.add(saxophoneProduct);
+products.add(milkProduct);
+
+chargehound.disputes.submit("dp_123",
+  new Dispute.UpdateParams.Builder()
+  .products(products)
+  .finish()
+);
+```
+
 ### Product data fields
 
 | Field        | Type              |  Required?  | Description                                                                                 |
@@ -957,6 +1073,19 @@ params := chargehound.UpdateDisputeParams{
 dispute, err := ch.Disputes.Submit(&params)
 ```
 
+```java
+import com.chargehound.Chargehound;
+import com.chargehound.models.Dispute;
+
+Chargehound chargehound = new Chargehound("test_123");
+
+chargehound.disputes.submit("dp_123",
+  new Dispute.UpdateParams.Builder()
+  .force(true)
+  .finish()
+);
+```
+
 You might want to have the chance to look over some disputes before you submit your response to the bank, so we allow you create rules to mark certain disputes for manual review.
 
 In order submit a dispute that has been marked for review via the API, you will need to pass an extra `force` parameter or the dispute will stay in the manual review queue.
@@ -1017,6 +1146,19 @@ params := chargehound.UpdateDisputeParams{
 dispute, err := ch.Disputes.Submit(&params)
 ```
 
+```java
+import com.chargehound.Chargehound;
+import com.chargehound.models.Dispute;
+
+Chargehound chargehound = new Chargehound("test_123");
+
+chargehound.disputes.submit("dp_123",
+  new Dispute.UpdateParams.Builder()
+  .charge("ch_123")
+  .finish()
+);
+```
+
 In order to submit a Braintree dispute, you will also need to attach the Braintree transaction id using the `charge` parameter. 
 
 ## Stripe charging directly
@@ -1071,6 +1213,19 @@ params := chargehound.UpdateDisputeParams{
 }
 
 dispute, err := ch.Disputes.Submit(&params)
+```
+
+```java
+import com.chargehound.Chargehound;
+import com.chargehound.models.Dispute;
+
+Chargehound chargehound = new Chargehound("test_123");
+
+chargehound.disputes.submit("dp_123",
+  new Dispute.UpdateParams.Builder()
+  .userId("acct_123")
+  .finish()
+);
 ```
 
 In order to work with Stripe Managed or Connected account integrations that [charge directly](https://stripe.com/docs/connect/direct-charges), you will need to attach the Stripe account id to the dispute using the `account_id` parameter. When you receive a webhook to your Connect webhook endpoint, get the `account` from the event. The `account_id` is the Stripe account id that you will need to set.

@@ -68,6 +68,12 @@ ch := chargehound.New("test_123",
   &chargehound.ClientParams{APIVersion: "YYYY-MM-DD"})
 ```
 
+```java
+import com.chargehound.Chargehound;
+Chargehound chargehound = new Chargehound("test_123");
+chargehound.setApiVersion("YYYY-MM-DD");
+```
+
 ## Changelog
 
 ### Version 2017-10-30

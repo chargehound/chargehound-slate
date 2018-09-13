@@ -34,6 +34,12 @@ import (
 ch := chargehound.New("test_123") 
 ```
 
+```java
+import com.chargehound.Chargehound;
+
+Chargehound chargehound = new Chargehound("test_123");
+```
+
 > Make sure to replace `test_123` with your API key.
 
 You have two API keys, one for test and one for live data.
@@ -175,6 +181,28 @@ default:
 }
 ```
 
+```java
+import com.chargehound.errors.ChargehoundException;
+
+try {
+  // Use the Chargehound library to make a request
+} catch (ChargehoundException.HttpException.Unauthorized exception) {
+  // Missing API key
+} catch (ChargehoundException.HttpException.Forbidden exception) {
+  // Incorrect API key
+} catch (ChargehoundException.HttpException.NotFound exception) {
+  // Not found
+} catch (ChargehoundException.HttpException.BadRequest exception) {
+  // Bad request
+} catch (ChargehoundException.HttpException.InternalServerError exception) {
+  // Internal server error
+} catch (ChargehoundException exception) {
+  // Generic Chargehound error
+} catch (Exception exception) {
+  // Handle any other types of unexpected errors
+}
+```
+
 When using our client libraries Chargehound also provides typed exceptions when errors are returned from the API.
 
 
@@ -186,6 +214,7 @@ Chargehound offers wrapper libraries in the following languages:
 - [Python](https://github.com/chargehound/chargehound-python)
 - [Ruby](https://github.com/chargehound/chargehound-ruby)
 - [Go](https://github.com/chargehound/chargehound-go)
+- [Java](https://github.com/chargehound/chargehound-java)
 
 ## HTTP
 
