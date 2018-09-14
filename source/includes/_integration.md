@@ -79,7 +79,7 @@ curl https://api.stripe.com/v1/tokens \
   -u {{your_stripe_test_key}}: \
   -d card[number]=4000000000000259 \
   -d card[exp_month]=12 \
-  -d card[exp_year]=2017 \
+  -d card[exp_year]=2020 \
   -d card[cvc]=123
 ```
 
@@ -92,7 +92,7 @@ stripe.tokens.create({
   card: {
     number: '4000000000000259',
     exp_month: 12,
-    exp_year: 2017,
+    exp_year: 2020,
     cvc: '123'
   }
 }, function (err, token) {
@@ -108,7 +108,7 @@ stripe.Token.create(
   card={
     "number": "4000000000000259",
     "exp_month": 12,
-    "exp_year": 2017,
+    "exp_year": 2020,
     "cvc": "123"
   },
 )
@@ -122,7 +122,7 @@ Stripe::Token.create(
   :card => {
     :number => '4000000000000259',
     :exp_month => 4,
-    :exp_year => 2017,
+    :exp_year => 2020,
     :cvc => '314'
   },
 )
@@ -135,10 +135,24 @@ t, err := token.New(&stripe.TokenParams{
   Card: &stripe.CardParams{
         Number: "4000000000000259",
         Month:  "12",
-        Year:   "2017",
+        Year:   "2020",
         CVC:    "123",
     },
 })
+```
+
+```java
+Stripe.apiKey = "{{your_stripe_test_key}}";
+
+Map<String, Object> tokenParams = new HashMap<String, Object>();
+Map<String, Object> cardParams = new HashMap<String, Object>();
+cardParams.put("number", "4000000000000259");
+cardParams.put("exp_month", 12);
+cardParams.put("exp_year", 2020);
+cardParams.put("cvc", "123");
+tokenParams.put("card", cardParams);
+
+Token.create(tokenParams);
 ```
 
 > 2) Attach that token to a Stripe customer, for easy reuse later.
@@ -191,6 +205,16 @@ customerParams := &stripe.CustomerParams{
 }
 customerParams.SetSource("{{token_from_step_1}}")
 c, err := customer.New(customerParams)
+```
+
+```java
+Stripe.apiKey = "{{your_stripe_test_key}}";
+
+Map<String, Object> customerParams = new HashMap<String, Object>();
+customerParams.put("description", "Always disputes charges");
+customerParams.put("source", "{{token_from_step_1}}");
+
+Customer.create(customerParams);
 ```
 
 > 3) Create a charge that will trigger a dispute. You can view the resulting dispute in the [Stripe dashboard](https://dashboard.stripe.com/test/disputes/overview).
@@ -255,6 +279,18 @@ chargeParams.SetSource("{{customer_from_step_2}}")
 ch, err := charge.New(chargeParams)
 ```
 
+```java
+Stripe.apiKey = "{{your_stripe_test_key}}";
+
+Map<String, Object> chargeParams = new HashMap<String, Object>();
+chargeParams.put("amount", 400);
+chargeParams.put("currency", "usd");
+chargeParams.put("description", "Triggering a dispute");
+chargeParams.put("source", "{{customer_from_step_2}}");
+
+Charge.create(chargeParams);
+```
+
 > 4) Once the dispute is created in Stripe, you will see it mirrored in Chargehound.
 
 ```sh
@@ -294,6 +330,14 @@ params := chargehound.RetrieveDisputeParams{
 dispute, err := ch.Disputes.Retrieve(&params)
 ```
 
+```java
+import com.chargehound.Chargehound;
+
+Chargehound chargehound = new Chargehound("{{your_chargehound_test_key}}");
+
+chargehound.disputes.retrieve("{{dispute_from_step_3}}");
+```
+
 > 5) Using your test API key, you can then update and submit the dispute.
 
 ```sh
@@ -331,6 +375,14 @@ params := chargehound.UpdateDisputeParams{
 }
 
 _, err := ch.Disputes.Submit(&params)
+```
+
+```java
+import com.chargehound.Chargehound;
+
+Chargehound chargehound = new Chargehound("{{your_chargehound_test_key}}");
+
+chargehound.disputes.submit("{{dispute_from_step_3}}");
 ```
 
 Because Chargehound creates live mode disputes with [webhooks](https://stripe.com/docs/webhooks) from Stripe, testing end to end requires creating a dispute in Stripe. You can do this by creating a charge with a [test card that simulates a dispute](https://stripe.com/docs/testing#how-do-i-test-disputes). You can create a charge with a [simple curl request](https://stripe.com/docs/api#create_charge), or via the [Stripe dashboard](https://support.stripe.com/questions/how-do-i-create-a-charge-via-the-dashboard).
@@ -387,6 +439,20 @@ gateway.transaction.sale(
 )
 ```
 
+```java
+TransactionRequest request = new TransactionRequest()
+  .amount(new BigDecimal("10.00"))
+  .creditCard()
+    .number("4023898493988028")
+    .expirationDate("05/2020")
+    .cvv("222")
+  .options()
+    .submitForSettlement(true)
+    .done();
+
+Result<Transaction> result = gateway.transaction().sale(request);
+```
+
 > 2) Once the dispute is created in Braintree, you will see it mirrored in Chargehound.
 
 ```javascript
@@ -409,6 +475,14 @@ require 'chargehound'
 Chargehound.api_key = '{{your_chargehound_test_key}}'
 
 Chargehound::Disputes.retrieve('{{dispute_from_step_1}}')
+```
+
+```java
+import com.chargehound.Chargehound;
+
+Chargehound chargehound = new Chargehound("{{your_chargehound_test_key}}");
+
+chargehound.disputes.retrieve("{{dispute_from_step_1}}");
 ```
 
 > 3) Using your test API key, you can then update and submit the dispute.
@@ -435,6 +509,14 @@ Chargehound.api_key = '{{your_chargehound_test_key}}'
 Chargehound::Disputes.submit('{{dispute_from_step_1}}')
 ```
 
+```java
+import com.chargehound.Chargehound;
+
+Chargehound chargehound = new Chargehound("{{your_chargehound_test_key}}");
+
+chargehound.disputes.submit("{{dispute_from_step_1}}");
+```
+
 If you have a Braintree sandbox, you can test your integration using Chargehound's test mode and Braintree's sandox environment. First, you'll need to connect your Braintree sandbox to Chargehound and set up the webhook, just as you did for your production Braintree environment. You can connect a Braintree sandbox from the settings page [here](https://www.chargehound.com/dashboard/settings/processors).
 
 Because Chargehound creates live mode disputes with [webhooks](https://developers.braintreepayments.com/guides/webhooks/overview) from Braintree, testing end to end requires creating a dispute in Braintree. You can do this by creating a transaction with a [test card number that triggers a dispute](https://developers.braintreepayments.com/reference/general/testing#creating-a-disputed-test-transaction). You can create a transaction using [one of the Braintree SDKs](https://developers.braintreepayments.com/reference/request/transaction/sale), or via the [Braintree dashboard](https://articles.braintreepayments.com/control-panel/transactions/create).
@@ -456,11 +538,11 @@ var chargehound = require('chargehound')(
 async function respondToBacklog () {
   var res = await chargehound.Disputes.list({state: 'needs_response'});
   await Promise.all(res.data.map(async function (dispute) {
-    // submit the dispute
+    // Submit the dispute.
   });
 
   if (res.has_more) {
-    // recurse to address all of the open disputes
+    // Recurse to address all of the open disputes.
     await respondToBacklog();
   }
 }
@@ -473,10 +555,10 @@ chargehound.api_key = 'test_123'
 def respond_to_backlog():
   res = chargehound.Disputes.list(state='needs_response')
   for dispute in res['data']:
-    # submit the dispute
+    # Submit the dispute.
 
   if res['has_more']:
-    # recurse to address all of the open disputes
+    # Recurse to address all of the open disputes.
     respond_to_backlog()
 ```
 
@@ -487,11 +569,11 @@ Chargehound.api_key = 'test_123'
 def respond_to_backlog()
   res = Chargehound::Disputes.list(state: 'needs_response')
   res['data'].each { |dispute|
-    # submit the dispute
+    # Submit the dispute.
   }
 
   if res['has_more']
-    # recurse to address all of the open disputes
+    # Recurse to address all of the open disputes.
     respond_to_backlog()
   end
 end
@@ -512,11 +594,37 @@ func respondToBacklog () {
   response, err := ch.Disputes.List(&params)
 
   for _, dispute := range response.Data {
-    // submit the dispute
+    // Submit the dispute.
   }
 
   if response.HasMore == true {
-    // recurse to address all of the open disputes
+    // Recurse to address all of the open disputes
+    respondToBacklog()
+  }
+}
+```
+
+```java
+import com.chargehound.Chargehound;
+import com.chargehound.models.DisputesList;
+import com.chargehound.models.Dispute;
+
+Chargehound chargehound = new Chargehound("${apiKey}");
+
+public void respondToBacklog() {
+  DisputesList result = chargehound.Disputes.list(
+    new DisputesList.Params.Builder()
+      .state("needs_response")
+      .finish()
+  );
+
+  for (int i = 0; i < result.data.length; i++) {
+    Dispute dispute = result.data[i]
+    // Submit the dispute.
+  }
+
+  if (result.hasMore) {
+    // Recurse to address all of the open disputes.
     respondToBacklog()
   }
 }

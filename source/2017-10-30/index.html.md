@@ -7,6 +7,7 @@ language_tabs:
   - python: Python
   - ruby: Ruby
   - go: Go
+  - java: Java
 
 includes:
   - overview

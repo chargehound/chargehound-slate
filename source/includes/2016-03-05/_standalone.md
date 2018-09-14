@@ -30,6 +30,10 @@ Chargehound::Disputes.create
 ch.Disputes.Create(*chargehound.CreateDisputeParams)
 ```
 
+```java
+chargehound.disputes.create();
+```
+
 > Example request:
 
 ```sh
@@ -160,9 +164,39 @@ params := chargehound.CreateDisputeParams{
 dispute, err := ch.Disputes.Create(&params)
 ```
 
+```java
+import com.chargehound.Chargehound;
+import com.chargehound.models.Dispute;
+
+Chargehound chargehound = new Chargehound("test_123");
+
+Map<String, Object> fields = new HashMap<String, Object>();
+fields.put("customer_name", "Susie Chargeback");
+
+chargehound.disputes.create(
+  new Dispute.CreateParams.Builder()
+    .template("unrecognized")
+    .fields(fields)
+    .id("dp_123")
+    .charge("ch_123")
+    .customer("cus_123")
+    .processor("stripe")
+    .reason("general")
+    .chargedAt("2016-10-01T22:20:53")
+    .disputedAt("2016-10-01T22:20:53")
+    .dueBy("2016-12-01T22:20:53")
+    .currency("usd")
+    .amount(500)
+    .reversalCurrency("usd")
+    .fee(1500)
+    .reversalAmount(500)
+    .finish()
+);
+```
+
 > Example response:
 
-```javascripton
+```json
 {
   "customer": "cus_123",
   "livemode": false,
@@ -273,6 +307,10 @@ Chargehound::Disputes.response
 ch.Disputes.Response(*chargehound.RetrieveDisputeParams)
 ```
 
+```java
+chargehound.disputes.response();
+```
+
 > Example request:
 
 ```sh
@@ -280,7 +318,7 @@ curl https://api.chargehound.com/v1/disputes/dp_123/response \
   -u test_123:
 ```
 
-```js
+```javascript
 var chargehound = require('chargehound')(
   'test_123'
 );
@@ -316,6 +354,14 @@ params := chargehound.RetrieveDisputeParams{
 }
 
 response, err := ch.Disputes.Response(&params)
+```
+
+```java
+import com.chargehound.Chargehound;
+
+Chargehound chargehound = new Chargehound("test_123");
+
+chargehound.disputes.response("dp_123");
 ```
 
 > Example response:
