@@ -152,9 +152,9 @@ fields.put("customer_name", "Susie Chargeback");
 
 chargehound.disputes.submit("dp_123",
   new Dispute.UpdateParams.Builder()
-  .template("unrecognized")
-  .fields(fields)
-  .finish()
+    .template("unrecognized")
+    .fields(fields)
+    .finish()
 );
 ```
 
@@ -611,9 +611,9 @@ fields.put("customer_name", "Susie Chargeback");
 
 chargehound.disputes.update("dp_123",
   new Dispute.UpdateParams.Builder()
-  .template("unrecognized")
-  .fields(fields)
-  .finish()
+    .template("unrecognized")
+    .fields(fields)
+    .finish()
 );
 ```
 
@@ -1077,8 +1077,8 @@ Chargehound chargehound = new Chargehound("test_123");
 
 chargehound.disputes.submit("dp_123",
   new Dispute.UpdateParams.Builder()
-  .force(true)
-  .finish()
+    .force(true)
+    .finish()
 );
 ```
 
@@ -1150,8 +1150,8 @@ Chargehound chargehound = new Chargehound("test_123");
 
 chargehound.disputes.submit("dp_123",
   new Dispute.UpdateParams.Builder()
-  .charge("ch_123")
-  .finish()
+    .charge("ch_123")
+    .finish()
 );
 ```
 
@@ -1223,8 +1223,8 @@ Chargehound chargehound = new Chargehound("test_123");
 
 chargehound.disputes.submit("dp_123",
   new Dispute.UpdateParams.Builder()
-  .accountId("acct_123")
-  .finish()
+    .accountId("acct_123")
+    .finish()
 );
 ```
 
