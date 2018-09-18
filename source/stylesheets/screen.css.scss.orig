@@ -2,8 +2,11 @@
 @import 'normalize';
 @import 'variables';
 @import 'icon-font';
+<<<<<<< HEAD
 @import 'chargehound';
+=======
 // @import 'rtl'; // uncomment to switch to RTL format
+>>>>>>> upstream/master
 
 /*
 Copyright 2008-2013 Concur Technologies, Inc.
