@@ -7,45 +7,45 @@ Dispute objects represent a dispute created on a charge. They can also be referr
 
 A dispute object is:
 
-| Field                | Type       | Description                                                                                 |
-| ---------------------|------------|---------------------------------------------------------------------------------------------|
-| id                   | string     | A unique identifier for the dispute. This id is set by the payment processor of the dispute. |
+| Field                | Type       | Description                                                                                             |
+| ---------------------|------------|---------------------------------------------------------------------------------------------------------|
+| id                   | string     | A unique identifier for the dispute. This id is set by the payment processor of the dispute.            |
 | state                | string     | State of the dispute. One of `needs_response`,`submitted`, `under_review`, `won`, `lost`, `warning_needs_response`, `warning_under_review`, `warning_closed` , `response_disabled`, `charge_refunded`, `requires_review`, `accepted`, `queued`. |
 | reason               | string     | Reason for the dispute. One of `general`, `fraudulent`, `duplicate`, `subscription_canceled`, `product_unacceptable`, `product_not_received`, `unrecognized`, `credit_not_processed`, `incorrect_account_details`, `insufficient_funds`, `bank_cannot_process`, `debit_not_authorized`, `goods_services_returned_or_refused`, `goods_services_cancelled`, `transaction_amount_differs`, `retrieved`, `customer_initiated` | 
-| charged_at           | string     | ISO 8601 timestamp - when the charge was made.                                              |
-| disputed_at          | string     | ISO 8601 timestamp - when the charge was disputed.                                          |
-| due_by               | string     | ISO 8601 timestamp - when dispute evidence needs to be disputed by.                         |
-| submitted_at         | string     | ISO 8601 timestamp - when dispute evidence was submitted.                                   |
-| closed_at            | string     | ISO 8601 timestamp - when the dispute was resolved.                                         |
-| submitted_count      | integer    | Number of times the dispute evidence has been submitted.                                    |
-| template             | string     | Id of the template attached to the dispute.                                                 |
-| fields               | dictionary | Evidence fields attached to the dispute.                                                    |
-| missing_fields       | dictionary | Any fields required by the template that have not yet been provided.                        |
-| products             | array      | A list of products in the disputed order. (See [Product data](#product-data) for details.) |
-| charge               | string     | Id of the disputed charge. This id is set by the payment processor of the dispute. |
-| is_charge_refundable | boolean    | Can the charge be refunded.                                                                 |
-| amount               | integer    | Amount of the disputed charge. Amounts are in cents (or other minor currency unit.)         |
-| currency             | string     | Currency code of the disputed charge. e.g. 'USD'.                                           |
+| charged_at           | string     | ISO 8601 timestamp - when the charge was made.                                                          |
+| disputed_at          | string     | ISO 8601 timestamp - when the charge was disputed.                                                      |
+| due_by               | string     | ISO 8601 timestamp - when dispute evidence needs to be disputed by.                                     |
+| submitted_at         | string     | ISO 8601 timestamp - when dispute evidence was submitted.                                               |
+| closed_at            | string     | ISO 8601 timestamp - when the dispute was resolved.                                                     |
+| submitted_count      | integer    | Number of times the dispute evidence has been submitted.                                                |
+| template             | string     | Id of the template attached to the dispute.                                                             |
+| fields               | dictionary | Evidence fields attached to the dispute.                                                                |
+| missing_fields       | dictionary | Any fields required by the template that have not yet been provided.                                    |
+| products             | array      | A list of products in the disputed order. (See [Product data](#product-data) for details.)              |
+| charge               | string     | Id of the disputed charge. This id is set by the payment processor of the dispute.                      |
+| is_charge_refundable | boolean    | Can the charge be refunded.                                                                             |
+| amount               | integer    | Amount of the disputed charge. Amounts are in cents (or other minor currency unit.)                     |
+| currency             | string     | Currency code of the disputed charge. e.g. 'USD'.                                                       |
 | fee                  | integer    | The amount deducted due to the payment processor's chargeback fee. Amounts are in cents (or other minor currency unit.) |
 | reversal_amount      | integer    | The amount deducted due to the chargeback. Amounts are in cents (or other minor currency unit.)         |
-| reversal_currency    | string     | Currency code of the deduction amount. e.g. 'USD'.                                           |
-| customer    | string     | Id of the customer (if any). This id is set by the payment processor of the dispute. |
-| customer_name        | string     | Name of the customer (if any).                                                       |
-| customer_email       | string     | Email of the customer (if any).                                                      |
-| customer_purchase_ip | string     | IP of purchase (if available).                                                              |
-| address_zip          | string     | Billing address zip of the charge.                                                          |
-| address_line1_check  | string     | State of address check (if available). One of `pass`, `fail`, `unavailable`, `checked`.     |
-| address_zip_check    | string     | State of address zip check (if available). One of `pass`, `fail`, `unavailable`, `checked`. |
-| cvc_check            | string     | State of cvc check (if available). One of `pass`, `fail`, `unavailable`, `checked`.         |
-| statement_descriptor | string     | The descriptor that appears on the customer's credit card statement for this change.        |
+| reversal_currency    | string     | Currency code of the deduction amount. e.g. 'USD'.                                                      |
+| customer             | string     | Id of the customer (if any). This id is set by the payment processor of the dispute.                    |
+| customer_name        | string     | Name of the customer (if any).                                                                          |
+| customer_email       | string     | Email of the customer (if any).                                                                         |
+| customer_purchase_ip | string     | IP of purchase (if available).                                                                          |
+| address_zip          | string     | Billing address zip of the charge.                                                                      |
+| address_line1_check  | string     | State of address check (if available). One of `pass`, `fail`, `unavailable`, `checked`.                 |
+| address_zip_check    | string     | State of address zip check (if available). One of `pass`, `fail`, `unavailable`, `checked`.             |
+| cvc_check            | string     | State of cvc check (if available). One of `pass`, `fail`, `unavailable`, `checked`.                     |
+| statement_descriptor | string     | The descriptor that appears on the customer's credit card statement for this change.                    |
 | account_id           | string     | The account id for accounts that are charged directly through Stripe (if any). (See [Stripe charging directly](#stripe-charging-directly) for details.) |
-| created              | string     | ISO 8601 timestamp - when the dispute was created in Chargehound. |
-| updated              | string     | ISO 8601 timestamp - when the dispute was last updated in Chargehound. |
+| created              | string     | ISO 8601 timestamp - when the dispute was created in Chargehound.                                       |
+| updated              | string     | ISO 8601 timestamp - when the dispute was last updated in Chargehound.                                  |
 | source               | string     | The source of the dispute. One of `mock`, `api`, `braintree`, `vantiv`, `adyen`, `worldpay` or `stripe` |
-| processor            | string     | The payment processor of the dispute. One of `braintree`, `vantiv`, `adyen`, `worldpay` or `stripe` |
-| kind                 | string     | The kind of the dispute. One of `chargeback`, `pre_arbitration` or `retrieval` |
-| account              | string     | The Id of the connected account for this dispute. |
-| reference_url        | string     | Custom URL with dispute information, such as the dispute or charge in your company dashboard. |
+| processor            | string     | The payment processor of the dispute. One of `braintree`, `vantiv`, `adyen`, `worldpay` or `stripe`     |
+| kind                 | string     | The kind of the dispute. One of `chargeback`, `pre_arbitration` or `retrieval`                          |
+| account              | string     | The Id of the connected account for this dispute.                                                       |
+| reference_url        | string     | Custom URL with dispute information, such as the dispute or charge in your company dashboard.           |
 
 ## Submitting a dispute
 
@@ -219,15 +219,15 @@ The dispute will be in the `submitted` state if the submit was successful.
 | fields         | dictionary | optional   | Key value pairs to hydrate the template's evidence fields. |
 | products       | array      | optional   | List of products the customer purchased. (See [Product data](#product-data) for details.) |
 | reference_url  | string     | optional   | Custom URL with dispute information, such as the dispute or charge in your company dashboard. |
-| queue | boolean | optional | Queue the dispute for submission. (See [Queuing for submission](#queuing-for-submission) for details.) |
-| force | boolean | optional | Skip the manual review filters or submit a dispute in manual review. (See [Manual review](#manual-review) for details.) |
-| account_id | string | optional | Set the account id for accounts that are charged directly through Stripe. (See [Stripe charging directly](#stripe-charging-directly) for details.) |
-| account    | string     | optional   | Id of the connected account for this dispute (if multiple accounts are connected). View your connected accounts in the Chargehound dashboard settings page [here](/dashboard/settings/processors). |
+| queue          | boolean    | optional   | Queue the dispute for submission. (See [Queuing for submission](#queuing-for-submission) for details.) |
+| force          | boolean    | optional   | Skip the manual review filters or submit a dispute in manual review. (See [Manual review](#manual-review) for details.) |
+| account_id     | string     | optional   | Set the account identifier for accounts that are charged directly through Stripe. (See [Stripe charging directly](#stripe-charging-directly) for details.) |
+| account        | string     | optional   | Id of the connected account for this dispute (if multiple accounts are connected). View your connected accounts in the Chargehound dashboard settings page [here](/dashboard/settings/processors). |
 
 ### Possible errors
 
 | Error code           | Description                                                          |
-| ---------------------|-------------------------------------------------                     |
+| ---------------------|----------------------------------------------------------------------|
 | 400 Bad Request      | Dispute has no template, or missing fields required by the template. |
 
 ## Creating a dispute
@@ -365,16 +365,17 @@ chargehound.disputes.list();
 }
 ```
 
-This endpoint will list all the disputes that we have synced from your payment processor. By default the disputes will be ordered by created with the most recent dispute first. `has_more` will be true if more results are available.
+This endpoint will list all the disputes that we have synced from your payment processor(s). By default the disputes will be ordered by created with the most recent dispute first. `has_more` will be true if more results are available.
 
 ### Parameters
 
-| Parameter      | Type       | Required?  | Description                                                          |
-| -------------  | ---------- | ---------- | -------------------------------------------------------------------- |
-| limit          | integer    | optional   | Maximum number of disputes to return. Default is 20, maximum is 100. |
-| starting_after | string     | optional   | A dispute id. Fetch the next page of disputes (disputes created before this dispute). |
+| Parameter      | Type       | Required?  | Description                                                                              |
+| -------------  | ---------- | ---------- | ---------------------------------------------------------------------------------------- |
+| limit          | integer    | optional   | Maximum number of disputes to return. Default is 20, maximum is 100.                     |
+| starting_after | string     | optional   | A dispute id. Fetch the next page of disputes (disputes created before this dispute).    |
 | ending_before  | string     | optional   | A dispute id. Fetch the previous page of disputes (disputes created after this dispute). |
-| state          | string     | optional   | Dispute state. Will only fetch disputes with the state.            |
+| state          | string     | optional   | Dispute state. Will only fetch disputes with the state.                                  |
+| account        | string     | optional   | Account id. Will only fetch disputes under that connected account. View your connected accounts in the Chargehound dashboard settings page [here](/dashboard/settings/processors). |
 
 ## Retrieving a dispute
 
@@ -676,10 +677,10 @@ You can update the template and the fields on a dispute.
 | fields         | dictionary | optional   | Key value pairs to hydrate the template's evidence fields. |
 | products       | array      | optional   | List of products the customer purchased. (See [Product data](#product-data) for details.) |
 | reference_url  | string     | optional   | Custom URL with dispute information, such as the dispute or charge in your company dashboard. |
-| account_id | string     | optional   | Set the account id for accounts that are charged directly through Stripe. (See [Stripe charging directly](#stripe-charging-directly) for details.) |
-| submit | boolean | optional | Submit dispute evidence immediately after update. If the submit fails, updated fields will still be saved. |
-| queue | boolean | optional | Queue the dispute for submission. (See [Queuing for submission](#queuing-for-submission) for details.) |
-| force | boolean | optional | Skip the manual review filters or submit a dispute in manual review. (See [Manual review](#manual-review) for details.) |
+| account_id     | string     | optional   | Set the account id for accounts that are charged directly through Stripe. (See [Stripe charging directly](#stripe-charging-directly) for details.) |
+| submit         | boolean    | optional   | Submit dispute evidence immediately after update. If the submit fails, updated fields will still be saved. |
+| queue          | boolean    | optional   | Queue the dispute for submission. (See [Queuing for submission](#queuing-for-submission) for details.) |
+| force          | boolean    | optional   | Skip the manual review filters or submit a dispute in manual review. (See [Manual review](#manual-review) for details.) |
 
 ### Possible errors
 

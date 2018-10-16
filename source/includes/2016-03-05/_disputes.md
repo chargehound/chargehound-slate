@@ -377,6 +377,7 @@ This endpoint will list all the disputes that we have synced from your payment p
 | starting_after | string     | optional   | A dispute id. Fetch the next page of disputes (disputes created before this dispute). |
 | ending_before  | string     | optional   | A dispute id. Fetch the previous page of disputes (disputes created after this dispute). |
 | state          | string     | optional   | Dispute state. Will only fetch disputes with the state.            |
+| account        | string     | optional   | Account id. Will only fetch disputes under that connected account. View your connected accounts in the Chargehound dashboard settings page [here](/dashboard/settings/processors). |
 
 ## Retrieving a dispute
 
