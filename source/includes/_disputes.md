@@ -221,7 +221,6 @@ The dispute will be in the `submitted` state if the submit was successful.
 | reference_url  | string     | optional   | Custom URL with dispute information, such as the dispute or charge in your company dashboard. |
 | queue          | boolean    | optional   | Queue the dispute for submission. (See [Queuing for submission](#queuing-for-submission) for details.) |
 | force          | boolean    | optional   | Skip the manual review filters or submit a dispute in manual review. (See [Manual review](#manual-review) for details.) |
-| account_id     | string     | optional   | Set the account identifier for accounts that are charged directly through Stripe. (See [Stripe charging directly](#stripe-charging-directly) for details.) |
 | account        | string     | optional   | Id of the connected account for this dispute (if multiple accounts are connected). View your connected accounts in the Chargehound dashboard settings page [here](/dashboard/settings/processors). |
 
 ### Possible errors
@@ -677,7 +676,6 @@ You can update the template and the fields on a dispute.
 | fields         | dictionary | optional   | Key value pairs to hydrate the template's evidence fields. |
 | products       | array      | optional   | List of products the customer purchased. (See [Product data](#product-data) for details.) |
 | reference_url  | string     | optional   | Custom URL with dispute information, such as the dispute or charge in your company dashboard. |
-| account_id     | string     | optional   | Set the account id for accounts that are charged directly through Stripe. (See [Stripe charging directly](#stripe-charging-directly) for details.) |
 | submit         | boolean    | optional   | Submit dispute evidence immediately after update. If the submit fails, updated fields will still be saved. |
 | queue          | boolean    | optional   | Queue the dispute for submission. (See [Queuing for submission](#queuing-for-submission) for details.) |
 | force          | boolean    | optional   | Skip the manual review filters or submit a dispute in manual review. (See [Manual review](#manual-review) for details.) |
