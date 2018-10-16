@@ -219,11 +219,11 @@ The dispute will be in the `submitted` state if the submit was successful.
 | reference_url  | string     | optional   | Custom URL with dispute information, such as the dispute or charge in your company dashboard. |
 | queue | boolean | optional | Queue the dispute for submission. (See [Queuing for submission](#queuing-for-submission) for details.) |
 | force | boolean | optional | Skip the manual review filters or submit a dispute in manual review. (See [Manual review](#manual-review) for details.) |
-| account_id | string | optional | Set the account id for accounts that are charged directly through Stripe. (See [Stripe charging directly](#stripe-charging-directly) for details.) |
 | charge | string | optional | You will need to send the transaction id if the payment processor is Braintree. (See [Braintree disputes](#braintree-disputes) for details.) |
 | account    | string     | optional   | Id of the connected account for this dispute (if multiple accounts are connected). View your connected accounts in the Chargehound dashboard settings page [here](/dashboard/settings/processors). |
 | customer_name  | string     | optional   | Update the customer name. Will also update the customer name in the evidence fields. (Deprecated, set the "customer_name" attribute in the fields object). |
 | customer_email | string     | optional   | Update the customer email. Will also update the customer email in the evidence fields. Must be a valid email address. (Deprecated, set the "customer_name" attribute in the fields object). |
+| account_id | string | optional | Set the account id for accounts that are charged directly through Stripe. (See [Stripe charging directly](#stripe-charging-directly) for details.) |
 | user_id | string | optional | The account id for Connected accounts that are charged directly through Stripe (if any). (Deprecated, use "account_id" instead). |
 
 
@@ -377,6 +377,7 @@ This endpoint will list all the disputes that we have synced from your payment p
 | starting_after | string     | optional   | A dispute id. Fetch the next page of disputes (disputes created before this dispute). |
 | ending_before  | string     | optional   | A dispute id. Fetch the previous page of disputes (disputes created after this dispute). |
 | state          | string     | optional   | Dispute state. Will only fetch disputes with the state.            |
+| account        | string     | optional   | Account id. Will only fetch disputes under that connected account. View your connected accounts in the Chargehound dashboard settings page [here](/dashboard/settings/processors). |
 
 ## Retrieving a dispute
 
