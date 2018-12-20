@@ -264,7 +264,7 @@ chargehound.disputes.list();
 > Example request:
 
 ```sh
-curl https://api.chargehound.com/v1/disputes \
+curl https://api.chargehound.com/v1/disputes?state=warning_needs_response&state=needs_response \
   -u test_123:
 ```
 
@@ -273,7 +273,7 @@ var chargehound = require('chargehound')(
   'test_123'
 );
 
-chargehound.Disputes.list(null, function (err, res) {
+chargehound.Disputes.list({state: ['warning_needs_response', 'needs_response']}, function (err, res) {
   // ...
 });
 ```
@@ -282,14 +282,14 @@ chargehound.Disputes.list(null, function (err, res) {
 import chargehound
 chargehound.api_key = 'test_123'
 
-chargehound.Disputes.list()
+chargehound.Disputes.list(state=['warning_needs_response', 'needs_response'])
 ```
 
 ```ruby
 require 'chargehound'
 Chargehound.api_key = 'test_123'
 
-Chargehound::Disputes.list
+Chargehound::Disputes.list(state: %w[warning_needs_response needs_response])
 ```
 
 ```go
@@ -299,15 +299,25 @@ import (
 
 ch := chargehound.New("test_123", nil)
 
-disputeList, err := ch.Disputes.List(nil)
+disputeList, err := ch.Disputes.List(&chargehound.ListDisputesParams{
+    State: []string{
+      "warning_needs_response",
+      "needs_response",
+    },
+  })
 ```
 
 ```java
 import com.chargehound.Chargehound;
+import com.chargehound.models.DisputesList;
 
 Chargehound chargehound = new Chargehound("test_123");
 
-chargehound.disputes.list();
+DisputesList.Params params = new DisputesList.Params.Builder()
+    .state("warning_needs_response", "needs_response")
+    .finish();
+
+DisputesList result = chargehound.disputes.list(params);
 ```
 
 > Example response:
@@ -1159,69 +1169,6 @@ If Chargehound does not have access to the Braintree disputes API, you'll need t
 You will also need to attach the Braintree transaction id using the `charge` parameter when updating or submitting disputes using the Chargehound API.
 
 You can always reconnect your Braintree account from the settings page [here](/dashboard/settings/processors) to grant Chargehound access to the disputes API, this will make your integration easier.
-
-## Stripe listing needs response
-
-> Example usage:
-
-```sh
-curl https://api.chargehound.com/v1/disputes?needs_response&warning_needs_response \
-  -u test_123:
-```
-
-```javascript
-var chargehound = require('chargehound')(
-  'test_123'
-);
-
-chargehound.Disputes.list({state: ['needs_response', 'warning_needs_response']}, function (err, res) {
-  // ...
-});
-```
-
-```python
-import chargehound
-chargehound.api_key = 'test_123'
-
-chargehound.Disputes.list(state=['needs_response', 'warning_needs_response'])
-```
-
-```ruby
-require 'chargehound'
-Chargehound.api_key = 'test_123'
-
-Chargehound::Disputes.list(state: %w[needs_response warning_needs_response])
-```
-
-```go
-import (
-  "github.com/chargehound/chargehound-go"
-)
-
-ch := chargehound.New("test_123", nil)
-
-disputeList, err := ch.Disputes.List(&chargehound.ListDisputesParams{
-    State: []string{
-      "needs_response",
-      "warning_needs_response",
-    },
-  })
-```
-
-```java
-import com.chargehound.Chargehound;
-import com.chargehound.models.DisputesList;
-
-Chargehound chargehound = new Chargehound("test_123");
-
-DisputesList.Params params = new DisputesList.Params.Builder()
-    .state("needs_response", "warning_needs_response")
-    .finish();
-
-DisputesList result = chargehound.disputes.list(params);
-```
-
-Stripe retrievals are initially in `warning_needs_response`, so to list all disputes needing response for a Stripe accounts it's necessary to filter by both `needs_response` and `warning_needs_response`.
 
 ## Stripe charging directly
 
