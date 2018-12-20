@@ -526,7 +526,7 @@ Because Chargehound creates live mode disputes with [webhooks](https://developer
 Before integrating with Chargehound you might have accrued a dispute backlog, but you can easily respond to all of those disputes by writing a simple script and running it as the final integration step.
 
 ```sh
-curl https://api.chargehound.com/v1/disputes?state=needs_response \
+curl https://api.chargehound.com/v1/disputes?state=warning_needs_response&state=needs_response \
   -u test_123
 ```
 
@@ -536,7 +536,7 @@ var chargehound = require('chargehound')(
 );
 
 async function respondToBacklog () {
-  var res = await chargehound.Disputes.list({state: 'needs_response'});
+  var res = await chargehound.Disputes.list({state: ['warning_needs_response', 'needs_response']});
   await Promise.all(res.data.map(async function (dispute) {
     // Submit the dispute.
   });
@@ -553,7 +553,7 @@ import chargehound
 chargehound.api_key = 'test_123'
 
 def respond_to_backlog():
-  res = chargehound.Disputes.list(state='needs_response')
+  res = chargehound.Disputes.list(state=['warning_needs_response', 'needs_response'])
   for dispute in res['data']:
     # Submit the dispute.
 
@@ -567,7 +567,7 @@ require 'chargehound'
 Chargehound.api_key = 'test_123'
 
 def respond_to_backlog()
-  res = Chargehound::Disputes.list(state: 'needs_response')
+  res = Chargehound::Disputes.list(state: %w[needs_response warning_needs_response])
   res['data'].each { |dispute|
     # Submit the dispute.
   }
@@ -588,7 +588,7 @@ ch := chargehound.New("test_123", nil)
 
 func respondToBacklog () {
   params := chargehound.ListDisputesParams{
-    State: "needs_response",
+    State: []string{"warning_needs_response", "needs_response"},
   }
 
   response, err := ch.Disputes.List(&params)
@@ -614,7 +614,7 @@ Chargehound chargehound = new Chargehound("${apiKey}");
 public void respondToBacklog() {
   DisputesList result = chargehound.Disputes.list(
     new DisputesList.Params.Builder()
-      .state("needs_response")
+      .state("warning_needs_response", "needs_response")
       .finish()
   );
 
