@@ -373,7 +373,7 @@ This endpoint will list all the disputes that we have synced from your payment p
 | limit          | integer    | optional   | Maximum number of disputes to return. Default is 20, maximum is 100.                     |
 | starting_after | string     | optional   | A dispute id. Fetch the next page of disputes (disputes created before this dispute).    |
 | ending_before  | string     | optional   | A dispute id. Fetch the previous page of disputes (disputes created after this dispute). |
-| state          | string     | optional   | Dispute state. Will only fetch disputes with the state.                                  |
+| state          | string     | optional   | Dispute state. Will only fetch disputes with the state. Multiple states can be provided. |
 | account        | string     | optional   | Account id. Will only fetch disputes under that connected account. View your connected accounts in the Chargehound dashboard settings page [here](/dashboard/settings/processors). |
 
 ## Retrieving a dispute
@@ -1159,6 +1159,69 @@ If Chargehound does not have access to the Braintree disputes API, you'll need t
 You will also need to attach the Braintree transaction id using the `charge` parameter when updating or submitting disputes using the Chargehound API.
 
 You can always reconnect your Braintree account from the settings page [here](/dashboard/settings/processors) to grant Chargehound access to the disputes API, this will make your integration easier.
+
+## Stripe listing needs response
+
+> Example usage:
+
+```sh
+curl https://api.chargehound.com/v1/disputes?needs_response&warning_needs_response \
+  -u test_123:
+```
+
+```javascript
+var chargehound = require('chargehound')(
+  'test_123'
+);
+
+chargehound.Disputes.list({state: ['needs_response', 'warning_needs_response']}, function (err, res) {
+  // ...
+});
+```
+
+```python
+import chargehound
+chargehound.api_key = 'test_123'
+
+chargehound.Disputes.list(state=['needs_response', 'warning_needs_response'])
+```
+
+```ruby
+require 'chargehound'
+Chargehound.api_key = 'test_123'
+
+Chargehound::Disputes.list(state: %w[needs_response warning_needs_response])
+```
+
+```go
+import (
+  "github.com/chargehound/chargehound-go"
+)
+
+ch := chargehound.New("test_123", nil)
+
+disputeList, err := ch.Disputes.List(&chargehound.ListDisputesParams{
+    State: []string{
+      "needs_response",
+      "warning_needs_response",
+    },
+  })
+```
+
+```java
+import com.chargehound.Chargehound;
+import com.chargehound.models.DisputesList;
+
+Chargehound chargehound = new Chargehound("test_123");
+
+DisputesList.Params params = new DisputesList.Params.Builder()
+    .state("needs_response", "warning_needs_response")
+    .finish();
+
+DisputesList result = chargehound.disputes.list(params);
+```
+
+Stripe retrievals are initially in `warning_needs_response`, so to list all disputes needing response for a Stripe accounts it's necessary to filter by both `needs_response` and `warning_needs_response`.
 
 ## Stripe charging directly
 
