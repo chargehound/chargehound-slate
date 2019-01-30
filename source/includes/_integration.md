@@ -18,6 +18,12 @@ Once you have chosen a dispute, choose the template that you want to use and cop
 
 If you don't have a real dispute for reference, go to the [templates page](https://www.chargehound.com/dashboard/templates) and view the customized documentation for a template.
 
+## Optional fields
+
+In the `missing_fields` hash for a dispute you will see that fields have a `required` property. Required fields must be set to a value in order to submit a response with the chosen template. Optional fields represent additional information that is good to have, but not necessary. You should set a value for as many of the optional fields as possible, but they are not required to submit a response.
+
+The required and optional fields for a template are also listed on the template's detail page. To view that list, go to the [templates page](https://www.chargehound.com/dashboard/templates), click "View details" for the template, and then click the "Fields" tab.
+
 ## Formatting fields
 
 When submitting evidence you will encounter a few different types of fields in the `missing_fields` hash. Currently Chargehound templates can have `text`, `date`, `number`, `amount` `url`, and `email` fields, and each type is validated differently. Here's a breakdown of what Chargehound expects for each type:
