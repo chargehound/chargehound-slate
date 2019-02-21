@@ -851,6 +851,8 @@ curl -X PUT https://api.chargehound.com/v1/disputes/dp_123 \
                    \"quantity\" : 1,
                    \"amount\" : 20000,
                    \"url\" : \"http://www.example.com\"
+                   \"shipping_carrier\\": \"fedex\"
+                   \"shipping_tracking_number\": \"657672264372\" 
                 },{
                    \"name\" : \"Milk\",
                    \"description\" : \"Semi-skimmed Organic\",
@@ -859,6 +861,8 @@ curl -X PUT https://api.chargehound.com/v1/disputes/dp_123 \
                    \"quantity\" : \"64oz\",
                    \"amount\" : 400,
                    \"url\" : \"http://www.example.com\"
+                   \"shipping_carrier\\": \"fedex\"
+                   \"shipping_tracking_number\": \"657672264372\" 
                 }]"
 ```
 
@@ -875,7 +879,9 @@ chargehound.Disputes.update('dp_123', {
     'sku': '17283001272',
     'quantity': 1,
     'amount': 20000,
-    'url': 'http://www.example.com'
+    'url': 'http://www.example.com',
+    'shipping_carrier': 'fedex',
+    'shipping_tracking_number': '657672264372' 
   },{
     'name': 'Milk',
     'description': 'Semi-skimmed Organic',
@@ -883,7 +889,9 @@ chargehound.Disputes.update('dp_123', {
     'sku': '26377382910',
     'quantity': '64oz',
     'amount': 400,
-    'url': 'http://www.example.com'
+    'url': 'http://www.example.com',
+    'shipping_carrier': 'fedex',
+    'shipping_tracking_number': '657672264372' 
   }]
 }, function (err, res) {
   // ...
@@ -902,7 +910,9 @@ chargehound.Disputes.update('dp_123',
      'sku': '17283001272',
      'quantity': 1,
      'amount': 20000,
-     'url': 'http://www.example.com'
+     'url': 'http://www.example.com',
+     'shipping_carrier': 'fedex',
+     'shipping_tracking_number': '657672264372' 
   }, {
      'name': 'Milk',
      'description': 'Semi-skimmed Organic',
@@ -910,7 +920,9 @@ chargehound.Disputes.update('dp_123',
      'sku': '26377382910',
      'quantity': '64oz',
      'amount': 400,
-     'url': 'http://www.example.com'
+     'url': 'http://www.example.com',
+     'shipping_carrier': 'fedex',
+     'shipping_tracking_number': '657672264372' 
   }]
 )
 ```
@@ -958,6 +970,8 @@ params := chargehound.UpdateDisputeParams{
       Quantity:    1,
       Amount:      20000,
       Url:         "http://www.example.com",
+      ShippingCarrier: "fedex",
+      ShippingTrackingNumber: "657672264372",
     },
     {
       Name:        "Milk",
@@ -967,6 +981,8 @@ params := chargehound.UpdateDisputeParams{
       Quantity:    "64oz",
       Amount:      400,
       Url:         "http://www.example.com",
+      ShippingCarrier: "fedex",
+      ShippingTrackingNumber: "657672264372",
     },
   },
 }
@@ -989,6 +1005,8 @@ Product saxophoneProduct = new Product.Builder()
   .quantity(1)
   .amount(20000)
   .url("http://www.example.com")
+  .shippingCarrier("fedex")
+  .shippingTrackingNumber("657672264372")
   .finish();
 
 Product milkProduct = new Product.Builder()
@@ -999,6 +1017,8 @@ Product milkProduct = new Product.Builder()
   .quantity("64oz")
   .amount(400)
   .url("http://www.example.com")
+  .shippingCarrier("fedex")
+  .shippingTrackingNumber("657672264372")
   .finish();
 
 List<Product> products = new ArrayList<Product>();
@@ -1014,15 +1034,17 @@ chargehound.disputes.submit("dp_123",
 
 ### Product data fields
 
-| Field        | Type              |  Required?  | Description                                                                                 |
+| Field        | Type              |  Required?  | Description   |
 | -------------|-------------------|-------------|--------------------------------------------------------------------------------|
-| name         | string            | required |The name of the product ordered.                                                            |
-| quantity     | string or integer | required |The number or quantity of this product (e.g. 10 or "64oz").                                 |
-| amount       | integer           | required |The price paid for this item, in cents (or other minor currency unit).                      |
-| description  | string            | optional |A product description - for example, the size or color.                          |
-| image        | url               | optional |A URL showing the product image.                                                 |
-| sku          | string            | optional |The stock-keeping unit.                                                          |
-| url          | url               | optional |The URL of the purchased item, if it is listed online.                           |
+| name         | string            | required  |The name of the product ordered. |
+| quantity     | string or integer | required  |The number or quantity of this product (e.g. 10 or "64oz"). |
+| amount       | integer           | required  |The price paid for this item, in cents (or other minor currency unit).                      |
+| description  | string            | optional  |A product description - for example, the size or color. |
+| image        | url               | optional  |A URL showing the product image. |
+| sku          | string            | optional  |The stock-keeping unit. |
+| url          | url               | optional  |The URL of the purchased item, if it is listed online. |
+| shipping_carrier | string        | optional  |Shipping carrier for the shipment for the product. |
+| shipping_tracking_number | string | optional |Shipping tracking number for the shipment for the product. |
 
 ## Manual review
 
