@@ -850,8 +850,8 @@ curl -X PUT https://api.chargehound.com/v1/disputes/dp_123 \
                    \"sku\" : \"17283001272\",
                    \"quantity\" : 1,
                    \"amount\" : 20000,
-                   \"url\" : \"http://www.example.com\"
-                   \"shipping_carrier\\": \"fedex\"
+                   \"url\" : \"http://www.example.com\",
+                   \"shipping_carrier\": \"fedex\",
                    \"shipping_tracking_number\": \"657672264372\" 
                 },{
                    \"name\" : \"Milk\",
@@ -860,8 +860,8 @@ curl -X PUT https://api.chargehound.com/v1/disputes/dp_123 \
                    \"sku\" : \"26377382910\",
                    \"quantity\" : \"64oz\",
                    \"amount\" : 400,
-                   \"url\" : \"http://www.example.com\"
-                   \"shipping_carrier\\": \"fedex\"
+                   \"url\" : \"http://www.example.com\",
+                   \"shipping_carrier\": \"fedex\",
                    \"shipping_tracking_number\": \"657672264372\" 
                 }]"
 ```
@@ -963,25 +963,25 @@ params := chargehound.UpdateDisputeParams{
   ID:       "dp_2284d5ac6eba4e4e8e9a80df0f9c2287",
   Products: []chargehound.Product{
     {
-      Name:        "Saxophone",
-      Description: "Alto saxophone, with carrying case",
-      Image:       "http://s3.amazonaws.com/chargehound/saxophone.png",
-      Sku:         "17283001272",
-      Quantity:    1,
-      Amount:      20000,
-      Url:         "http://www.example.com",
-      ShippingCarrier: "fedex",
+      Name:                   "Saxophone",
+      Description:            "Alto saxophone, with carrying case",
+      Image:                  "http://s3.amazonaws.com/chargehound/saxophone.png",
+      Sku:                    "17283001272",
+      Quantity:               1,
+      Amount:                 20000,
+      Url:                    "http://www.example.com",
+      ShippingCarrier:        "fedex",
       ShippingTrackingNumber: "657672264372",
     },
     {
-      Name:        "Milk",
-      Description: "Semi-skimmed Organic",
-      Image:       "http://s3.amazonaws.com/chargehound/milk.png",
-      Sku:         "26377382910",
-      Quantity:    "64oz",
-      Amount:      400,
-      Url:         "http://www.example.com",
-      ShippingCarrier: "fedex",
+      Name:                   "Milk",
+      Description:            "Semi-skimmed Organic",
+      Image:                  "http://s3.amazonaws.com/chargehound/milk.png",
+      Sku:                    "26377382910",
+      Quantity:               "64oz",
+      Amount:                 400,
+      Url:                    "http://www.example.com",
+      ShippingCarrier:        "fedex",
       ShippingTrackingNumber: "657672264372",
     },
   },
