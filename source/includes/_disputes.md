@@ -22,6 +22,7 @@ A dispute object is:
 | fields               | dictionary | Evidence fields attached to the dispute.                                                                |
 | missing_fields       | dictionary | Any fields required by the template that have not yet been provided.                                    |
 | products             | array      | A list of products in the disputed order. (See [Product data](#product-data) for details.)              |
+| correspondence       | array      | A list of communications with the customer. (See [Customer correspondence](#customer-correspondence) for details.)              |
 | charge               | string     | Id of the disputed charge. This id is set by the payment processor of the dispute.                      |
 | is_charge_refundable | boolean    | Can the charge be refunded.                                                                             |
 | amount               | integer    | Amount of the disputed charge. Amounts are in cents (or other minor currency unit.)                     |
@@ -200,6 +201,7 @@ chargehound.disputes.submit("dp_123",
   },
   "charged_at": "2016-09-18T20:38:51",
   "products": [],
+  "correspondence": [],
   "reference_url": null,
   "amount": 500,
   "processor": "stripe",
@@ -218,6 +220,7 @@ The dispute will be in the `submitted` state if the submit was successful.
 | template       | string     | optional   | The id of the template to use. |
 | fields         | dictionary | optional   | Key value pairs to hydrate the template's evidence fields. |
 | products       | array      | optional   | List of products the customer purchased. (See [Product data](#product-data) for details.) |
+| correspondence | array      | optional   | A list of communications with the customer. (See [Customer correspondence](#customer-correspondence) for details.)              |
 | reference_url  | string     | optional   | Custom URL with dispute information, such as the dispute or charge in your company dashboard. |
 | queue          | boolean    | optional   | Queue the dispute for submission. (See [Queuing for submission](#queuing-for-submission) for details.) |
 | force          | boolean    | optional   | Skip the manual review filters or submit a dispute in manual review. (See [Manual review](#manual-review) for details.) |
@@ -365,6 +368,7 @@ DisputesList result = chargehound.disputes.list(params);
       "fields": {},
       "charged_at": "2016-09-18T20:38:51",
       "products": [],
+      "correspondence": [],
       "reference_url": null,
       "amount": 500,
       "processor": "stripe",
@@ -507,6 +511,7 @@ chargehound.disputes.retrieve("dp_123");
   "fields": {},
   "charged_at": "2016-09-18T20:38:51",
   "products": [],
+  "correspondence": [],
   "reference_url": null,
   "amount": 500,
   "processor": "stripe",
@@ -669,6 +674,7 @@ chargehound.disputes.update("dp_123",
   },
   "charged_at": "2016-09-18T20:38:51",
   "products": [],
+  "correspondence": [],
   "reference_url": null,
   "amount": 500,
   "processor": "stripe",
@@ -685,6 +691,7 @@ You can update the template and the fields on a dispute.
 | template       | string     | optional   | The id of the template to use. |
 | fields         | dictionary | optional   | Key value pairs to hydrate the template's evidence fields. |
 | products       | array      | optional   | List of products the customer purchased. (See [Product data](#product-data) for details.) |
+| correspondence | array      | optional   | A list of communications with the customer. (See [Customer correspondence](#customer-correspondence) for details.)              |
 | reference_url  | string     | optional   | Custom URL with dispute information, such as the dispute or charge in your company dashboard. |
 | submit         | boolean    | optional   | Submit dispute evidence immediately after update. If the submit fails, updated fields will still be saved. |
 | queue          | boolean    | optional   | Queue the dispute for submission. (See [Queuing for submission](#queuing-for-submission) for details.) |
@@ -823,6 +830,7 @@ chargehound.disputes.accept("dp_123");
   "fields": {},
   "charged_at": "2016-09-18T20:38:51",
   "products": [],
+  "correspondence": [],
   "reference_url": null,
   "amount": 500,
   "processor": "stripe",
