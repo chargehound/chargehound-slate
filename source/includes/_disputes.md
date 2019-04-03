@@ -1025,7 +1025,7 @@ List<Product> products = new ArrayList<Product>();
 products.add(saxophoneProduct);
 products.add(milkProduct);
 
-chargehound.disputes.submit("dp_123",
+chargehound.disputes.update("dp_123",
   new Dispute.UpdateParams.Builder()
   .products(products)
   .finish()
@@ -1045,6 +1045,183 @@ chargehound.disputes.submit("dp_123",
 | url          | url               | optional  |The URL of the purchased item, if it is listed online. |
 | shipping_carrier | string        | optional  |Shipping carrier for the shipment for the product. |
 | shipping_tracking_number | string | optional |Shipping tracking number for the shipment for the product. |
+
+## Customer correspondence
+
+If you have a record of email communication with the customer, you can attach that record to a dispute when updating or submitting the dispute. Each correspondence item has the following properties:
+
+> Example usage:
+
+```sh
+curl -X PUT https://api.chargehound.com/v1/disputes/dp_123 \
+  -u test_123: \
+  -d correspondence="[{ \
+    \"to\": \"customer@example.com\", \
+    \"from\": \"noreply@example.com\", \
+    \"sent\": \"2019-03-31 09:00:22PM UTC\", \
+    \"subject\": \"Your Order\", \
+    \"body\": \"Your order was received.\", \
+    \"caption\": \"Order confirmation email.\" \
+  }, { \
+    \"to\": \"customer@example.com\", \
+    \"from\": \"noreply@example.com\", \
+    \"sent\": \"2019-04-03 08:59:36PM UTC\", \
+    \"subject\": \"Your Order\", \
+    \"body\": \"Your order was delivered.\", \
+    \"caption\": \"Delivery confirmation email.\" \
+  }]"
+```
+
+```javascript
+var chargehound = require('chargehound')(
+  'test_123'
+);
+
+chargehound.Disputes.update('dp_123', {
+  correspondence: [{
+    'to': 'customer@example.com',
+    'from': 'noreply@example.com',
+    'sent': '2019-03-31 09:00:22PM UTC',
+    'subject': 'Your Order',
+    'body': 'Your order was received.',
+    'caption': 'Order confirmation email.'
+  }, {
+    'to': 'customer@example.com',
+    'from': 'noreply@example.com',
+    'sent': '2019-04-01 09:00:22PM UTC',
+    'subject': 'Your Order',
+    'body': 'Your order was delivered.',
+    'caption': 'Delivery confirmation email.'
+  }]
+}, function (err, res) {
+  // ...
+});
+```
+
+```python
+import chargehound
+chargehound.api_key = 'test_123'
+
+chargehound.Disputes.update('dp_123',
+  correspondence=[{
+    'to': 'customer@example.com',
+    'from': 'noreply@example.com',
+    'sent': '2019-03-31 09:01:01PM UTC',
+    'subject': 'Your Order',
+    'body': 'Your order was received.',
+    'caption': 'Order confirmation email.'
+  }, {
+    'to': 'customer@example.com',
+    'from': 'noreply@example.com',
+    'sent': '2019-04-01 09:01:01PM UTC',
+    'subject': 'Your Order',
+    'body': 'Your order was delivered.',
+    'caption': 'Delivery confirmation email.'
+  }]
+)
+```
+
+```ruby
+require 'chargehound'
+Chargehound.api_key = 'test_123'
+
+Chargehound::Disputes.update('dp_123',
+  correspondence: [{
+    'to' => 'customer@example.com',
+    'from' => 'noreply@example.com',
+    'sent' => '2019-03-31 09:01:26PM UTC',
+    'subject' => 'Your Order',
+    'body' => 'Your order was received.',
+    'caption' => 'Order confirmation email.'
+  }, {
+    'to' => 'customer@example.com',
+    'from' => 'noreply@example.com',
+    'sent' => '2019-04-01 09:01:26PM UTC',
+    'subject' => 'Your Order',
+    'body' => 'Your order was delivered.',
+    'caption' => 'Delivery confirmation email.'
+  }]
+)
+```
+
+```go
+import (
+  "github.com/chargehound/chargehound-go"
+)
+
+ch := chargehound.New("test_123", nil)
+
+params := chargehound.UpdateDisputeParams{
+  ID: "dp_2284d5ac6eba4e4e8e9a80df0f9c2287",
+  Correspondence: []chargehound.CorrespondenceItem{
+    {
+      To: "customer@example.com",
+      From: "noreply@example.com",
+      Sent: "2019-03-31 09:04:05PM UTC",
+      Subject: "Your Order",
+      Body: "Your order was received.",
+      Caption: "Order confirmation email."
+    },
+    {
+      To: "customer@example.com",
+      From: "noreply@example.com",
+      Sent: "2019-04-01 09:04:05PM UTC",
+      Subject: "Your Order",
+      Body: "Your order was delivered.",
+      Caption: "Delivery confirmation email."
+    },
+  },
+}
+
+dispute, err := ch.Disputes.Update(&params)
+```
+
+```java
+import com.chargehound.Chargehound;
+import com.chargehound.models.Dispute;
+import com.chargehound.models.Email;
+
+Chargehound chargehound = new Chargehound("test_123");
+
+Email confirmationEmail = new Email.Builder()
+  .to("customer@example.com")
+  .from("noreply@example.com")
+  .sent("2019-03-31 09:04:55PM UTC")
+  .subject("Your Order")
+  .body("Your order was received.")
+  .caption("Order confirmation email.")
+  .finish();
+
+Email deliveryEmail = new Email.Builder()
+  .to("customer@example.com")
+  .from("noreply@example.com")
+  .sent("2019-04-01 09:04:55PM UTC")
+  .subject("Your Order")
+  .body("Your order was delivered.")
+  .caption("Delivery confirmation email.")
+  .finish();
+
+List<Email> correspondence = new ArrayList<Email>();
+correspondence.add(confirmationEmail);
+correspondence.add(deliveryEmail);
+
+chargehound.disputes.update("dp_123",
+  new Dispute.UpdateParams.Builder()
+  .correspondence(correspondence)
+  .finish()
+);
+```
+
+### Correspondence item fields
+
+| Field        | Type              |  Required?  | Description   |
+| -------------|-------------------|-------------|--------------------------------------------------------------------------------|
+| to           | string            | required  |The address where the email was sent. Likely the customer's email address.|
+| from         | string            | required  |The address of the email sender. Likely your company's support email address. |
+| sent         | string            | optional  |When the email was sent.|
+| subject      | string            | required  |The email subject line.|
+| body         | string            | required  |The email body, as plain text.|
+| caption      | string            | optional  |A description of the email.|
 
 ## Manual review
 

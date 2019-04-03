@@ -1031,7 +1031,7 @@ List<Product> products = new ArrayList<Product>();
 products.add(saxophoneProduct);
 products.add(milkProduct);
 
-chargehound.disputes.submit("dp_123",
+chargehound.disputes.update("dp_123",
   new Dispute.UpdateParams.Builder()
   .products(products)
   .finish()
