@@ -1064,20 +1064,20 @@ If you have a record of email communication with the customer, you can attach th
 curl -X PUT https://api.chargehound.com/v1/disputes/dp_123 \
   -u test_123: \
   -d correspondence="[{ \
-    \"to\": \"customer@example.com\", \
-    \"from\": \"noreply@example.com\", \
-    \"sent\": \"2019-03-31 09:00:22PM UTC\", \
-    \"subject\": \"Your Order\", \
-    \"body\": \"Your order was received.\", \
-    \"caption\": \"Order confirmation email.\" \
-  }, { \
-    \"to\": \"customer@example.com\", \
-    \"from\": \"noreply@example.com\", \
-    \"sent\": \"2019-04-03 08:59:36PM UTC\", \
-    \"subject\": \"Your Order\", \
-    \"body\": \"Your order was delivered.\", \
-    \"caption\": \"Delivery confirmation email.\" \
-  }]"
+       \"to\": \"customer@example.com\", \
+       \"from\": \"noreply@example.com\", \
+       \"sent\": \"2019-03-31 09:00:22PM UTC\", \
+       \"subject\": \"Your Order\", \
+       \"body\": \"Your order was received.\", \
+       \"caption\": \"Order confirmation email.\" \
+     }, { \
+       \"to\": \"customer@example.com\", \
+       \"from\": \"noreply@example.com\", \
+       \"sent\": \"2019-04-03 08:59:36PM UTC\", \
+       \"subject\": \"Your Order\", \
+       \"body\": \"Your order was delivered.\", \
+       \"caption\": \"Delivery confirmation email.\" \
+     }]"
 ```
 
 ```javascript
