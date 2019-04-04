@@ -850,7 +850,7 @@ The dispute will be in the `accepted` state if the request was successful.
 
 ## Product data
 
-If a customer purchased multiple products in a disputed order, those products can be individually attached to a dispute when updating or submitting the dispute. Each product has the following properties:
+If a customer purchased multiple products in a disputed order, those products can be individually attached to a dispute when [updating](#updating-a-dispute) or [submitting](#submitting-a-dispute) the dispute. Each product has the following properties:
 
 > Example usage:
 
@@ -1062,7 +1062,7 @@ chargehound.disputes.update("dp_123",
 
 ## Customer correspondence
 
-If you have a record of email communication with the customer, you can attach that record to a dispute when updating or submitting the dispute. Each correspondence item has the following properties:
+If you have a record of email communication with the customer, you can attach that record to a dispute when [updating](#updating-a-dispute) or [submitting](#submitting-a-dispute) the dispute. Each correspondence item has the following properties:
 
 > Example usage:
 
