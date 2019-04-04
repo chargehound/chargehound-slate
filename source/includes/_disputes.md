@@ -1224,8 +1224,8 @@ chargehound.disputes.update("dp_123",
 
 | Field        | Type              |  Required?  | Description   |
 | -------------|-------------------|-------------|--------------------------------------------------------------------------------|
-| to           | string            | required  |The address where the email was sent. Likely the customer's email address.|
-| from         | string            | required  |The address of the email sender. Likely your company's support email address. |
+| to           | string            | required  |The address where the email was sent. E.g. the customer's email address.|
+| from         | string            | required  |The address of the email sender. E.g. your company's support email address. |
 | sent         | string            | optional  |When the email was sent.|
 | subject      | string            | required  |The email subject line.|
 | body         | string            | required  |The email body, as plain text.|
