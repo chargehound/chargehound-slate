@@ -541,15 +541,26 @@ var chargehound = require('chargehound')(
   'test_123'
 );
 
-async function respondToBacklog () {
-  var res = await chargehound.Disputes.list({state: ['warning_needs_response', 'needs_response']});
+async function respondToBacklog (startingAfterId=null) {
+  var params = {
+    state: ['warning_needs_response', 'needs_response']
+  };
+
+  // Use the dispute ID to page.
+  if (startingAfterId) {
+    params['starting_after'] = startingAfterId;
+  }
+
+  var res = await chargehound.Disputes.list(params);
+
   await Promise.all(res.data.map(async function (dispute) {
     // Submit the dispute.
   });
 
   if (res.has_more) {
     // Recurse to address all of the open disputes.
-    await respondToBacklog();
+    var startingAfterId = res.data[res.data.length - 1].id;
+    await respondToBacklog(startingAfterId);
   }
 }
 ```
@@ -558,29 +569,49 @@ async function respondToBacklog () {
 import chargehound
 chargehound.api_key = 'test_123'
 
-def respond_to_backlog():
-  res = chargehound.Disputes.list(state=['warning_needs_response', 'needs_response'])
+def respond_to_backlog(starting_after_id=None):
+  params = {
+    'state': ['warning_needs_response', 'needs_response']
+  }
+
+  # Use the dispute ID to page.
+  if starting_after_id:
+    params['starting_after'] = starting_after_id
+
+  res = chargehound.Disputes.list(**params)
+
   for dispute in res['data']:
     # Submit the dispute.
 
   if res['has_more']:
     # Recurse to address all of the open disputes.
-    respond_to_backlog()
+    starting_after_id = res['data'][-1]['id']
+    respond_to_backlog(starting_after_id)
 ```
 
 ```ruby
 require 'chargehound'
 Chargehound.api_key = 'test_123'
 
-def respond_to_backlog()
-  res = Chargehound::Disputes.list(state: %w[needs_response warning_needs_response])
+def respond_to_backlog(starting_after_id)
+  params = {
+    state: %w[needs_response warning_needs_response]
+  }
+
+  # Use the dispute ID to page.
+  if starting_after_id
+    params['starting_after'] = starting_after_id
+  end
+
+  res = Chargehound::Disputes.list(params)
   res['data'].each { |dispute|
     # Submit the dispute.
   }
 
   if res['has_more']
     # Recurse to address all of the open disputes.
-    respond_to_backlog()
+    starting_after_id = res['data'][-1]['id']
+    respond_to_backlog(starting_after_id)
   end
 end
 ```
@@ -592,9 +623,10 @@ import (
 
 ch := chargehound.New("test_123", nil)
 
-func respondToBacklog () {
+func respondToBacklog (startingAfterId string) {
   params := chargehound.ListDisputesParams{
     State: []string{"warning_needs_response", "needs_response"},
+    StartingAfter: startingAfterId
   }
 
   response, err := ch.Disputes.List(&params)
@@ -604,8 +636,9 @@ func respondToBacklog () {
   }
 
   if response.HasMore == true {
-    // Recurse to address all of the open disputes
-    respondToBacklog()
+    // Recurse to address all of the open disputes.
+    nextStartingAfterId := response.Data[len(response.Data)-1].ID
+    respondToBacklog(nextStartingAfterId)
   }
 }
 ```
@@ -615,14 +648,20 @@ import com.chargehound.Chargehound;
 import com.chargehound.models.DisputesList;
 import com.chargehound.models.Dispute;
 
-Chargehound chargehound = new Chargehound("${apiKey}");
+Chargehound chargehound = new Chargehound("test_123");
 
-public void respondToBacklog() {
-  DisputesList result = chargehound.Disputes.list(
-    new DisputesList.Params.Builder()
-      .state("warning_needs_response", "needs_response")
-      .finish()
-  );
+public void respondToBacklog(String startingAfterId) {
+  DisputesList.Params.Builder paramsBuilder = new DisputesList.Params.Builder()
+    .state("warning_needs_response", "needs_response");
+
+  // Use the dispute ID to page.
+  if (startingAfterId != null) {
+    paramsBuilder = paramsBuilder.startingAfter(startingAfterId);
+  }
+
+  DisputesList.Params params = paramsBuilder.finish();
+
+  DisputesList result = chargehound.Disputes.list(params);
 
   for (int i = 0; i < result.data.length; i++) {
     Dispute dispute = result.data[i]
@@ -631,7 +670,8 @@ public void respondToBacklog() {
 
   if (result.hasMore) {
     // Recurse to address all of the open disputes.
-    respondToBacklog()
+    String nextStartingAfterId = result.data[result.data.length - 1].id;
+    respondToBacklog(nextStartingAfterId)
   }
 }
 ```
