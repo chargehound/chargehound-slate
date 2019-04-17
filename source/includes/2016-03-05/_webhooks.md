@@ -6,7 +6,7 @@ Webhooks let you register a URL that Chargehound will notify when an event occur
 
 To acknowledge successful receipt of a webhook, your endpoint should return a `2xx` HTTP status code. Any other information returned in the request headers or request body is ignored. All response codes outside this range, including `3xx` codes, will be treated as a failure. If a webhook is not successfully received for any reason, Charhound will continue trying to send the webhook once every half hour for up to 3 days.
 
-## Webhook IP addresses
+## Static IP addresses
 
 If you need to whitelist individual IP addresses in your firewall you can opt to have webhook calls sent from a fixed range of IP addresses on your [settings page](https://www.chargehound.com/dashboard/settings/api#webhook-settings). 
 
