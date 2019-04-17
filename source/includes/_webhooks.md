@@ -1,6 +1,18 @@
 # Webhooks
 
-Webhooks let you register a URL that Chargehound will notify when an event occurs. You might want to use webhooks to be notified when a dispute is created so that you can automatically submit a response. You can configure your webhook URLs on your [team settings page](https://www.chargehound.com/dashboard/settings/api#webhook-urls), clicking *Add webhook URL* on that page reveals a form to add a new URL for receiving webhooks. You can select what events you would like to receive a notification for. The events are `dispute.created`, `dispute.updated`, `dispute.submitted`, `dispute.closed` and `dispute.response.generated`.
+Webhooks let you register a URL that Chargehound will notify when an event occurs. You might want to use webhooks to be notified when a dispute is created so that you can automatically submit a response. You can configure your webhook URLs on your [settings page](https://www.chargehound.com/dashboard/settings/api#webhook-settings), clicking *Add webhook URL* on that page reveals a form to add a new URL for receiving webhooks. You can select what events you would like to receive a notification for. The events are `dispute.created`, `dispute.updated`, `dispute.submitted`, `dispute.closed` and `dispute.response.generated`.
+
+## Webhook IP addresses
+
+If you need to whitelist individual IP addresses in your firewall you can opt to have webhook calls sent from a fixed range to IP addresses on your [settings page](https://www.chargehound.com/dashboard/settings/api#webhook-settings). Webhook calls will then be send from on of the following IP addresses:
+
+```
+3.211.115.112
+3.212.160.248
+3.212.186.185
+34.194.118.97
+34.200.90.111
+``` 
 
 ## Responding to a webhook
 
