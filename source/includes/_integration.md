@@ -527,6 +527,100 @@ If you have a Braintree sandbox, you can test your integration using Chargehound
 
 Because Chargehound creates live mode disputes with [webhooks](https://developers.braintreepayments.com/guides/webhooks/overview) from Braintree, testing end to end requires creating a dispute in Braintree. You can do this by creating a transaction with a [test card number that triggers a dispute](https://developers.braintreepayments.com/reference/general/testing#creating-a-disputed-test-transaction). You can create a transaction using [one of the Braintree SDKs](https://developers.braintreepayments.com/reference/request/transaction/sale), or via the [Braintree dashboard](https://articles.braintreepayments.com/control-panel/transactions/create).
 
+## Testing with Paypal
+
+> 1) Log into the [Sandbox paypal dashboard](https://sandbox.braintreegateway.com) as a buyer, [send money](https://www.sandbox.paypal.com/myaccount/transfer/buy) to the Sandbox Paypal account that you connected to Chargehound, and dispute the transaction. You can view the resulting dispute in the [resolution center](https://www.sandbox.paypal.com/disputes/).
+
+
+> 2) Once the dispute is created in Paypal, you will see it mirrored in Chargehound.
+
+```javascript
+var chargehound = require('chargehound')('{{your_chargehound_test_key}}');
+
+chargehound.Disputes.retrieve('{{dispute_from_step_1}}', function (err, res) {
+  // ...
+});
+```
+
+```python
+import chargehound
+chargehound.api_key = '{{your_chargehound_test_key}}'
+
+chargehound.Disputes.retrieve('{{dispute_from_step_1}}')
+```
+
+```ruby
+require 'chargehound'
+Chargehound.api_key = '{{your_chargehound_test_key}}'
+
+Chargehound::Disputes.retrieve('{{dispute_from_step_1}}')
+```
+
+
+```go
+ch := chargehound.New("{{your_chargehound_test_key}}", nil)
+
+params := chargehound.RetrieveDisputeParams{
+  ID: "{{dispute_from_step_3}}",
+}
+
+dispute, err := ch.Disputes.Retrieve(&params)
+```
+
+```java
+import com.chargehound.Chargehound;
+
+Chargehound chargehound = new Chargehound("{{your_chargehound_test_key}}");
+
+chargehound.disputes.retrieve("{{dispute_from_step_1}}");
+```
+
+> 3) Using your test API key, you can then update and submit the dispute.
+
+```javascript
+var chargehound = require('chargehound')('{{your_chargehound_test_key}}');
+
+chargehound.Disputes.submit('{{dispute_from_step_1}}', function (err, res) {
+  // ...
+});
+```
+
+```python
+import chargehound
+chargehound.api_key = '{{your_chargehound_test_key}}'
+
+chargehound.Disputes.submit('{{dispute_from_step_1}}')
+```
+
+```ruby
+require 'chargehound'
+Chargehound.api_key = '{{your_chargehound_test_key}}'
+
+Chargehound::Disputes.submit('{{dispute_from_step_1}}')
+```
+
+```go
+ch := chargehound.New("{{your_chargehound_test_key}}", nil)
+
+params := chargehound.UpdateDisputeParams{
+  ID: "{{dispute_from_step_1}}",
+}
+
+_, err := ch.Disputes.Submit(&params)
+```
+
+```java
+import com.chargehound.Chargehound;
+
+Chargehound chargehound = new Chargehound("{{your_chargehound_test_key}}");
+
+chargehound.disputes.submit("{{dispute_from_step_1}}");
+```
+
+If you have a Paypal sandbox account, you can test your integration using Chargehound's test mode and Paypal's sandox environment. First, you'll need to connect your Paypal sandbox to Chargehound and set up the webhook, just as you did for your production Paypal environment. You can connect a Paypal sandbox account from the settings page [here](https://www.chargehound.com/dashboard/settings/processors).
+
+Because Chargehound creates live mode disputes with [webhooks](https://developer.paypal.com/docs/integration/direct/webhooks/) from Paypal, testing end to end requires creating a dispute in Paypal. You can do this by creating a transaction from a sandbox Paypal [buyer account](https://developer.paypal.com/docs/classic/lifecycle/sb_about-accounts/) and disputing the transaction.
+
 ## Responding to your backlog
 
 Before integrating with Chargehound you might have accrued a dispute backlog, but you can easily respond to all of those disputes by writing a simple script and running it as the final integration step.
