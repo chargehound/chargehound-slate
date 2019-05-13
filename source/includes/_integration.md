@@ -529,7 +529,7 @@ Because Chargehound creates live mode disputes with [webhooks](https://developer
 
 ## Testing with Paypal
 
-> 1) Log into the [Sandbox paypal dashboard](https://sandbox.paypal.com) as a buyer, [send money](https://www.sandbox.paypal.com/myaccount/transfer/buy) to the Sandbox Paypal account that you connected to Chargehound, and dispute the transaction. You can view the resulting dispute in the [resolution center](https://www.sandbox.paypal.com/disputes/).
+> 1) Use the [Orders API](https://developer.paypal.com/docs/api/orders/v2/) to charge a test buyer account from the Sandbox Paypal account that you connected to Chargehound. Log into the [Sandbox paypal dashboard](https://sandbox.paypal.com) as the buyer and dispute the transaction. You can view the resulting dispute in the [resolution center](https://www.sandbox.paypal.com/disputes/).
 
 
 > 2) Once the dispute is created in Paypal, you will see it mirrored in Chargehound.
