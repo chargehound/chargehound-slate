@@ -527,12 +527,12 @@ If you have a Braintree sandbox, you can test your integration using Chargehound
 
 Because Chargehound creates live mode disputes with [webhooks](https://developers.braintreepayments.com/guides/webhooks/overview) from Braintree, testing end to end requires creating a dispute in Braintree. You can do this by creating a transaction with a [test card number that triggers a dispute](https://developers.braintreepayments.com/reference/general/testing#creating-a-disputed-test-transaction). You can create a transaction using [one of the Braintree SDKs](https://developers.braintreepayments.com/reference/request/transaction/sale), or via the [Braintree dashboard](https://articles.braintreepayments.com/control-panel/transactions/create).
 
-## Testing with Paypal
+## Testing with PayPal
 
-> 1) Use the [Orders API](https://developer.paypal.com/docs/api/orders/v2/) to charge a test buyer account from the Sandbox Paypal account that you connected to Chargehound. Log into the [Sandbox paypal dashboard](https://sandbox.paypal.com) as the buyer and dispute the transaction. You can view the resulting dispute in the [resolution center](https://www.sandbox.paypal.com/disputes/).
+> 1) Use the [Orders API](https://developer.paypal.com/docs/api/orders/v2/) to charge a test buyer account from the Sandbox PayPal account that you connected to Chargehound. Log into the [Sandbox PayPal dashboard](https://sandbox.paypal.com) as the buyer and dispute the transaction. You can view the resulting dispute in the [resolution center](https://www.sandbox.paypal.com/disputes/).
 
 
-> 2) Once the dispute is created in Paypal, you will see it mirrored in Chargehound.
+> 2) Once the dispute is created in PayPal, you will see it mirrored in Chargehound.
 
 ```javascript
 var chargehound = require('chargehound')('{{your_chargehound_test_key}}');
