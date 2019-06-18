@@ -617,9 +617,9 @@ Chargehound chargehound = new Chargehound("{{your_chargehound_test_key}}");
 chargehound.disputes.submit("{{dispute_from_step_1}}");
 ```
 
-If you have a Paypal sandbox account, you can test your integration using Chargehound's test mode and Paypal's sandox environment. First, you'll need to connect your Paypal sandbox to Chargehound and set up the webhook, just as you did for your production Paypal environment. You can connect a Paypal sandbox account from the settings page [here](https://www.chargehound.com/dashboard/settings/processors).
+If you have a PayPal sandbox account, you can test your integration using Chargehound's test mode and PayPal's sandox environment. First, you'll need to connect your PayPal sandbox to Chargehound and set up the webhook, just as you did for your production PayPal environment. You can connect a PayPal sandbox account from the settings page [here](https://www.chargehound.com/dashboard/settings/processors).
 
-Because Chargehound creates live mode disputes with [webhooks](https://developer.paypal.com/docs/integration/direct/webhooks/) from Paypal, testing end to end requires creating a dispute in Paypal. You can do this by creating a transaction from a sandbox Paypal [buyer account](https://developer.paypal.com/docs/classic/lifecycle/sb_about-accounts/) and disputing the transaction.
+Because Chargehound creates live mode disputes with [webhooks](https://developer.paypal.com/docs/integration/direct/webhooks/) from PayPal, testing end to end requires creating a dispute in PayPal. You can do this by creating a transaction from a sandbox PayPal [buyer account](https://developer.paypal.com/docs/classic/lifecycle/sb_about-accounts/) and disputing the transaction.
 
 ## Responding to your backlog
 
