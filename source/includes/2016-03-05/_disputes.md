@@ -1248,7 +1248,7 @@ chargehound.disputes.update("dp_123",
 
 Showing a history of valid transactions with customer is good evidence that their disputed transaction is also valid. Typically, Chargehound can automatically fetch past payments from your payment processor. <b>Generally, you do not need to set past payment information yourself.</b> 
 
-The past payments should be successful, non-disputed transactions that used the same credit card as the disputed transaction. You can update the past payment history when [updating](#updating-a-dispute) or [submitting](#submitting-a-dispute) the dispute. Each payment has the following properties:
+The past payments should be successful, non-disputed transactions that used the same credit card as the disputed transaction. The past payment list should not include more than 10 payments. You can update the past payment history when [updating](#updating-a-dispute) or [submitting](#submitting-a-dispute) the dispute. Each payment has the following properties:
 
 > Example usage:
 
