@@ -200,6 +200,7 @@ chargehound.disputes.submit("dp_123",
   },
   "charged_at": "2016-09-18T20:38:51",
   "products": [],
+  "past_payments": [], 
   "correspondence": [],
   "reference_url": null,
   "amount": 500,
@@ -219,6 +220,7 @@ The dispute will be in the `submitted` state if the submit was successful.
 | fields         | dictionary | optional   | Key value pairs to hydrate the template's evidence fields. |
 | products       | array      | optional   | List of products the customer purchased. (See [Product data](#product-data) for details.) |
 | correspondence | array      | optional   | A list of communications with the customer. (See [Customer correspondence](#customer-correspondence) for details.)              |
+| past_payments  | array      | optional   | History of the customer's valid, non-disputed transactions using the same card. (See [Past payments](#past-payments) for details.) |
 | reference_url  | string     | optional   | Custom URL with dispute information, such as the dispute or charge in your company dashboard. |
 | queue | boolean | optional | Queue the dispute for submission. (See [Queuing for submission](#queuing-for-submission) for details.) |
 | force | boolean | optional | Skip the manual review filters or submit a dispute in manual review. (See [Manual review](#manual-review) for details.) |
@@ -372,6 +374,7 @@ DisputesList result = chargehound.disputes.list(params);
       "fields": {},
       "charged_at": "2016-09-18T20:38:51",
       "products": [],
+      "past_payments": [], 
       "correspondence": [],
       "reference_url": null,
       "amount": 500,
@@ -514,6 +517,7 @@ chargehound.disputes.retrieve("dp_123");
   "fields": {},
   "charged_at": "2016-09-18T20:38:51",
   "products": [],
+  "past_payments": [], 
   "correspondence": [],
   "reference_url": null,
   "amount": 500,
@@ -676,6 +680,7 @@ chargehound.disputes.update("dp_123",
   },
   "charged_at": "2016-09-18T20:38:51",
   "products": [],
+  "past_payments": [], 
   "correspondence": [],
   "reference_url": null,
   "amount": 500,
@@ -693,6 +698,7 @@ You can update the template and the fields on a dispute.
 | fields         | dictionary | optional   | Key value pairs to hydrate the template's evidence fields. |
 | products       | array      | optional   | List of products the customer purchased. (See [Product data](#product-data) for details.) |
 | correspondence | array      | optional   | A list of communications with the customer. (See [Customer correspondence](#customer-correspondence) for details.)              |
+| past_payments  | array      | optional   | History of the customer's valid, non-disputed transactions using the same card. (See [Past payments](#past-payments) for details.) |
 | reference_url  | string     | optional   | Custom URL with dispute information, such as the dispute or charge in your company dashboard. |
 | account_id | string     | optional   | Set the account id for accounts that are charged directly through Stripe. (See [Stripe charging directly](#stripe-charging-directly) for details.) |
 | charge | string     | optional   | You will need to send the transaction id if the payment processor is Braintree. (See [Braintree disputes](#braintree-disputes) for details.) |
@@ -837,6 +843,7 @@ chargehound.disputes.accept("dp_123");
   "fields": {},
   "charged_at": "2016-09-18T20:38:51",
   "products": [],
+  "past_payments": [], 
   "correspondence": [],
   "reference_url": null,
   "amount": 500,
@@ -974,7 +981,7 @@ import (
 ch := chargehound.New("test_123", nil)
 
 params := chargehound.UpdateDisputeParams{
-  ID:       "dp_2284d5ac6eba4e4e8e9a80df0f9c2287",
+  ID:       "dp_123",
   Products: []chargehound.Product{
     {
       Name:                   "Saxophone",
@@ -1166,7 +1173,7 @@ import (
 ch := chargehound.New("test_123", nil)
 
 params := chargehound.UpdateDisputeParams{
-  ID: "dp_2284d5ac6eba4e4e8e9a80df0f9c2287",
+  ID: "dp_123",
   Correspondence: []chargehound.CorrespondenceItem{
     {
       To: "customer@example.com",
@@ -1236,6 +1243,160 @@ chargehound.disputes.update("dp_123",
 | subject      | string            | required  |The email subject line.|
 | body         | string            | required  |The email body, as plain text.|
 | caption      | string            | optional  |A description of the email.|
+
+## Past payments
+
+Showing a history of valid transactions with customer is good evidence that their disputed transaction is also valid. Typically, Chargehound can automatically fetch past payments from your payment processor. <b>Generally, you do not need to set past payment information yourself.</b> 
+
+The past payments should be successful, non-disputed transactions that used the same credit card as the disputed transaction. You can update the past payment history when [updating](#updating-a-dispute) or [submitting](#submitting-a-dispute) the dispute. Each payment has the following properties:
+
+> Example usage:
+
+```sh
+curl -X PUT https://api.chargehound.com/v1/disputes/dp_123 \
+  -u test_123: \
+  -d past_payments="[{ \
+       \"id\": \"ch_1\", \
+       \"amount\": 20000, \
+       \"currency\": \"usd\", \
+       \"charged_at\": \"2019-09-10 10:18:41PM UTC\" \
+     }, { \
+       \"id\": \"ch_2\", \
+       \"amount\": 50000, \
+       \"currency\": \"usd\", \
+       \"charged_at\": \"2019-09-03 10:18:41PM UTC\" \
+     }]"
+```
+
+```javascript
+var chargehound = require('chargehound')(
+  'test_123'
+);
+
+chargehound.Disputes.update('dp_123', {
+  past_payments: [{
+    'id': 'ch_1',
+    'amount': 20000,
+    'currency': 'usd',
+    'charged_at': '2019-09-10 11:09:41PM UTC'
+  }, {
+    'id': 'ch_2',
+    'amount': 50000,
+    'currency': 'usd',
+    'charged_at': '2019-09-03 11:09:41PM UTC'
+  }]
+}, function (err, res) {
+  // ...
+});
+```
+
+```python
+import chargehound
+chargehound.api_key = 'test_123'
+
+chargehound.Disputes.update('dp_123',
+  past_payments = [{
+    'id': 'ch_1',
+    'amount': 20000,
+    'currency': 'usd',
+    'charged_at': '2019-09-10 11:10:06PM UTC'
+  }, {
+    'id': 'ch_2',
+    'amount': 50000,
+    'currency': 'usd',
+    'charged_at': '2019-09-03 11:10:06PM UTC'
+  }]
+)
+```
+
+```ruby
+require 'chargehound'
+Chargehound.api_key = 'test_123'
+
+Chargehound::Disputes.update('dp_123',
+  past_payments: [{
+    'id' => 'ch_1',
+    'amount' => 20000,
+    'currency' => 'usd',
+    'charged_at' => '2019-09-10 11:10:14PM UTC'
+  }, {
+    'id' => 'ch_2',
+    'amount' => 50000,
+    'currency' => 'usd',
+    'charged_at' => '2019-09-03 11:10:14PM UTC'
+  }]
+)
+```
+
+```go
+import (
+  "github.com/chargehound/chargehound-go"
+)
+
+ch := chargehound.New("test_123", nil)
+
+params := chargehound.UpdateDisputeParams{
+  ID:       "dp_123",
+  PastPayments: []chargehound.PastPayment{
+    {
+      ID: "ch_1",
+      Amount: 20000,
+      Currency: "usd",
+      ChargedAt: "2019-09-10 11:10:22PM UTC",
+    },
+    {
+      ID: "ch_2",
+      Amount: 50000,
+      Currency: "usd",
+      ChargedAt: "2019-09-03 11:10:22PM UTC",
+    },
+  },
+}
+
+dispute, err := ch.Disputes.Update(&params)
+```
+
+```java
+import com.chargehound.Chargehound;
+import com.chargehound.models.Dispute;
+import com.chargehound.models.PastPayment;
+
+Chargehound chargehound = new Chargehound("test_123");
+
+PastPayment firstPayment = new PastPayment.Builder()
+  .id("ch_1")
+  .amount(20000)
+  .currency("usd")
+  .chargedAt("2019-09-10 11:10:47PM UTC")
+  .finish();
+
+PastPayment secondPayment = new PastPayment.Builder()
+  .to("ch_2")
+  .amount(50000)
+  .currency("usd")
+  .chargedAt("2019-09-03 11:10:47PM UTC")
+  .finish();
+
+
+List<PastPayment> pastPayments = new ArrayList<PastPayment>();
+pastPayments.add(firstPayment);
+pastPayments.add(secondPayment);
+
+chargehound.disputes.update("dp_123",
+  new Dispute.UpdateParams.Builder()
+  .pastPayments(pastPayments)
+  .finish()
+);
+```
+
+### Past payment  fields
+
+| Field        | Type              |  Required?  | Description   |
+| -------------|-------------------|-------------|--------------------------------------------------------------------------------|
+| id           | string            | required  |The ID of the transaction in your payment processor. |
+| amount       | integer           | required  |The amount of the transaction, in cents (or other minor currency unit.)        |
+| currency     | string            | required  |A 3 character ISO currency code. |
+| charged_at   | string or integer | required  |The date of the transaction, as a formatted string or Unix timestamp. |
 
 ## Manual review
 
