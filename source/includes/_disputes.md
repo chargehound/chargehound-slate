@@ -1366,7 +1366,7 @@ PastPayment firstPayment = new PastPayment.Builder()
   .finish();
 
 PastPayment secondPayment = new PastPayment.Builder()
-  .to("ch_2")
+  .id("ch_2")
   .amount(50000)
   .currency("usd")
   .chargedAt("2019-09-03 11:10:47PM UTC")
