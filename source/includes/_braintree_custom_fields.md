@@ -1,16 +1,16 @@
-# Braintree Custom Field Integration
+# Braintree Direct
 
 In typical integrations with Chargehound you supply evidence and respond to disputes using the Chargehound API; however, in some cases supporting another third party integration may not be possible or desired.
 
-Using Braintree Custom Fields, you supply evidence and respond to disputes with Chargehound, but you do so using the Braintree API.
+With a Braintree Direct integration you supply evidence and respond to disputes with Chargehound, but you do so using the Braintree API.
 
 ## Overview
 
-A Braintree Custom Fields Integration follows the same general pattern as a typical Chargehound API integration.
+A Braintree Direct Integration follows the same general pattern as a typical Chargehound API integration.
 
 1) When a dispute is created in Braintree, you'll handle Braintree's "Dispute Opened" webhook notification.
 
-2) You'll collect the evidence needed by your response template.
+2) You'll collect the evidence needed by your Chargehound template.
 
 3) You'll send the evidence fields to the Braintree API. You'll do this by updating the Custom Fields of the disputed transaction in Braintree. Chargehound will take it from there.
 
