@@ -18,7 +18,7 @@ A Braintree Direct integration follows the same general pattern as a typical Cha
 
 You'll need to handle Braintree's ["Dispute Opened" webhook notification](https://developers.braintreepayments.com/reference/general/webhooks/dispute). You can configure your Braintree webhooks in your Braintree dashboard.
 
-## Setting up Braintree Custom Fields
+## Setting up custom fields
 
 You'll need to define the evidence fields used in your template as [Braintree custom fields](https://articles.braintreepayments.com/control-panel/custom-fields). These custom fields will need to be "Store and Pass Back" fields. In addition to your template evidence fields, you'll need to define a few custom fields that will be used to take actions in Chargehound.
 
@@ -34,7 +34,7 @@ Setting this field to `"true"` will tell Chargehound to queue the dispute for la
 `chargehound_force`
 Setting this field to `"true"` will tell Chargehound to override any manual review rules. (See [Manual review](#manual-review) for details.)
 
-## Updating Braintree Custom Fields
+## Updating custom fields
 
 After you handle the "Dispute Opened" webhook notification, you'll gather the response evidence and update the Braintree custom fields. You'll use [Braintree's GraphQL API](https://graphql.braintreepayments.com/) to update the custom fields of the disputed transaction.
 
@@ -64,3 +64,9 @@ mutation UpdateTransactionCustomFields($input: UpdateTransactionCustomFieldsInpu
   }
 }
 ```
+
+## Verifying and Debugging
+
+While with a Braintree Direct integration you interact only with the Braintree API, you'll still want to check on the disputes in Chargehound to ensure that the evidence fields you are sending are correct and that the response is submitted. 
+
+You can easily find the dispute in Chargehound using the same ID used by Braintree. By clicking "View Logs" on the dispute page you will be able to see the updates made to the dispute by the Braintree Direct integration, this can help you spot and debug any issues.
