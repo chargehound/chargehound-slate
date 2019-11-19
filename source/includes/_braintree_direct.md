@@ -12,7 +12,7 @@ A Braintree Direct integration follows the same general pattern as a typical Cha
 
 2) You'll collect the evidence needed by your Chargehound template(s).
 
-3) You'll send the evidence fields to the Braintree API. You'll do this by updating the Custom Fields of the disputed transaction in Braintree. Chargehound will take it from there.
+3) You'll send the evidence fields to the Braintree API. You'll do this by updating the custom fields of the disputed transaction in Braintree. Chargehound will take it from there.
 
 ## Setting up webhooks
 
@@ -20,7 +20,7 @@ You'll need to handle Braintree's ["Dispute Opened" webhook notification](https:
 
 ## Setting up Braintree Custom Fields
 
-You'll need to define the evidence fields used in your template as [Braintree Custom Fields](https://articles.braintreepayments.com/control-panel/custom-fields). These Custom Fields will need to be "Store and Pass Back" fields. In addition to your template evidence fields, you'll need to define a few Custom Fields that will be used to take actions in Chargehound.
+You'll need to define the evidence fields used in your template as [Braintree custom fields](https://articles.braintreepayments.com/control-panel/custom-fields). These custom fields will need to be "Store and Pass Back" fields. In addition to your template evidence fields, you'll need to define a few custom fields that will be used to take actions in Chargehound.
 
 `chargehound_template`
 This field can be used to set the template used by Chargehound. Set this field to a template ID.
@@ -36,7 +36,7 @@ Setting this field to `"true"` will tell Chargehound to override any manual revi
 
 ## Updating Braintree Custom Fields
 
-After you handle the "Dispute Opened" webhook notification, you'll gather the response evidence and update the Braintree Custom Fields. You'll use [Braintree's GraphQL API](https://graphql.braintreepayments.com/) to update the Custom Fields of the disputed transaction.
+After you handle the "Dispute Opened" webhook notification, you'll gather the response evidence and update the Braintree custom fields. You'll use [Braintree's GraphQL API](https://graphql.braintreepayments.com/) to update the custom fields of the disputed transaction.
 
 ```graphql
 mutation UpdateTransactionCustomFields($input: UpdateTransactionCustomFieldsInput!) {
