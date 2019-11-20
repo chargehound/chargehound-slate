@@ -65,7 +65,7 @@ mutation UpdateTransactionCustomFields($input: UpdateTransactionCustomFieldsInpu
 }
 ```
 
-## Verifying and Debugging
+## Verifying and debugging
 
 While with a Braintree Direct integration you interact only with the Braintree API, you'll still want to check on the disputes in Chargehound to ensure that the evidence fields you are sending are correct and that the response is submitted. 
 
