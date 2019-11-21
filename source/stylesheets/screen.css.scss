@@ -619,3 +619,8 @@ html, body {
 .highlight, .highlight .w {
   background-color: $code-bg;
 }
+
+// Handle rouge update that wraps code blocks in a new div
+div.highlight {
+  clear: none;
+}

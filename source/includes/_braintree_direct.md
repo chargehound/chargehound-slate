@@ -49,7 +49,6 @@ mutation UpdateTransactionCustomFields($input: UpdateTransactionCustomFieldsInpu
   }
 }
 ```
-
 ```graphql
 {
   "input": {
