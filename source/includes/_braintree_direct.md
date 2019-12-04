@@ -6,7 +6,7 @@ With a Braintree Direct integration you supply evidence and respond to disputes 
 
 ## Overview
 
-A Braintree Direct integration follows the same general pattern as a typical Chargehound API integration.
+There are 3 simple steps to a Braintree Direct integration:
 
 1) When a dispute is created in Braintree, you'll handle Braintree's "Dispute Opened" webhook notification.
 
@@ -20,7 +20,7 @@ You'll need to handle Braintree's ["Dispute Opened" webhook notification](https:
 
 ## Setting up custom fields
 
-You'll need to define the evidence fields used in your template as [Braintree custom fields](https://articles.braintreepayments.com/control-panel/custom-fields). These custom fields will need to be "Store and Pass Back" fields. In addition to your template evidence fields, you'll need to define a few custom fields that will be used to take actions in Chargehound.
+You'll need to define the evidence fields used in your template(s) as [Braintree custom fields](https://articles.braintreepayments.com/control-panel/custom-fields). These custom fields will need to be "Store and Pass Back" fields. In addition to your template evidence fields, you'll need to define a few custom fields that will be used to take actions in Chargehound.
 
 `chargehound_template`
 This field can be used to set the template used by Chargehound. Set this field to a template ID.
@@ -38,6 +38,8 @@ Setting this field to `"true"` will tell Chargehound to override any manual revi
 
 After you handle the "Dispute Opened" webhook notification, you'll gather the response evidence and update the Braintree custom fields. You'll use [Braintree's GraphQL API](https://graphql.braintreepayments.com/) to update the custom fields of the disputed transaction.
 
+Braintree custom fields only support strings, but Chargehound will convert amounts or numbers from strings when needed. See the guidelines for formatting fields [here](#formatting-fields).
+
 ```graphql
 mutation UpdateTransactionCustomFields($input: UpdateTransactionCustomFieldsInput!) {
      updateTransactionCustomFields(input: $input) {
@@ -49,15 +51,24 @@ mutation UpdateTransactionCustomFields($input: UpdateTransactionCustomFieldsInpu
   }
 }
 ```
+
 ```graphql
 {
   "input": {
-    "transactionId": "{disputed_transaction_id}",
+    "transactionId": "ch_123",
     "clientMutationId": "TEST EXAMPLE",
     "customFields": [
       {
-        "name": "{example_field}",
-        "value": "{example_value}"
+        "name": "chargehound_submit",
+        "value": "true"
+      },
+      {
+        "name": "chargehound_template",
+        "value": "unrecognized"
+      },
+      {
+        "name": "customer_name",
+        "value": "Susie Chargeback"
       }
     ]
   }
@@ -66,6 +77,6 @@ mutation UpdateTransactionCustomFields($input: UpdateTransactionCustomFieldsInpu
 
 ## Verifying and debugging
 
-While with a Braintree Direct integration you interact only with the Braintree API, you'll still want to check on the disputes in Chargehound to ensure that the evidence fields you are sending are correct and that the response is submitted. 
+While with a Braintree Direct integration you only interact with the Braintree API, you'll still want to check on the disputes in Chargehound to ensure that the evidence fields you are sending are correct and that the response is submitted. 
 
 You can easily find the dispute in Chargehound using the same ID used by Braintree. By clicking "View Logs" on the dispute page you will be able to see the updates made to the dispute by the Braintree Direct integration, this can help you spot and debug any issues.
