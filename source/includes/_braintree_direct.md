@@ -4,8 +4,6 @@ In typical integrations with Chargehound you supply evidence and respond to disp
 
 With a Braintree Direct integration you supply evidence and respond to disputes with Chargehound, but you do so using the Braintree API.
 
-## Overview
-
 There are 3 simple steps to a Braintree Direct integration:
 
 1) When a dispute is created in Braintree, you'll handle Braintree's "Dispute Opened" webhook notification.
