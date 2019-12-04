@@ -59,12 +59,12 @@ mutation UpdateTransactionCustomFields($input: UpdateTransactionCustomFieldsInpu
     "clientMutationId": "TEST EXAMPLE",
     "customFields": [
       {
-        "name": "chargehound_submit",
-        "value": "true"
-      },
-      {
         "name": "chargehound_template",
         "value": "unrecognized"
+      },
+      {
+        "name": "chargehound_submit",
+        "value": "true"
       },
       {
         "name": "customer_name",
