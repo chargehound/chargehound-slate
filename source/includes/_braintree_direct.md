@@ -14,11 +14,13 @@ There are 3 simple steps to a Braintree Direct integration:
 
 ## Setting up webhooks
 
-You'll need to handle Braintree's ["Dispute Opened" webhook notification](https://developers.braintreepayments.com/reference/general/webhooks/dispute). You can configure your Braintree webhooks in your Braintree dashboard.
+You'll need to handle Braintree's ["Dispute Opened" webhook notification](https://developers.braintreepayments.com/reference/general/webhooks/dispute). You can configure your Braintree webhooks in your Braintree dashboard. If you haven't defined any webhooks yet, follow the instructions for how to create a webhook [here](https://developers.braintreepayments.com/guides/webhooks/create).
 
 ## Setting up custom fields
 
-You'll need to define the evidence fields used in your template(s) as [Braintree custom fields](https://articles.braintreepayments.com/control-panel/custom-fields). These custom fields will need to be "Store and Pass Back" fields. In addition to your template evidence fields, you'll need to define a few custom fields that will be used to take actions in Chargehound.
+You'll need to define the evidence fields used in your template(s) as [Braintree custom fields](https://articles.braintreepayments.com/control-panel/custom-fields). Follow the instructions for how to create custom fields [here](https://articles.braintreepayments.com/control-panel/custom-fields#creating-a-custom-field). The custom fields will need to be "Store and Pass Back" fields.
+
+In addition to your template evidence fields, you'll need to define a few custom fields that will be used to take actions in Chargehound.
 
 `chargehound_template`
 This field can be used to set the template used by Chargehound. Set this field to a template ID.
@@ -33,10 +35,6 @@ Setting this field to `"true"` will tell Chargehound to queue the dispute for la
 Setting this field to `"true"` will tell Chargehound to override any manual review rules. (See [Manual review](#manual-review) for details.)
 
 ## Updating custom fields
-
-After you handle the "Dispute Opened" webhook notification, you'll gather the response evidence and update the Braintree custom fields. You'll use [Braintree's GraphQL API](https://graphql.braintreepayments.com/) to update the custom fields of the disputed transaction.
-
-Braintree custom fields only support strings, but Chargehound will convert amounts or numbers from strings when needed. See the guidelines for formatting fields [here](#formatting-fields).
 
 ```graphql
 mutation UpdateTransactionCustomFields($input: UpdateTransactionCustomFieldsInput!) {
@@ -72,6 +70,10 @@ mutation UpdateTransactionCustomFields($input: UpdateTransactionCustomFieldsInpu
   }
 }
 ```
+
+After you handle the "Dispute Opened" webhook notification, you'll gather the response evidence and update the Braintree custom fields. You'll use [Braintree's GraphQL API](https://graphql.braintreepayments.com/) to update the custom fields of the disputed transaction. If you encounter an error like "Custom field is invalid" you may need to create the custom field, follow the instructions for setting up custom fields [here](#setting-up-custom-fields).
+
+Braintree custom fields only support strings, but Chargehound will convert amounts or numbers from strings when needed. See the guidelines for formatting fields [here](#formatting-fields).
 
 ## Verifying and debugging
 
