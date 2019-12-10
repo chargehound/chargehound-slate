@@ -58,7 +58,7 @@ If you connected a Braintree account, Chargehound can automaticaly collect data 
 
 When you submit a dispute, you can set the `queue` flag to true so that the dispute is not submitted immediately. This gives your team time to review the evidence while being assured that every dispute will be addressed. You can configure when queued disputes will be submitted on the workflow tab of your team settings page [here](https://www.chargehound.com/dashboard/settings/workflow#queue-settings). Queued disputes will always be submitted before the due date.
 
-## Setting up webhooks
+## Handling webhooks
 
 In order to automatically submit responses whenever you get a dispute, you will need to set up a webhook handler and handle the `dispute.created` [webhook notification](#webhooks).
 
