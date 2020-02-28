@@ -81,7 +81,7 @@ chargehound.setApiVersion("YYYY-MM-DD");
 In this API version, we changed the behavior of the accept filters and the `accepted` state.
 
 In older versions, workflow rules for accepting disputes were only applied to new disputes, and disputes 
- in the `accepted` state could be submitted normally by API requests. Accepted disputes were primarily 
+ in the `accepted` state could be submitted normally by API requests. Accepted disputes were 
  intended to help with dashboard organization and did not affect API integrations.
 
 Starting with this version, workflow rules for accepting disputes are also applied when disputes are
