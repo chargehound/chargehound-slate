@@ -225,7 +225,7 @@ The dispute will be in the `submitted` state if the submit was successful.
 | past_payments  | array      | optional   | History of the customer's valid, non-disputed transactions using the same card. (See [Past payments](#past-payments) for details.) |
 | reference_url  | string     | optional   | Custom URL with dispute information, such as the dispute or charge in your company dashboard. |
 | queue          | boolean    | optional   | Queue the dispute for submission. (See [Queuing for submission](#queuing-for-submission) for details.) |
-| force          | boolean    | optional   | Submit a dispute in manual review (See [Manual review](#manual-review) for details) or submit an accepted dispute (See [Accepting a dispute](#accepting-a-dispute) for details.) |
+| force          | boolean    | optional   | Submit a dispute in manual review (see [Manual review](#manual-review) for details) or submit an accepted dispute (see [Accepting a dispute](#accepting-a-dispute) for details.) |
 | account        | string     | optional   | Id of the connected account for this dispute (if multiple accounts are connected). View your connected accounts in the Chargehound dashboard settings page [here](/dashboard/settings/processors). |
 
 ### Possible errors
@@ -701,7 +701,7 @@ You can update the template and the fields on a dispute.
 | reference_url  | string     | optional   | Custom URL with dispute information, such as the dispute or charge in your company dashboard. |
 | submit         | boolean    | optional   | Submit dispute evidence immediately after update. If the submit fails, updated fields will still be saved. |
 | queue          | boolean    | optional   | Queue the dispute for submission. (See [Queuing for submission](#queuing-for-submission) for details.) |
-| force          | boolean    | optional   | Submit a dispute in manual review (See [Manual review](#manual-review) for details) or submit an accepted dispute (See [Accepting a dispute](#accepting-a-dispute) for details.) |
+| force          | boolean    | optional   | Submit a dispute in manual review (see [Manual review](#manual-review) for details) or submit an accepted dispute (see [Accepting a dispute](#accepting-a-dispute) for details.) |
 
 ### Possible errors
 
