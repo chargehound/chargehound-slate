@@ -34,6 +34,9 @@ Setting this field to `"true"` will tell Chargehound to queue the dispute for la
 `chargehound_force`
 Setting this field to `"true"` will tell Chargehound to override any manual review rules. (See [Manual review](#manual-review) for details.)
 
+`chargehound_version`
+This field can be used to override the Chargehound API version. (See [Versioning](#versioning) for details.)
+
 ## Updating custom fields
 
 ```graphql

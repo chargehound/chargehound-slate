@@ -76,6 +76,12 @@ chargehound.setApiVersion("YYYY-MM-DD");
 
 ## Changelog
 
+### Version 2020-02-28
+
+In this API version, we changed the behavior of the "Accept" workflow rules.
+
+TODO...
+
 ### Version 2017-10-30
 
 In this API version, we’ve cleaned up some attribute names in order to make them more consistent and intuitive.
