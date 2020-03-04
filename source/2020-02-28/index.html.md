@@ -12,7 +12,7 @@ language_tabs:
 includes:
   - overview
   - versioning
-  - 2017-10-30/disputes
+  - disputes
   - integration
   - webhooks
   - standalone
@@ -20,6 +20,6 @@ includes:
 
 search: false
 
-version: 2017-10-30
+version: 2020-02-28
 
 ---

@@ -42,8 +42,8 @@ A dispute object is:
 | account_id           | string     | The account id for accounts that are charged directly through Stripe (if any). (See [Stripe charging directly](#stripe-charging-directly) for details.) |
 | created              | string     | ISO 8601 timestamp - when the dispute was created in Chargehound.                                       |
 | updated              | string     | ISO 8601 timestamp - when the dispute was last updated in Chargehound.                                  |
-| source               | string     | The source of the dispute. One of `mock`, `api`, `braintree`, `vantiv`, `adyen`, `worldpay`, `paypal`, `amex` or `stripe` |
-| processor            | string     | The payment processor of the dispute. One of `braintree`, `vantiv`, `adyen`, `worldpay`, `paypal`, `amex` or `stripe`     |
+| source               | string     | The source of the dispute. One of `mock`, `api`, `braintree`, `vantiv`, `adyen`, `worldpay` or `stripe` |
+| processor            | string     | The payment processor of the dispute. One of `braintree`, `vantiv`, `adyen`, `worldpay` or `stripe`     |
 | kind                 | string     | The kind of the dispute. One of `chargeback`, `pre_arbitration` or `retrieval`                          |
 | account              | string     | The Id of the connected account for this dispute.                                                       |
 | reference_url        | string     | Custom URL with dispute information, such as the dispute or charge in your company dashboard.           |
@@ -225,7 +225,7 @@ The dispute will be in the `submitted` state if the submit was successful.
 | past_payments  | array      | optional   | History of the customer's valid, non-disputed transactions using the same card. (See [Past payments](#past-payments) for details.) |
 | reference_url  | string     | optional   | Custom URL with dispute information, such as the dispute or charge in your company dashboard. |
 | queue          | boolean    | optional   | Queue the dispute for submission. (See [Queuing for submission](#queuing-for-submission) for details.) |
-| force          | boolean    | optional   | Submit a dispute in manual review (see [Manual review](#manual-review) for details) or submit an accepted dispute (see [Accepting a dispute](#accepting-a-dispute) for details.) |
+| force          | boolean    | optional   | Skip the manual review filters or submit a dispute in manual review. (See [Manual review](#manual-review) for details.) |
 | account        | string     | optional   | Id of the connected account for this dispute (if multiple accounts are connected). View your connected accounts in the Chargehound dashboard settings page [here](/dashboard/settings/processors). |
 
 ### Possible errors
@@ -701,7 +701,7 @@ You can update the template and the fields on a dispute.
 | reference_url  | string     | optional   | Custom URL with dispute information, such as the dispute or charge in your company dashboard. |
 | submit         | boolean    | optional   | Submit dispute evidence immediately after update. If the submit fails, updated fields will still be saved. |
 | queue          | boolean    | optional   | Queue the dispute for submission. (See [Queuing for submission](#queuing-for-submission) for details.) |
-| force          | boolean    | optional   | Submit a dispute in manual review (see [Manual review](#manual-review) for details) or submit an accepted dispute (see [Accepting a dispute](#accepting-a-dispute) for details.) |
+| force          | boolean    | optional   | Skip the manual review filters or submit a dispute in manual review. (See [Manual review](#manual-review) for details.) |
 
 ### Possible errors
 
@@ -845,13 +845,9 @@ chargehound.disputes.accept("dp_123");
 }
 ```
 
-If you do not wish to respond to a dispute you can accept the dispute. Accepting a dispute will remove the dispute from your queue of disputes that need response.
+If you do not wish to respond to a dispute you can accept the dispute. Accepting a dispute will remove the dispute from your queue of disputes that need response. This is intended to help you organize your disputes.
 
 The dispute will be in the `accepted` state if the request was successful. 
-
-In order submit a dispute that has been accepted via the API, you will need to pass an extra `force` parameter or the dispute will stay in the accepted state.
-
-You can tell a dispute has been accepted if when you submit it you receive a 202 status and the state does not change to submitted.
 
 ## Product data
 
