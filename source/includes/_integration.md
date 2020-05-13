@@ -391,7 +391,7 @@ Chargehound chargehound = new Chargehound("{{your_chargehound_test_key}}");
 chargehound.disputes.submit("{{dispute_from_step_3}}");
 ```
 
-Because Chargehound creates live mode disputes with [webhooks](https://stripe.com/docs/webhooks) from Stripe, testing end to end requires creating a dispute in Stripe. You can do this by creating a charge with a [test card that simulates a dispute](https://stripe.com/docs/testing#how-do-i-test-disputes). You can create a charge with a [simple curl request](https://stripe.com/docs/api#create_charge), or via the [Stripe dashboard](https://support.stripe.com/questions/how-do-i-create-a-charge-via-the-dashboard).
+Because Chargehound creates live mode disputes with [webhooks](https://stripe.com/docs/webhooks) from Stripe, testing end to end requires creating a dispute in Stripe. You can do this by creating a charge with a [test card that simulates a dispute](https://stripe.com/docs/testing#how-do-i-test-disputes). If you have a test environment, you can create a charge there to simulate a dispute end to end in your system. You can also create a charge with a [simple curl request](https://stripe.com/docs/api#create_charge), or via the [Stripe dashboard](https://support.stripe.com/questions/how-do-i-create-a-charge-via-the-dashboard).
 
 ## Testing with Braintree
 
@@ -525,7 +525,7 @@ chargehound.disputes.submit("{{dispute_from_step_1}}");
 
 If you have a Braintree sandbox, you can test your integration using Chargehound's test mode and Braintree's sandox environment. First, you'll need to connect your Braintree sandbox to Chargehound, just as you did for your production Braintree environment. You can connect a Braintree sandbox account from the settings page [here](https://www.chargehound.com/dashboard/settings/processors).
 
-Because Chargehound creates live mode disputes with [webhooks](https://developers.braintreepayments.com/guides/webhooks/overview) from Braintree, testing end to end requires creating a dispute in Braintree. You can do this by creating a transaction with a [test card number that triggers a dispute](https://developers.braintreepayments.com/reference/general/testing#creating-a-disputed-test-transaction). You can create a transaction using [one of the Braintree SDKs](https://developers.braintreepayments.com/reference/request/transaction/sale), or via the [Braintree dashboard](https://articles.braintreepayments.com/control-panel/transactions/create).
+Because Chargehound creates live mode disputes with [webhooks](https://developers.braintreepayments.com/guides/webhooks/overview) from Braintree, testing end to end requires creating a dispute in Braintree. You can do this by creating a transaction with a [test card number that triggers a dispute](https://developers.braintreepayments.com/reference/general/testing#creating-a-disputed-test-transaction). If you have a test environment, you can create a transaction there to simulate a dispute end to end in your system. You can also create a transaction using [one of the Braintree SDKs](https://developers.braintreepayments.com/reference/request/transaction/sale), or via the [Braintree dashboard](https://articles.braintreepayments.com/control-panel/transactions/create).
 
 ## Testing with PayPal
 
@@ -619,7 +619,7 @@ chargehound.disputes.submit("{{dispute_from_step_1}}");
 
 If you have a PayPal sandbox account, you can test your integration using Chargehound's test mode and PayPal's sandox environment. First, you'll need to connect your PayPal sandbox to Chargehound, just as you did for your production PayPal environment. You can connect a PayPal sandbox account from the settings page [here](https://www.chargehound.com/dashboard/settings/processors).
 
-Testing end to end requires creating a dispute in PayPal. You can do this by creating a transaction from a sandbox PayPal [buyer account](https://developer.paypal.com/docs/classic/lifecycle/sb_about-accounts/) and disputing the transaction.
+Testing end to end requires creating a dispute in PayPal. You can do this by creating a transaction from a sandbox PayPal [buyer account](https://developer.paypal.com/docs/classic/lifecycle/sb_about-accounts/) and disputing the transaction. If you have a test environment, you can create a transaction there to simulate a dispute end to end in your system.
 
 ## Responding to your backlog
 
