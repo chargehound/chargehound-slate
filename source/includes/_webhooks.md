@@ -4,7 +4,7 @@ Webhooks let you register a URL that Chargehound will notify when an event occur
 
 ## Static IP addresses
 
-If you need to whitelist individual IP addresses in your firewall you can opt to have webhook calls sent from a fixed range of IP addresses on your [settings page](https://www.chargehound.com/dashboard/settings/api#webhook-settings). 
+If you need to allowlist individual IP addresses in your firewall you can opt to have webhook calls sent from a fixed range of IP addresses on your [settings page](https://www.chargehound.com/dashboard/settings/api#webhook-settings). 
 
 > Webhook calls will then be sent from one of the following IP addresses if you opt to use a static IP:
 
