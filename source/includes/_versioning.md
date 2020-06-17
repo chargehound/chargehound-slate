@@ -76,6 +76,18 @@ chargehound.setApiVersion("YYYY-MM-DD");
 
 ## Changelog
 
+### Version 2020-02-28
+
+In this API version, we changed the behavior of the accept filters and the `accepted` state.
+
+In older versions, workflow rules for accepting disputes were only applied to new disputes, and disputes 
+ in the `accepted` state could be submitted normally by API requests. Accepted disputes were 
+ intended to help with dashboard organization and did not affect API integrations.
+
+Starting with this version, workflow rules for accepting disputes are also applied when disputes are
+ updated or submitted via API, and disputes in the `accepted` state cannot be submitted by API requests
+ without the `force` parameter. Accepted disputes are intended to complement manual review filters.
+
 ### Version 2017-10-30
 
 In this API version, we’ve cleaned up some attribute names in order to make them more consistent and intuitive.
@@ -92,5 +104,6 @@ In this API version, we’ve cleaned up some attribute names in order to make th
 
 Documentation is available for all releases:
 
-* [2017-10-30 (Latest)](../2017-10-30/)
+* [2020-02-28 (Latest)](../2020-02-28/)
+* [2017-10-30](../2017-10-30/)
 * [2016-03-05](../2016-03-05/)

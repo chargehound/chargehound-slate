@@ -18,6 +18,12 @@ Once you have chosen a dispute, choose the template that you want to use and cop
 
 If you don't have a real dispute for reference, go to the [templates page](https://www.chargehound.com/dashboard/templates) and view the customized documentation for a template.
 
+## Optional fields
+
+In the `missing_fields` hash for a dispute you will see that fields have a `required` property. Required fields must be set to a value in order to submit a response with the chosen template. Optional fields represent additional information that is good to have, but not necessary. You should set a value for as many of the optional fields as possible, but they are not required to submit a response.
+
+The required and optional fields for a template are also listed on the template's detail page. To view that list, go to the [templates page](https://www.chargehound.com/dashboard/templates), click "View details" for the template, and then click the "Fields" tab.
+
 ## Formatting fields
 
 When submitting evidence you will encounter a few different types of fields in the `missing_fields` hash. Currently Chargehound templates can have `text`, `date`, `number`, `amount` `url`, and `email` fields, and each type is validated differently. Here's a breakdown of what Chargehound expects for each type:
@@ -25,7 +31,7 @@ When submitting evidence you will encounter a few different types of fields in t
 | Field  | Type   | Validation |
 |--------|--------|------------|
 | text | string | Multi-line strings are ok, but be sensitive to your template layout. |
-| date | string | Submitted responses will be reviewed by humans so try to format dates to be human readable and friendly, although no specific format is enforced. This is not the place for Unix timestamps. |
+| date | string or integer | Submitted responses will be reviewed by humans so try to format dates to be human readable and friendly, although no specific format is enforced. You can also provide a Unix timestamp, which will be formatted by Chargehound. |
 | number | integer | A number should be an integer, not a float. |
 | amount | integer | An amount should be an integer that represents the cents (or other minor currency unit) value. E.g. $1 is 100. |
 | url | string | A URL should be a fully qualified URL including the scheme (`http://` or `https://`). |
@@ -52,7 +58,7 @@ If you connected a Braintree account, Chargehound can automaticaly collect data 
 
 When you submit a dispute, you can set the `queue` flag to true so that the dispute is not submitted immediately. This gives your team time to review the evidence while being assured that every dispute will be addressed. You can configure when queued disputes will be submitted on the workflow tab of your team settings page [here](https://www.chargehound.com/dashboard/settings/workflow#queue-settings). Queued disputes will always be submitted before the due date.
 
-## Setting up webhooks
+## Handling webhooks
 
 In order to automatically submit responses whenever you get a dispute, you will need to set up a webhook handler and handle the `dispute.created` [webhook notification](#webhooks).
 
@@ -385,7 +391,7 @@ Chargehound chargehound = new Chargehound("{{your_chargehound_test_key}}");
 chargehound.disputes.submit("{{dispute_from_step_3}}");
 ```
 
-Because Chargehound creates live mode disputes with [webhooks](https://stripe.com/docs/webhooks) from Stripe, testing end to end requires creating a dispute in Stripe. You can do this by creating a charge with a [test card that simulates a dispute](https://stripe.com/docs/testing#how-do-i-test-disputes). You can create a charge with a [simple curl request](https://stripe.com/docs/api#create_charge), or via the [Stripe dashboard](https://support.stripe.com/questions/how-do-i-create-a-charge-via-the-dashboard).
+Because Chargehound creates live mode disputes with [webhooks](https://stripe.com/docs/webhooks) from Stripe, testing end to end requires creating a dispute in Stripe. You can do this by creating a charge with a [test card that simulates a dispute](https://stripe.com/docs/testing#how-do-i-test-disputes). If you have a test environment, you can create a charge there to simulate a dispute end to end in your system. You can also create a charge with a [simple curl request](https://stripe.com/docs/api#create_charge), or via the [Stripe dashboard](https://support.stripe.com/questions/how-do-i-create-a-charge-via-the-dashboard).
 
 ## Testing with Braintree
 
@@ -517,16 +523,110 @@ Chargehound chargehound = new Chargehound("{{your_chargehound_test_key}}");
 chargehound.disputes.submit("{{dispute_from_step_1}}");
 ```
 
-If you have a Braintree sandbox, you can test your integration using Chargehound's test mode and Braintree's sandox environment. First, you'll need to connect your Braintree sandbox to Chargehound and set up the webhook, just as you did for your production Braintree environment. You can connect a Braintree sandbox from the settings page [here](https://www.chargehound.com/dashboard/settings/processors).
+If you have a Braintree sandbox, you can test your integration using Chargehound's test mode and Braintree's sandox environment. First, you'll need to connect your Braintree sandbox to Chargehound, just as you did for your production Braintree environment. You can connect a Braintree sandbox account from the settings page [here](https://www.chargehound.com/dashboard/settings/processors).
 
-Because Chargehound creates live mode disputes with [webhooks](https://developers.braintreepayments.com/guides/webhooks/overview) from Braintree, testing end to end requires creating a dispute in Braintree. You can do this by creating a transaction with a [test card number that triggers a dispute](https://developers.braintreepayments.com/reference/general/testing#creating-a-disputed-test-transaction). You can create a transaction using [one of the Braintree SDKs](https://developers.braintreepayments.com/reference/request/transaction/sale), or via the [Braintree dashboard](https://articles.braintreepayments.com/control-panel/transactions/create).
+Because Chargehound creates live mode disputes with [webhooks](https://developers.braintreepayments.com/guides/webhooks/overview) from Braintree, testing end to end requires creating a dispute in Braintree. You can do this by creating a transaction with a [test card number that triggers a dispute](https://developers.braintreepayments.com/reference/general/testing#creating-a-disputed-test-transaction). If you have a test environment, you can create a transaction there to simulate a dispute end to end in your system. You can also create a transaction using [one of the Braintree SDKs](https://developers.braintreepayments.com/reference/request/transaction/sale), or via the [Braintree dashboard](https://articles.braintreepayments.com/control-panel/transactions/create).
+
+## Testing with PayPal
+
+> 1) Use the [Orders API](https://developer.paypal.com/docs/api/orders/v2/) to charge a test buyer account from the sandbox PayPal account that you connected to Chargehound. Log into the [sandbox PayPal dashboard](https://sandbox.paypal.com) as the buyer and dispute the transaction. You can view the resulting dispute in the [resolution center](https://www.sandbox.paypal.com/disputes/).
+
+
+> 2) Once the dispute is created in PayPal, you will see it mirrored in Chargehound.
+
+```javascript
+var chargehound = require('chargehound')('{{your_chargehound_test_key}}');
+
+chargehound.Disputes.retrieve('{{dispute_from_step_1}}', function (err, res) {
+  // ...
+});
+```
+
+```python
+import chargehound
+chargehound.api_key = '{{your_chargehound_test_key}}'
+
+chargehound.Disputes.retrieve('{{dispute_from_step_1}}')
+```
+
+```ruby
+require 'chargehound'
+Chargehound.api_key = '{{your_chargehound_test_key}}'
+
+Chargehound::Disputes.retrieve('{{dispute_from_step_1}}')
+```
+
+
+```go
+ch := chargehound.New("{{your_chargehound_test_key}}", nil)
+
+params := chargehound.RetrieveDisputeParams{
+  ID: "{{dispute_from_step_3}}",
+}
+
+dispute, err := ch.Disputes.Retrieve(&params)
+```
+
+```java
+import com.chargehound.Chargehound;
+
+Chargehound chargehound = new Chargehound("{{your_chargehound_test_key}}");
+
+chargehound.disputes.retrieve("{{dispute_from_step_1}}");
+```
+
+> 3) Using your test API key, you can then update and submit the dispute.
+
+```javascript
+var chargehound = require('chargehound')('{{your_chargehound_test_key}}');
+
+chargehound.Disputes.submit('{{dispute_from_step_1}}', function (err, res) {
+  // ...
+});
+```
+
+```python
+import chargehound
+chargehound.api_key = '{{your_chargehound_test_key}}'
+
+chargehound.Disputes.submit('{{dispute_from_step_1}}')
+```
+
+```ruby
+require 'chargehound'
+Chargehound.api_key = '{{your_chargehound_test_key}}'
+
+Chargehound::Disputes.submit('{{dispute_from_step_1}}')
+```
+
+```go
+ch := chargehound.New("{{your_chargehound_test_key}}", nil)
+
+params := chargehound.UpdateDisputeParams{
+  ID: "{{dispute_from_step_1}}",
+}
+
+_, err := ch.Disputes.Submit(&params)
+```
+
+```java
+import com.chargehound.Chargehound;
+
+Chargehound chargehound = new Chargehound("{{your_chargehound_test_key}}");
+
+chargehound.disputes.submit("{{dispute_from_step_1}}");
+```
+
+If you have a PayPal sandbox account, you can test your integration using Chargehound's test mode and PayPal's sandox environment. First, you'll need to connect your PayPal sandbox to Chargehound, just as you did for your production PayPal environment. You can connect a PayPal sandbox account from the settings page [here](https://www.chargehound.com/dashboard/settings/processors).
+
+Testing end to end requires creating a dispute in PayPal. You can do this by creating a transaction from a sandbox PayPal [buyer account](https://developer.paypal.com/docs/classic/lifecycle/sb_about-accounts/) and disputing the transaction. If you have a test environment, you can create a transaction there to simulate a dispute end to end in your system.
 
 ## Responding to your backlog
 
 Before integrating with Chargehound you might have accrued a dispute backlog, but you can easily respond to all of those disputes by writing a simple script and running it as the final integration step.
 
 ```sh
-curl https://api.chargehound.com/v1/disputes?state=needs_response \
+curl https://api.chargehound.com/v1/disputes?state=warning_needs_response&state=needs_response \
   -u test_123
 ```
 
@@ -535,15 +635,26 @@ var chargehound = require('chargehound')(
   'test_123'
 );
 
-async function respondToBacklog () {
-  var res = await chargehound.Disputes.list({state: 'needs_response'});
+async function respondToBacklog (startingAfterId=null) {
+  var params = {
+    state: ['warning_needs_response', 'needs_response']
+  };
+
+  // Use the dispute ID to page.
+  if (startingAfterId) {
+    params['starting_after'] = startingAfterId;
+  }
+
+  var res = await chargehound.Disputes.list(params);
+
   await Promise.all(res.data.map(async function (dispute) {
     // Submit the dispute.
   });
 
   if (res.has_more) {
     // Recurse to address all of the open disputes.
-    await respondToBacklog();
+    var startingAfterId = res.data[res.data.length - 1].id;
+    await respondToBacklog(startingAfterId);
   }
 }
 ```
@@ -552,29 +663,49 @@ async function respondToBacklog () {
 import chargehound
 chargehound.api_key = 'test_123'
 
-def respond_to_backlog():
-  res = chargehound.Disputes.list(state='needs_response')
+def respond_to_backlog(starting_after_id=None):
+  params = {
+    'state': ['warning_needs_response', 'needs_response']
+  }
+
+  # Use the dispute ID to page.
+  if starting_after_id:
+    params['starting_after'] = starting_after_id
+
+  res = chargehound.Disputes.list(**params)
+
   for dispute in res['data']:
     # Submit the dispute.
 
   if res['has_more']:
     # Recurse to address all of the open disputes.
-    respond_to_backlog()
+    starting_after_id = res['data'][-1]['id']
+    respond_to_backlog(starting_after_id)
 ```
 
 ```ruby
 require 'chargehound'
 Chargehound.api_key = 'test_123'
 
-def respond_to_backlog()
-  res = Chargehound::Disputes.list(state: 'needs_response')
+def respond_to_backlog(starting_after_id)
+  params = {
+    state: %w[needs_response warning_needs_response]
+  }
+
+  # Use the dispute ID to page.
+  if starting_after_id
+    params['starting_after'] = starting_after_id
+  end
+
+  res = Chargehound::Disputes.list(params)
   res['data'].each { |dispute|
     # Submit the dispute.
   }
 
   if res['has_more']
     # Recurse to address all of the open disputes.
-    respond_to_backlog()
+    starting_after_id = res['data'][-1]['id']
+    respond_to_backlog(starting_after_id)
   end
 end
 ```
@@ -586,9 +717,10 @@ import (
 
 ch := chargehound.New("test_123", nil)
 
-func respondToBacklog () {
+func respondToBacklog (startingAfterId string) {
   params := chargehound.ListDisputesParams{
-    State: "needs_response",
+    State: []string{"warning_needs_response", "needs_response"},
+    StartingAfter: startingAfterId
   }
 
   response, err := ch.Disputes.List(&params)
@@ -598,8 +730,9 @@ func respondToBacklog () {
   }
 
   if response.HasMore == true {
-    // Recurse to address all of the open disputes
-    respondToBacklog()
+    // Recurse to address all of the open disputes.
+    nextStartingAfterId := response.Data[len(response.Data)-1].ID
+    respondToBacklog(nextStartingAfterId)
   }
 }
 ```
@@ -609,14 +742,20 @@ import com.chargehound.Chargehound;
 import com.chargehound.models.DisputesList;
 import com.chargehound.models.Dispute;
 
-Chargehound chargehound = new Chargehound("${apiKey}");
+Chargehound chargehound = new Chargehound("test_123");
 
-public void respondToBacklog() {
-  DisputesList result = chargehound.Disputes.list(
-    new DisputesList.Params.Builder()
-      .state("needs_response")
-      .finish()
-  );
+public void respondToBacklog(String startingAfterId) {
+  DisputesList.Params.Builder paramsBuilder = new DisputesList.Params.Builder()
+    .state("warning_needs_response", "needs_response");
+
+  // Use the dispute ID to page.
+  if (startingAfterId != null) {
+    paramsBuilder = paramsBuilder.startingAfter(startingAfterId);
+  }
+
+  DisputesList.Params params = paramsBuilder.finish();
+
+  DisputesList result = chargehound.Disputes.list(params);
 
   for (int i = 0; i < result.data.length; i++) {
     Dispute dispute = result.data[i]
@@ -625,7 +764,8 @@ public void respondToBacklog() {
 
   if (result.hasMore) {
     // Recurse to address all of the open disputes.
-    respondToBacklog()
+    String nextStartingAfterId = result.data[result.data.length - 1].id;
+    respondToBacklog(nextStartingAfterId)
   }
 }
 ```
