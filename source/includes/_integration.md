@@ -42,7 +42,7 @@ evidence fields is not properly formatted. When you get a `201` response code th
 
 ## Metadata and custom fields
 
-Chargehound tries to automatically collect standard information from your payment processor when a dispute is created. You can also define a whitelist of custom fields and metadata fields that you would like to automatically collect on the processors tab of your team settings page [here](https://www.chargehound.com/dashboard/settings#metadata-settings). These fields will be automatically copied to the evidence fields of your disputes when they are created in Chargehound.
+Chargehound tries to automatically collect standard information from your payment processor when a dispute is created. You can also define a list of custom fields and metadata fields that you would like to automatically collect on the processors tab of your team settings page [here](https://www.chargehound.com/dashboard/settings#metadata-settings). These fields will be automatically copied to the evidence fields of your disputes when they are created in Chargehound.
 
 For example, if you add an "order_id" to your Stripe Charges with metadata fields, you could easily access that ID in the fields of the disputes created in Chargehound.  You could use the ID to find more relevant evidence data in your system, and/or use the ID in your templates.
 
