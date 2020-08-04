@@ -531,7 +531,7 @@ Because Chargehound creates live mode disputes with [webhooks](https://developer
 
 > 1) Use the [Orders API](https://developer.paypal.com/docs/api/orders/v2/) to charge a test buyer account from the sandbox PayPal account that you connected to Chargehound.
 
-```curl
+```sh
 curl https://api.sandbox.paypal.com/v2/checkout/orders \
 -H "Content-Type: application/json" \
 -H "Authorization: Bearer {{your_paypal_access_key}}" \
@@ -555,7 +555,7 @@ curl https://api.sandbox.paypal.com/v2/checkout/orders \
 
 > 3) Using your Paypal facilitator API key, capture the payment.
 
-```curl
+```sh
 curl-X POST https://api.sandbox.paypal.com/v2/checkout/orders/{{order_id_from_step_1}}/capture \
 -H "Content-Type: application/json" \
 -H "Authorization: Bearer {{your_paypal_access_key}}"
@@ -564,6 +564,11 @@ curl-X POST https://api.sandbox.paypal.com/v2/checkout/orders/{{order_id_from_st
 > 4) As the Paypal buyer account, find the transaction in your [activity](https://www.sandbox.paypal.com/myaccount/transactions). Click "Report a problem". Click "I want to report unauthorized activity". Fill out any details, it's not important what they are. You can skip the change password step. You can view the resulting dispute in the [resolution center](https://www.sandbox.paypal.com/disputes/).
 
 > 5) You can fetch the dispute in Chargehound using the Paypal ID. Remember, it takes on average 3-5 hours for the dispute to appear in Chargehound.
+
+```sh
+curl https://api.chargehound.com/v1/disputes/{{dispute_from_step_4}} \
+  -u {{your_chargehound_test_key}}:
+```
 
 ```javascript
 var chargehound = require('chargehound')('{{your_chargehound_test_key}}');
@@ -607,6 +612,11 @@ chargehound.disputes.retrieve("{{dispute_from_step_4}}");
 ```
 
 > 6) Using your test API key, you can then update and submit the dispute.
+
+```sh
+curl https://api.chargehound.com/v1/disputes/{{dispute_from_step_4}}/submit \
+  -u {{your_chargehound_test_key}}:
+```
 
 ```javascript
 var chargehound = require('chargehound')('{{your_chargehound_test_key}}');
