@@ -1,7 +1,13 @@
 //= require ./lib/_energize
+//= require ./app/_copy
 //= require ./app/_toc
 //= require ./app/_lang
 //= require ./app/_chargehound
+
+function adjustLanguageSelectorWidth() {
+  const elem = $('.dark-box > .lang-selector');
+  elem.width(elem.parent().width());
+}
 
 $(function() {
   setupVersion();
@@ -11,6 +17,11 @@ $(function() {
     window.recacheHeights();
     window.refreshToc();
   });
+
+  $(window).resize(function() {
+    adjustLanguageSelectorWidth();
+  });
+  adjustLanguageSelectorWidth();
 });
 
 window.onpopstate = function() {

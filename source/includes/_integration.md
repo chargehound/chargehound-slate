@@ -523,21 +523,57 @@ Chargehound chargehound = new Chargehound("{{your_chargehound_test_key}}");
 chargehound.disputes.submit("{{dispute_from_step_1}}");
 ```
 
-If you have a Braintree sandbox, you can test your integration using Chargehound's test mode and Braintree's sandox environment. First, you'll need to connect your Braintree sandbox to Chargehound, just as you did for your production Braintree environment. You can connect a Braintree sandbox account from the settings page [here](https://www.chargehound.com/dashboard/settings/processors).
+If you have a Braintree sandbox, you can test your integration using Chargehound's test mode and Braintree's sandbox environment. First, you'll need to connect your Braintree sandbox to Chargehound, just as you did for your production Braintree environment. You can connect a Braintree sandbox account from the settings page [here](https://www.chargehound.com/dashboard/settings/processors).
 
 Because Chargehound creates live mode disputes with [webhooks](https://developers.braintreepayments.com/guides/webhooks/overview) from Braintree, testing end to end requires creating a dispute in Braintree. You can do this by creating a transaction with a [test card number that triggers a dispute](https://developers.braintreepayments.com/reference/general/testing#creating-a-disputed-test-transaction). If you have a test environment, you can create a transaction there to simulate a dispute end to end in your system. You can also create a transaction using [one of the Braintree SDKs](https://developers.braintreepayments.com/reference/request/transaction/sale), or via the [Braintree dashboard](https://articles.braintreepayments.com/control-panel/transactions/create).
 
 ## Testing with PayPal
 
-> 1) Use the [Orders API](https://developer.paypal.com/docs/api/orders/v2/) to charge a test buyer account from the sandbox PayPal account that you connected to Chargehound. Log into the [sandbox PayPal dashboard](https://sandbox.paypal.com) as the buyer and dispute the transaction. You can view the resulting dispute in the [resolution center](https://www.sandbox.paypal.com/disputes/).
+> 1) Use the [Orders API](https://developer.paypal.com/docs/api/orders/v2/) to charge a test buyer account from the sandbox PayPal account that you connected to Chargehound.
 
+```sh
+curl https://api.sandbox.paypal.com/v2/checkout/orders \
+-H "Content-Type: application/json" \
+-H "Authorization: Bearer {{your_paypal_access_key}}" \
+-d '{
+  "payer": {
+    "email_address": "{{your_buyer_account_email_address}}"
+  },
+  "intent": "CAPTURE",
+  "purchase_units": [
+    {
+      "amount": {
+        "currency_code": "USD",
+        "value": "100.00"
+      }
+    }
+  ]
+}'
+```
 
-> 2) Once the dispute is created in PayPal, you will see it mirrored in Chargehound.
+> 2) As the Paypal buyer account, approve the payment using the link returned in the response from step 1. It is the "approve" link and should look like `https://www.sandbox.paypal.com/checkoutnow?token={{token}}`.
+
+> 3) Using your Paypal facilitator API key, capture the payment.
+
+```sh
+curl-X POST https://api.sandbox.paypal.com/v2/checkout/orders/{{order_id_from_step_1}}/capture \
+-H "Content-Type: application/json" \
+-H "Authorization: Bearer {{your_paypal_access_key}}"
+```
+
+> 4) As the Paypal buyer account, find the transaction in your [activity](https://www.sandbox.paypal.com/myaccount/transactions). Click "Report a problem". Click "I want to report unauthorized activity". Fill out any details, it's not important what they are. You can skip the change password step. You can view the resulting dispute in the [resolution center](https://www.sandbox.paypal.com/disputes/).
+
+> 5) You can fetch the dispute in Chargehound using the Paypal ID. Remember, it takes on average 3-5 hours for the dispute to appear in Chargehound.
+
+```sh
+curl https://api.chargehound.com/v1/disputes/{{dispute_from_step_4}} \
+  -u {{your_chargehound_test_key}}:
+```
 
 ```javascript
 var chargehound = require('chargehound')('{{your_chargehound_test_key}}');
 
-chargehound.Disputes.retrieve('{{dispute_from_step_1}}', function (err, res) {
+chargehound.Disputes.retrieve('{{dispute_from_step_4}}', function (err, res) {
   // ...
 });
 ```
@@ -546,14 +582,14 @@ chargehound.Disputes.retrieve('{{dispute_from_step_1}}', function (err, res) {
 import chargehound
 chargehound.api_key = '{{your_chargehound_test_key}}'
 
-chargehound.Disputes.retrieve('{{dispute_from_step_1}}')
+chargehound.Disputes.retrieve('{{dispute_from_step_4}}')
 ```
 
 ```ruby
 require 'chargehound'
 Chargehound.api_key = '{{your_chargehound_test_key}}'
 
-Chargehound::Disputes.retrieve('{{dispute_from_step_1}}')
+Chargehound::Disputes.retrieve('{{dispute_from_step_4}}')
 ```
 
 
@@ -561,7 +597,7 @@ Chargehound::Disputes.retrieve('{{dispute_from_step_1}}')
 ch := chargehound.New("{{your_chargehound_test_key}}", nil)
 
 params := chargehound.RetrieveDisputeParams{
-  ID: "{{dispute_from_step_3}}",
+  ID: "{{dispute_from_step_4}}",
 }
 
 dispute, err := ch.Disputes.Retrieve(&params)
@@ -572,15 +608,20 @@ import com.chargehound.Chargehound;
 
 Chargehound chargehound = new Chargehound("{{your_chargehound_test_key}}");
 
-chargehound.disputes.retrieve("{{dispute_from_step_1}}");
+chargehound.disputes.retrieve("{{dispute_from_step_4}}");
 ```
 
-> 3) Using your test API key, you can then update and submit the dispute.
+> 6) Using your test API key, you can then update and submit the dispute.
+
+```sh
+curl https://api.chargehound.com/v1/disputes/{{dispute_from_step_4}}/submit \
+  -u {{your_chargehound_test_key}}:
+```
 
 ```javascript
 var chargehound = require('chargehound')('{{your_chargehound_test_key}}');
 
-chargehound.Disputes.submit('{{dispute_from_step_1}}', function (err, res) {
+chargehound.Disputes.submit('{{dispute_from_step_4}}', function (err, res) {
   // ...
 });
 ```
@@ -589,21 +630,21 @@ chargehound.Disputes.submit('{{dispute_from_step_1}}', function (err, res) {
 import chargehound
 chargehound.api_key = '{{your_chargehound_test_key}}'
 
-chargehound.Disputes.submit('{{dispute_from_step_1}}')
+chargehound.Disputes.submit('{{dispute_from_step_4}}')
 ```
 
 ```ruby
 require 'chargehound'
 Chargehound.api_key = '{{your_chargehound_test_key}}'
 
-Chargehound::Disputes.submit('{{dispute_from_step_1}}')
+Chargehound::Disputes.submit('{{dispute_from_step_4}}')
 ```
 
 ```go
 ch := chargehound.New("{{your_chargehound_test_key}}", nil)
 
 params := chargehound.UpdateDisputeParams{
-  ID: "{{dispute_from_step_1}}",
+  ID: "{{dispute_from_step_4}}",
 }
 
 _, err := ch.Disputes.Submit(&params)
@@ -614,12 +655,14 @@ import com.chargehound.Chargehound;
 
 Chargehound chargehound = new Chargehound("{{your_chargehound_test_key}}");
 
-chargehound.disputes.submit("{{dispute_from_step_1}}");
+chargehound.disputes.submit("{{dispute_from_step_4}}");
 ```
 
-If you have a PayPal sandbox account, you can test your integration using Chargehound's test mode and PayPal's sandox environment. First, you'll need to connect your PayPal sandbox to Chargehound, just as you did for your production PayPal environment. You can connect a PayPal sandbox account from the settings page [here](https://www.chargehound.com/dashboard/settings/processors).
+If you have a Paypal sandbox, you can test your integration using Chargehound's test mode and Paypal's sandbox environment. First, you'll need to connect your Paypal sandbox to Chargehound, just as you did for your production Paypal environment. You can connect a Paypal sandbox account from the settings page [here](https://www.chargehound.com/dashboard/settings/processors).
 
-Testing end to end requires creating a dispute in PayPal. You can do this by creating a transaction from a sandbox PayPal [buyer account](https://developer.paypal.com/docs/classic/lifecycle/sb_about-accounts/) and disputing the transaction. If you have a test environment, you can create a transaction there to simulate a dispute end to end in your system.
+Testing end to end requires creating a dispute in Paypal. You can do this by creating a transaction from a sandbox PayPal [buyer account](https://developer.paypal.com/docs/classic/lifecycle/sb_about-accounts/) and disputing the transaction. Be sure to follow the steps given here exactly. It is important that you choose the correct reason for filing a dispute. You want to create a Chargeback in Paypal. Some dispute reasons will create Paypal Inquiries rather than Chargebacks. 
+
+Be prepared to wait after creating the dispute in Paypal. Unfortunately, Chargehound cannot sync Paypal disputes in real time. Transaction data is not immediately available to us in the Paypal API we use. After a dispute is created in Paypal, you will have to wait between 3-5 hours before it is available in Chargehound. When testing with Paypal's sandbox, it can take even longer.
 
 ## Responding to your backlog
 
