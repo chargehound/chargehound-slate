@@ -31,18 +31,28 @@ under the License.
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title><%= current_page.data.title || "API Documentation" %></title>
 
-    <style>
+    <style media="screen">
       <%= Rouge::Themes::MonokaiSublimeSlate.render(:scope => '.highlight') %>
     </style>
-    <%= stylesheet_link_tag :screen, media: :screen, charset: 'utf-8' %>
-    <%= stylesheet_link_tag :print, media: :print, charset: 'utf-8' %>
+    <style media="print">
+      * {
+        transition:none!important;
+      }
+      <%= Rouge::Themes::Base16::Solarized.render(:scope => '.highlight') %>
+    </style>
+    <%= stylesheet_link_tag :screen, media: :screen %>
+    <%= stylesheet_link_tag :print, media: :print %>
     <% if current_page.data.search %>
       <%= javascript_include_tag  "all", charset: 'utf-8' %>
     <% else %>
       <%= javascript_include_tag  "all_nosearch", charset: 'utf-8' %>
     <% end %>
 
-    <script charset="utf-8" src="/tracking.js"> </script>
+    <% if current_page.data.code_clipboard %>
+    <script>
+      $(function() { setupCodeCopy(); });
+    </script>
+    <% end %>
   </head>
 
   <body class="<%= page_classes %>" data-languages="<%=h language_tabs.map{ |lang| lang.is_a?(Hash) ? lang.keys.first : lang }.to_json %>">
