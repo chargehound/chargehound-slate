@@ -551,7 +551,7 @@ curl https://api.sandbox.paypal.com/v2/checkout/orders \
 }'
 ```
 
-> 2) As the Paypal buyer account, approve the payment using the link returned in the response above. It is the "approve" link and should look like `https://www.sandbox.paypal.com/checkoutnow?token={{token}}`.
+> 2) As the Paypal buyer account, approve the payment using the link returned in the response from step 1. It is the "approve" link and should look like `https://www.sandbox.paypal.com/checkoutnow?token={{token}}`.
 
 > 3) Using your Paypal facilitator API key, capture the payment.
 
