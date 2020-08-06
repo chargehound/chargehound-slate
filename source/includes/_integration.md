@@ -812,3 +812,103 @@ public void respondToBacklog(String startingAfterId) {
   }
 }
 ```
+
+## Testing with Checkout
+
+> 1) Create a payment with a [dispute trigger](https://docs.checkout.com/testing/disputes-testing)
+
+> 2) Once the dispute is created in Check, you will see it mirrored in Chargehound.
+
+```sh
+curl https://api.chargehound.com/v1/disputes/{{dispute_from_step_1}} \
+  -u {{your_chargehound_test_key}}:
+```
+
+```javascript
+var chargehound = require('chargehound')('{{your_chargehound_test_key}}');
+
+chargehound.Disputes.retrieve('{{dispute_from_step_1}}', function (err, res) {
+  // ...
+});
+```
+
+```python
+import chargehound
+chargehound.api_key = '{{your_chargehound_test_key}}'
+
+chargehound.Disputes.retrieve('{{dispute_from_step_1}}')
+```
+
+```ruby
+require 'chargehound'
+Chargehound.api_key = '{{your_chargehound_test_key}}'
+
+Chargehound::Disputes.retrieve('{{dispute_from_step_1}}')
+```
+
+```go
+ch := chargehound.New("{{your_chargehound_test_key}}", nil)
+
+params := chargehound.RetrieveDisputeParams{
+  ID: "{{dispute_from_step_1}}",
+}
+
+dispute, err := ch.Disputes.Retrieve(&params)
+```
+
+```java
+import com.chargehound.Chargehound;
+
+Chargehound chargehound = new Chargehound("{{your_chargehound_test_key}}");
+
+chargehound.disputes.retrieve("{{dispute_from_step_1}}");
+```
+
+> 3) Using your test API key, you can then update and submit the dispute.
+
+```sh
+curl https://api.chargehound.com/v1/disputes/{{dispute_from_step_1}}/submit \
+  -u {{your_chargehound_test_key}}:
+```
+
+```javascript
+var chargehound = require('chargehound')('{{your_chargehound_test_key}}');
+
+chargehound.Disputes.submit('{{dispute_from_step_1}}', function (err, res) {
+  // ...
+});
+```
+
+```python
+import chargehound
+chargehound.api_key = '{{your_chargehound_test_key}}'
+
+chargehound.Disputes.submit('{{dispute_from_step_1}}')
+```
+
+```ruby
+require 'chargehound'
+Chargehound.api_key = '{{your_chargehound_test_key}}'
+
+Chargehound::Disputes.submit('{{dispute_from_step_1}}')
+```
+
+```go
+ch := chargehound.New("{{your_chargehound_test_key}}", nil)
+
+params := chargehound.UpdateDisputeParams{
+  ID: "{{dispute_from_step_1}}",
+}
+
+_, err := ch.Disputes.Submit(&params)
+```
+
+```java
+import com.chargehound.Chargehound;
+
+Chargehound chargehound = new Chargehound("{{your_chargehound_test_key}}");
+
+chargehound.disputes.submit("{{dispute_from_step_1}}");
+```
+
+Because Chargehound creates live mode disputes with [webhooks](https://docs.checkout.com/reporting-and-insights/webhooks) from Checkout, testing end to end requires creating a dispute in Checkout. You can do this by creating a charge with a [test card that simulates a dispute](https://docs.checkout.com/testing/disputes-testing). If you have a test environment, you can create a charge there to simulate a dispute end to end in your system. You can also create a charge with the Checkout API or from the Checkout dashboard.
