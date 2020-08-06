@@ -666,9 +666,9 @@ Be prepared to wait after creating the dispute in Paypal. Unfortunately, Chargeh
 
 ## Testing with Checkout
 
-> 1) Create a payment with a [dispute trigger](https://docs.checkout.com/testing/disputes-testing)
+> 1) Create a payment with a [dispute trigger](https://docs.checkout.com/testing/disputes-testing).
 
-> 2) Once the dispute is created in Check, you will see it mirrored in Chargehound.
+> 2) Once the dispute is created in Checkout, you will see it mirrored in Chargehound.
 
 ```sh
 curl https://api.chargehound.com/v1/disputes/{{dispute_from_step_1}} \
