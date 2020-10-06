@@ -17,6 +17,7 @@ includes:
   - webhooks
   - standalone
   - braintree_direct
+  - data_requests
 
 search: false
 
