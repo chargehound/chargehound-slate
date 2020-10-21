@@ -20,6 +20,29 @@ If you need to allowlist individual IP addresses in your firewall you can opt to
 
 To acknowledge successful receipt of a webhook, your endpoint should return a `2xx` HTTP status code. Any other information returned in the request headers or request body is ignored. All response codes outside this range, including `3xx` codes, will be treated as a failure. If a webhook is not successfully received for any reason, Chargehound will continue trying to send the webhook once every half hour for up to 3 days.
 
+## Test webhook
+
+A test webhook can be triggered from your [settings page](https://www.chargehound.com/dashboard/settings/api#webhook-settings) when adding or editing a webhook. The test webhook is intended to help you verify your webhook URL, test webhooks will only be sent when you trigger them. The test webhook "type" will always be "test", "livemode" will match the mode of the webhook, and the ID will be randomly generated.
+
+> Example request:
+
+```json
+{
+  "id": "wh_123",
+  "type": "test",
+  "object": "webhook",
+  "livemode": true
+}
+```
+
+The test webhook object is:
+
+| Field | Type | Description |
+|---------------------|---------|-----------|
+| id | string | A unique identifier for the webhook request. |
+| type | string | The event type. |
+| livemode | boolean | Is this a test or live mode webhook. |
+
 ## Dispute created
 
 Notification that Chargehound has received a new dispute from your payment processor.

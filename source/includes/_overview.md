@@ -205,6 +205,15 @@ try {
 
 When using our client libraries Chargehound also provides typed exceptions when errors are returned from the API.
 
+## Response metadata
+
+Our API responses contain a few standard metadata fields in the JSON. These fields are "object", "livemode", and "url". 
+
+"object" identifies the type of object returned by the API. Currently the object can be a ["dispute"](#the-dispute-object), "list", or ["webhook"](#webhooks). A list contains a list of other objects in the "data" field.
+
+"livemode" shows whether the API returned test or live data. The mode is determined by which API key was used to [authenticate](#authentication).
+
+"url" shows the path of the request that was made.
 
 ## Libraries
 
