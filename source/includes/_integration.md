@@ -8,6 +8,20 @@ Before you can use the Chargehound API, you will need your API keys. Your API ke
 
 In order to submit a dispute you will also need to specify the template to use. Templates are referenced by an ID. You can see a list of your organization's templates and their IDs on the [templates page](https://www.chargehound.com/dashboard/templates).
 
+## Finding dispute data
+
+The first step in responding to a dispute with Chargehound is linking the dispute to key data in your system. The exact details of this vary by payment processor and company. Here are the most common IDs you will use to link data: 
+
+- **charge**: The `charge` property of a Chargehound dispute is always the payment ID used by the payment processor. You can use this ID to look up payment data in your system.
+
+- **customer**: The `customer` property of a Chargehound dispute is always the customer ID used by the payment processor (if available). You can use this ID to look up customer data in your system.
+
+- **order_id**: `order_id` may be available in the `fields` hash of a Chargehound dispute. The availability and meaning of the `order_id` varies, in general it's an order, receipt, or payment ID. If available, you can use the `order_id` like the `charge` ID, to look up payment data in your system.
+
+The IDs above will help you out most of the time, for most payment processors. There is one more ID worth mentioning, for Adyen integrations only:
+
+- **merchant_reference**: `merchant_reference` is available in the `fields` hash of a Chargehound dispute for Adyen disputes. The `merchant_reference` ID can be used like the `charge` ID, it is a reference number for a specific payment.
+
 ## Collecting evidence
 
 Depending on the template that you want to use, you will need to collect specific evidence in order to submit a dispute. The `fields` hash on a dispute represents this evidence. Chargehound will fill some of the evidence fields automatically, but it is unlikely that we can get all the evidence we need without your help. Using the API you can identify the missing fields that represent the evidence you will need to collect yourself.
