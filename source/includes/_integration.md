@@ -8,6 +8,51 @@ Before you can use the Chargehound API, you will need your API keys. Your API ke
 
 In order to submit a dispute you will also need to specify the template to use. Templates are referenced by an ID. You can see a list of your organization's templates and their IDs on the [templates page](https://www.chargehound.com/dashboard/templates).
 
+## Linking data
+
+```javascript
+// Use the charge ID to look up payment data.
+var charge = dispute.charge
+// Order ID may help find payment data.
+var order = dispute.fields['order_id']
+```
+
+```python
+# Use the charge ID to look up payment data.
+charge = dispute.charge
+# Order ID may help find payment data.
+order = dispute.fields['order_id']
+```
+
+```ruby
+# Use the charge ID to look up payment data.
+charge = dispute.charge
+# Order ID may help find payment data.
+order = dispute.fields['order_id']
+```
+
+```go
+// Use the charge ID to look up payment data.
+charge := dispute.charge
+// Order ID may help find payment data.
+order := dispute.fields["order_id"]
+```
+
+```java
+// Use the charge ID to look up payment data.
+String charge = dispute.charge;
+// Order ID may help find payment data.
+String order = dispute.fields.get("order");
+```
+
+The first step in responding to a dispute with Chargehound is linking the dispute to key data in your system. The exact details of this vary by payment processor and company. Here are the most common IDs you will use to link data: 
+
+- **charge**: The `charge` property of a Chargehound dispute is the payment ID used by the payment processor. You can use this ID to look up payment data in your system.
+
+- **customer**: The `customer` property of a Chargehound dispute is the customer ID used by the payment processor (if available). You can use this ID to look up customer data in your system.
+
+- **order_id**: `order_id` may be available in the `fields` hash of a Chargehound dispute. The meaning of the `order_id` varies, in general it's an order, receipt, or payment ID. If available, you can use the `order_id` to look up payment data in your system.
+
 ## Collecting evidence
 
 Depending on the template that you want to use, you will need to collect specific evidence in order to submit a dispute. The `fields` hash on a dispute represents this evidence. Chargehound will fill some of the evidence fields automatically, but it is unlikely that we can get all the evidence we need without your help. Using the API you can identify the missing fields that represent the evidence you will need to collect yourself.
