@@ -15,11 +15,6 @@ In order to submit a dispute you will also need to specify the template to use. 
 var charge = dispute.charge
 // Order ID may help find payment data.
 var order = dispute.fields['order_id']
-
-// Adyen only: Reference number that was provided when initiating the payment request.
-var merchantReference = dispute.fields['merchant_reference']
-// Adyen only: Name of your merchant account that was used to process the original payment request.
-var merchantAccount = dispute.fields['merchant_account_code']
 ```
 
 ```python
@@ -27,11 +22,6 @@ var merchantAccount = dispute.fields['merchant_account_code']
 charge = dispute.charge
 # Order ID may help find payment data.
 order = dispute.fields['order_id']
-
-# Adyen only: Reference number that was provided when initiating the payment request.
-merchant_reference = dispute.fields['merchant_reference']
-# Adyen only: Name of your merchant account that was used to process the original payment request.
-merchant_account = dispute.fields['merchant_account_code']
 ```
 
 ```ruby
@@ -39,11 +29,6 @@ merchant_account = dispute.fields['merchant_account_code']
 charge = dispute.charge
 # Order ID may help find payment data.
 order = dispute.fields['order_id']
-
-# Adyen only: Reference number that was provided when initiating the payment request.
-merchant_reference = dispute.fields['merchant_reference']
-# Adyen only: Name of your merchant account that was used to process the original payment request.
-merchant_account = dispute.fields['merchant_account_code']
 ```
 
 ```go
@@ -51,11 +36,6 @@ merchant_account = dispute.fields['merchant_account_code']
 charge := dispute.charge
 // Order ID may help find payment data.
 order := dispute.fields["order_id"]
-
-// Adyen only: Reference number that was provided when initiating the payment request.
-merchantReference := dispute.fields["merchant_reference"]
-// Adyen only: Name of your merchant account that was used to process the original payment request.
-merchantAccount := dispute.fields["merchant_account_code]
 ```
 
 ```java
@@ -63,26 +43,15 @@ merchantAccount := dispute.fields["merchant_account_code]
 String charge = dispute.charge;
 // Order ID may help find payment data.
 String order = dispute.fields.get("order");
-
-// Adyen only: Reference number that was provided when initiating the payment request.
-String referenceNumber = dispute.fields.get("merchant_reference");
-// Adyen only: Name of your merchant account that was used to process the original payment request.
-String merchantAccount = dispute.fields.get("merchant_account_code");
 ```
 
 The first step in responding to a dispute with Chargehound is linking the dispute to key data in your system. The exact details of this vary by payment processor and company. Here are the most common IDs you will use to link data: 
 
-- **charge**: The `charge` property of a Chargehound dispute is always the payment ID used by the payment processor. You can use this ID to look up payment data in your system.
+- **charge**: The `charge` property of a Chargehound dispute is the payment ID used by the payment processor. You can use this ID to look up payment data in your system.
 
-- **customer**: The `customer` property of a Chargehound dispute is always the customer ID used by the payment processor (if available). You can use this ID to look up customer data in your system.
+- **customer**: The `customer` property of a Chargehound dispute is the customer ID used by the payment processor (if available). You can use this ID to look up customer data in your system.
 
 - **order_id**: `order_id` may be available in the `fields` hash of a Chargehound dispute. The meaning of the `order_id` varies, in general it's an order, receipt, or payment ID. If available, you can use the `order_id` to look up payment data in your system.
-
-The IDs above will help you out most of the time, for most payment processors. There are a couple more IDs worth mentioning, for Adyen integrations only:
-
-- **merchant_reference**: `merchant_reference` is available in the `fields` hash of a Chargehound dispute for Adyen disputes. The `merchant_reference` ID can be used like the `charge` ID, it is a reference number for a specific payment.
-
-- **merchant_account_code**: `merchant_account_code` is available in the `fields` hash of a Chargehound dispute for Adyen disputes. The `merchant_account_code` ID can be used to identify the Adyen merchant accout for the dispute and its payment.
 
 ## Collecting evidence
 
