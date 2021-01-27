@@ -13,7 +13,7 @@ POST /v1/personal-data/retrieve
 > Example request:
 
 ```sh
-curl http://localhost:3030/v1/personal-data/retrieve \
+curl https://api.chargehound.com/v1/personal-data/retrieve \
   -u test_123: \
   -d email="susie@example.com" \
   -d name="Susie Chargeback" \
@@ -59,7 +59,7 @@ POST /v1/personal-data/remove
 > Example request:
 
 ```sh
-curl http://localhost:3030/v1/personal-data/remove \
+curl https://api.chargehound.com/v1/personal-data/remove \
   -u test_123: \
   -d email="susie@example.com" \
   -d name="Susie Chargeback" \
