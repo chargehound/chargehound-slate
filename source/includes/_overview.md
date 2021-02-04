@@ -76,6 +76,16 @@ Chargehound uses conventional HTTP response codes to indicate success or failure
 | 404 - Not Found | Resource could note be found. |
 | 500 - Server Error | Something went wrong on Chargehound's end. |
 
+### Error details
+
+An API error has a few standard fields in the "error" JSON object. These fields are "status", "message", and "type". 
+
+"status" is the HTTP status code of the error.
+
+"message" is a description of the error. This is the place to look when debugging.
+
+"type" is a structured error type. One of `authentication`, `not_found`, or `invalid_request`. 
+
 ### Handling errors
 
 ```javascript
@@ -204,16 +214,6 @@ try {
 ```
 
 When using our client libraries Chargehound also provides typed exceptions when errors are returned from the API.
-
-### Error details
-
-An API error has a few standard fields in the "error" JSON. These fields are "status", "message", and "type". 
-
-"status" is the HTTP status code of the error.
-
-"message" is a description of the error. This is the place to look when debugging.
-
-"type" is a structured error type. One of `authentication`, `not_found`, or `invalid_request`. 
 
 ## Response metadata
 
