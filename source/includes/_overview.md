@@ -57,7 +57,7 @@ If you are setting authentication in the HTTP Headers with the form `Authorizati
   "error": {
     "status": 404,
     "message": "A dispute with id 'puppy' was not found",
-    "type": "not_found"
+    "type": "dispute_not_found"
   }
 }
 ```
