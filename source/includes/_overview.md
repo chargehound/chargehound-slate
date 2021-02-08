@@ -56,7 +56,8 @@ If you are setting authentication in the HTTP Headers with the form `Authorizati
   "livemode": false,
   "error": {
     "status": 404,
-    "message": "A dispute with id 'puppy' was not found"
+    "message": "A dispute with id 'puppy' was not found",
+    "type": "dispute_not_found"
   }
 }
 ```
@@ -76,7 +77,36 @@ Chargehound uses conventional HTTP response codes to indicate success or failure
 | 404 - Not Found | Resource could note be found. |
 | 500 - Server Error | Something went wrong on Chargehound's end. |
 
-### Handling errors
+### Error details
+
+An API error has a few standard fields in the "error" JSON object. These fields are "status", "message", and "type". 
+
+"status" is the HTTP status code of the error.
+
+"message" is a human readable description of the error. This is the place to look when debugging.
+
+"type" is a structured error type string. This can help you programmatically handle some errors.
+
+### Error types
+
+| Type | Description |
+|--------|--------|
+| authentication | Invalid API key provided.  |
+| dispute_closed | Dispute won/lost and cannot be updated. |
+| dispute_not_found | No dispute found for the given ID. |
+| dispute_overdue | Dispute overdue and cannot be submitted. |
+| dispute_submitted | Dispute already submitted and cannot be submitted again. |
+| dispute_uneditable | Dispute cannot be updated. |
+| invalid_correspondence | Invalid correspondence data. |
+| invalid_fields | Invalid fields data. |
+| invalid_past_payments | Invalid past payments data. |
+| invalid_products | Invalid products data. |
+| invalid_request | The request data was invalid or incomplete. |
+| missing_fields | Missing fields required by template. |
+| missing_template | Template not set for dispute. |
+| template_not_found | No template found for the given ID. |
+
+## Handling errors
 
 ```javascript
 var Chargehound = require('chargehound')('test_123')
