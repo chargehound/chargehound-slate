@@ -55,23 +55,15 @@ The first step in responding to a dispute with Chargehound is linking the disput
 
 ## Collecting evidence
 
-Depending on the template that you want to use, you will need to collect specific evidence in order to submit a dispute. The `fields` hash on a dispute represents this evidence. Chargehound will fill some of the evidence fields automatically, but it is unlikely that we can get all the evidence we need without your help. Using the API you can identify the missing fields that represent the evidence you will need to collect yourself.
+You will need to collect specific evidence in order to submit a dispute. The `fields` hash on a dispute represents this evidence. The exact fields depend on your template. To understand the data you will need to collect, go to the [templates page](https://www.chargehound.com/dashboard/templates) and click "View details" to see customized documentation for a template. 
 
-When your organization first connected to your payment processor, Chargehound likely imported your current queue of disputes needing response. In order to figure out what evidence you need to collect we will need to look at one of these real disputes, but don't worry, we aren't going to submit the dispute yet. List your disputes using the [list endpoint](#retrieving-a-list-of-disputes), and choose one.
+On the template page, click the "Fields" tab to see the overall list of fields for the template. "Required Fields" fields are needed to submit a response with the template. "Optional Fields" represent additional information that is good to have, but not necessary. You should set a value for as many of the optional fields as possible, but they are not required to submit a response.
 
-Once you have chosen a dispute, choose the template that you want to use and copy its ID. Next, attach the template to the dispute using the [update endpoint](#updating-a-dispute). In the response body look for the `missing_fields` hash. The `missing_fields` hash shows which fields are still needed in order to submit the dispute with the chosen template. Now you can figure out how to collect the required evidence.
-
-If you don't have a real dispute for reference, go to the [templates page](https://www.chargehound.com/dashboard/templates) and view the customized documentation for a template.
-
-## Optional fields
-
-In the `missing_fields` hash for a dispute you will see that fields have a `required` property. Required fields must be set to a value in order to submit a response with the chosen template. Optional fields represent additional information that is good to have, but not necessary. You should set a value for as many of the optional fields as possible, but they are not required to submit a response.
-
-The required and optional fields for a template are also listed on the template's detail page. To view that list, go to the [templates page](https://www.chargehound.com/dashboard/templates), click "View details" for the template, and then click the "Fields" tab.
+Click on the template's "Integration" tab to see an example of how to update the fields and submit the dispute using Chargehound's API. Chargehound will fill some of the evidence fields automatically, but it is unlikely that we can get all the evidence we need without your help. The "Collecting Evidence" tool helps you check what fields you will need to collect.
 
 ## Formatting fields
 
-When submitting evidence you will encounter a few different types of fields in the `missing_fields` hash. Currently Chargehound templates can have `text`, `date`, `number`, `amount` `url`, and `email` fields, and each type is validated differently. Here's a breakdown of what Chargehound expects for each type:
+You will encounter a few different types of fields. To view the types of your fields, use the "Fields" tab of the template page described [above](#collecting-evidence). Currently Chargehound templates can have `text`, `date`, `number`, `amount` `url`, and `email` fields, and each type is validated differently. Here's a breakdown of what Chargehound expects for each type:
 
 | Field  | Type   | Validation |
 |--------|--------|------------|
