@@ -57,7 +57,7 @@ The first step in responding to a dispute with Chargehound is linking the disput
 
 You will need to collect specific evidence in order to submit a dispute. The `fields` hash on a dispute represents this evidence. The exact fields depend on your template. To understand the data you will need to collect, go to the [templates page](https://www.chargehound.com/dashboard/templates) and click "View details" to see customized documentation for a template. 
 
-On the template page, click the "Fields" tab to see the overall list of fields for the template. "Required Fields" fields are needed to submit a response with the template. "Optional Fields" represent additional information that is good to have, but not necessary. You should set a value for as many of the optional fields as possible, but they are not required to submit a response.
+On the template page, click the "Fields" tab to see the overall list of fields for the template. Required fields are needed to submit a response with the template. Optional fields represent additional information that is good to have, but not necessary. You should set a value for as many of the optional fields as possible, but they are not required to submit a response.
 
 Click on the template's "Integration" tab to see an example of how to update the fields and submit the dispute using Chargehound's API. Chargehound will fill some of the evidence fields automatically, but it is unlikely that we can get all the evidence we need without your help. The "Collecting Evidence" tool helps you check what fields you will need to collect.
 
