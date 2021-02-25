@@ -93,7 +93,7 @@ If you connected a Braintree account, Chargehound can automaticaly collect data 
 
 ## Workflow rules and automation
 
-Chargehound has a number of workflow automation rules that can act on a dispute using its data. You can view those [here](https://www.chargehound.com/dashboard/settings/workflow). Instead of coding all of the logic to decide what to do with a dispute, it often makes more sense to send as much data as possible for a dispute, and then a dashboard user can manage the rules to automate the workflow. For example, instead of setting a template on each of your submit API calls, you can use the [Template Select](https://www.chargehound.com/dashboard/settings/workflow#template-select) workflow rules in the dashboard. By using the rules, you can avoid writing and maintaining code.
+Chargehound has a number of workflow automation rules that can act on a dispute using its data. You can view those [here](https://www.chargehound.com/dashboard/settings/workflow). Instead of coding all of the logic to decide what to do with a dispute, it often makes more sense to send as much data as possible for a dispute, and then a dashboard user can manage the rules to automate the workflow. For example, instead of setting a template on each of your submit API calls, you can use the [Template Select](https://www.chargehound.com/dashboard/settings/workflow#template-select) workflow rules in the dashboard. By using the rules, you can avoid writing and maintaining code when you need to make changes to your workflow or add a new template.
 
 ## Queue settings
 
