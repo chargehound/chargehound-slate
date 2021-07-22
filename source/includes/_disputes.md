@@ -865,7 +865,7 @@ curl -X PUT https://api.chargehound.com/v1/disputes/dp_123 \
   -d products="[{
                    \"name\" : \"Saxophone\",
                    \"description\" : \"Alto saxophone, with carrying case\",
-                   \"image\" : \"http://s3.amazonaws.com/chargehound/saxophone.png\",
+                   \"image\" : \"https://static.chargehound.com/saxophone.png\",
                    \"sku\" : \"17283001272\",
                    \"quantity\" : 1,
                    \"amount\" : 20000,
@@ -875,7 +875,7 @@ curl -X PUT https://api.chargehound.com/v1/disputes/dp_123 \
                 },{
                    \"name\" : \"Milk\",
                    \"description\" : \"Semi-skimmed Organic\",
-                   \"image\" : \"http://s3.amazonaws.com/chargehound/milk.png\",
+                   \"image\" : \"https://static.chargehound.com/milk.png\",
                    \"sku\" : \"26377382910\",
                    \"quantity\" : \"64oz\",
                    \"amount\" : 400,
@@ -894,7 +894,7 @@ chargehound.Disputes.update('dp_123', {
   products: [{
     'name': 'Saxophone',
     'description': 'Alto saxophone, with carrying case',
-    'image': 'http://s3.amazonaws.com/chargehound/saxophone.png',
+    'image': 'https://static.chargehound.com/saxophone.png',
     'sku': '17283001272',
     'quantity': 1,
     'amount': 20000,
@@ -904,7 +904,7 @@ chargehound.Disputes.update('dp_123', {
   },{
     'name': 'Milk',
     'description': 'Semi-skimmed Organic',
-    'image': 'http://s3.amazonaws.com/chargehound/milk.png',
+    'image': 'https://static.chargehound.com/milk.png',
     'sku': '26377382910',
     'quantity': '64oz',
     'amount': 400,
@@ -925,7 +925,7 @@ chargehound.Disputes.update('dp_123',
   products=[{
      'name': 'Saxophone',
      'description': 'Alto saxophone, with carrying case',
-     'image': 'http://s3.amazonaws.com/chargehound/saxophone.png',
+     'image': 'https://static.chargehound.com/saxophone.png',
      'sku': '17283001272',
      'quantity': 1,
      'amount': 20000,
@@ -935,7 +935,7 @@ chargehound.Disputes.update('dp_123',
   }, {
      'name': 'Milk',
      'description': 'Semi-skimmed Organic',
-     'image': 'http://s3.amazonaws.com/chargehound/milk.png',
+     'image': 'https://static.chargehound.com/milk.png',
      'sku': '26377382910',
      'quantity': '64oz',
      'amount': 400,
@@ -954,19 +954,19 @@ Chargehound::Disputes.update('dp_123',
   products: [{
      'name' => 'Saxophone',
      'description' => 'Alto saxophone, with carrying case',
-     'image' => 'http =>//s3.amazonaws.com/chargehound/saxophone.png',
+     'image' => 'https://static.chargehound.com/saxophone.png',
      'sku' => '17283001272',
      'quantity' => 1,
      'amount' => 20000,
-     'url' => 'http =>//www.example.com'
+     'url' => 'https://www.example.com'
   },{
      'name' => 'Milk',
      'description' => 'Semi-skimmed Organic',
-     'image' => 'http =>//s3.amazonaws.com/chargehound/milk.png',
+     'image' => 'https://static.chargehound.com/milk.png',
      'sku' => '26377382910',
      'quantity' => '64oz',
      'amount' => 400,
-     'url' => 'http =>//www.example.com'
+     'url' => 'https://www.example.com'
   }]
 )
 ```
@@ -984,7 +984,7 @@ params := chargehound.UpdateDisputeParams{
     {
       Name:                   "Saxophone",
       Description:            "Alto saxophone, with carrying case",
-      Image:                  "http://s3.amazonaws.com/chargehound/saxophone.png",
+      Image:                  "http://static.chargehound.com/saxophone.png",
       Sku:                    "17283001272",
       Quantity:               1,
       Amount:                 20000,
@@ -995,7 +995,7 @@ params := chargehound.UpdateDisputeParams{
     {
       Name:                   "Milk",
       Description:            "Semi-skimmed Organic",
-      Image:                  "http://s3.amazonaws.com/chargehound/milk.png",
+      Image:                  "http://static.chargehound.com/milk.png",
       Sku:                    "26377382910",
       Quantity:               "64oz",
       Amount:                 400,
@@ -1019,7 +1019,7 @@ Chargehound chargehound = new Chargehound("test_123");
 Product saxophoneProduct = new Product.Builder()
   .name("Saxophone")
   .description("Alto saxophone, with carrying case")
-  .image("http://s3.amazonaws.com/chargehound/saxophone.png")
+  .image("http://static.chargehound.com/saxophone.png")
   .sku("17283001272")
   .quantity(1)
   .amount(20000)
@@ -1031,7 +1031,7 @@ Product saxophoneProduct = new Product.Builder()
 Product milkProduct = new Product.Builder()
   .name("Milk")
   .description("Semi-skimmed Organic")
-  .image("http://s3.amazonaws.com/chargehound/milk.png")
+  .image("http://static.chargehound.com/milk.png")
   .sku("26377382910")
   .quantity("64oz")
   .amount(400)
