@@ -70,7 +70,7 @@ The webhook object is:
 
 ## Dispute updated
 
-Notification that a dispute has been updated.
+Notification that a dispute has been edited or updated in Chargehound.
 
 > Example request:
 
@@ -95,7 +95,7 @@ The webhook object is:
 
 ## Dispute submitted
 
-Notification that a dispute has been submitted.
+Notification that a dispute has been submitted by Chargehound.
 
 > Example request:
 
@@ -118,9 +118,34 @@ The webhook object is:
 | livemode | boolean | Is this a test or live mode dispute. |
 | dispute | string | The id of the dispute. |
 
+## Dispute state updated
+
+Notification that a dispute has changed state.
+
+> Example request:
+
+```json
+{
+  "id": "wh_123",
+  "type": "dispute.state_updated",
+  "object": "webhook",
+  "livemode": true,
+  "dispute": "dp_123"
+}
+```
+
+The webhook object is:
+
+| Field | Type | Description |
+|---------------------|---------|-----------|
+| id | string | A unique identifier for the webhook request. |
+| type | string | The event type. |
+| livemode | boolean | Is this a test or live mode dispute. |
+| dispute | string | The id of the dispute. |
+
 ## Dispute closed
 
-Notification that a dispute was closed (`won`, `lost`, `charge_refunded`, or `warning_closed`).
+Notification that a dispute was closed (`won`, `lost`, `charge_refunded`, or `warning_closed`). This webhook is only sent for disputes that were submitted by Chargehound. For other disputes, use the `dispute.state_updated` event.
 
 > Example request:
 
