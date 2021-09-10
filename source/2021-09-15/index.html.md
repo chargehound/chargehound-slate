@@ -14,13 +14,13 @@ includes:
   - versioning
   - disputes
   - integration
-  - 2020-02-28/webhooks
+  - webhooks
   - standalone
   - braintree_direct
   - data_requests
 
 search: false
 
-version: 2020-02-28
+version: 2021-09-15
 
 ---

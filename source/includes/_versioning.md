@@ -76,6 +76,12 @@ chargehound.setApiVersion("YYYY-MM-DD");
 
 ## Changelog
 
+### Version 2021-09-15
+
+In this API version, we changed the behavior of the webhook `dispute.closed` event.
+
+In older versions, a `dispute.closed` notification would only be sent if Chargehound submitted the dispute. Starting with this version, the `dispute.closed` notification will be sent for all closed, whether Chargehound submitted evidence or not.
+
 ### Version 2020-02-28
 
 In this API version, we changed the behavior of the accept filters and the `accepted` state.
@@ -104,6 +110,7 @@ In this API version, we’ve cleaned up some attribute names in order to make th
 
 Documentation is available for all releases:
 
-* [2020-02-28 (Latest)](../2020-02-28/)
+* [2021-09-15 (Latest)](../2021-09-15/)
+* [2020-02-28](../2020-02-28/)
 * [2017-10-30](../2017-10-30/)
 * [2016-03-05](../2016-03-05/)
