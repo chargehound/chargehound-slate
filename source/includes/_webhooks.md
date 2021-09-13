@@ -70,7 +70,7 @@ The webhook object is:
 
 ## Dispute updated
 
-Notification that a dispute has been updated or edited in Chargehound. E.g. a field was added or updated.
+Notification that a dispute has been updated or edited in Chargehound.
 
 > Example request:
 
