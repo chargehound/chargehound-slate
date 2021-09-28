@@ -80,7 +80,7 @@ chargehound.setApiVersion("YYYY-MM-DD");
 
 In this API version, we changed the behavior of the webhook `dispute.closed` event.
 
-In older versions, a `dispute.closed` notification would only be sent if Chargehound submitted the dispute. Starting with this version, the `dispute.closed` notification will be sent for all closed, whether Chargehound submitted evidence or not.
+In older versions, a `dispute.closed` notification would only be sent if Chargehound submitted the dispute. Starting with this version, the `dispute.closed` notification will be sent for all closed disputes, whether Chargehound submitted evidence or not.
 
 ### Version 2020-02-28
 
