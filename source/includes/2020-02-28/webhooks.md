@@ -120,7 +120,7 @@ The webhook object is:
 
 ## Dispute closed
 
-Notification that a dispute was closed (`won`, `lost`, `charge_refunded`, or `warning_closed`).
+Notification that a dispute that was submitted by Chargehound was closed (`won`, `lost`, `charge_refunded`, or `warning_closed`).
 
 > Example request:
 
