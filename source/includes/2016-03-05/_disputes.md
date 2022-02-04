@@ -35,9 +35,9 @@ A dispute object is:
 | customer_email       | string     | Email of the customer (if any).                                                      |
 | customer_purchase_ip | string     | IP of purchase (if available).                                                              |
 | address_zip          | string     | Billing address zip of the charge.                                                          |
-| address_line1_check  | string     | State of address check (if available). One of `pass`, `fail`, `unavailable`, `checked`.     |
-| address_zip_check    | string     | State of address zip check (if available). One of `pass`, `fail`, `unavailable`, `checked`. |
-| cvc_check            | string     | State of cvc check (if available). One of `pass`, `fail`, `unavailable`, `checked`.         |
+| address_line1_check  | string     | State of address check (if available). One of `pass`, `fail`, `unavailable`, `unchecked`.     |
+| address_zip_check    | string     | State of address zip check (if available). One of `pass`, `fail`, `unavailable`, `unchecked`. |
+| cvc_check            | string     | State of cvc check (if available). One of `pass`, `fail`, `unavailable`, `unchecked`.         |
 | statement_descriptor | string     | The descriptor that appears on the customer's credit card statement for this change.        |
 | account_id           | string     | The account id for Connected accounts that are charged directly through Stripe (if any). (See [Stripe charging directly](#stripe-charging-directly) for details.) |
 | created              | string     | ISO 8601 timestamp - when the dispute was created in Chargehound. |

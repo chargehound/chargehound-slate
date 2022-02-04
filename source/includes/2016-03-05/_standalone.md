@@ -258,9 +258,9 @@ chargehound.disputes.create(
 | reversal_total | integer | optional | The total amount of the dispute balance withdrawal (with fee). Amounts are in cents (or other minor currency unit.) |
 | is_charge_refundable | boolean | optional | Is the disputed charge refundable. |
 | submitted_count | integer | optional | How many times has dispute evidence been submitted. |
-| address_line1_check | string | optional | State of address check (if available). One of `pass`, `fail`, `unavailable`, `checked`. |
-| address_zip_check | string | optional | State of address zip check (if available). One of `pass`, `fail`, `unavailable`, `checked`. |
-| cvc_check | string | optional | State of cvc check (if available). One of `pass`, `fail`, `unavailable`, `checked`. |
+| address_line1_check | string | optional | State of address check (if available). One of `pass`, `fail`, `unavailable`, `unchecked`. |
+| address_zip_check | string | optional | State of address zip check (if available). One of `pass`, `fail`, `unavailable`, `unchecked`. |
+| cvc_check | string | optional | State of cvc check (if available). One of `pass`, `fail`, `unavailable`, `unchecked`. |
 | template | string     | optional | The id of the template to use. |
 | fields | dictionary | optional | Key value pairs to hydrate the template's evidence fields. |
 | products | array | optional | List of products the customer purchased. (See [Product data](#product-data) for details.) |
