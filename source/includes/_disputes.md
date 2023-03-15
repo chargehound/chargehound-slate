@@ -1377,7 +1377,7 @@ params := chargehound.UpdateDisputeParams{
       DeviceId: "ABCD",
       UserId: "chargehound@example.com",
       IPAddress: "127.0.0.1",
-      ShippingAddress': "2211 N First Street",  
+      ShippingAddress: "2211 N First Street",  
     },
     {
       ID: "ch_2",
@@ -1387,7 +1387,7 @@ params := chargehound.UpdateDisputeParams{
       DeviceId: "ABCD",
       UserId: "chargehound@example.com",
       IPAddress: "127.0.0.1",
-      ShippingAddress': "2211 N First Street",
+      ShippingAddress: "2211 N First Street",
     },
   },
 }
@@ -1444,8 +1444,8 @@ chargehound.disputes.update("dp_123",
 | amount     | integer | required | The amount of the transaction, in cents (or other minor currency unit.) |
 | currency   | string | required | A 3 character ISO currency code.                                        |
 | charged_at | string or integer | required | The date of the transaction, as a formatted string or Unix timestamp.   |
-| device_id  | string | optional | The unique device_id of the buyer                                       |
-| user_id    | string | optional | The username or email address of the buyer                              |
+| device_id  | string | optional | The unique device ID of the buyer                                       |
+| user_id    | string | optional | The user login or email address of the buyer                              |
 | ip_address | string | optional | The IP Address of the buyer device                                      |
 | shipping_address | string | optional | The shipping address of the transaction                           |
 ## Manual review

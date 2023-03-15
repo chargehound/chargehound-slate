@@ -1,11 +1,4 @@
 # Changelog
-## Version 2.13.0
-
-*March 31, 2023*
-
-* Added new optional fields in past payment as per VISA 3.0 requirements
-* New optional fields: user_id, device_id, ip_address, shipping_address
-
 ## Version 2.13.1
 
 *January 31, 2023*
