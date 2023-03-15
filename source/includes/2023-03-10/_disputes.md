@@ -1259,19 +1259,11 @@ curl -X PUT https://api.chargehound.com/v1/disputes/dp_123 \
        \"amount\": 20000, \
        \"currency\": \"usd\", \
        \"charged_at\": \"2019-09-10 10:18:41PM UTC\" \
-       \"device_id\": \"ABCD\" \
-       \"user_id\": \"chargehound@example.com\" \
-       \"ip_address\": \"127.0.0.1\" \
-       \"shipping_address\": \"2211 N First Street\" \
      }, { \
        \"id\": \"ch_2\", \
        \"amount\": 50000, \
        \"currency\": \"usd\", \
        \"charged_at\": \"2019-09-03 10:18:41PM UTC\" \
-       \"device_id\": \"ABCD\" \
-       \"user_id\": \"chargehound@example.com\" \
-       \"ip_address\": \"127.0.0.1\" \
-       \"shipping_address\": \"2211 N First Street\" \
      }]"
 ```
 
@@ -1285,20 +1277,12 @@ chargehound.Disputes.update('dp_123', {
     'id': 'ch_1',
     'amount': 20000,
     'currency': 'usd',
-    'charged_at': '2019-09-10 11:09:41PM UTC',
-    'device_id': 'ABCD',
-    'user_id': 'chargehound@example.com',
-    'ip_address': '127.0.0.1',
-    'shipping_address': '2211 N First Street'
+    'charged_at': '2019-09-10 11:09:41PM UTC'
   }, {
     'id': 'ch_2',
     'amount': 50000,
     'currency': 'usd',
-    'charged_at': '2019-09-03 11:09:41PM UTC',
-    'device_id': 'ABCD',
-    'user_id': 'chargehound@example.com',
-    'ip_address': '127.0.0.1',
-    'shipping_address': '2211 N First Street'
+    'charged_at': '2019-09-03 11:09:41PM UTC'
   }]
 }, function (err, res) {
   // ...
@@ -1314,20 +1298,12 @@ chargehound.Disputes.update('dp_123',
     'id': 'ch_1',
     'amount': 20000,
     'currency': 'usd',
-    'charged_at': '2019-09-10 11:10:06PM UTC',
-    'device_id': 'ABCD',
-    'user_id': 'chargehound@example.com',
-    'ip_address': '127.0.0.1',
-    'shipping_address': '2211 N First Street'
+    'charged_at': '2019-09-10 11:10:06PM UTC'
   }, {
     'id': 'ch_2',
     'amount': 50000,
     'currency': 'usd',
-    'charged_at': '2019-09-03 11:10:06PM UTC',
-    'device_id': 'ABCD',
-    'user_id': 'chargehound@example.com',
-    'ip_address': '127.0.0.1',
-    'shipping_address': '2211 N First Street'
+    'charged_at': '2019-09-03 11:10:06PM UTC'
   }]
 )
 ```
@@ -1341,20 +1317,12 @@ Chargehound::Disputes.update('dp_123',
     'id' => 'ch_1',
     'amount' => 20000,
     'currency' => 'usd',
-    'charged_at' => '2019-09-10 11:10:14PM UTC',
-    'device_id': 'ABCD',
-    'user_id': 'chargehound@example.com',
-    'ip_address': '127.0.0.1',
-    'shipping_address': '2211 N First Street'
+    'charged_at' => '2019-09-10 11:10:14PM UTC'
   }, {
     'id' => 'ch_2',
     'amount' => 50000,
     'currency' => 'usd',
-    'charged_at' => '2019-09-03 11:10:14PM UTC',
-    'device_id': 'ABCD',
-    'user_id': 'chargehound@example.com',
-    'ip_address': '127.0.0.1',
-    'shipping_address': '2211 N First Street'
+    'charged_at' => '2019-09-03 11:10:14PM UTC'
   }]
 )
 ```
@@ -1374,20 +1342,12 @@ params := chargehound.UpdateDisputeParams{
       Amount: 20000,
       Currency: "usd",
       ChargedAt: "2019-09-10 11:10:22PM UTC",
-      DeviceId: "ABCD",
-      UserId: "chargehound@example.com",
-      IPAddress: "127.0.0.1",
-      ShippingAddress': "2211 N First Street",  
     },
     {
       ID: "ch_2",
       Amount: 50000,
       Currency: "usd",
       ChargedAt: "2019-09-03 11:10:22PM UTC",
-      DeviceId: "ABCD",
-      UserId: "chargehound@example.com",
-      IPAddress: "127.0.0.1",
-      ShippingAddress': "2211 N First Street",
     },
   },
 }
@@ -1407,10 +1367,6 @@ PastPayment firstPayment = new PastPayment.Builder()
   .amount(20000)
   .currency("usd")
   .chargedAt("2019-09-10 11:10:47PM UTC")
-  .deviceId("ABCD")
-  .userId("chargehound@example.com")
-  .ipAddress("127.0.0.1")
-  .shippingAddress("2211 N First Street")
   .finish();
 
 PastPayment secondPayment = new PastPayment.Builder()
@@ -1418,10 +1374,6 @@ PastPayment secondPayment = new PastPayment.Builder()
   .amount(50000)
   .currency("usd")
   .chargedAt("2019-09-03 11:10:47PM UTC")
-  .deviceId("ABCD")
-  .userId("chargehound@example.com")
-  .ipAddress("127.0.0.1")
-  .shippingAddress("2211 N First Street")
   .finish();
 
 
@@ -1438,16 +1390,13 @@ chargehound.disputes.update("dp_123",
 
 ### Past payment fields
 
-| Field      | Type   | Required? | Description                                                             |
-|------------|--------|--|-------------------------------------------------------------------------|
-| id         | string | required | The ID of the transaction in your payment processor.                    |
-| amount     | integer | required | The amount of the transaction, in cents (or other minor currency unit.) |
-| currency   | string | required | A 3 character ISO currency code.                                        |
-| charged_at | string or integer | required | The date of the transaction, as a formatted string or Unix timestamp.   |
-| device_id  | string | optional | The unique device_id of the buyer                                       |
-| user_id    | string | optional | The username or email address of the buyer                              |
-| ip_address | string | optional | The IP Address of the buyer device                                      |
-| shipping_address | string | optional | The shipping address of the transaction                           |
+| Field        | Type              |  Required?  | Description   |
+| -------------|-------------------|-------------|--------------------------------------------------------------------------------|
+| id           | string            | required  |The ID of the transaction in your payment processor. |
+| amount       | integer           | required  |The amount of the transaction, in cents (or other minor currency unit.)        |
+| currency     | string            | required  |A 3 character ISO currency code. |
+| charged_at   | string or integer | required  |The date of the transaction, as a formatted string or Unix timestamp. |
+
 ## Manual review
 
 > Example usage:
