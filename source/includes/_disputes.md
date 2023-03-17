@@ -1258,19 +1258,19 @@ curl -X PUT https://api.chargehound.com/v1/disputes/dp_123 \
        \"id\": \"ch_1\", \
        \"amount\": 20000, \
        \"currency\": \"usd\", \
-       \"charged_at\": \"2019-09-10 10:18:41PM UTC\" \
-       \"device_id\": \"ABCD\" \
-       \"user_id\": \"chargehound@example.com\" \
-       \"ip_address\": \"127.0.0.1\" \
+       \"charged_at\": \"2019-09-10 10:18:41PM UTC\", \
+       \"device_id\": \"ABCD\", \
+       \"user_id\": \"chargehound@example.com\", \
+       \"ip_address\": \"127.0.0.1\", \
        \"shipping_address\": \"2211 N First Street\" \
      }, { \
        \"id\": \"ch_2\", \
        \"amount\": 50000, \
        \"currency\": \"usd\", \
-       \"charged_at\": \"2019-09-03 10:18:41PM UTC\" \
-       \"device_id\": \"ABCD\" \
-       \"user_id\": \"chargehound@example.com\" \
-       \"ip_address\": \"127.0.0.1\" \
+       \"charged_at\": \"2019-09-03 10:18:41PM UTC\", \
+       \"device_id\": \"ABCD\", \
+       \"user_id\": \"chargehound@example.com\", \
+       \"ip_address\": \"127.0.0.1\", \
        \"shipping_address\": \"2211 N First Street\" \
      }]"
 ```
