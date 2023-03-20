@@ -1262,7 +1262,7 @@ curl -X PUT https://api.chargehound.com/v1/disputes/dp_123 \
        \"device_id\": \"ABCD\", \
        \"user_id\": \"chargehound@example.com\", \
        \"ip_address\": \"127.0.0.1\", \
-       \"shipping_address\": \"2211 N First Street\" \
+       \"shipping_address\": \"2211 N First Street San Jose, CA 95413\" \
      }, { \
        \"id\": \"ch_2\", \
        \"amount\": 50000, \
@@ -1271,7 +1271,7 @@ curl -X PUT https://api.chargehound.com/v1/disputes/dp_123 \
        \"device_id\": \"ABCD\", \
        \"user_id\": \"chargehound@example.com\", \
        \"ip_address\": \"127.0.0.1\", \
-       \"shipping_address\": \"2211 N First Street\" \
+       \"shipping_address\": \"2211 N First Street San Jose, CA 95413\" \
      }]"
 ```
 
@@ -1289,7 +1289,7 @@ chargehound.Disputes.update('dp_123', {
     'device_id': 'ABCD',
     'user_id': 'chargehound@example.com',
     'ip_address': '127.0.0.1',
-    'shipping_address': '2211 N First Street'
+    'shipping_address': '2211 N First Street San Jose, CA 95413'
   }, {
     'id': 'ch_2',
     'amount': 50000,
@@ -1298,7 +1298,7 @@ chargehound.Disputes.update('dp_123', {
     'device_id': 'ABCD',
     'user_id': 'chargehound@example.com',
     'ip_address': '127.0.0.1',
-    'shipping_address': '2211 N First Street'
+    'shipping_address': '2211 N First Street San Jose, CA 95413'
   }]
 }, function (err, res) {
   // ...
@@ -1318,7 +1318,7 @@ chargehound.Disputes.update('dp_123',
     'device_id': 'ABCD',
     'user_id': 'chargehound@example.com',
     'ip_address': '127.0.0.1',
-    'shipping_address': '2211 N First Street'
+    'shipping_address': '2211 N First Street San Jose, CA 95413'
   }, {
     'id': 'ch_2',
     'amount': 50000,
@@ -1327,7 +1327,7 @@ chargehound.Disputes.update('dp_123',
     'device_id': 'ABCD',
     'user_id': 'chargehound@example.com',
     'ip_address': '127.0.0.1',
-    'shipping_address': '2211 N First Street'
+    'shipping_address': '2211 N First Street San Jose, CA 95413'
   }]
 )
 ```
@@ -1342,19 +1342,19 @@ Chargehound::Disputes.update('dp_123',
     'amount' => 20000,
     'currency' => 'usd',
     'charged_at' => '2019-09-10 11:10:14PM UTC',
-    'device_id': 'ABCD',
-    'user_id': 'chargehound@example.com',
-    'ip_address': '127.0.0.1',
-    'shipping_address': '2211 N First Street'
+    'device_id' => 'ABCD',
+    'user_id' => 'chargehound@example.com',
+    'ip_address' => '127.0.0.1',
+    'shipping_address' => '2211 N First Street San Jose, CA 95413'
   }, {
     'id' => 'ch_2',
     'amount' => 50000,
     'currency' => 'usd',
     'charged_at' => '2019-09-03 11:10:14PM UTC',
-    'device_id': 'ABCD',
-    'user_id': 'chargehound@example.com',
-    'ip_address': '127.0.0.1',
-    'shipping_address': '2211 N First Street'
+    'device_id' => 'ABCD',
+    'user_id' => 'chargehound@example.com',
+    'ip_address' => '127.0.0.1',
+    'shipping_address' => '2211 N First Street San Jose, CA 95413'
   }]
 )
 ```
@@ -1377,7 +1377,7 @@ params := chargehound.UpdateDisputeParams{
       DeviceId: "ABCD",
       UserId: "chargehound@example.com",
       IPAddress: "127.0.0.1",
-      ShippingAddress: "2211 N First Street",  
+      ShippingAddress: "2211 N First Street San Jose, CA 95413",  
     },
     {
       ID: "ch_2",
@@ -1387,7 +1387,7 @@ params := chargehound.UpdateDisputeParams{
       DeviceId: "ABCD",
       UserId: "chargehound@example.com",
       IPAddress: "127.0.0.1",
-      ShippingAddress: "2211 N First Street",
+      ShippingAddress: "2211 N First Street San Jose, CA 95413",
     },
   },
 }
@@ -1410,7 +1410,7 @@ PastPayment firstPayment = new PastPayment.Builder()
   .deviceId("ABCD")
   .userId("chargehound@example.com")
   .ipAddress("127.0.0.1")
-  .shippingAddress("2211 N First Street")
+  .shippingAddress("2211 N First Street San Jose, CA 95413")
   .finish();
 
 PastPayment secondPayment = new PastPayment.Builder()
@@ -1421,7 +1421,7 @@ PastPayment secondPayment = new PastPayment.Builder()
   .deviceId("ABCD")
   .userId("chargehound@example.com")
   .ipAddress("127.0.0.1")
-  .shippingAddress("2211 N First Street")
+  .shippingAddress("2211 N First Street San Jose, CA 95413")
   .finish();
 
 
