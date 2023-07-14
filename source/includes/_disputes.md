@@ -1245,7 +1245,7 @@ chargehound.disputes.update("dp_123",
 
 ## Past payments
 
-Showing a history of valid transactions with a customer can serve as evidence that their disputed transaction was also a valid transaction. Typically, Chargehound can automatically fetch past payments from your payment processor. <b>Generally, you do not need to set past payment information yourself.</b> 
+Showing a history of valid transactions with a customer can serve as evidence that their disputed transaction was also a valid transaction. If you are unable to include past payment details, Chargehound may be able to automatically fetch past payments from your payment processor.</b> 
 
 The past payments provided to our API should be successful, non-disputed transactions that used the same credit card as the disputed transaction. The past payment list should not include more than 10 payments. You can update the past payment history when [updating](#updating-a-dispute) or [submitting](#submitting-a-dispute) the dispute. Each payment has the following properties:
 
@@ -1260,6 +1260,7 @@ curl -X PUT https://api.chargehound.com/v1/disputes/dp_123 \
        \"currency\": \"usd\", \
        \"charged_at\": \"2019-09-10 10:18:41PM UTC\", \
        \"device_id\": \"ABCD\", \
+       \"item_description\": \"10 saxophones\", \
        \"user_id\": \"chargehound@example.com\", \
        \"ip_address\": \"127.0.0.1\", \
        \"shipping_address\": \"2211 N First Street San Jose, CA 95413\" \
@@ -1269,6 +1270,7 @@ curl -X PUT https://api.chargehound.com/v1/disputes/dp_123 \
        \"currency\": \"usd\", \
        \"charged_at\": \"2019-09-03 10:18:41PM UTC\", \
        \"device_id\": \"ABCD\", \
+       \"item_description\": \"1 gallon of semi-skimmed milk\", \
        \"user_id\": \"chargehound@example.com\", \
        \"ip_address\": \"127.0.0.1\", \
        \"shipping_address\": \"2211 N First Street San Jose, CA 95413\" \
@@ -1287,6 +1289,7 @@ chargehound.Disputes.update('dp_123', {
     'currency': 'usd',
     'charged_at': '2019-09-10 11:09:41PM UTC',
     'device_id': 'ABCD',
+    'item_description': '10 saxophones',
     'user_id': 'chargehound@example.com',
     'ip_address': '127.0.0.1',
     'shipping_address': '2211 N First Street San Jose, CA 95413'
@@ -1296,6 +1299,7 @@ chargehound.Disputes.update('dp_123', {
     'currency': 'usd',
     'charged_at': '2019-09-03 11:09:41PM UTC',
     'device_id': 'ABCD',
+    'item_description': '1 gallon of semi-skimmed milk',
     'user_id': 'chargehound@example.com',
     'ip_address': '127.0.0.1',
     'shipping_address': '2211 N First Street San Jose, CA 95413'
@@ -1316,6 +1320,7 @@ chargehound.Disputes.update('dp_123',
     'currency': 'usd',
     'charged_at': '2019-09-10 11:10:06PM UTC',
     'device_id': 'ABCD',
+    'item_description': '10 saxophones',
     'user_id': 'chargehound@example.com',
     'ip_address': '127.0.0.1',
     'shipping_address': '2211 N First Street San Jose, CA 95413'
@@ -1325,6 +1330,7 @@ chargehound.Disputes.update('dp_123',
     'currency': 'usd',
     'charged_at': '2019-09-03 11:10:06PM UTC',
     'device_id': 'ABCD',
+    'item_description': '1 gallon of semi-skimmed milk',
     'user_id': 'chargehound@example.com',
     'ip_address': '127.0.0.1',
     'shipping_address': '2211 N First Street San Jose, CA 95413'
@@ -1343,6 +1349,7 @@ Chargehound::Disputes.update('dp_123',
     'currency' => 'usd',
     'charged_at' => '2019-09-10 11:10:14PM UTC',
     'device_id' => 'ABCD',
+    'item_description' => '10 saxophones',
     'user_id' => 'chargehound@example.com',
     'ip_address' => '127.0.0.1',
     'shipping_address' => '2211 N First Street San Jose, CA 95413'
@@ -1352,6 +1359,7 @@ Chargehound::Disputes.update('dp_123',
     'currency' => 'usd',
     'charged_at' => '2019-09-03 11:10:14PM UTC',
     'device_id' => 'ABCD',
+    'item_description' => '1 gallon of semi-skimmed milk',
     'user_id' => 'chargehound@example.com',
     'ip_address' => '127.0.0.1',
     'shipping_address' => '2211 N First Street San Jose, CA 95413'
@@ -1375,6 +1383,7 @@ params := chargehound.UpdateDisputeParams{
       Currency: "usd",
       ChargedAt: "2019-09-10 11:10:22PM UTC",
       DeviceId: "ABCD",
+      ItemDescription: "10 saxophones",
       UserId: "chargehound@example.com",
       IPAddress: "127.0.0.1",
       ShippingAddress: "2211 N First Street San Jose, CA 95413",  
@@ -1385,6 +1394,7 @@ params := chargehound.UpdateDisputeParams{
       Currency: "usd",
       ChargedAt: "2019-09-03 11:10:22PM UTC",
       DeviceId: "ABCD",
+      ItemDescription: "1 gallon of semi-skimmed milk",
       UserId: "chargehound@example.com",
       IPAddress: "127.0.0.1",
       ShippingAddress: "2211 N First Street San Jose, CA 95413",
@@ -1408,6 +1418,7 @@ PastPayment firstPayment = new PastPayment.Builder()
   .currency("usd")
   .chargedAt("2019-09-10 11:10:47PM UTC")
   .deviceId("ABCD")
+  .itemDescription("10 saxophones")
   .userId("chargehound@example.com")
   .ipAddress("127.0.0.1")
   .shippingAddress("2211 N First Street San Jose, CA 95413")
@@ -1419,6 +1430,7 @@ PastPayment secondPayment = new PastPayment.Builder()
   .currency("usd")
   .chargedAt("2019-09-03 11:10:47PM UTC")
   .deviceId("ABCD")
+  .itemDescription("1 gallon of semi-skimmed milk")
   .userId("chargehound@example.com")
   .ipAddress("127.0.0.1")
   .shippingAddress("2211 N First Street San Jose, CA 95413")
@@ -1438,16 +1450,17 @@ chargehound.disputes.update("dp_123",
 
 ### Past payment fields
 
-| Field      | Type   | Required? | Description                                                             |
-|------------|--------|--|-------------------------------------------------------------------------|
-| id         | string | required | The ID of the transaction in your payment processor.                    |
-| amount     | integer | required | The amount of the transaction, in cents (or other minor currency unit.) |
-| currency   | string | required | A 3 character ISO currency code.                                        |
-| charged_at | string or integer | required | The date of the transaction, as a formatted string or Unix timestamp.   |
-| device_id  | string | optional | The unique device ID of the buyer                                       |
-| user_id    | string | optional | The user login or email address of the buyer                              |
-| ip_address | string | optional | The IP Address of the buyer device                                      |
-| shipping_address | string | optional | The shipping address of the transaction                           |
+| Field            | Type   | Required? | Description                                                             |
+|------------------|--------|--|-------------------------------------------------------------------------|
+| id               | string | required | The ID of the transaction in your payment processor.                    |
+| amount           | integer | required | The amount of the transaction, in cents (or other minor currency unit.) |
+| currency         | string | required | A 3 character ISO currency code.                                        |
+| charged_at       | string or integer | required | The date of the transaction, as a formatted string or Unix timestamp.   |
+| device_id        | string | optional | The unique device ID of the buyer                                       |
+| item_description | string | optional | The description or name of the item purchased                           |
+| user_id          | string | optional | The user login or email address of the buyer                            |
+| ip_address       | string | optional | The IP Address of the buyer device                                      |
+| shipping_address | string | optional | The shipping address of the transaction                                 |
 ## Manual review
 
 > Example usage:
