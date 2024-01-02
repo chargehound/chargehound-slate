@@ -15,8 +15,10 @@ RUN apt-get update \
     && gem install bundler \
     && bundle install \
     && apt-get remove -y build-essential git \
-    && apt-get autoremove -y \
-    && rm -rf /var/lib/apt/lists/*
+    && apt-get autoremove -y
+
+RUN apt-get install libc6 -y
+RUN rm -rf /var/lib/apt/lists/*
 
 COPY . /srv/slate
 
