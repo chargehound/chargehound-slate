@@ -10,7 +10,7 @@ A dispute object is:
 | Field                | Type       | Description                                                                                             |
 | ---------------------|------------|---------------------------------------------------------------------------------------------------------|
 | id                   | string     | A unique identifier for the dispute. This id is set by the payment processor of the dispute.            |
-| state                | string     | State of the dispute. One of `needs_response`,`submitted`, `under_review`, `won`, `lost`, `warning_needs_response`, `warning_under_review`, `warning_closed` , `response_disabled`, `charge_refunded`, `requires_review`, `accepted`, `queued`. |
+| state                | string     | State of the dispute. One of `needs_response`,`compiling_evidence`,`submitted`, `under_review`, `won`, `lost`, `warning_needs_response`, `warning_under_review`, `warning_closed` , `response_disabled`, `charge_refunded`, `requires_review`, `accepted`, `queued`. |
 | reason               | string     | Reason for the dispute. One of `general`, `fraudulent`, `duplicate`, `subscription_canceled`, `product_unacceptable`, `product_not_received`, `unrecognized`, `credit_not_processed`, `incorrect_account_details`, `insufficient_funds`, `bank_cannot_process`, `debit_not_authorized`, `goods_services_returned_or_refused`, `goods_services_cancelled`, `transaction_amount_differs`, `retrieved`, `customer_initiated` | 
 | charged_at           | string     | ISO 8601 timestamp - when the charge was made.                                                          |
 | disputed_at          | string     | ISO 8601 timestamp - when the charge was disputed.                                                      |
@@ -42,8 +42,8 @@ A dispute object is:
 | account_id           | string     | The account id for accounts that are charged directly through Stripe (if any). (See [Stripe charging directly](#stripe-charging-directly) for details.) |
 | created              | string     | ISO 8601 timestamp - when the dispute was created in Chargehound.                                       |
 | updated              | string     | ISO 8601 timestamp - when the dispute was last updated in Chargehound.                                  |
-| source               | string     | The source of the dispute. One of `mock`, `api`, `braintree`, `vantiv`, `adyen`, `worldpay`, `paypal`, `amex`, 'checkout', or `stripe` |
-| processor            | string     | The payment processor of the dispute. One of `braintree`, `vantiv`, `adyen`, `worldpay`, `paypal`, `amex`, 'checkout', or `stripe`     |
+| source               | string     | The source of the dispute. One of `mock`, `api`, `braintree`, `vantiv`, `adyen`, `worldpay`, `paypal`, `amex`, `checkout`, or `stripe` |
+| processor            | string     | The payment processor of the dispute. One of `braintree`, `vantiv`, `adyen`, `worldpay`, `paypal`, `amex`, `checkout`, or `stripe`     |
 | kind                 | string     | The kind of the dispute. One of `chargeback`, `pre_arbitration` or `retrieval`                          |
 | account              | string     | The Id of the connected account for this dispute.                                                       |
 | reference_url        | string     | Custom URL with dispute information, such as the dispute or charge in your company dashboard.           |
