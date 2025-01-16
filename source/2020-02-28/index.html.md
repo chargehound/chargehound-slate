@@ -21,6 +21,6 @@ includes:
 
 search: false
 
-version: 2020-02-28
+version: "2020-02-28"
 
 ---

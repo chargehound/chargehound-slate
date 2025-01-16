@@ -1,4 +1,14 @@
 # Changelog
+
+## Version 2.14.0
+
+*January 16, 2025*
+
+* Updated ruby version from 3.1.6 to 3.2.2
+* Updated bundler version from 2.2.22 to 2.6.2
+* Fix date format in HTML files.
+* Updated Github workflows to use bumped ruby version.
+
 ## Version 2.13.1
 
 *January 31, 2023*
