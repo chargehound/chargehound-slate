@@ -21,6 +21,6 @@ includes:
 
 search: false
 
-version: 2017-10-30
+version: "2017-10-30"
 
 ---

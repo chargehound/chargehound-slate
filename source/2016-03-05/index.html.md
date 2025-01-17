@@ -21,6 +21,6 @@ includes:
 
 search: false
 
-version: 2016-03-05
+version: "2016-03-05"
 
 ---
