@@ -1,0 +1,14 @@
+name: CodeQL
+
+on:
+  pull_request:
+    branches: [ develop ]
+  push:
+    branches: [ develop ]
+  workflow_dispatch:
+
+jobs:
+  codeql-javascript:
+    uses: chargehound/security-workflows/.github/workflows/codeql-javascript.yml@main
+  codeql-ruby:
+    uses: chargehound/security-workflows/.github/workflows/codeql-ruby.yml@main  
