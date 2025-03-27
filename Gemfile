@@ -1,4 +1,4 @@
-ruby '>= 3.2'
+ruby '>= 3.3.9'
 source 'https://rubygems.org'
 
 # Middleman
@@ -11,3 +11,6 @@ gem 'redcarpet', '~> 3.6.0'
 gem 'nokogiri', '~> 1.13.10'
 gem 'sass'
 gem 'webrick'
+gem 'bigdecimal'
+gem 'mutex_m'
+gem 'base64'
