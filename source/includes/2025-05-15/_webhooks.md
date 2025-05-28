@@ -1,0 +1,184 @@
+# Webhooks
+
+Webhooks let you register a URL that Chargehound will notify when an event occurs. You might want to use webhooks to be notified when a dispute is created so that you can automatically submit a response. You can configure your webhook URLs on your [settings page](https://www.chargehound.com/dashboard/settings/api#webhook-settings), clicking *Add webhook URL* on that page reveals a form to add a new URL for receiving webhooks. You can select what events you would like to receive a notification for. The events are `dispute.created`, `dispute.updated`, `dispute.submitted`, `dispute.closed` and `dispute.response.generated`.
+
+## Static IP addresses
+
+If you need to allowlist individual IP addresses in your firewall you can opt to have webhook calls sent from a fixed range of IP addresses on your [settings page](https://www.chargehound.com/dashboard/settings/api#webhook-settings). 
+
+> Webhook calls will then be sent from one of the following IP addresses if you opt to use a static IP:
+
+```
+3.211.115.112
+3.212.160.248
+3.212.186.185
+34.194.118.97
+34.200.90.111
+``` 
+
+## Responding to a webhook
+
+To acknowledge successful receipt of a webhook, your endpoint should return a `2xx` HTTP status code. Any other information returned in the request headers or request body is ignored. All response codes outside this range, including `3xx` codes, will be treated as a failure. If a webhook is not successfully received for any reason, Chargehound will continue trying to send the webhook once every half hour for up to 3 days.
+
+## Test webhook
+
+A test webhook can be triggered from your [settings page](https://www.chargehound.com/dashboard/settings/api#webhook-settings) when adding or editing a webhook. The test webhook is intended to help you verify your webhook URL, test webhooks will only be sent when you trigger them. The test webhook "type" will always be "test", "livemode" will match the mode of the webhook, and the ID will be randomly generated.
+
+> Example request:
+
+```json
+{
+  "id": "wh_123",
+  "type": "test",
+  "object": "webhook",
+  "livemode": true
+}
+```
+
+The test webhook object is:
+
+| Field | Type | Description |
+|---------------------|---------|-----------|
+| id | string | A unique identifier for the webhook request. |
+| type | string | The event type. |
+| livemode | boolean | Is this a test or live mode webhook. |
+
+## Dispute created
+
+Notification that Chargehound has received a new dispute from your payment processor.
+
+> Example request:
+
+```json
+{
+  "id": "wh_123",
+  "type": "dispute.created",
+  "object": "webhook",
+  "livemode": true,
+  "dispute": "dp_123"
+}
+```
+
+The webhook object is:
+
+| Field | Type | Description |
+|---------------------|---------|-----------|
+| id | string | A unique identifier for the webhook request. |
+| type | string | The event type. |
+| livemode | boolean | Is this a test or live mode dispute. |
+| dispute | string | The id of the dispute. |
+
+## Dispute updated
+
+Notification that a dispute has been updated or edited in Chargehound.
+
+> Example request:
+
+```json
+{
+  "id": "wh_123",
+  "type": "dispute.updated",
+  "object": "webhook",
+  "livemode": true,
+  "dispute": "dp_123"
+}
+```
+
+The webhook object is:
+
+| Field | Type | Description |
+|---------------------|---------|-----------|
+| id | string | A unique identifier for the webhook request. |
+| type | string | The event type. |
+| livemode | boolean | Is this a test or live mode dispute. |
+| dispute | string | The id of the dispute. |
+
+## Dispute submitted
+
+Notification that a dispute has been submitted by Chargehound.
+
+> Example request:
+
+```json
+{
+  "id": "wh_123",
+  "type": "dispute.submitted",
+  "object": "webhook",
+  "livemode": true,
+  "dispute": "dp_123"
+}
+```
+
+The webhook object is:
+
+| Field | Type | Description |
+|---------------------|---------|-----------|
+| id | string | A unique identifier for the webhook request. |
+| type | string | The event type. |
+| livemode | boolean | Is this a test or live mode dispute. |
+| dispute | string | The id of the dispute. |
+
+## Dispute closed
+
+Notification that a dispute was closed (`won`, `lost`, `charge_refunded`, or `warning_closed`).
+
+**New in version 2025-05-15:**  
+The `dispute.closed` webhook now includes a `status` field indicating the final status of the dispute.
+
+> Example request:
+
+```json
+{
+  "id": "wh_123",
+  "type": "dispute.closed",
+  "object": "webhook",
+  "livemode": true,
+  "dispute": "dp_123",
+  "status": "won"
+}
+```
+
+The webhook object is:
+
+| Field | Type | Description |
+|---------------------|---------|-----------|
+| id | string | A unique identifier for the webhook request. |
+| type | string | The event type. |
+| livemode | boolean | Is this a test or live mode dispute. |
+| dispute | string | The id of the dispute. |
+| status | string | The final status of the dispute. One of `won`, `lost`, `charge_refunded`, or `warning_closed`. |
+
+## Dispute response ready
+
+Notification that Chargehound has generated a response for a dispute. This event is typically used for standalone integrations, where you are responsible for uploading the response evidence document yourself.
+
+> Example request:
+
+```json
+{
+  "id": "wh_123",
+  "type": "dispute.response.generated",
+  "object": "webhook",
+  "livemode": true,
+  "dispute": "dp_123",
+  "charge": "ch_123",
+  "account_id": null,
+  "evidence": {
+    "customer_name": "Susie Chargeback"
+  },
+  "response_url": "https://chargehound.s3.amazonaws.com/XXX.pdf?Signature=XXX&Expires=XXX&AWSAccessKeyId=XXX"
+}
+```
+
+The webhook object is:
+
+| Field | Type | Description |
+|---------------------|---------|-----------|
+| id | string | A unique identifier for the webhook request. |
+| type | string | The event type. |
+| livemode | boolean | Is this a test or live mode dispute. |
+| dispute | string | The id of the dispute. |
+| charge | string| The id of the disputed charge. |
+| response_url | string | The URL of the generated response PDF. This URL is a temporary access URL. |
+| evidence | dictionary | Key value pairs for the dispute response evidence object. |
+| account_id | string | The account id for Connected accounts that are charged directly through Stripe (if any). (See [Stripe charging directly](#stripe-charging-directly) for details.) |

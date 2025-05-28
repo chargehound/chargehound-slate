@@ -61,6 +61,7 @@ set :port, 4567
 
 # The list of available versions, in reverse chronological order
 config[:versions] = [
+  '2025-05-15',
   '2021-09-15',
   '2020-02-28',
   '2017-10-30',
