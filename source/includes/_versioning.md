@@ -76,6 +76,13 @@ chargehound.setApiVersion("YYYY-MM-DD");
 
 ## Changelog
 
+### Version 2025-05-15
+
+In this version of the API, the status field has been introduced to the webhook payload for the `dispute.closed` event.
+
+In previous versions, the JSON payload for a `dispute.closed` webhook included the following fields: {id, livemode, object, type, dispute}.
+Beginning with this release, the payload now also includes the `status` field, which indicates the outcome of the `dispute (won or lost)`. As a result, the updated JSON structure is: {id, livemode, object, type, dispute, status}.
+
 ### Version 2021-09-15
 
 In this API version, we changed the behavior of the webhook `dispute.closed` event.
@@ -110,7 +117,8 @@ In this API version, we’ve cleaned up some attribute names in order to make th
 
 Documentation is available for all releases:
 
-* [2021-09-15 (Latest)](../2021-09-15/)
+* [2025-05-15 (Latest)](../2025-05-15/)
+* [2021-09-15](../2021-09-15/)
 * [2020-02-28](../2020-02-28/)
 * [2017-10-30](../2017-10-30/)
 * [2016-03-05](../2016-03-05/)
